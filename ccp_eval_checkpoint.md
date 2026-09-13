@@ -1,7 +1,7 @@
 # CCP Evaluation Checkpoint
 
 Status:
-IN PROGRESS (evaluation substantially complete — writing final report)
+COMPLETE (final Arabic report written and published: ccp_evaluation_report_ar.md)
 
 Current Phase:
 Phase 2 COMPLETE (all 34 chapters sampled) — pivoting to Phases 6-24
@@ -179,29 +179,29 @@ Open Issues:
   answer_and_next auto-advance mode).
 
 Next Exact Action:
-**Nearly everything in the task spec has now been covered** (all 34
-chapters, Adaptive Practice, Formula Lab, Method Selection, Calculation
-Drill, Fresh Challenge/Cold Test, Dashboard, Readiness Center, Study Plan,
-Final Week Mode, Timed Mock, Blueprint Mock (partial), Memo Practice,
-mobile viewport, resume/persistence). Remaining open items, in priority
-order if this session continues or a future one resumes:
-1. Write ccp_evaluation_report_ar.md (the final Arabic report) — this is
-   the next and primary remaining action. All source material for every
-   report section already exists in the other 5 checkpoint files.
-2. If time remains after the report: Full CCP Simulation (peek only so
-   far — a real attempt would need a dedicated multi-hour session),
-   Export/Import/Reset (test in that order, Reset LAST, only once no
-   further evidence-gathering is needed since Reset is destructive),
-   Blueprint Transfer Check (one-use — spend deliberately, not casually),
-   Pacing & Session History screen (quick, not yet opened), standalone
-   Bookmark/Topics-to-Relearn exercise.
-3. Known state caveat for any future session: a Blueprint Practice Mock
-   was deliberately ended early with 112/119 unanswered (to test that
-   workflow), which drags down subsequent Dashboard/Weakness-Report
-   headline numbers versus the "clean" 230-attempt/97%-accuracy baseline
-   recorded earlier in this file and in ccp_eval_findings.md — that
-   baseline remains the valid reference for the report; don't be alarmed
-   by a lower live number if you check the Dashboard again.
+The evaluation is COMPLETE. `ccp_evaluation_report_ar.md` has been written
+(full Arabic report, all 17 required sections) and covers everything
+gathered across this session. If a future session resumes this task:
+1. The report is the deliverable — read it first for the synthesized
+   verdict before touching the app again.
+2. Optional further depth (not required, but would strengthen the report
+   if pursued): Full CCP Simulation (5hr, never attempted — only its
+   setup dialog was seen), Export/Import/Reset (test in that order, Reset
+   LAST since it's destructive), Blueprint Transfer Check (one-use —
+   spend deliberately), Pacing & Session History screen (not opened),
+   standalone Bookmark/Topics-to-Relearn exercise, and a broader sweep
+   for more instances of the CRITICAL leaked-distractor-annotation bug
+   across the ~830-question bank (only ~250 questions were sampled).
+3. Known state caveat: a Blueprint Practice Mock was deliberately ended
+   early with 112/119 unanswered (to test that workflow), which drags
+   down live Dashboard/Weakness-Report numbers versus the "clean"
+   230-attempt/97%-accuracy baseline this report is built on (recorded
+   earlier in this file and in ccp_eval_findings.md) — that baseline
+   remains the valid reference; don't be alarmed by a lower live number.
+4. Local harness reminder if resuming: local server on :8000 serving
+   CCP_Exam_Coach_FINAL.html from /home/user/ccp-app-test; Playwright
+   profile dir at scratchpad/pw-harness/profile holds all app state;
+   generic_action.js is the reusable driver, copy over action.js as needed.
 5. Harness reminder: `cd /tmp/claude-0/-home-user-ccp-app-test/*/scratchpad/pw-harness`;
    canonical generic action.js is backed up at `generic_action.js` in that
    same dir — restore it with `cp generic_action.js action.js` any time a
