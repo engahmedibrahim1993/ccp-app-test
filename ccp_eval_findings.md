@@ -5,6 +5,92 @@ feedback, or dashboard content has been observed, because the live
 application could not be reached from this environment (see
 `ccp_eval_checkpoint.md` for full detail).
 
+## Session 2 — Real Evaluation Begins (local app file, network blocker resolved)
+
+### STRONG POSITIVE FINDING — Weakness Report / confidence×correctness engine is mathematically sound
+
+After 20 Chapter Practice questions (Ch.1 + Ch.9) with a deliberately constructed
+history (1 Wrong+High/misconception, 1 Wrong+Medium, 1 Wrong+Low, rest
+Correct at High/Medium) plus a 3-question Wrong Answers Review retry (all
+corrected), the Weakness Report showed:
+- 23 recorded attempts total (10+10+3) — correct.
+- Confidence×correctness bucket counts (18 Correct+High, 2 Correct+Medium,
+  0 Correct+Low, 1 Wrong+High, 1 Wrong+Medium, 1 Wrong+Low) — I hand-verified
+  every one of these against my own answer log and they are **exactly
+  correct**, including correctly bucketing the 3 corrected retries as new
+  Correct+High attempts rather than overwriting the original wrong attempts.
+- The one topic with a genuine high-confidence miss ("Allowances vs
+  contingency") is still shown at "50% (1/2)" and flagged as the #1 priority
+  weak area / "contains a flagged misconception" **even after I answered it
+  correctly on retry** — this is not a bug, it's counting both the original
+  miss and the corrected retry as two separate attempts (1 of 2 correct =
+  50%), and correctly declines to instantly clear a flagged misconception
+  from a single immediate correct retry. This matches sound learning-science
+  practice (one correct retry ≠ retained mastery) and is a genuine strength
+  to highlight in the final report, not a defect.
+- Root-cause distribution (1 Concept Gap, 1 Formula Selection) also matched
+  exactly what I self-classified on the two questions I actually classified
+  (the third wrong answer, Ch1 Q7, was auto-advanced past without
+  classification, and correctly does NOT appear in the root-cause
+  distribution — it's absent from "2 classified mistakes," confirming
+  unclassified mistakes are excluded rather than silently miscounted).
+- Domain and difficulty breakdowns (Domain 1 86%, Domain 3 100%; Easy 80%,
+  Medium 88%, Hard 100%) also reconcile correctly against the raw data.
+
+This is meaningful, verified evidence (not a superficial glance) that the
+underlying analytics engine driving weakness diagnosis is trustworthy at
+this scale. Will need to re-verify at larger scale (more chapters, more
+attempts) before generalizing, but this is a strong start.
+
+### BUG — Error Notebook "currently missed" count never clears after correcting the mistake
+
+- **Severity:** HIGH
+- **Feature:** Error Notebook (Fix Mistakes → Error Notebook), and by
+  extension "Wrong Answers Review" / "Retry these 3 questions"
+- **Reproduction steps:**
+  1. Answer 3 questions incorrectly across two Chapter Practice sessions
+     (Ch.1 Q7, Ch.9 Q7, Ch.9 Q8 — done deliberately for this evaluation).
+  2. Open Fix Mistakes → Wrong Answers Review. Answer all 3 correctly
+     (confirmed via on-screen "3/3 · 100%" results, "Clean sweep — no
+     missed questions this session").
+  3. Open Fix Mistakes → Weakness Report: correctly reflects the retry as
+     new evidence (topic accuracy recalculates to include the retry
+     attempt — see the positive finding above).
+  4. Open Fix Mistakes → Error Notebook: **still reads "3 question(s)
+     currently missed (most recent attempt was wrong)"** and lists the
+     exact same 3 questions as still-missed, with no acknowledgment of the
+     corrected retry.
+  5. Repeated the entire retry (via the Error Notebook's own "Retry these
+     3 questions" button this time, not the Fix-Mistakes-hub entry point —
+     confirmed both buttons route to the identical "WRONG ANSWERS REVIEW"
+     screen) — answered all 3 correctly again (3/3, 100%).
+  6. Re-opened Error Notebook immediately after: **still "3 question(s)
+     currently missed (most recent attempt was wrong)"**, unchanged.
+- **Expected behavior:** "most recent attempt was wrong" should become
+  false for a question once its most recent attempt (via any retry path)
+  is correct — the count should drop toward 0 as mistakes are fixed,
+  consistent with the app's own description of the feature ("Auto-populated
+  ... 3 question(s) currently missed (most recent attempt was wrong)").
+- **Observed behavior:** The count and question list are frozen at the
+  original miss and do not update no matter how many times the same
+  question is subsequently answered correctly through the app's own retry
+  flow.
+- **Student impact:** A student doing exactly what the app recommends
+  (fix your mistakes, then check your Error Notebook) sees no evidence
+  their correction registered. In Final Week Mode this is actively harmful:
+  either the student keeps re-reviewing material they've already fixed
+  (wasted time under time pressure), or — worse — loses trust in the
+  feature and stops using it, or believes they still have unresolved gaps
+  they've actually already closed.
+- **Reproduced?** Yes — twice, via two different entry points that share
+  the same underlying screen, both immediately after a confirmed 100%
+  correct retry session.
+- **Note:** This sits alongside (but is distinct from) the earlier
+  Weakness-Report finding, which DOES update correctly. So the bug appears
+  specific to whatever "currently missed" flag drives the Error Notebook's
+  count/filter — Pass 2 (code inspection) should target that specific
+  piece of state once the blind pass is far enough along to justify it.
+
 ## Session 1 — Infrastructure Finding (not an app finding)
 
 - **Type:** Environment/infrastructure blocker (explicitly NOT a

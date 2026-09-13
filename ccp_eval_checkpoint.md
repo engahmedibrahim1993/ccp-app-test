@@ -1,114 +1,154 @@
 # CCP Evaluation Checkpoint
 
 Status:
-BLOCKED
+IN PROGRESS
 
 Current Phase:
-Phase 0 — Browser Interaction Smoke Test (never completed)
+Phase 2 — Every Chapter (Chapter 1 practice session complete; touring
+remaining 33 chapters + major features next)
 
 Last Completed Action:
-Verified Playwright browser automation is technically available and working in
-this environment (Chromium pre-installed at /opt/pw-browsers, `playwright`
-npm package present globally, a persistent-context harness was built at
-`/tmp/.../scratchpad/pw-harness/` using `chromium.launchPersistentContext`
-so login/localStorage state would survive across script invocations).
-Attempted to navigate to the live application URL and confirmed the request
-never reaches the target — it is rejected by this session's outbound network
-policy before any page loads.
+RESOLVED the earlier network blocker: the live Netlify URL is not used
+anymore. The real app file (`CCP_Exam_Coach_FINAL.html`, uploaded by the
+user, committed to this branch) is served locally via
+`python3 -m http.server 8000` on `127.0.0.1:8000` and driven with a
+Playwright persistent-context harness in
+`/tmp/.../scratchpad/pw-harness/` (lib.js + parametrized action.js,
+MODE=read|answer|answer_and_next|next via env vars ANSWER_LETTER/CONFIDENCE).
+State (localStorage/progress) persists across script runs via the profile
+dir, confirmed by a real "Resume Session" prompt appearing on reload.
+
+Completed a full 10-question Chapter Practice session on **Chapter 1 —
+Cost Elements** (Mixed concept+calc, All difficulty, Immediate feedback,
+Confidence Check On): 9/10 correct (90%), one miss. Reached the session
+Results screen and saw the mastery pipeline: Practice → Apply Test (≥80%)
+→ Mastery Test (10Q closed-book, ≥85%) → Challenge (closed-book, ≥75%) →
+Retention. Chapter 1 currently sits at "Training passed · Official
+Questions pending."
 
 Current Browser Location:
-N/A — no page was ever successfully loaded. Zero pixels of the application
-have been rendered or observed in this session.
+Chapter 1 Results screen ("Session Complete" / evidence pipeline view),
+app served at http://127.0.0.1:8000/CCP_Exam_Coach_FINAL.html
 
 Application State:
-UNKNOWN (never reached)
+PRESERVED (persistent Playwright profile dir + app's own localStorage
+persistence both confirmed working)
 
 Completed Chapters:
-None
+- Ch.1 Cost Elements — PARTIALLY TESTED (1 Chapter-Practice session, 10 Qs,
+  mixed concept+calc, difficulty Easy/Medium/Hard all seen; Official
+  Questions / Apply / Mastery / Challenge / Retention tiers NOT yet
+  attempted)
 
 Completed Features:
-None
+- Chapter Practice workflow (setup screen, question flow, confidence
+  selection, immediate feedback, worked solutions, session results,
+  session closeout diagnosis, per-chapter evidence pipeline) — TESTED for
+  Chapter 1 only
+- Wrong-answer self-classification widget (Concept Gap / Formula
+  Selection / Calculation Error / Question Reading) — SEEN but not yet
+  exercised (auto-advanced past it once by accident on Q7 — worth
+  revisiting deliberately)
 
 Approximate Questions Attempted:
-0
+10 (Chapter 1 only)
 
 Known Strong Areas:
-N/A — no learner interaction occurred
+Direct vs Indirect Cost classification (100% this session per app's own
+closeout message) — matches my independent sense that basic cost
+classification is a strength.
 
 Known Weak Concept Area:
-N/A
+Not yet established with confidence (only one chapter done). Candidate:
+the Direct/Indirect × Fixed/Variable 2×2 matrix is subtle (Q5, Q9) —
+answered correctly but this is a plausible confusion area worth
+retesting later in Adaptive Practice / retention checks.
 
 Known Weak Calculation Area:
-N/A
+Q7 (sum of 4 direct-cost line items) — I deliberately simulated a
+plausible "misread one line item" error (answered $202,000 instead of
+$222,000, consistent with misreading $35,000 as ~$15,000) at Medium
+confidence. Real error type: Question Reading / Calculation Error blend.
 
 High-Confidence Errors:
-N/A
+None yet (Chapter 1's one miss was at Medium confidence, by design).
 
 Low-Confidence Correct Answers:
-N/A
+None yet — Chapter 1 answers were mostly Medium/High confidence. Plan to
+deliberately include Low-confidence correct/incorrect answers in later
+chapters (per task's required history matrix).
 
 Bookmarks / Notes / Error Records Created:
-None
+None yet (Bookmark / Mark for review / Question issue controls seen on
+every question screen but not yet exercised).
 
 Important Findings:
-- **BLOCKER (environment/infrastructure, not an app bug):** This remote
-  execution environment's outbound network policy is a strict allowlist that
-  does NOT include `rococo-daifuku-1076a2.netlify.app` (or `netlify.app`,
-  `app.netlify.com`, or even generic hosts like `www.google.com`). Every
-  outbound HTTPS CONNECT to the target was rejected at the egress proxy with:
-  `HTTP/1.1 403 Forbidden` — body: `request blocked: no rule or allowlist
-  entry allows host "rococo-daifuku-1076a2.netlify.app"`.
-- Confirmed via: (1) Playwright `page.goto()` → `net::ERR_TUNNEL_CONNECTION_FAILED`,
-  (2) raw `curl` CONNECT to the proxy → 403 with the explicit denial message
-  above, (3) a raw Python socket CONNECT to `127.0.0.1:38071` reproducing the
-  same 403 body, (4) control tests to `github.com` (400, i.e. reachable —
-  different from the 403 policy denial), `www.google.com`, `netlify.app`, and
-  `app.netlify.com` — all four blocked identically, proving this is a
-  session-wide default-deny allowlist, not a fluke or a DNS/TLS
-  misconfiguration specific to the target site.
-- Per the standing operating rule for this proxy: **do not retry
-  organization policy denials (403/407) and do not attempt to route around
-  them** (no alternate DNS, no different CA/TLS settings, no tunneling
-  through an allowed host). None of those workarounds were attempted.
-- This is an infrastructure/environment configuration limitation, not a
-  finding about the CCP application itself. No claim about the app's
-  quality, correctness, or content can be made yet.
+- **RESOLVED — prior network blocker.** The Netlify 403 documented below was
+  a session network-policy limitation, NOT an application bug. It no longer
+  applies: evaluation now runs against the real app file served locally.
+  (Original evidence kept for the record, not re-litigated.)
+  - `HTTP/1.1 403 Forbidden` — `request blocked: no rule or allowlist entry
+    allows host "rococo-daifuku-1076a2.netlify.app"`, reproduced via
+    Playwright, curl, and a raw socket CONNECT; control hosts
+    (google.com, netlify.app, app.netlify.com) blocked identically while
+    github.com was reachable, proving a session-wide default-deny allowlist.
+- **NEW — content/pedagogy finding (Chapter 1, Q7):** When a wrong answer is
+  submitted, the "WHY YOUR ANSWER WAS WRONG" section is a **generic
+  boilerplate sentence**, not tailored to the specific wrong choice: "The
+  incorrect options typically reflect a wrong formula, mis-substitution, or
+  arithmetic slip — verify each step against the formula shown above." It
+  does not diagnose that my chosen $202,000 corresponds to a plausible
+  misread of one line item. This is a real transferable-reasoning gap
+  (logged in ccp_eval_content_issues.md).
+- **NEW — UX note:** Worked-solution "Check" step is also generic
+  boilerplate on every question so far: "The result must be consistent with
+  the units, sign, and direction required by the stem." Doesn't add
+  question-specific value.
+- **NEW — feature confirmed:** Wrong-answer self-classification widget
+  (Concept Gap / Formula Selection / Calculation Error / Question Reading /
+  Skip classification) appears on the feedback screen after an incorrect
+  answer. Not yet deliberately exercised (need to click one, not just
+  "Next question").
+- **NEW — feature confirmed:** Each chapter has a full evidence/mastery
+  pipeline: Practice → Apply Test (≥80%) → Mastery Test (10Q closed-book,
+  ≥85%) → Challenge (closed-book, ≥75%) → Retention. Explicit UI text says
+  "Mastery tests are internal quality-gated evidence, not an independent
+  external exam" — good, honest framing to check the report doesn't
+  overclaim vs. this.
 
 Open Issues:
-- The task requires genuine rendered-UI browser interaction with the live
-  Netlify URL. That is currently impossible from this session because the
-  network policy blocks the destination outright — this is not fixable from
-  inside the session (cannot edit egress allowlists, cannot disable TLS
-  verification, cannot unset HTTPS_PROXY per hard rules).
-- Needs either: (a) a new/this session's environment recreated with a
-  network policy that allows outbound access to the target host (e.g. a
-  "full network access" policy per
-  https://code.claude.com/docs/en/claude-code-on-the-web), or (b) the
-  specific host added to this environment's allowlist, or (c) the user
-  supplying an alternative access path (e.g. the app's own source repo, so a
-  local build/serve could be evaluated instead — though the task explicitly
-  asks for the *live* deployed app, not a local rebuild).
+- Full 34-chapter coverage, all major features (Random Practice, Calculation
+  Drill, Fresh Challenge, Adaptive Practice, Formula Lab, Dashboard, Study
+  Plan, Wrong Answers Review, Timed Mock, MCQ Blueprint Mock, Memo Practice,
+  Full Simulation, Final Week Mode, retention loop, export/import/reset,
+  mobile viewport) are NOT YET TESTED — this is a very large surface and
+  will span multiple sessions per the task's own design.
+- Need to deliberately exercise the wrong-answer classification widget at
+  least once (missed the chance on Q7 by using the combined
+  answer_and_next auto-advance mode).
 
 Next Exact Action:
-Once network access to `rococo-daifuku-1076a2.netlify.app` is confirmed
-available (re-run the smoke test:
-`curl -sS -o /dev/null -w '%{http_code}\n' https://rococo-daifuku-1076a2.netlify.app/`
-should return 200, not 000/403), resume at Phase 0:
-1. Run the Playwright smoke test in
-   `/tmp/claude-0/-home-user-ccp-app-test/*/scratchpad/pw-harness/` (recreate
-   if the scratchpad was cleared — the harness code is fully captured in this
-   repo's checkpoint notes and is trivial to rebuild: a
-   `chromium.launchPersistentContext` runner + a per-action `action.js`).
-2. Open the live URL, read the Home screen, click into Chapter Practice,
-   reach a real visible question, record it (question text + choices only,
-   no answer-key access), screenshot to `ccp_eval_screenshots/`.
-3. Update this checkpoint's Status to IN PROGRESS and begin Phase 1
-   (First-Time Student Experience) exactly as specified in the task.
+1. On the Chapter 1 Results screen, click "Complete Official Questions →"
+   briefly to understand that mechanic (don't need to finish all of them),
+   OR click "Home" to move to touring more chapters — prioritize breadth
+   next: sample ~5 questions per chapter across a representative spread of
+   the remaining 33 chapters (mixing concept/calc, all difficulties),
+   deliberately varying confidence x correctness to build the full history
+   matrix required by the task (need: Correct+Low, Wrong+Low, Wrong+High
+   still missing).
+2. After a handful of chapters, deliberately trigger and use the
+   wrong-answer classification widget at least once (use MODE=answer alone,
+   read feedback, click a classification button, THEN MODE=next).
+3. Then cycle through: Random Practice, Calculation Drill, Fresh Challenge,
+   Formula Lab, Wrong Answers Review, Dashboard, Study Plan, Adaptive
+   Practice (once enough history exists), Timed Mock, Memo Practice.
+4. Update all 5 checkpoint files after every ~5-10 questions or feature.
 
 Remaining Phases:
-ALL — Phase 1 through Phase 28, plus Pass 2 (limited technical investigation)
-and the final Arabic report (`ccp_evaluation_report_ar.md`). Nothing beyond
-the network-access smoke test has been attempted.
+Phase 1 (retro — mostly done implicitly, home screen already read), Phase 2
+(33 more chapters), Phases 3-28 all still open. Pass 2 (technical
+investigation) and final Arabic report come last.
 
 Last Updated:
-2026-09-13 (initial session — blocked immediately at network smoke test)
+2026-09-13 (Session 2 — network blocker resolved via local app file; first
+real chapter practice session completed)
