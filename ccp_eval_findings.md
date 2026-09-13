@@ -42,6 +42,29 @@ underlying analytics engine driving weakness diagnosis is trustworthy at
 this scale. Will need to re-verify at larger scale (more chapters, more
 attempts) before generalizing, but this is a strong start.
 
+### FINDING — Inconsistent state persistence across modes
+
+- **Severity:** MEDIUM
+- **Feature:** Session persistence / Resume
+- Chapter Practice, Timed Mock, Adaptive Practice, Today's Study Plan, and
+  Final Week Mode ALL correctly show a "Resume Session →" prompt after a
+  full page reload and restore exact progress (question index, answers,
+  timer, flags) - verified repeatedly across dozens of reloads this
+  session.
+- Memo Practice (before clicking "Finish and Self-Review"/saving) and
+  Calculation Drill do NOT survive a page reload - navigating back to
+  either after a reload starts completely fresh at the picker screen, with
+  no draft/in-progress recovery.
+- **Student impact:** Losing an in-progress Calculation Drill set is low-
+  cost (each item is quick, freshly generated, and not officially scored).
+  Losing an in-progress memo draft before saving is more painful - a
+  student who accidentally navigates away or the browser crashes mid-memo
+  loses the writing entirely, with no warning that this mode behaves
+  differently from every quiz-like mode in the app.
+- **Recommendation:** At minimum, autosave the memo textarea draft
+  periodically (e.g., to localStorage) so a reload can offer to restore
+  unsaved text, matching the safety net every other mode already has.
+
 ### BUG — Distractor-option text leaks the answer-key rationale (CRITICAL)
 
 - **Severity:** CRITICAL
