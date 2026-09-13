@@ -95,6 +95,9 @@ attempts) before generalizing, but this is a strong start.
   for the "Substitute and calculate" template-repetition issue, Issue 2 in
   ccp_eval_content_issues.md) — flagging for Pass 2 / broader Phase 3-4
   sampling to check prevalence.
+- **Additional evidence:** Adaptive Practice Q12 (cumulative CPI/SPI from
+  workhours) had option C rendered as "CPI = 0.951, SPI = 0.935
+  **(reversed)**" — same pattern, 4th confirmed instance.
 - **Additional evidence:** Ch.30 (Optimization) Q4/Q5 LP maximization
   question had an option rendered as "X1=60, X2=0, max profit=$1,500
   **(infeasible)**" — again a mechanism-revealing annotation (this option
