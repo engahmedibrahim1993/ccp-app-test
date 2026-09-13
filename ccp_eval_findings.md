@@ -42,6 +42,29 @@ underlying analytics engine driving weakness diagnosis is trustworthy at
 this scale. Will need to re-verify at larger scale (more chapters, more
 attempts) before generalizing, but this is a strong start.
 
+### STRONG POSITIVE FINDING — Mock timer is wall-clock-based, survives a long real-world gap
+
+- **Feature:** Blueprint Practice Mock (119Q) countdown timer
+- Started a Blueprint Practice Mock (dialog confirmed "~180 minutes"), timer
+  showed 3:00:28 at Q1. A real-world gap of roughly 2.5 hours then occurred
+  in this session (a usage-limit pause/reset), during which the browser
+  process was not actively running. On resuming and reopening the app,
+  "Resume Session" correctly restored Q1 exactly as left (same answer
+  state, same question), but the timer now read ~27:13 - i.e., it had
+  continued counting down against real elapsed wall-clock time rather than
+  freezing while the tab/process was inactive.
+- **Why this matters:** This is exactly the correct, exam-realistic
+  behavior for a timed assessment - a student cannot "pause" a mock by
+  closing the tab or losing network/power. It also confirms the app
+  computes remaining time from a stored start-timestamp + duration rather
+  than a simple in-memory interval that would have incorrectly frozen at
+  3:00:28. Genuinely good engineering, worth highlighting as a strength in
+  the final report.
+- **Caveat:** because of this same behavior, the in-progress mock now has
+  very little real time left, which is what actually curtailed further
+  testing of the *content* of this mode this session - the session
+  continues below with that reduced time budget, by design.
+
 ### FINDING — Inconsistent state persistence across modes
 
 - **Severity:** MEDIUM
