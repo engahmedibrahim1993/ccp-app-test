@@ -42,6 +42,69 @@ underlying analytics engine driving weakness diagnosis is trustworthy at
 this scale. Will need to re-verify at larger scale (more chapters, more
 attempts) before generalizing, but this is a strong start.
 
+### BUG — Distractor-option text leaks the answer-key rationale (CRITICAL)
+
+- **Severity:** CRITICAL
+- **Feature:** Chapter Practice question rendering (Ch.10 Process Product
+  Manufacturing, and possibly wider — needs a broader sweep)
+- **Reproduction steps:**
+  1. Chapter Practice → Ch.10 — Process Product Manufacturing → Mixed,
+     10 questions, All difficulty, Immediate feedback, Confidence On.
+  2. Question 4 ("A plant's full-capacity annual sales income is
+     $9,600,000... what is the sales income at 70% of capacity?") rendered
+     its answer choices as:
+     - A $6,720,000
+     - **B $3,360,000 (mistakenly halving the correct result)**
+     - C $9,600,000 (unchanged from full capacity)
+     - **D $2,880,000 (30% of capacity instead of 70%)**
+  3. The parenthetical text after options B and D is clearly author-facing
+     answer-key/distractor-rationale metadata ("mistakenly halving the
+     correct result", "30% of capacity instead of 70%") that leaked into
+     the student-facing option label, visible BEFORE submitting an answer.
+  4. Also seen on option C ("unchanged from full capacity") — less
+     damaging since it just restates the scenario, but still metadata-
+     shaped, not natural answer-choice phrasing.
+- **Expected behavior:** Answer options should show only the value/choice
+  a real exam would show (e.g., plain "$3,360,000"), with any "why this
+  distractor is wrong" explanation reserved for the post-submission
+  feedback screen only.
+- **Observed behavior:** The distractor's designed failure mode is spelled
+  out in parentheses directly on the option button, visible pre-answer.
+  A test-wise student doesn't even need to know the material — the
+  parenthetical literally tells you "this is the wrong 30%-instead-of-70%
+  answer" and "this is the mistakenly-halved answer," making the correct
+  answer (A, the one WITHOUT a give-away parenthetical) identifiable by
+  elimination alone.
+- **Student impact:** This directly undermines validity for any question
+  that has this leak — the question stops testing knowledge and starts
+  testing "which option has no confession attached." For self-practice
+  this is merely unhelpful (inflates scores, teaches nothing); if similar
+  leakage exists in Mock/Simulation modes it would be a much more serious
+  exam-readiness/content-integrity problem.
+- **Reproduced?** Yes, at least twice independently: Ch.10 Q4 (above) AND
+  earlier, Ch.29 Q8 (Statistics — sample variance/std dev question) had
+  option C rendered as "Variance≈5.70, Std Dev≈32.46 **(reversed)**" — the
+  exact same pattern (a dev-facing note on how the distractor was
+  constructed, i.e. "these two values are swapped," leaking into the
+  student-facing label) — I noted it at the time in
+  ccp_eval_calculations.md but did not yet escalate it as a bug; doing so
+  now that a second, clearer instance confirms it's systemic rather than a
+  one-off typo. Have not yet done a systematic sweep for how common this
+  is across the ~830-question bank — likely tied to a specific
+  content-generation/authoring batch (possibly the same one responsible
+  for the "Substitute and calculate" template-repetition issue, Issue 2 in
+  ccp_eval_content_issues.md) — flagging for Pass 2 / broader Phase 3-4
+  sampling to check prevalence.
+- **Recommended fix:** Server/content-side strip of any parenthetical
+  distractor-rationale text from option labels before rendering; add a
+  content-QA check that flags option strings matching patterns like
+  "(mistakenly ...)", "(instead of ...)", "(reversed)", "(unchanged from
+  ...)" etc. (note: similar bracketed asides were also seen framing
+  correct answers in other chapters, e.g. Ch.29 "(reversed)" pairing and
+  Ch.9's "(the 9.0 bid is a clear outlier...)" — the latter is fine, it's
+  scenario context, not a distractor-mechanism confession; the pattern to
+  strip specifically is meta-commentary on WHY an option is right/wrong).
+
 ### BUG — Error Notebook "currently missed" count never clears after correcting the mistake
 
 - **Severity:** HIGH

@@ -107,6 +107,57 @@ should). Severity: LOW-MEDIUM. Confidence: MEDIUM (only 10 samples so far).
 - Severity: LOW
 - Confidence: HIGH (directly observed, low ambiguity about the cause)
 
+## Issue 4 — Ch.6 "purchase price" redefined mid-problem without signaling it
+
+- Chapter: 6 — Machinery, Equipment & Tools
+- Question: dealer buys a lathe for $6,200 + $500 deinstall/rigging/delivery,
+  applies cost-of-money (10%/yr, 3mo) + "overhead at 20% of purchase price"
+  + "profit at 20% of purchase price."
+- App's marked answer (verified correct, I derived it independently before
+  seeing the rationale): $9,547.50, computed by treating "purchase price" as
+  $6,700 (i.e., $6,200 auction price **plus** the $500 deinstall/rigging/
+  delivery cost) for the cost-of-money, overhead, AND profit calculations.
+- Why potentially weak: the stem introduces "$6,200" specifically as what
+  was paid "at auction" and separately introduces "$500 for deinstallation,
+  rigging, and delivery" as a distinct cost — a plain reading defines
+  "purchase price" as $6,200 only. The worked solution then silently states
+  "Purchase price = $6,200+$500 = $6,700" and applies all percentages to
+  that combined figure. A careful reader who takes "purchase price" at its
+  first, narrower meaning would compute a different (unlisted) subtotal.
+  Fortunately none of the 4 answer options match that literal alternate
+  reading either, so a student re-checking arithmetic against the options
+  would still likely arrive at D — but the terminology inconsistency itself
+  is a real authoring flaw that could cost time/confidence under exam
+  pressure.
+- Classification: CALCULATION / FORMULA ISSUE (terminology ambiguity, not
+  a wrong final answer)
+- Severity: LOW-MEDIUM
+- Confidence: HIGH (verified by independently computing multiple
+  interpretations and comparing to the stated rationale)
+
+## Issue 5 — Ch.6 near-duplicate question appeared twice in one 5-question sample
+
+- The exact same dealer/lathe pricing scenario (same numbers: $6,200
+  auction price, $500 deinstall/rigging/delivery, 10%/3mo cost of money,
+  20%/20% overhead/profit) appeared as both Question 2 ("What is the
+  minimum desired selling price (subtotal of all these components)?") and
+  Question 3 ("What is the resulting market valuation?") of the same
+  5-question Chapter 6 session — different question wording, identical
+  numbers, identical correct answer ($9,547.50), answer options in the
+  same order.
+- Why potentially weak: in a 24-question chapter pool, drawing the same
+  underlying scenario twice in a 5-question sample suggests either the pool
+  is smaller/more repetitive than the "24 eligible questions" count implies
+  (i.e., two "different" bank entries are really the same content restated),
+  or the shuffling logic has no duplicate-scenario protection within a
+  session. Either way it reduces perceived question variety and wastes a
+  learning opportunity that could have covered new ground instead.
+- Classification: LEARNING / PEDAGOGY GAP (content variety) — could also be
+  QUESTION-BANK CONTENT ISSUE if the two are literally cloned entries
+- Severity: MEDIUM (if this pattern recurs across other chapters, it should
+  be escalated — flagged here as a first observation, watch for repeats)
+- Confidence: HIGH (directly observed, identical numbers/answer)
+
 Planned record format per entry, once testing resumes:
 
 - Question ID (if visible)
