@@ -4,8 +4,10 @@ Status:
 IN PROGRESS
 
 Current Phase:
-Phase 2 — Every Chapter (Chapter 1 practice session complete; touring
-remaining 33 chapters + major features next)
+Phase 2 COMPLETE (all 34 chapters sampled) — pivoting to Phases 6-24
+(major features: Random Practice, Calculation Drill, Fresh Challenge,
+Formula Lab, Dashboard, Adaptive Practice, Study Plan, Mocks, Memo,
+Full Simulation, Final Week Mode)
 
 Last Completed Action:
 RESOLVED the earlier network blocker: the live Netlify URL is not used
@@ -57,7 +59,20 @@ Completed Chapters:
   compound interest, F/A annuity factor, FV compounding, ROR table lookup,
   cash-flow-vs-profit and intangibles concepts — best-designed calc
   chapter alongside Ch.29)
-- 28 chapters remain untouched (Ch.2-8, 10-12, 15-26, 28, 30-34)
+- **ALL 34 CHAPTERS NOW SAMPLED.** Full per-chapter table with scores and
+  notes lives in ccp_eval_coverage.md — do not duplicate it here. Overall:
+  ~195 Chapter Practice questions answered, 191 correct (~98% — very high,
+  consistent with a well-prepared persona on Mixed/All-difficulty sampling;
+  the few misses were deliberate history-building or genuine specific-fact
+  gaps). Strongest chapters: 27, 29, 30 (rigorous, well-designed
+  engineering-economy and optimization calc, independently vertex-checked
+  twice for LP problems). Weakest showing: Ch.33 (TCM terminology
+  confusion, corrected within the same session — good transfer-learning
+  evidence). Two systemic content issues found across chapters (see
+  ccp_eval_content_issues.md and ccp_eval_findings.md): leading-word
+  truncation in question stems (6+ instances), and CRITICAL leaked
+  answer-key annotations in distractor option text (3 confirmed instances
+  across Ch.6/10/29/30).
 
 Completed Features:
 - Chapter Practice workflow (setup screen, question flow, confidence
@@ -70,13 +85,12 @@ Completed Features:
   revisiting deliberately)
 
 Approximate Questions Attempted:
-66 total: 60 Chapter Practice (Ch.1, 9, 14, 29, 13, 27 — 10Q each) + 6
-Wrong Answers Review retries. Perfect 10/10 scores on Ch.13 and Ch.27 (both
-straightforward for my persona); 9-10/10 on the other four. Personal
-scoring streak is now quite high (feels slightly too easy at "Medium"
-default difficulty — worth deliberately trying Hard-only filters and
-weaker-for-my-persona chapters, e.g. Ch.4 Labor, Ch.10/11 Manufacturing,
-Ch.30 Optimization, next time chapter breadth resumes).
+~201 total: ~195 Chapter Practice (all 34 chapters) + 6 Wrong Answers
+Review retries. Overall accuracy ~98%. This is now high enough that
+future sessions should deliberately use Hard-only difficulty filters and
+Calculation-only question type to stress-test the harder end of the bank,
+since Mixed/All-difficulty sampling is no longer discriminating well for
+this persona.
 
 Known Strong Areas:
 Statistics & Probability (Ch.29) — 10/10 including a Hard binomial
@@ -165,20 +179,17 @@ Open Issues:
   answer_and_next auto-advance mode).
 
 Next Exact Action:
-Full history matrix now achieved (all 6 required combinations present +
-verified against Weakness Report). Pivoting from "build history" to
-"breadth + major features":
-1. Sample 2-3 more calc-heavy/scenario-heavy chapters (suggest: Ch.13
-   Scheduling, Ch.27 Financial & Cash Flow, Ch.31/32 Risk Management) at
-   ~10Q each via MODE=setup CHAPTER="..." NUMQ=10.
-2. Then pivot hard into untested major features, in this order (all still
-   0% tested): Random Practice, Calculation Drill, Method Selection, Fresh
-   Challenge (all levels), Formula Lab, Performance Dashboard / Readiness
-   Center, Adaptive Practice (history now exists — use it), Study Plan,
-   My Final Review, Topics to Relearn.
-3. Then: Timed Mock, MCQ Blueprint Mock (if present), Memo Practice, Full
-   CCP Simulation, Final Week Mode.
-4. Near the end (not yet): mobile viewport pass, export/import/reset.
+**Chapter breadth is DONE — all 34 chapters sampled (~195 Qs, see
+ccp_eval_coverage.md for the full table).** Resume here:
+1. Go Home → work through "More tools"/Advanced section in order: Random
+   Practice, Calculation Drill, Method Selection, Fresh Challenge (every
+   available level), Formula Lab, Readiness Center, Adaptive Practice
+   (substantial history now exists), Study Plan, Weak Topics Practice, My
+   Final Review, Topics to Relearn.
+2. Then Exam & Readiness hub: Timed Mock, MCQ Blueprint Mock (if present),
+   Memo Practice, Full CCP Simulation, Final Week Mode.
+3. Near the very end only (state-destructive, do last): mobile/narrow
+   viewport pass, export/import, reset-behavior test.
 5. Harness reminder: `cd /tmp/claude-0/-home-user-ccp-app-test/*/scratchpad/pw-harness`;
    canonical generic action.js is backed up at `generic_action.js` in that
    same dir — restore it with `cp generic_action.js action.js` any time a

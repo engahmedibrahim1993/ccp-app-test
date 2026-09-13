@@ -45,34 +45,38 @@ Legend: TESTED / PARTIALLY TESTED / NOT TESTED / BLOCKED
 | 8 | Activity Based Cost Management | 17 | PARTIALLY TESTED | 5 | 5/5 | ABC allocation vs traditional, activity rate |
 | 9 | Cost Estimating | 45 | PARTIALLY TESTED | 10 | 8/10 | Strong scenario+calc mix; allowance/contingency miss |
 | 10 | Process Product Manufacturing | 29 | PARTIALLY TESTED | 10 | 10/10 | **Critical leaked-distractor-annotation bug found (Q4)**; break-even, MACRS, scaling exponent |
-| 11 | Discrete Part Manufacturing | 29 | NOT TESTED | 0 | — | |
-| 12 | Project Planning | 22 | NOT TESTED | 0 | — | |
+| 11 | Discrete Part Manufacturing | 29 | PARTIALLY TESTED | 5 | 5/5 | Concurrent engineering, tax/markup, prime cost, CAPP variant approach |
+| 12 | Project Planning | 22 | PARTIALLY TESTED | 5 | 5/5 | Construction-driven scheduling, budget freeze, historical/physical data, WBS/OBS coding, contingency planning |
 | 13 | Scheduling | 49 | PARTIALLY TESTED | 10 | 10/10 | CPM logic, float, leveling, recovery math |
 | 14 | Earned Value Overview | 70 | PARTIALLY TESTED | 10 | 9/10 | Core EVM formulas, WBS/OBS, 50/50 rule miss |
-| 15 | Performance & Productivity Management | 24 | NOT TESTED | 0 | — | |
-| 16 | Project Management Fundamentals | 14 | NOT TESTED | 0 | — | |
-| 17 | Project Organization Structure | 12 | NOT TESTED | 0 | — | |
-| 18 | Project Communications | 36 | NOT TESTED | 0 | — | |
-| 19 | Project Labor Cost Control | 32 | NOT TESTED | 0 | — | |
-| 20 | Leadership & Management of Project People | 20 | NOT TESTED | 0 | — | |
-| 21 | Quality Management | 9 | NOT TESTED | 0 | — | |
-| 22 | Value Engineering | 11 | NOT TESTED | 0 | — | |
-| 23 | Contracting for Capital Projects | 30 | NOT TESTED | 0 | — | |
-| 24 | Strategic Asset Management | 13 | NOT TESTED | 0 | — | |
-| 25 | Change Management Practical Guide | 13 | NOT TESTED | 0 | — | |
-| 26 | Overview of Construction Claims & Disputes | 12 | NOT TESTED | 0 | — | |
+| 15 | Performance & Productivity Management | 24 | PARTIALLY TESTED | 5 | 5/5 | Success Index, CWH, equivalent-units %complete (weighted, verified) |
+| 16 | Project Management Fundamentals | 14 | PARTIALLY TESTED | 5 | 5/5 | PM history, Bean Counter Syndrome, F.T.-T.T. technique (fragile correct, low conf) |
+| 17 | Project Organization Structure | 12 | PARTIALLY TESTED | 5 | 5/5 | CII study, lump-sum vs reimbursable staffing/contract fit |
+| 18 | Project Communications | 36 | PARTIALLY TESTED | 5 | 5/5 | Audience tailoring, S-curves, cross-discipline reconciliation |
+| 19 | Project Labor Cost Control | 32 | PARTIALLY TESTED | 5 | 5/5 | EV/CV/CPI from linear-foot unit rates (verified), labor $ derivation |
+| 20 | Leadership & Management of Project People | 20 | PARTIALLY TESTED | 5 | 5/5 | Likert, McGregor X/Y, Maslow, Blake & Mouton grid |
+| 21 | Quality Management | 9 | PARTIALLY TESTED | 5 | 5/5 | COQ multi-step calc (verified, 5%→8% profit), sporadic/chronic problems |
+| 22 | Value Engineering | 11 | PARTIALLY TESTED | 5 | 5/5 | VE ROI ranges, FAST diagram, 4 value types (exchange value) |
+| 23 | Contracting for Capital Projects | 30 | PARTIALLY TESTED | 5 | 5/5 | Contract formation/mistake doctrine, unit-price + quantity-variation clause |
+| 24 | Strategic Asset Management | 13 | PARTIALLY TESTED | 5 | 5/5 | ROI/ROA, asset life cycle, influence curve, cost-reduction impact at scale |
+| 25 | Change Management Practical Guide | 13 | PARTIALLY TESTED | 5 | 5/5 | Change-control sequencing, baseline discipline |
+| 26 | Overview of Construction Claims & Disputes | 12 | PARTIALLY TESTED | 5 | 5/5 | Acceleration, Measured Mile, mediator authority, DSC claim support |
 | 27 | Financial & Cash Flow Analysis | 30 | PARTIALLY TESTED | 10 | 10/10 | Strong engineering-economy coverage |
-| 28 | Practical Corporate Investment Decision-Making Guide | 22 | NOT TESTED | 0 | — | |
+| 28 | Practical Corporate Investment Decision-Making Guide | 22 | PARTIALLY TESTED | 5 | 5/5 | NPV (verified), ROCE, Capex/unit, cash-flow 3-way split |
 | 29 | Statistics & Probability | 38 | PARTIALLY TESTED | 10 | 10/10 | Strongest calc chapter; leaked-annotation precursor "(reversed)" |
-| 30 | Optimization | 14 | NOT TESTED | 0 | — | |
-| 31 | Risk Management Fundamentals | 22 | NOT TESTED | 0 | — | |
-| 32 | Risk Management Practical Guide | 22 | NOT TESTED | 0 | — | |
-| 33 | Total Cost Management Overview | 11 | NOT TESTED | 0 | — | |
-| 34 | The International System of Units (SI) | 20 | NOT TESTED | 0 | — | |
+| 30 | Optimization | 14 | PARTIALLY TESTED | 5 | 5/5 | **LP graphical solution fully vertex-verified twice (min-cost and max-profit)** — both non-trivial, both confirmed correct |
+| 31 | Risk Management Fundamentals | 22 | PARTIALLY TESTED | 5 | 5/5 | Contingency calc, decision-tree EMV (4 paths verified), expected cost |
+| 32 | Risk Management Practical Guide | 22 | PARTIALLY TESTED | 5 | 5/5 | 3-point EV, QRA interpretation, EMV, TCM/TQM relationship |
+| 33 | Total Cost Management Overview | 11 | PARTIALLY TESTED | 5 | 4/5 | **Genuine miss**: confused project-lifecycle terms (Ideation/Planning/Execution/Closure) with asset-lifecycle terms (Ideation/Creation/Operation/Modification/Termination) — good real learning-transfer moment across Q1→Q3 |
+| 34 | The International System of Units (SI) | 20 | PARTIALLY TESTED | 5 | 5/5 | Unit conversions (all independently verified), SI history, mass vs weight |
 
-Total bank size across all 34 chapters: 830 questions (confirmed via
-"All chapters" filter pool count). 10 of 34 chapters sampled so far
-(115 total Chapter Practice questions answered + 6 retries).
+**All 34 chapters now have representative coverage.** Total bank size
+across all 34 chapters: 830 questions (confirmed via "All chapters" filter
+pool count). 195 total Chapter Practice questions answered across all 34
+chapters + 6 Wrong-Answers-Review retries. No chapter is FULLY TESTED yet
+(Official Questions / Apply / Mastery / Challenge / Retention tiers remain
+essentially untouched beyond Ch.1's initial look) — "PARTIALLY TESTED" is
+accurate for every row above.
 
 ## Infrastructure / harness status (for resumption, not app coverage)
 

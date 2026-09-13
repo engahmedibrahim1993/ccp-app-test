@@ -158,6 +158,30 @@ should). Severity: LOW-MEDIUM. Confidence: MEDIUM (only 10 samples so far).
   be escalated — flagged here as a first observation, watch for repeats)
 - Confidence: HIGH (directly observed, identical numbers/answer)
 
+## Issue 6 — Recurring leading-word truncation in question stems (3+ occurrences)
+
+- Chapters: 2, 17 (x2 so far)
+- Examples:
+  - Ch.2 Q1: "the cost classification used in the costing-pricing
+    process, which of these belongs under Indirect Costs..." (missing
+    opening word, likely "In")
+  - Ch.17 Q1: "the most comprehensive Construction Industry Institute
+    (CII) study to date, what was identified..." (missing "In")
+  - Ch.17 Q2: "If cost control should not function as an independent audit
+    arm reporting to senior management, what mechanism does describe as
+    more than adequate..." (missing subject after "does", e.g. "does
+    [S&K6/the text] describe")
+- Why potentially weak: minor readability/professionalism issue — doesn't
+  block answering (context is still inferable) but looks unpolished and
+  could momentarily confuse a non-native-English speaker, of whom the CCP
+  candidate pool likely has many (AACE is an international body).
+- Classification: MINOR POLISH (text rendering/authoring)
+- Severity: LOW (cosmetic, does not affect answerability)
+- Confidence: HIGH (directly observed 3 times across 2 chapters so far —
+  worth flagging as a systemic small-scale content-QA gap rather than
+  isolated typos, likely from an automated content pipeline dropping a
+  leading token)
+
 Planned record format per entry, once testing resumes:
 
 - Question ID (if visible)

@@ -95,6 +95,14 @@ attempts) before generalizing, but this is a strong start.
   for the "Substitute and calculate" template-repetition issue, Issue 2 in
   ccp_eval_content_issues.md) — flagging for Pass 2 / broader Phase 3-4
   sampling to check prevalence.
+- **Additional evidence:** Ch.30 (Optimization) Q4/Q5 LP maximization
+  question had an option rendered as "X1=60, X2=0, max profit=$1,500
+  **(infeasible)**" — again a mechanism-revealing annotation (this option
+  ignores the binding labor constraint) baked into the visible option text
+  rather than reserved for post-submission feedback. Lower severity than
+  the Ch.10/Ch.29 examples (a single word, and arguably closer to
+  legitimate scenario framing than a full "why this is wrong" sentence),
+  but consistent with the same authoring pattern.
 - **Recommended fix:** Server/content-side strip of any parenthetical
   distractor-rationale text from option labels before rendering; add a
   content-QA check that flags option strings matching patterns like
