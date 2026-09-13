@@ -200,6 +200,26 @@ should). Severity: LOW-MEDIUM. Confidence: MEDIUM (only 10 samples so far).
 - Severity: LOW-MEDIUM
 - Confidence: HIGH (directly observed, unambiguous)
 
+## Issue 8 — Minor mobile layout overlap: "Mark for review" pill overlaps wrapped question text
+
+- Viewport: 390×844 (iPhone-class narrow mobile)
+- Observed: on a question whose stem wraps to 2 lines, the floating
+  "☆ Mark for review" pill (positioned top-right of the question card)
+  visually overlaps the second line of question text ("main life-cycle
+  phases" partially obscured behind the pill).
+- Classification: MINOR POLISH (mobile CSS)
+- Severity: LOW
+- Confidence: HIGH (directly observed via screenshot)
+
+## Positive note — mobile responsiveness overall
+
+Home, Chapter Practice setup, and the question/confidence screen all
+render cleanly at 390px width: single-column cards, no horizontal
+overflow, comfortable touch-target sizing on all buttons, and the
+pill-button groups (question count, difficulty, feedback mode) wrap
+gracefully. Aside from the one minor overlap above, mobile is a genuine
+strength, not an afterthought.
+
 Planned record format per entry, once testing resumes:
 
 - Question ID (if visible)

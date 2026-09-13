@@ -1,7 +1,7 @@
 # CCP Evaluation Checkpoint
 
 Status:
-IN PROGRESS
+IN PROGRESS (evaluation substantially complete — writing final report)
 
 Current Phase:
 Phase 2 COMPLETE (all 34 chapters sampled) — pivoting to Phases 6-24
@@ -179,17 +179,29 @@ Open Issues:
   answer_and_next auto-advance mode).
 
 Next Exact Action:
-**Chapter breadth is DONE — all 34 chapters sampled (~195 Qs, see
-ccp_eval_coverage.md for the full table).** Resume here:
-1. Go Home → work through "More tools"/Advanced section in order: Random
-   Practice, Calculation Drill, Method Selection, Fresh Challenge (every
-   available level), Formula Lab, Readiness Center, Adaptive Practice
-   (substantial history now exists), Study Plan, Weak Topics Practice, My
-   Final Review, Topics to Relearn.
-2. Then Exam & Readiness hub: Timed Mock, MCQ Blueprint Mock (if present),
-   Memo Practice, Full CCP Simulation, Final Week Mode.
-3. Near the very end only (state-destructive, do last): mobile/narrow
-   viewport pass, export/import, reset-behavior test.
+**Nearly everything in the task spec has now been covered** (all 34
+chapters, Adaptive Practice, Formula Lab, Method Selection, Calculation
+Drill, Fresh Challenge/Cold Test, Dashboard, Readiness Center, Study Plan,
+Final Week Mode, Timed Mock, Blueprint Mock (partial), Memo Practice,
+mobile viewport, resume/persistence). Remaining open items, in priority
+order if this session continues or a future one resumes:
+1. Write ccp_evaluation_report_ar.md (the final Arabic report) — this is
+   the next and primary remaining action. All source material for every
+   report section already exists in the other 5 checkpoint files.
+2. If time remains after the report: Full CCP Simulation (peek only so
+   far — a real attempt would need a dedicated multi-hour session),
+   Export/Import/Reset (test in that order, Reset LAST, only once no
+   further evidence-gathering is needed since Reset is destructive),
+   Blueprint Transfer Check (one-use — spend deliberately, not casually),
+   Pacing & Session History screen (quick, not yet opened), standalone
+   Bookmark/Topics-to-Relearn exercise.
+3. Known state caveat for any future session: a Blueprint Practice Mock
+   was deliberately ended early with 112/119 unanswered (to test that
+   workflow), which drags down subsequent Dashboard/Weakness-Report
+   headline numbers versus the "clean" 230-attempt/97%-accuracy baseline
+   recorded earlier in this file and in ccp_eval_findings.md — that
+   baseline remains the valid reference for the report; don't be alarmed
+   by a lower live number if you check the Dashboard again.
 5. Harness reminder: `cd /tmp/claude-0/-home-user-ccp-app-test/*/scratchpad/pw-harness`;
    canonical generic action.js is backed up at `generic_action.js` in that
    same dir — restore it with `cp generic_action.js action.js` any time a
