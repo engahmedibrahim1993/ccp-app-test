@@ -182,6 +182,24 @@ should). Severity: LOW-MEDIUM. Confidence: MEDIUM (only 10 samples so far).
   isolated typos, likely from an automated content pipeline dropping a
   leading token)
 
+## Issue 7 — "Top Weaknesses" list mixes genuine misses with "Limited Evidence" 100%-correct items, unlabeled
+
+- Feature: Timed Mock Post-Exam Diagnostic → "Top Weaknesses From This Exam"
+- Observed: the list showed 5 items, all marked severity "LOW," but #2-#5
+  were all "1/1 correct (100%) — Limited Evidence" — i.e., topics I
+  answered CORRECTLY, included only because I'd seen just one question on
+  them. Only #1 was an actual miss (0/1, 0%).
+- Why potentially weak: a student skimming a "Top Weaknesses" heading
+  would reasonably expect every listed item to represent an actual
+  mistake. Seeing four 100%-correct topics under "Top Weaknesses" (each
+  individually captioned "Limited Evidence," but the list header itself
+  doesn't say that) could read as confusing or as the app crying wolf.
+  A clearer design would separate "Confirmed misses" from "Needs more
+  evidence" as two distinct sub-lists, or rename the header.
+- Classification: UX FRICTION / ANALYTICS-DIAGNOSIS clarity
+- Severity: LOW-MEDIUM
+- Confidence: HIGH (directly observed, unambiguous)
+
 Planned record format per entry, once testing resumes:
 
 - Question ID (if visible)

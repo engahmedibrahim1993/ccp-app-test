@@ -28,7 +28,7 @@ Legend: TESTED / PARTIALLY TESTED / NOT TESTED / BLOCKED
 | 13 | Study Plan | NOT TESTED | Never reached |
 | 14 | Retention / Mastery indicators | NOT TESTED | Never reached |
 | 15 | Readiness indicators | NOT TESTED | Never reached |
-| 16 | Timed Mock | NOT TESTED | Never reached |
+| 16 | Timed Mock | TESTED | 20Q, 30-min countdown timer (confirmed live-decrementing), question map (accurately tracked answered/flagged counts throughout), "Next unanswered" jump (verified), direct question-number navigation, flag-for-review (persists, shows "★ Flagged"), skip-then-return workflow, changed one answer on revisit (Q1, D→B, this one then scored wrong - realistic), native browser `confirm()` dialog gates submission with an accurate "Unanswered: 0, Flagged: 1, cannot change after submission" summary (minor polish: native dialog vs in-app modal). Post-Exam Diagnostic screen is very rich (calc vs concept split, pacing feedback, by-domain/chapter/topic/difficulty breakdowns, confidence diagnostics). Result: 19/20 (95%). |
 | 17 | MCQ Blueprint Mock | NOT TESTED | Never reached |
 | 18 | Memo Practice | NOT TESTED | Never reached |
 | 19 | Full CCP Simulation | NOT TESTED | Never reached |
