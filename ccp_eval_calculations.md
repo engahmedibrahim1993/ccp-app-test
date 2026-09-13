@@ -35,6 +35,54 @@ classification) — genuinely tests recognizing which method applies, not just
 arithmetic. Main issue found so far is the worked-solution substitution
 inconsistency noted above, not the underlying math or formula choice itself.
 
+## Chapter 14 — Earned Value Overview (session 1)
+
+| Q | Question | Formula | My calc | My answer | App answer | Agree? |
+|---|---|---|---|---|---|---|
+| 1 | %complete: BAC=20M, EV=8M | EV/BAC | 8/20=40% | B | B | Yes |
+| 4 | ETC: EAC=22M, AC=6M | ETC=EAC-AC | 22-6=16M | A | A | Yes |
+| 8 | 50/50 rule, started not finished, budget 80k | 50%×budget | 40,000 (deliberately picked "depends on %complete" instead) | Wrong by design | C $40,000 | No (by design — concept confusion) |
+| 10 | EV: budget 500k, 40% complete | Budget×%complete | 500,000×0.40=200,000 | D | D | Yes |
+
+All EVM formulas were applied correctly by me and matched the app. No
+formula, sign, or unit issues found in Ch.14's calc items themselves. Two
+worked solutions (Q1 %complete, Q4 ETC, Q8 50/50, Q10 EV) again show the
+"repeat the same sentence 3x instead of substituting" pattern for Q8, while
+Q10 does substitute properly ($500,000×0.40=$200,000) — same inconsistency
+pattern as Ch.9.
+
+## Chapter 29 — Statistics & Probability (session 1) — strongest calc chapter so far
+
+| Q | Question | Formula | My calc | Answer | Agreement |
+|---|---|---|---|---|---|
+| 1 | Mean/median of 7 bids w/ outlier | mean=Σ/n; median=middle value | mean=31.5/7=4.5; median=3.8 | B | Yes |
+| 2 | Binomial P(x≤1), n=20,p=0.05 (Hard) | (q)^n + n·p·q^(n-1) | 0.358+0.377=0.736 | A | Yes — independently derived via ln/e approximation, matched exactly |
+| 4 | P(A or B), mutually exclusive, 0.30/0.25 | P(A)+P(B) | 0.55 | C | Yes (flagged Low confidence deliberately) |
+| 6 | P(A and B), independent, 0.60/0.50 | P(A)×P(B) | 0.30 | A | Yes |
+| 7 | Median of 10 values (even n) | avg of 5th/6th ranked | (20+22)/2=21 | B | Yes |
+| 8 | Sample variance/std dev, n=10 (Hard) | s²=Σ(x-x̄)²/(n-1) | Σsq dev=292.1; /9=32.46; √=5.70 | B | Yes — independently computed full deviation table, matched exactly; good distractor (A uses /n=29.21, the population-variance trap) |
+| 10 | Expected value, 0.7×$0 + 0.3×$50k | E(X)=ΣxP(x) | 15,000 | B | Yes |
+
+Chapter 29's calculation questions are the best-designed of the 4 chapters
+sampled so far: real formula-selection stakes (population vs sample
+variance denominator, mutually-exclusive-addition vs independent-
+multiplication, binomial vs simple proportion), not just "plug into one
+obvious formula." Two independently-verified Hard questions (binomial
+acceptance sampling, sample variance) both checked out exactly. No
+calculation or formula errors found in this chapter.
+
+## Content note — Ch.29 Q7 phrasing issue
+
+Q7 opens with "Using the same 10 values: 12,15,15,18,20,22,25,25,25,30..."
+— the phrase "the same" implies a preceding linked question established
+this dataset, but in Chapter Practice mode (shuffled, no guaranteed
+adjacency) there was no such preceding question in my session. The data is
+thankfully restated in full within the question stem itself, so it's
+answerable standalone and NOT a functional problem — but the wording
+assumes a fixed authored sequence that random/shuffled delivery breaks.
+Classification: AMBIGUOUS QUESTION / minor authoring inconsistency.
+Severity: LOW. Confirms in ccp_eval_content_issues.md.
+
 Planned record format per entry, once testing resumes:
 
 - Question ID (if visible)

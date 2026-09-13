@@ -89,6 +89,24 @@ Classification: AMBIGUOUS QUESTION / weak-distractor-design pattern (not
 wrong, but discriminates less than a well-designed single-best-answer MCQ
 should). Severity: LOW-MEDIUM. Confidence: MEDIUM (only 10 samples so far).
 
+## Issue 3 — "Same 10 values" phrasing assumes fixed question order that shuffled delivery breaks
+
+- Chapter: 29 — Statistics & Probability
+- Question: "Using the same 10 values: 12,15,15,18,20,22,25,25,25,30, what
+  is the median?" (and a follow-up "Using the dataset 12,15,... (n=10,
+  mean=20.7), what are the sample variance and standard deviation?")
+- Why potentially weak: "the same" implies a directly preceding question
+  established this dataset (likely true in the original authored sequence),
+  but Chapter Practice draws a shuffled/filtered subset, so a student could
+  see this question without ever having seen "the first" one. Data is
+  restated in full in the stem, so it remains answerable, but the phrasing
+  is confusing/momentarily disorienting ("wait, what same values?") and a
+  less confident student might waste time looking for a missing prior
+  question.
+- Classification: AMBIGUOUS QUESTION (minor authoring/sequencing issue)
+- Severity: LOW
+- Confidence: HIGH (directly observed, low ambiguity about the cause)
+
 Planned record format per entry, once testing resumes:
 
 - Question ID (if visible)

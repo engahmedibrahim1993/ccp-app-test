@@ -35,10 +35,21 @@ PRESERVED (persistent Playwright profile dir + app's own localStorage
 persistence both confirmed working)
 
 Completed Chapters:
-- Ch.1 Cost Elements — PARTIALLY TESTED (1 Chapter-Practice session, 10 Qs,
-  mixed concept+calc, difficulty Easy/Medium/Hard all seen; Official
-  Questions / Apply / Mastery / Challenge / Retention tiers NOT yet
-  attempted)
+- Ch.1 Cost Elements — PARTIALLY TESTED (10Q session, 9/10; concept+calc,
+  Easy/Med/Hard seen; Official Questions/Apply/Mastery/Challenge/Retention
+  tiers not attempted)
+- Ch.9 Cost Estimating — PARTIALLY TESTED (10Q, 8/10; strong scenario-
+  judgment + calculation mix: cost indexing, sequential markup, unit-rate
+  scaling, allowance vs contingency)
+- Ch.14 Earned Value Overview — PARTIALLY TESTED (10Q, 9/10; core EVM
+  formulas (%complete, ETC, EV from %complete), WBS/OBS/Control Account
+  structure, 50/50 rule, PMB concept — good coverage of Domain 4 basics)
+- Ch.29 Statistics & Probability — PARTIALLY TESTED (10Q, 10/10 — strongest
+  session so far; mean/median/outlier robustness, binomial acceptance
+  sampling (Hard, computed independently and matched), sample variance/std
+  dev with n-1 denominator trap, probability addition/multiplication rules,
+  expected value)
+- 30 chapters remain untouched (Ch.2-8, 10-13, 15-28, 30-34)
 
 Completed Features:
 - Chapter Practice workflow (setup screen, question flow, confidence
@@ -51,36 +62,50 @@ Completed Features:
   revisiting deliberately)
 
 Approximate Questions Attempted:
-10 (Chapter 1 only)
+46 total: 10 (Ch.1) + 10 (Ch.9) + 10 (Ch.14) + 10 (Ch.29) Chapter Practice,
+plus 6 Wrong Answers Review retries (2 rounds of the same 3 missed
+questions, from two different entry points, to test the Error Notebook bug)
 
 Known Strong Areas:
-Direct vs Indirect Cost classification (100% this session per app's own
-closeout message) — matches my independent sense that basic cost
-classification is a strength.
+Statistics & Probability (Ch.29) — 10/10 including a Hard binomial
+acceptance-sampling calc I worked out independently and matched exactly.
+Direct vs Indirect Cost classification (Ch.1). EVM core formulas (Ch.14).
+Scenario-judgment "most appropriate response" questions generally
+(Ch.9/Ch.14) — my independent professional reasoning aligned with the
+app's marked answer every time so far (11/11 on that template).
 
 Known Weak Concept Area:
-Not yet established with confidence (only one chapter done). Candidate:
-the Direct/Indirect × Fixed/Variable 2×2 matrix is subtle (Q5, Q9) —
-answered correctly but this is a plausible confusion area worth
-retesting later in Adaptive Practice / retention checks.
+Allowance vs Contingency (Ch.9) — deliberately missed at High confidence
+(genuine plausible real-world confusion between "known scope, undefined
+detail" vs "identified risk"). App correctly flagged this as a
+misconception and it remains the #1 priority weak topic per Weakness
+Report even after 1 correct retry (by design, not a bug — see findings).
 
 Known Weak Calculation Area:
-Q7 (sum of 4 direct-cost line items) — I deliberately simulated a
-plausible "misread one line item" error (answered $202,000 instead of
-$222,000, consistent with misreading $35,000 as ~$15,000) at Medium
-confidence. Real error type: Question Reading / Calculation Error blend.
+Two deliberate calc-trap misses in Ch.9: (1) Q7 Ch.1-style — misread a
+line-item number → wrong sum (Medium conf). (2) Sequential vs flat
+markup (10%+10% compounded vs simple 20%) — picked the flat-20% trap
+answer at Low confidence. Both are realistic, plausible calc errors, not
+random guesses.
 
 High-Confidence Errors:
-None yet (Chapter 1's one miss was at Medium confidence, by design).
+2 now: (1) Ch.9 "Allowance vs Contingency" — genuine concept confusion.
+(2) Ch.14 Q8 "50/50 rule" — deliberately confused the fixed-formula 50/50
+progress-measurement rule with the continuous percent-complete method
+(picked "depends on physical % complete" instead of the fixed 50%×budget
+answer). Both classified via the app's own widget (Concept Gap both times).
 
 Low-Confidence Correct Answers:
-None yet — Chapter 1 answers were mostly Medium/High confidence. Plan to
-deliberately include Low-confidence correct/incorrect answers in later
-chapters (per task's required history matrix).
+1: Ch.29 Q4 (mutually-exclusive addition rule, 0.30+0.25=0.55) — answered
+correctly but flagged Low confidence to create a "fragile correct" data
+point for the Weakness Report to (hopefully) pick up on.
 
 Bookmarks / Notes / Error Records Created:
-None yet (Bookmark / Mark for review / Question issue controls seen on
-every question screen but not yet exercised).
+Still none via Bookmark/Mark-for-review (planned for an upcoming chapter).
+2 wrong answers were self-classified via the app's "Why was this wrong?"
+widget: Concept Gap (Ch.9 allowance/contingency), Concept Gap (Ch.14
+50/50 rule vs %complete). 1 wrong answer (Ch.9 sequential markup) was
+classified as Formula Selection.
 
 Important Findings:
 - **RESOLVED — prior network blocker.** The Netlify 403 documented below was
@@ -128,21 +153,29 @@ Open Issues:
   answer_and_next auto-advance mode).
 
 Next Exact Action:
-1. On the Chapter 1 Results screen, click "Complete Official Questions →"
-   briefly to understand that mechanic (don't need to finish all of them),
-   OR click "Home" to move to touring more chapters — prioritize breadth
-   next: sample ~5 questions per chapter across a representative spread of
-   the remaining 33 chapters (mixing concept/calc, all difficulties),
-   deliberately varying confidence x correctness to build the full history
-   matrix required by the task (need: Correct+Low, Wrong+Low, Wrong+High
-   still missing).
-2. After a handful of chapters, deliberately trigger and use the
-   wrong-answer classification widget at least once (use MODE=answer alone,
-   read feedback, click a classification button, THEN MODE=next).
-3. Then cycle through: Random Practice, Calculation Drill, Fresh Challenge,
-   Formula Lab, Wrong Answers Review, Dashboard, Study Plan, Adaptive
-   Practice (once enough history exists), Timed Mock, Memo Practice.
-4. Update all 5 checkpoint files after every ~5-10 questions or feature.
+Full history matrix now achieved (all 6 required combinations present +
+verified against Weakness Report). Pivoting from "build history" to
+"breadth + major features":
+1. Sample 2-3 more calc-heavy/scenario-heavy chapters (suggest: Ch.13
+   Scheduling, Ch.27 Financial & Cash Flow, Ch.31/32 Risk Management) at
+   ~10Q each via MODE=setup CHAPTER="..." NUMQ=10.
+2. Then pivot hard into untested major features, in this order (all still
+   0% tested): Random Practice, Calculation Drill, Method Selection, Fresh
+   Challenge (all levels), Formula Lab, Performance Dashboard / Readiness
+   Center, Adaptive Practice (history now exists — use it), Study Plan,
+   My Final Review, Topics to Relearn.
+3. Then: Timed Mock, MCQ Blueprint Mock (if present), Memo Practice, Full
+   CCP Simulation, Final Week Mode.
+4. Near the end (not yet): mobile viewport pass, export/import/reset.
+5. Harness reminder: `cd /tmp/claude-0/-home-user-ccp-app-test/*/scratchpad/pw-harness`;
+   canonical generic action.js is backed up at `generic_action.js` in that
+   same dir — restore it with `cp generic_action.js action.js` any time a
+   one-off script overwrites action.js. Local server must be running:
+   `python3 -m http.server 8000` from `/home/user/ccp-app-test` (check with
+   `curl -sS -o /dev/null -w '%{http_code}' http://127.0.0.1:8000/CCP_Exam_Coach_FINAL.html`
+   — restart it if not 200; the persistent Playwright profile dir at
+   `.../pw-harness/profile` holds all app progress).
+6. Update all 5 checkpoint files after every ~10 questions or feature.
 
 Remaining Phases:
 Phase 1 (retro — mostly done implicitly, home screen already read), Phase 2
