@@ -113,6 +113,61 @@ attempts) before generalizing, but this is a strong start.
   scenario context, not a distractor-mechanism confession; the pattern to
   strip specifically is meta-commentary on WHY an option is right/wrong).
 
+### BUG — Chapter accuracy disagrees between Performance Dashboard and Chapter Progress & Mastery (same chapters, same attempt counts, different %)
+
+- **Severity:** HIGH
+- **Feature:** Readiness Center → Performance Dashboard vs. Readiness Center
+  → Chapter Progress & Mastery
+- **Reproduction steps:** After 230 total Chapter-Practice-family attempts
+  (including several genuine + deliberate wrong answers, some later
+  corrected via Wrong Answers Review retries), open both screens back to
+  back:
+  - Performance Dashboard → Chapters list shows (verbatim):
+    - Ch.1 — Cost Elements: **92% (12/13)**
+    - Ch.6 — Machinery, Equipment, & Tools: **83% (5/6)**
+    - Ch.9 — Cost Estimating: **87% (13/15)**
+    - Ch.33 — Total Cost Management Overview: **83% (5/6)**
+  - Chapter Progress & Mastery (same session, no new attempts in between)
+    shows, for the exact same chapters and the exact same attempt counts:
+    - Ch.1 Cost Elements: "Training: **100%** across **13** attempts"
+    - Ch.6 Machinery, Equipment, & Tools: "Training: **100%** across
+      **6** attempts"
+    - Ch.9 Cost Estimating: "Training: **100%** across **15** attempts"
+    - Ch.33 Total Cost Management Overview: "Training: **100%** across
+      **6** attempts"
+  - The attempt-count denominators match exactly between the two screens
+    (13, 6, 15, 6) — only the accuracy percentage differs (92/83/87/83%
+    vs. 100/100/100/100% for the identical four chapters that happen to
+    contain every chapter with an actual wrong answer in my history).
+- **Expected behavior:** The same underlying attempt history should
+  produce a consistent accuracy figure across every screen that reports
+  "chapter accuracy," or, if the two metrics are intentionally different
+  (e.g., "all-attempts accuracy" vs. "most-recent-attempt-per-question
+  accuracy"), each screen should clearly label which definition it uses so
+  a student isn't misled by an apparent contradiction.
+- **Observed behavior:** No such distinction is labeled. Chapter Progress
+  & Mastery's "Training: 100%" reads as an unqualified accuracy figure
+  sitting directly next to the Performance Dashboard's differently-computed
+  percentage for the identical chapter and attempt count, with nothing on
+  either screen explaining why they differ.
+- **Student impact:** A student who checks Chapter Progress & Mastery
+  first would reasonably conclude they have a flawless 100% record in
+  Ch.1/6/9/33 and see no reason to review those chapters further — directly
+  contradicting the Performance Dashboard, the Weakness Report, and (for
+  Ch.9's "Allowance vs Contingency" high-confidence miss) the app's own
+  earlier "flagged misconception" language. This is the same underlying
+  failure mode as the Error Notebook bug above (a "some attempts were
+  wrong, but the *only number the student sees* says otherwise" pattern),
+  now found on a second, more prominent screen (the actual Performance
+  Dashboard headline "Chapters" list is unaffected — it's specifically the
+  Mastery page that disagrees with it).
+- **Reproduced?** Yes, directly observed on 4 independent chapters in one
+  screen-comparison pass; not yet tested on chapters with zero wrong
+  answers (where both metrics should trivially agree at 100%, so this
+  wouldn't be visible) — recommend Pass 2 checks the exact "Training %"
+  formula used on the Mastery page against the Dashboard's chapter-percent
+  formula.
+
 ### BUG — Error Notebook "currently missed" count never clears after correcting the mistake
 
 - **Severity:** HIGH

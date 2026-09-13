@@ -15,6 +15,11 @@ Legend: TESTED / PARTIALLY TESTED / NOT TESTED / BLOCKED
 | 7 | Wrong Answers Review | TESTED | 2 full retry rounds (3 Qs each) from 2 entry points; confirmed reshuffled choices, correct-on-retry scoring, "Clean sweep" messaging |
 | 8 | Error Notebook / Notes / Bookmarks | PARTIALLY TESTED | Error Notebook opened, HIGH severity bug found (stale "currently missed" count, see findings). Bookmark/Mark-for-review/Topics-to-Relearn/My-Final-Review not yet exercised |
 | 9 | Weakness Report | TESTED | Full confidence×correctness matrix, root-cause distribution, domain/difficulty breakdown all hand-verified against my own answer log — exactly correct |
+| 12 | Performance Dashboard | TESTED | 230 attempts, 97% accuracy; hand-verified totals (attempts/correct/incorrect/fragile) all matched exactly; Blueprint task coverage (76 tasks) is a standout feature; honest "Training Readiness 85" penalized for no mock + thin bank coverage despite 97% raw accuracy |
+| — | Readiness Center (hub) | TESTED | Training Readiness (85) vs Unseen-Test Readiness (—, not yet activated) cleanly separated; genuinely sophisticated "cold/Lab-exposed" question tracking per chapter and per Blueprint domain with exact quotas for a strict 119Q cold mock — standout feature |
+| — | Unseen Evidence & Exam Readiness | TESTED | Full sealed-static-pool accounting (341/830 Lab-exposed, 216 seen, 410 cold-eligible); per-chapter and per-domain cold-test availability; explicitly refuses to "pretend a recycled training mock is unseen evidence" — strong integrity signal |
+| — | Chapter Progress & Mastery | TESTED | **Found HIGH-severity inconsistency**: shows "Training: 100%" for 4 chapters that the Performance Dashboard (same attempt counts) shows at 92%/87%/83%/83% — see ccp_eval_findings.md |
+| 22 | Today's Study Plan | TESTED | 19-question mission = 3 due-review (my actual past misses) + 5 calc/hard application-tagged + rest reused-but-relevant chapter content; correctly prioritized my real weak items first |
 | 10 | Adaptive Practice | NOT TESTED | Never reached |
 | 11 | Formula Lab | NOT TESTED | Never reached |
 | 12 | Performance Dashboard | NOT TESTED | Never reached |
