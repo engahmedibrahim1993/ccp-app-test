@@ -49,7 +49,15 @@ Completed Chapters:
   sampling (Hard, computed independently and matched), sample variance/std
   dev with n-1 denominator trap, probability addition/multiplication rules,
   expected value)
-- 30 chapters remain untouched (Ch.2-8, 10-13, 15-28, 30-34)
+- Ch.13 Scheduling — PARTIALLY TESTED (10Q, 10/10 — perfect; CPM logic
+  (FS/SS+lag, total float), resource leveling, schedule recovery math,
+  schedule-cost interface scenario questions)
+- Ch.27 Financial & Cash Flow Analysis — PARTIALLY TESTED (10Q, 10/10 —
+  perfect; engineering economy calcs: effective vs nominal rate, simple vs
+  compound interest, F/A annuity factor, FV compounding, ROR table lookup,
+  cash-flow-vs-profit and intangibles concepts — best-designed calc
+  chapter alongside Ch.29)
+- 28 chapters remain untouched (Ch.2-8, 10-12, 15-26, 28, 30-34)
 
 Completed Features:
 - Chapter Practice workflow (setup screen, question flow, confidence
@@ -62,9 +70,13 @@ Completed Features:
   revisiting deliberately)
 
 Approximate Questions Attempted:
-46 total: 10 (Ch.1) + 10 (Ch.9) + 10 (Ch.14) + 10 (Ch.29) Chapter Practice,
-plus 6 Wrong Answers Review retries (2 rounds of the same 3 missed
-questions, from two different entry points, to test the Error Notebook bug)
+66 total: 60 Chapter Practice (Ch.1, 9, 14, 29, 13, 27 — 10Q each) + 6
+Wrong Answers Review retries. Perfect 10/10 scores on Ch.13 and Ch.27 (both
+straightforward for my persona); 9-10/10 on the other four. Personal
+scoring streak is now quite high (feels slightly too easy at "Medium"
+default difficulty — worth deliberately trying Hard-only filters and
+weaker-for-my-persona chapters, e.g. Ch.4 Labor, Ch.10/11 Manufacturing,
+Ch.30 Optimization, next time chapter breadth resumes).
 
 Known Strong Areas:
 Statistics & Probability (Ch.29) — 10/10 including a Hard binomial

@@ -83,6 +83,41 @@ assumes a fixed authored sequence that random/shuffled delivery breaks.
 Classification: AMBIGUOUS QUESTION / minor authoring inconsistency.
 Severity: LOW. Confirms in ccp_eval_content_issues.md.
 
+## Chapter 13 — Scheduling (session 1) — all correct, no issues
+
+CPM basics (FS+lag, SS+lag, Total Float=LS-ES=0→critical), a schedule
+recovery subtraction (79-4-2=73), and several "most appropriate response"
+scenario items. All matched my independent reasoning exactly. No formula,
+unit, or worked-solution problems found in this chapter's calc items.
+
+## Chapter 27 — Financial & Cash Flow Analysis (session 1) — all correct, strong engineering-economy coverage
+
+| Q | Question | Formula | My calc | Answer | Agreement |
+|---|---|---|---|---|---|
+| 2 | EAR, 10% nominal, semi-annual | (1+r/k)^k-1 | (1.05)²-1=10.25% | D | Yes |
+| 3 | Simple interest, $500k @8%, 12mo | P×r×t | 500,000×0.08=40,000 | B | Yes |
+| 4 | ROR via P/A factor match | Table lookup | 10,000/2,374=4.212→6% | C | Yes (question essentially gives the answer — see content note) |
+| 5 | Compound vs simple interest diff, $5k@10%,2yr | Compound-Simple | 6,050-6,000=50 | B | Yes |
+| 8 | EAR, 12% nominal, monthly | (1+r/k)^k-1 | (1.01)^12-1=12.68% | A | Yes — independently derived via logs, matched |
+| 9 | FV annuity, $2,000/yr×8yr@7% | A×[(1+i)^n-1]/i | 2,000×10.2598=20,520 | C | Yes — derived factor from formula, not memorized table |
+| 10 | FV single sum, $600k@9%,3yr | P(1+i)^n | 600,000×1.295029=777,017 | C | Yes |
+
+All 7 calculation questions in Ch.27 checked out with no formula, sign, or
+arithmetic issues. This chapter has the best mix of genuine engineering-
+economy formula selection (simple vs compound, nominal vs effective,
+single-sum vs annuity, rate-via-table-lookup) seen so far — recommend
+highlighting Ch.27 and Ch.29 as the strongest-designed calculation
+chapters in the final report.
+
+## Content note — Ch.27 Q4 gives away its own answer
+
+"Given (P/A,6%,5)=4.212 and $10,000/$2,374≈4.212, what is the ROR?" — the
+question stem states the exact factor-to-rate mapping needed, so the
+"calculation" is really just reading the 6% back out of the same sentence
+that supplied it. Tagged Difficulty: Medium and "calculation," but requires
+no independent work once read carefully. Classification: MINOR POLISH /
+difficulty-label mismatch. Severity: LOW.
+
 Planned record format per entry, once testing resumes:
 
 - Question ID (if visible)

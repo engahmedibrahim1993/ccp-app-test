@@ -7,7 +7,7 @@ Legend: TESTED / PARTIALLY TESTED / NOT TESTED / BLOCKED
 |---|---|---|---|
 | 0 | Live app reachability (network smoke test) | BLOCKED | Egress policy in this environment returns 403 for `rococo-daifuku-1076a2.netlify.app` and every other non-allowlisted host tested. See checkpoint. |
 | 1 | Home / first-time experience | NOT TESTED | Never reached |
-| 2 | Chapter Practice (all chapters) | PARTIALLY TESTED | Ch.1, Ch.9, Ch.14, Ch.29 done (10Q each). 30 chapters remain. |
+| 2 | Chapter Practice (all chapters) | PARTIALLY TESTED | Ch.1, 9, 13, 14, 27, 29 done (10Q each, 60Q total). 28 chapters remain. |
 | 3 | Random Practice | NOT TESTED | Never reached |
 | 4 | Calculation Drill | NOT TESTED | Never reached |
 | 5 | Generated Practice | NOT TESTED | Never reached |
