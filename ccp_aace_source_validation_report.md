@@ -1,5 +1,13 @@
 # CCP Exam Coach — AACE Source Validation Report
 
+## Overall status: PARTIAL AACE SOURCE VALIDATION
+
+This is **not** a full-bank AACE validation. Of the 830 runtime questions, **17 have been manually, line-by-line source-validated** against actual AACE text; the remaining **813 have not** and must not be described as "AACE-validated." See Section 15 for the exact status counts and Section 18 for open access gaps.
+
+**Corrective notice (this revision):** an earlier version of this report contained two errors, both corrected below:
+1. It claimed the current Handbook specifies a 4-domain exam structure. This was wrong — that 4-part breakdown (Cost Management/Communication Competency/Interfacing with Other Disciplines/Performance Analysis) is the Handbook's candidate-facing **score-report** breakdown (p. 40, "Exam Results"), not the exam construction Blueprint. The actual Blueprint (pp. 9–10 of the Handbook, on pages that render as an image and were missed by the original text-only extraction) is a **6-domain** table that matches the application's existing 6-domain taxonomy exactly. See Section 9.
+2. It claimed a conflict between the app's "May 2026 Blueprint" citations and the Handbook's "Revised June 2026" cover date. This was wrong — the Blueprint table itself is titled "Certified Cost Professional (CCP) Examination Blueprint - May 2026," a legitimate date distinct from the Handbook document's own later revision date. The app's citations are correct as written; no change was needed or made.
+
 ## 1. Baseline
 
 - Branch: `claude/ccp-exam-prep-eval-48nukj`
@@ -14,9 +22,9 @@ All five primary sources were provided via a connected Google Drive folder (read
 
 | # | Title | Edition/Revision | Drive filename(s) | Validation role | Readability |
 |---|---|---|---|---|---|
-| 1 | CCP Candidate Handbook | Revised **June 2026** | `05 New CCP Candidate Handbook.pdf` | Current exam scope, domains, format | **Full** (65 pp, complete local extraction) |
+| 1 | CCP Candidate Handbook | Document revised **June 2026**; the embedded Blueprint table (pp. 9–10) is separately titled and dated **"...Blueprint - May 2026"** — both dates are genuine and not in conflict (Section 9) | `05 New CCP Candidate Handbook.pdf` | Current exam scope, domains, format | **Full** (65 pp). Note: pp. 9–10 (the Blueprint table) render as an image with no text layer — text-only extraction silently skips them; confirmed instead by visually rendering those two pages |
 | 2 | AACE RP 10S-90 — Cost Engineering Terminology | Rev. **August 23, 2022** | `03 Cost Engineering Termonology.pdf` | Governing terminology/definitions, formula definitions | **Full** (136 pp, complete local extraction; connector's own extraction was truncated at ~53% and was not relied on) |
-| 3 | Skills & Knowledge of Cost Engineering, 6th Ed. | 6th Ed., 2015 | `01 Skills-and-Knowledge 6 Edition.pdf` (single-file, exceeds connector's 10MB cap) + `SK6_Part_2_Ch09-15.pdf`, `SK6_Part_3_Ch16-26.pdf`, `SK6_Part_4_Ch27-34.pdf` (split copies, each under 10MB) | Primary technical/formula source | **Chapters 9–34: confirmed complete** (verified natural start/end boundaries for each part). **Chapters 1–8: substantial but not confirmed 100% complete** — obtained only via the connector's own truncated extraction of the single-file copy (~302,000 characters, ending partway through Chapter 8); the `SK6_Part_1_Ch01-08.pdf` split copy repeatedly failed to download (connector session errors on that specific 8.1MB file after 6 attempts) and could not be obtained by the time of this report |
+| 3 | Skills & Knowledge of Cost Engineering, 6th Ed. | 6th Ed., 2015 | `01 Skills-and-Knowledge 6 Edition.pdf` (single-file, exceeds connector's 10MB cap) + `SK6_Part_2_Ch09-15.pdf`, `SK6_Part_3_Ch16-26.pdf`, `SK6_Part_4_Ch27-34.pdf` (split copies, each under 10MB) | Primary technical/formula source | **Chapters 9–34: confirmed complete** (verified natural start/end boundaries for each part). **Chapters 1–8: still not confirmed complete** — obtained only via the connector's own truncated extraction of the single-file copy (~302,000 characters, ending partway through Chapter 8); the `SK6_Part_1_Ch01-08.pdf` split copy has failed to download in **10 attempts across two passes** (session errors specific to this 8.1MB file) and remains unobtained. See Section 18 for the recommended next step (further splitting). |
 | 4 | Total Cost Management Framework, 2nd Ed. | 2nd Ed., 2015 | `04 Total Cost Management Framework.pdf` | TCM lifecycle/process integration | **Full** (334 pp, complete local extraction) |
 | 5 | CCP Certification Study Guide, 2nd Ed. | 2nd Ed., 2016 | `02 CCP_CertStudyGuide2.pdf` | Official companion practice, Appendix A | **Full** (265 pp, complete local extraction, including Appendix A) |
 
@@ -35,7 +43,7 @@ Being precise about the three tiers, per instructions:
 - **Manually source-validated against actual AACE text in this pass (17 questions, line-by-line):** 9-8, 10-12, 10-24, 11-11, 11-21, 7-17, 7-21, 6-12, 6-18, 23-6, 32-10, 14-6, 14-13, 14-16, 14-22, 9-28, plus one original (unmodified) Chapter 33 TCM/TQM-relationship question checked for verbatim source alignment. This set was chosen deliberately: all 14 questions modified in the prior Content/Pedagogy pass (mandatory revalidation) plus their un-modified "sibling" questions where a near-duplicate existed (10-12, 11-11, 7-17, 6-12), plus one additional spot-check.
 - **Terminology items checked directly against 10S-90's authoritative text:** CONTINGENCY, ALLOWANCE, MANAGEMENT RESERVE, ESCALATION, DAMAGES/LIQUIDATED, RESIDUAL RISK, RISK RESPONSE, RISK TREATMENT, BAC, EV, AC, CPI, SPI, EAC, ETC, VAC, COST VARIANCE — 16 terms, all with formulas/definitions pulled and compared verbatim.
 - **Formula families checked against S&K6/10S-90 source text:** equipment minimum-desired-selling-price buildup (Ch.6), additive interest-rate method (Ch.7), royalty expense estimation (Ch.10), pre-tax profit grossing-up (Ch.11), parametric CER (Ch.9), core EVM formulas (VAC/EAC/CV/ETC via 10S-90) — 6 formula families.
-- **Blueprint mapping:** validated at the domain/weight/question-count level against the actual June 2026 Handbook (full document read); the granular task-code list (e.g., "1.A") used internally by 128 generated questions could not be validated against any of the 5 provided sources (see Section 9).
+- **Blueprint mapping:** validated at the domain/weight/quota level against the actual Blueprint table (Handbook pp. 9–10, visually confirmed) — all confirmed correct (see Section 9). 3 of the 128 generated questions' granular task codes (1.A, 1.P, 4.H) were spot-checked against the same table and matched exactly; the remaining task codes were not individually re-checked one-by-one.
 - **Study Guide / Appendix A:** reviewed for edition/structure and general style-and-topic alignment (not a question-by-question cross-check of all 830 against the Study Guide's own problems).
 - **Not manually source-checked in this pass:** the remaining 813 questions were structurally scanned and covered by the existing automated regression checks, but were not individually read against AACE source text line-by-line in this pass. This is stated plainly rather than implied otherwise.
 
@@ -80,30 +88,50 @@ The Total Cost Management Framework (2nd Ed., full text) defines TCM as "the sum
 - No Study Guide or Appendix A questions were copied into the application bank in this pass (validation only, no ingestion, per instructions).
 - No discrepancies were found between app content and Study Guide/Appendix A material in the specific comparisons made above.
 
-## 9. Current (June 2026) Blueprint Validation
+## 9. Current Blueprint Validation (corrected)
 
-This is the most significant finding of this pass.
+**This section supersedes the "4-domain" finding in the original version of this report, which was wrong.** The error: pages 9–10 of the Handbook (the actual Blueprint table) render as an image with no extractable text layer, so the original text-only `pdftotext` pass silently skipped straight from page 8 to page 11 with no warning. The 4-part breakdown found on page 40 ("Exam Results — Exam Breakdown and Scoring": Cost Management 55Q / Communication Competency memo / Interfacing with Other Disciplines 24Q / Performance Analysis 40Q) is a **separate, candidate-facing score-report grouping**, not the exam-construction Blueprint. This was corrected by visually rendering pages 9–10 as images and reading the table directly.
 
-**What the current Handbook actually specifies** (verbatim structure, paraphrased below the letter-of-the-law):
-- The CCP exam has exactly **4 scored domains**, averaged together, 70% overall to pass:
-  1. Cost Management — 55 questions
-  2. Communication Competency — 1 memo
-  3. Interfacing with Other Disciplines — 24 questions
-  4. Performance Analysis — 40 questions
-- Total: 119 multiple-choice questions + 1 memo.
-- No granular task-code list (e.g., "1.A," "4.H") appears anywhere in this 65-page Handbook — only the domain-level structure above.
+**The actual Blueprint (Handbook pp. 9–10), visually confirmed:**
 
-**What the application currently implements:**
-- A **6-domain** taxonomy across all 830 questions' `domain` field: Domain 1 "Managing Project Costs" (413 q), Domain 2 "Interface with Other Disciplines" (132 q), Domain 3 "Reports and Documentation" (50 q), Domain 4 "Performance Measurement" (136 q), Domain 5 "Support/Inform Scheduling" (41 q), Domain 6 "Inform the Risk Management Process" (58 q).
-- The Blueprint Mock's quota-generation array (`BLUEPRINT_DOMAINS`) hard-codes quotas 43/29/13/20/6/8 (summing to 119), derived per an in-code comment from percentages "36%,24%,11%,17%,5%,7%" attributed to a "Current Candidate Handbook Blueprint (May 2026)."
-- 128 runtime-generated "Blueprint reserve" questions cite `"Current CCP Candidate Handbook (May 2026 Blueprint) {task-code}"` in their `source` field.
+Title on the table itself: **"Certified Cost Professional (CCP) Examination Blueprint - May 2026"** — a date belonging to the Blueprint table, distinct from the Handbook document's own later "Revised June 2026" cover/footer date. Both dates are legitimately real; they are not in conflict, and the Blueprint's own May 2026 date is what any citation to "the Blueprint" should use.
 
-**Findings:**
-1. **Domain structure/weights: CORRECTION REQUIRED.** The app's 6-domain, 6-weight structure does not match the current (June 2026) 4-domain structure at all — not in domain count, names, or weights. **Not fixed in this pass**: doing so would require reclassifying every one of the 830 questions' `domain` field into one of the 4 new domains (a substantial, judgment-heavy reclassification), redesigning `BLUEPRINT_DOMAINS`'s quota logic, and re-validating the Blueprint Mock's balance — this is a mock-structure redesign, explicitly out of scope for a "targeted corrections" pass. Recommended as a dedicated future initiative.
-2. **"May 2026" date citation: CORRECTION REQUIRED, deliberately not fixed in isolation.** The actual current Handbook is dated "Revised June 2026," not May. However, simply renaming "May" to "June" in the 128 affected citations without also correcting the underlying (also non-current) 6-domain structure they describe would create a false impression that the June 2026 Handbook was consulted for a structure it does not actually contain. Both issues are documented together and left for a combined future correction.
-3. **Granular task codes (e.g., "1.A," "4.H"): NOT SOURCE-VALIDATED.** These do not appear in the Handbook at all. A different, more detailed AACE "Exam Content Outline"-type document (not among the 5 mandatory sources for this pass) would be required to verify them; none was provided.
+| Domain (as titled on the table) | Weight | Task count |
+|---|---|---|
+| Domain 1: Managing Project Costs | 36% | 27 tasks (1.A–1.AA) |
+| Domain 2: Interface with Other Disciplines | 24% | 18 tasks (2.A–2.R) |
+| Domain 3: Create Reports and Documentation | 11% | 8 tasks (3.A–3.H) |
+| Domain 4: Conduct Performance Measurement/Analysis | 17% | 13 tasks (4.A–4.M) |
+| Domain 5: Support/Inform the Scheduling Process | 5% | 4 tasks (5.A–5.D) |
+| Domain 6: Inform the Risk Management Process | 7% | 6 tasks (6.A–6.F) |
 
-No working mock logic was altered as a result of this finding, consistent with "do not alter working mock logic unless confirmed" balanced against the strict prohibition on redesigning mock structure — the confirmation is documented in full; the fix is deliberately deferred.
+Total: 36+24+11+17+5+7 = **100%**, 76 tasks total.
+
+**Application comparison — domain names/weights:**
+
+| App domain label | Actual Blueprint title | Weight match |
+|---|---|---|
+| "Domain 1: Managing Project Costs" | "Domain 1: Managing Project Costs" | **Exact name match.** 36% |
+| "Domain 2: Interface with Other Disciplines" | "Domain 2: Interface with Other Disciplines" | **Exact name match.** 24% |
+| "Domain 3: Reports and Documentation" | "Domain 3: Create Reports and Documentation" | Minor abbreviation (missing "Create") — compatible, not material. 11% |
+| "Domain 4: Performance Measurement" | "Domain 4: Conduct Performance Measurement/Analysis" | Minor abbreviation — compatible, not material. 17% |
+| "Domain 5: Support/Inform Scheduling" | "Domain 5: Support/Inform the Scheduling Process" | Minor abbreviation — compatible, not material. 5% |
+| "Domain 6: Inform the Risk Management Process" | "Domain 6: Inform the Risk Management Process" | **Exact name match.** 7% |
+
+**Blueprint Mock quota check:** the app's `BLUEPRINT_DOMAINS` array hard-codes quotas 43/29/13/20/6/8 (of 119), sourced from a code comment citing "36%,24%,11%,17%,5%,7%." Recomputing directly from the confirmed table: 119×0.36=42.84→43, ×0.24=28.56→29, ×0.11=13.09→13, ×0.17=20.23→20, ×0.05=5.95→6, ×0.07=8.33→8 — **matches the app's quotas exactly** (largest-remainder rounding, as the code comment itself states).
+
+**Task-code spot check** (sample of codes used by the app's 128 generated Blueprint-reserve questions, checked against the visually-confirmed table):
+- App cites **"1.A"** → table: "1.A Research historical database" — **exact match**
+- App cites **"1.P"** → table: "1.P Adhere to cost system governance requirements" — **exact match**
+- App cites **"4.H"** → table: "4.H Evaluate alignment between EV and physical progress" — **exact match**
+
+**Corrected findings:**
+1. **Domain structure and weights: CURRENTLY CORRECT.** The app's 6-domain taxonomy and 36/24/11/17/5/7% weighting are directly, visually confirmed against the actual Blueprint table (pp. 9–10). The minor name abbreviations (Domain 3–5) are compatible simplifications, not material conflicts. **No correction required, and none applied.**
+2. **Blueprint Mock quotas (43/29/13/20/6/8 of 119): CURRENTLY CORRECT.** Independently recomputed from the confirmed percentages and found to match exactly.
+3. **"May 2026" Blueprint-date citations (128 questions): CURRENTLY CORRECT.** This is the Blueprint table's own genuine title date, not an error. **No change was made or should be made** to these citations merely because the surrounding Handbook document carries a later "Revised June 2026" cover date — that would have been an incorrect edit made for a wrong reason, and was correctly not applied.
+4. **Task codes (e.g., "1.A," "4.H"): AACE-VALIDATED** for the 3 sampled above (direct visual match against the Blueprint table). The remaining task codes among the 128 generated questions were not individually re-checked one-by-one in this corrective pass; the 3-code sample found zero discrepancies.
+
+No working mock logic was altered — the original assessment that "no correction is currently needed" turns out to be correct, but for the right reason now (source-confirmed match) rather than the previous, incorrect reason (a fabricated mismatch that was never real).
 
 ## 10. Formula / Method Validation
 
@@ -135,17 +163,7 @@ No keyed (`correct`) answer was changed for any question in this pass. No questi
 
 ## 13. Source Conflicts
 
-**Conflict 1 — Blueprint domain structure**
-- Source A: Application's internal `BLUEPRINT_DOMAINS` (6 domains, weights citing "Current Candidate Handbook Blueprint (May 2026)")
-- Source B: Actual CCP Candidate Handbook, Revised June 2026 (4 domains: Cost Management/Communication Competency/Interfacing with Other Disciplines/Performance Analysis)
-- Authority decision: current Handbook governs (per hierarchy Rule 1)
-- App treatment: **documented as CORRECTION REQUIRED, not fixed** — see Section 9 for full rationale (scope: mock-structure redesign, deferred to a dedicated future pass)
-
-**Conflict 2 — Blueprint citation date**
-- Source A: App's `source` field text, "...(May 2026 Blueprint)..." (128 questions)
-- Source B: Actual Handbook's stated revision, "Revised June 2026"
-- Authority decision: current Handbook's actual date governs
-- App treatment: **documented, not fixed in isolation** (tied to Conflict 1 — see Section 9)
+**No genuine source conflicts were found in this pass.** The original version of this report claimed two Blueprint-related conflicts (a domain-count mismatch and a citation-date mismatch); both were investigated further per corrective review, traced to a text-extraction gap (Section 9), and retracted — the app's 6-domain structure, weights, and "May 2026" Blueprint citations are all confirmed correct against the actual, visually-inspected Blueprint table. There is no conflict to resolve for either item.
 
 No terminology conflicts requiring the 10S-90-supersedes-S&K6 rule were found in the terms actually checked (Section 5) — S&K6's wording, everywhere checked, was already consistent with 10S-90.
 
@@ -160,14 +178,20 @@ No terminology conflicts requiring the 10S-90-supersedes-S&K6 rule were found in
 
 ## 15. Validation Status Summary
 
-Counts reflect the 17 questions manually, line-by-line source-validated in this pass (Section 4), not the full 830-question bank:
+**Overall: PARTIAL AACE SOURCE VALIDATION.** These counts are exact, not blanket claims — 813 of 830 questions have not undergone authoritative source validation and must not be described as "AACE-validated."
 
-- **AACE-VALIDATED:** 15 (9-8 core distinction, 10-12, 10-24, 11-11, 11-21, 7-17, 7-21, 6-12, 6-18, 23-6, 32-10, 14-6, 14-13, 14-16, 14-22, plus the Ch.33 TCM/TQM question — 16 total; 9-28 excluded here since it moved to "corrected")
+Question-level counts (from the 17 manually, line-by-line source-validated in this pass, Section 4):
+- **AACE-VALIDATED:** 16 (9-8's core allowance/contingency/reserve/escalation distinction, 10-12, 10-24, 11-11, 11-21, 7-17, 7-21, 6-12, 6-18, 23-6, 32-10, 14-6, 14-13, 14-16, 14-22, plus the Ch.33 TCM/TQM question; 9-28 counted separately below since it moved to "corrected")
 - **AACE-VALIDATED WITH TERMINOLOGY UPDATE:** 1 (9-8)
 - **CORRECTED — AACE SOURCE:** 1 (9-28)
 - **SOURCE-METADATA CORRECTED:** 1 (9-28 — same question, distinct citation fix)
-- **SME REVIEW REQUIRED:** 2 specific distractor items (14-6, 14-22) + 1 general bank-wide citation-precision item + the Blueprint domain-structure/date conflict (Section 13) = 4 open items
-- **NOT SOURCE-VALIDATED:** the remaining 813 questions in the bank were not individually checked against AACE source text in this pass (structural/automated checks only); the 128 Blueprint-reserve questions' specific task-code granularity (1.A, 4.H, etc.) could not be checked against any of the 5 provided sources; S&K6 content specific to Chapters 1–5 and the untested portion of Chapter 8 was not independently re-verified in this pass beyond the general-audit confidence already established in the prior Content/Pedagogy pass
+- **SME REVIEW REQUIRED:** 3 open items — 2 specific distractor values (14-6, 14-22) + 1 general bank-wide citation-precision item
+- **NOT SOURCE-VALIDATED (questions):** 813 — structurally scanned and covered by automated regression checks only, not individually checked against AACE source text in this pass
+
+Non-question-level findings (corrected in this pass):
+- **Blueprint domain structure, weights, and quota logic (bank-wide, affecting all 830 questions' `domain` metadata and the Blueprint Mock): AACE-VALIDATED** — confirmed by direct visual inspection of Handbook pp. 9–10 (Section 9). This reverses the original report's incorrect "correction required" finding.
+- **Blueprint task codes:** AACE-VALIDATED for the 3 codes sampled (1.A, 1.P, 4.H); **NOT SOURCE-VALIDATED** for the remaining task codes among the 128 generated questions (not individually re-checked one-by-one).
+- **S&K6 Chapters 1–8 content beyond the specific items checked (Ch.6, Ch.7 formulas):** still **NOT SOURCE-VALIDATED** — full access to this range remains incomplete (Section 18).
 
 ## 16. Regression Tests
 
@@ -196,9 +220,9 @@ Counts reflect the 17 questions manually, line-by-line source-validated in this 
 ## 18. Remaining Known Limitations
 
 Factual only:
-- `SK6_Part_1_Ch01-08.pdf` (8.1 MB) could not be downloaded despite 6 attempts (the Google Drive connector reported session errors specific to this file); Chapters 1–8 coverage in this pass relies on an earlier, connector-truncated extraction of the full single-file S&K6 copy, which reaches partway into Chapter 8. Chapters 9–34 were independently confirmed complete via the three smaller split files that did download successfully.
-- Of the 830 questions in the runtime bank, 17 were manually, line-by-line source-validated in this pass; the remaining 813 were structurally scanned and covered by existing automated regression checks, but were not individually re-checked against AACE source text in this pass.
-- The application's Blueprint domain taxonomy (6 domains) and its Blueprint Mock quota logic do not match the current (June 2026) Handbook's actual 4-domain exam structure. This is a confirmed, significant, bank-wide finding that was deliberately not corrected in this pass because doing so would require reclassifying all 830 questions' domain metadata and redesigning the Blueprint Mock's quota-generation logic — a mock-structure redesign outside this pass's scope. It is recommended as a dedicated future initiative.
-- The 128 runtime-generated Blueprint-reserve questions' granular task codes (e.g., "1.A," "4.H") could not be verified against any of the 5 provided primary sources; a separate, more detailed AACE Exam Content Outline document (not provided) would be required.
+- **`SK6_Part_1_Ch01-08.pdf` (8.1 MB) still could not be downloaded** in this corrective pass either — 10 total attempts across both passes (6 originally + 4 in this corrective review), all returning a connector session error specific to this file. Chapters 1–8 coverage remains limited to an earlier, connector-truncated extraction of the full single-file S&K6 copy (reaching partway into Chapter 8) — the same partial coverage as before, **not resolved**. Chapters 9–34 remain independently confirmed complete via the three smaller split files that did download successfully. **Per explicit instruction, this pass does not claim full S&K6 Chapters 1–34 access, and the overall status is reported as PARTIAL rather than a completed full-bank pass.** Recommendation: split `Ch01-08` into two smaller files (e.g., Ch.1–4 and Ch.5–8) so each is well under the connector's working size range, and retry.
+- Of the 830 questions in the runtime bank, 17 were manually, line-by-line source-validated in this pass; the remaining 813 were structurally scanned and covered by existing automated regression checks, but were not individually re-checked against AACE source text.
+- The Blueprint domain structure, weights, and quota logic were previously misreported as requiring correction; this was an extraction error (Section 9), now corrected — the app's implementation is confirmed accurate against the actual, visually-inspected Blueprint table. No outstanding Blueprint action item remains from this pass.
+- The 128 runtime-generated Blueprint-reserve questions' granular task codes were spot-checked (3 of them) and matched exactly; the remaining task codes were not individually re-verified one-by-one against the Blueprint table in this pass.
 - Two SME-flagged distractor values (14-6's "-6.42," 14-22's "$2.00 million") remain without a source-traceable derivation; no available source documents common incorrect-calculation patterns, only correct formulas.
-- A full page-by-page citation audit of all 830 questions' source metadata was not performed; only citations directly tied to the 17 manually-checked questions were verified or corrected.
+- A full page-by-page citation audit of all 830 questions' source metadata was not performed; only citations directly tied to the 17 manually-checked questions (plus the Blueprint task-code sample) were verified or corrected.
