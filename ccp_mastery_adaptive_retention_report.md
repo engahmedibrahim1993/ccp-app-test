@@ -173,8 +173,39 @@ Both the engine-specific suite (37 assertions) and the core-flow suite were run 
 
 ---
 
+## 21. Live End-to-End Mastery Pipeline Verification (post-lock, verification-only pass)
+
+A separate, follow-up verification pass was run against the **locked final build**, `CCP_Exam_Coach_MASTERY_RETENTION.html` (SHA-256 unchanged, see below), to directly exercise the real, unmodified 5-stage pipeline end-to-end — Practice → Official Study Guide → Apply → Mastery Test → Challenge → Retention — for one real chapter (Chapter 18) carrying one weak skill, one high-confidence-wrong skill, and one fragile-correct skill, all seeded from real bank questions. **No evaluation function was stubbed or monkey-patched at any point in this pass** (unlike the earlier isolated unit tests in Section 15, which deliberately stubbed the base pipeline to test the gate wrapper in isolation) — `chapterTrainingGate`, `officialStudyGuideGate`, `chapterMasteryStatus`, `chapterExitNextAction`, `recommendedNextStep`, `buildTodayMission`, and `buildFinalWeekPool` all ran as their real, live production code throughout.
+
+**Method**: Chapter Practice's own question pool is intentionally randomized/exposure-based and cannot be aimed at specific question IDs, so — to deterministically plant the three required skills — the Practice stage called the app's own `recordAttempt()` (the exact function every "Submit answer" click invokes) for chosen question IDs, rather than clicking through a randomly-drawn queue. Every later stage was driven through its real UI handler functions with no shortcuts: `startOfficialStudyGuide`/`v56PickOfficial`/`finishOfficialStudyGuide` for the Official Study Guide; `autoGenerateAndStartFresh`/`selectFreshChallengeAnswer`/`confirmFreshChallengeAnswer`/`nextFreshChallengeItem`/`attestOfflineFresh` for Apply, Mastery Test, Challenge, and Retention. A controlled test-clock (`Date.now` overridden inside the isolated Playwright page only, invalidating the app's own derived-data cache the same way a real `saveProgress()` call does) simulated the 5-day retention delay; production code itself was never touched.
+
+**Sequence and real (unstubbed) results**:
+
+| Step | Real pipeline action | Result |
+|---|---|---|
+| 1 | Practice: seeded one weak (wrong+low), one high-confidence-wrong (wrong+high), one fragile-correct (correct+low) skill, plus 7 filler correct+high answers, via `recordAttempt()` | `chapterTrainingGate('18').pass === true`; all three skills correctly classified by the real engine |
+| 2 | Official Study Guide: all 10 real Chapter 18 items answered via `v56PickOfficial`/`finishOfficialStudyGuide` | `officialStudyGuideGate('18').pass === true` (100%) |
+| 3 | Apply Test (L2): 10-item real Fresh Challenge, 100% | `latestFreshLevelEvidence('18',2).scorePct >= 80` |
+| 4 | Mastery Test (Internal, sealed): 10-item real Fresh Challenge, 100%, closed-book attested | `latestInternalMasteryEvidence('18')` real record, `scorePct>=85`, `closedBook && closedBookAttested === true` |
+| 5 | Challenge (L3): 10-item real Fresh Challenge, 100%, closed-book attested | `latestFreshLevelEvidence('18',3)` real record, `scorePct>=75`, `effectiveClosedBookEvidence === true` |
+| 6 | **Gate check** — real, unstubbed `chapterMasteryStatus('18')` | The base 5-stage pipeline had everything it needs to call this chapter mastered, but the engine correctly returned **`retestRequired`** because the Stage-1 misconception was still unresolved. `chapterExitNextAction('18')` correctly offered "Resolve Chapter 18 Misconception" (not "move forward"); `recommendedNextStep()` correctly surfaced it first; the real Study Plan screen rendered the specific reason text; `buildFinalWeekPool()` front-loaded the misconception question |
+| 7 | Same-question retry: `recordAttempt()` correct+high on the **same** misconception qid | `chapterMasteryStatus('18')` **still** `retestRequired`; `mreUnresolvedMisconceptionsForChapter('18')` still reports it (with `sameQFixed:true`) — confirms the mandatory rule live, inside a pipeline that had otherwise fully earned mastery |
+| 8 | Fresh (different) question, same skill, correct+high | `chapterMasteryStatus('18')` now real, unstubbed **`provisional`** |
+| 9 | Controlled clock at t=0 after mastery | Still `provisional` (retention correctly not yet due) |
+| 10 | Controlled clock at 5 days + 1 hour | Real, unstubbed **`due`**; real Study Plan's `retentionCh` includes Chapter 18 |
+| 11 | Delayed Retention test (real, closed-book, 100%) | Real, unstubbed **`retained`** |
+| 12 | A second delayed retention test (real, closed-book, 20%) | Real, unstubbed **`failed`** (Retention Gap) — demonstrates failure at the retention stage correctly demotes an already-retained chapter, without deleting the earlier `retained` evidence record itself (only the currently-reported status changes; both evidence records remain in `PROGRESS.externalEvidence[]`); `chapterExitNextAction` correctly offered repair; Study Plan and Final Week both still surfaced the chapter |
+| 13 | Reload | `chapterMasteryStatus('18')` still real, unstubbed `failed` — full pipeline state (all seven pipeline stages' worth of evidence) survives a reload |
+| 14 | Structural check | All 830 questions still present with unique IDs; question bank confirmed byte-identical to the locked build |
+
+**Result: 28/28 real, live, end-to-end assertions passed.** No JS errors occurred during the run.
+
+**Defect found**: none in the engine. One issue surfaced during script development — the derived-data cache (`V58_CACHE`/`V58_REV`, pre-existing and unrelated to this pass, see Section 2) needs invalidating (via `saveProgress()`, exactly as every real learner action already triggers) before re-reading `chapterMasteryStatus()` after advancing the controlled test-clock; the first draft of the *test script* forgot this and briefly showed a stale cached status. This was a test-harness omission, not an application defect — a real learner's clock never jumps discontinuously mid-session, and every real state-changing action already calls `saveProgress()`. **No engine code was modified as a result of this verification pass.**
+
+**Regression re-run**: the existing core-flow regression (Chapter 4 Practice session end-to-end, all core views, reload persistence) was re-run against the exact same locked `CCP_Exam_Coach_MASTERY_RETENTION.html` and passed cleanly with zero JS errors, exactly as in Section 17.
+
 ## Final Build
 
 - **Final build filename**: `CCP_Exam_Coach_MASTERY_RETENTION.html`
-- **SHA-256** (computed only after all testing above, file not edited afterward): `16aa6924a1736ca43a203929fae2d1898a45a15d556beb6c329d8b64d6ec0fd6`
+- **SHA-256** (unchanged by this verification-only pass — no code was edited): `16aa6924a1736ca43a203929fae2d1898a45a15d556beb6c329d8b64d6ec0fd6`
 - **Report filename**: `ccp_mastery_adaptive_retention_report.md`
