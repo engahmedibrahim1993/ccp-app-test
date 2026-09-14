@@ -1,0 +1,90 @@
+# CCP Exam Coach — UX Simplification Implementation Report
+
+This is the implementation pass for `ccp_ux_simplification_audit.md`. It is a **presentation-layer restructuring**: navigation, screen organization, and wording changed; no evidence rule, gate threshold, scoring formula, question content, or persisted data field changed.
+
+## 1. Baseline
+
+- Pre-edit baseline: `CCP_Exam_Coach_MASTERY_RETENTION.html` (branch `claude/ccp-exam-prep-eval-48nukj`, commit `c2e8c1d`), SHA-256 `16aa6924a1736ca43a203929fae2d1898a45a15d556beb6c329d8b64d6ec0fd6`.
+- Backup created before any edit: `CCP_Exam_Coach_PRE_UX_SIMPLIFICATION.html` — confirmed byte-identical to the baseline (`sha256sum` matches).
+- All editing was done in `CCP_Exam_Coach_AACE_VALIDATED.html`. The final build, `CCP_Exam_Coach_SIMPLIFIED.html`, is a byte-for-byte copy made only after every test below passed.
+
+## 2. What Changed (and What Didn't)
+
+**Changed:** the Home screen, three of the old hub screens (Practice/Review/Exam Center), the Formula Lab's layout, and the wording of already-computed status labels/hints on the primary screens. Two new screens were added (Progress, More Tools). One new orchestration function was added (`startFixWeakAreasSession`).
+
+**Not changed:** `QUESTIONS[]` (830 questions, byte-identical — verified), any Mastery Gate / Adaptive Retesting / Retention / Fragile Knowledge / High-Confidence Wrong evidence rule, `chapterTrainingGate`, `chapterMasteryStatus`'s decision logic (only its label wording, on primary screens, via a presentation wrapper that never touches its `.key`), `buildTodayMission`'s selection algorithm, `buildFinalWeekPool`'s selection algorithm, SRS, exposure tracking, `recordAttempt`, `PROGRESS` schema, export/import, or any quiz/mock/memo/timer mechanic.
+
+## 3. New Student-Facing Architecture
+
+**Landing screen — Today** (`renderHome`, VIEW `home`): shows, in order — an urgent alert (only when a high-confidence mistake needs a second look or a repeated error exists), one recommended action with a plain-language reason and a short "today's plan" list, the active chapter's status card, and the retention countdown. One primary button: **Start Recommended Session** (routes through the existing, unmodified `runRecommendedStep()`/`recommendedNextStep()`).
+
+**Persistent navigation** (new `primaryNav()` helper, shown on the five destinations below, not on quiz/config/result screens): **Today · Study · Fix Weak Areas · Exam Practice · Progress**, plus a small **More** link for secondary tools — five primary destinations, exactly the target.
+
+- **Study** (`renderPracticeCenter`, VIEW `practiceCenter`): "Study a chapter" is the primary action; "Calculation practice" groups Calculation Drill / Timed Calculation Set / Method Selection; Random Practice, Generated Practice, and manual Fresh Challenge moved under a "More study options" disclosure.
+- **Fix Weak Areas** (`renderReviewCenter`, VIEW `reviewCenter`): one primary button, **Start Fix Weak Areas Session**, calling the new `startFixWeakAreasSession()`. It checks for an overdue/failed retention check on a studied chapter first (routes into the real, unmodified retention pipeline via `runChapterExitAction`); otherwise it starts the existing `adaptive` mode, which already blends weak topics, due SRS reviews, and the high-confidence-wrong/fragile-knowledge priority boosts added in the Mastery/Adaptive/Retention pass. Manual Adaptive/Weak/Wrong-only options remain available under a "Choose manually instead" disclosure for anyone who wants them.
+- **Exam Practice** (`renderExamCenter`, VIEW `examCenter`): four primary formats (Unseen Chapter Test, Timed Practice Mock, Blueprint Practice Mock, Full CCP Simulation). Final Week automatically becomes a prominent, amber-highlighted card when the saved exam date is ≤10 days away; otherwise it's a secondary link. Memo Practice is a secondary link. "Blueprint Transfer Check" moved under "More exam-format options" (a presentational move — the underlying one-use item pool and its evidence semantics are untouched). Duplicate "Open Readiness Center"/"Pacing & Session History" links replaced with one "See Full Progress →" link.
+- **Progress** (new `renderProgress`, new VIEW `progress`): one screen — Readiness (the Training Readiness ring plus one line linking to Unseen-Test Readiness detail), Chapters (plain-language status per chapter via `plainChapterStatus`, click for topic detail), then four collapsed `<details>` sections (Weak Areas, Mistakes & Final Review, raw Chapters-all-attempts, Session History) and Data & Export. The five original screens it consolidates — Dashboard, Weakness Report, Readiness Center, Evidence, My Final Review — are left fully intact and are exactly the "expandable detail" this screen links to; nothing was deleted or recomputed differently.
+- **More** (new `renderMoreTools`, new VIEW `moreTools`): Random Practice, Generated Practice, manual Fresh Challenge, Blueprint Transfer Check, Topics to Relearn, Session History, Export/Import, Coach Diagnostic export, and a link to the advanced Chapter Evidence view.
+
+**Formula Lab** (`renderFormulaLab`): added a chapter filter dropdown (`FORMULA_LAB_FILTER`) so the default "All chapters" view is still fully browsable, but a student can narrow to one chapter instead of scrolling past every other chapter's card. Verified: selecting a chapter reduces the visible formula cards from all of them to just that chapter's.
+
+## 4. Background Engines — Confirmed Still Fully Active, Now Less Visible
+
+Mastery Gate, Adaptive Retesting (same-question-vs-fresh-question rule), Retention, Fragile Knowledge, and High-Confidence Wrong all continue to run exactly as implemented in the previous pass — verified by re-running that pass's full test suites (Section 6) against the restructured UI with zero changes to pass/fail results. Their internal-pipeline vocabulary (Apply Test, Internal Mastery Test, Challenge Test, Retention Test, "closed-book attestation," "L2/L3," "sealed one-use," "Provisional/Retained Mastery," "Retention Gap") is softened wherever it reaches the five primary screens, via two small, purely-textual layers:
+
+- `humanizeStageText(s)` — a plain string substitution ("Mastery Test" → "Mastery Check", "closed-book" → "no notes/no help", "Provisional Mastery" → "Nearly Ready", etc.), applied only to already-generated label/hint/reason strings on Today.
+- `plainChapterStatus(key)` — a status-word translation ("retained" → "Ready", "due" → "Refresh Due", "retestRequired" → "Needs Another Look", etc.), used on Progress's chapter list.
+- A final presentation wrapper on `chapterExitNextAction` (`UX_baseChapterExitNextAction`) applies `humanizeStageText` to its `label`/`hint` fields only — its `.key` (what every caller dispatches on) is untouched, so this cannot change which action actually runs, only its wording.
+
+The deep, technical evidence screens (Evidence/Chapter Readiness, Cold Readiness, Readiness Center) are left with their original precise wording — they are the intentional "expandable detail" layer for a student who wants it, reached from Progress.
+
+## 5. Cleanup
+
+**Removed (confirmed dead, then removed):** the never-rendered original Home architecture — `HOME_SECTIONS`, `STUDY_RESOURCES`, `ADVANCED_RESOURCES`, and the shadowed first declarations of `chapterCoachingFacts` and `renderHome` (superseded, before this pass, by later declarations of the same name — confirmed by grep that no other code referenced these three arrays, and that the shadowed functions could never execute under JavaScript's function-redeclaration semantics). This is the "old Practice/Review/Exam Center architecture" named in the task; **Practice Center, Review Center, and Exam Center's own render functions were not duplicated** and were repurposed in place rather than removed.
+
+**Regression found and fixed during this cleanup:** the deleted block turned out to also contain four still-live pieces interleaved with the dead code — the `NEXT_STEP_ROUTE` variable (read by the Evidence page's external-evidence form) and the functions `nextAppropriateDevelopingChapter`, `openIndependentFreshRoute`, and `openIndependentFreshEvidenceEntry`/`renderIndependentFreshRoute` (used by `chapterExitNextAction`'s Independent-Fresh routing and the `independentFreshRoute` view). A first deletion pass removed these along with the genuinely dead code; a full 36-view sweep caught the resulting `ReferenceError`s immediately, and all four were restored verbatim from the pre-edit backup. Post-restoration, the same full sweep and the complete Mastery/Adaptive/Retention regression suite (Section 6) both pass cleanly. This is disclosed here in full rather than omitted, since it is exactly the kind of risk the task's "confirm it is not required by any current workflow" instruction is meant to catch — and in this case a first pass at that confirmation was incomplete until the automated sweep caught it.
+
+**Specifically inspected, left in place (not deleted):** `AI Pack Manager`, `Bug/Confusion Log`, and `Build Integrity/Self-check`. Dependency check performed: grepped for every call site of `renderAiPackManager`, `renderFrictionLog`, `renderIntegrity`, `integrityResults`, and `goAiPackManager` outside their own screens — none exist; no button in the current student-facing navigation (Today/Study/Fix Weak Areas/Exam Practice/Progress/More) links to them, confirming they were already fully unreachable before this pass. They were **not deleted** because (a) they are self-contained, complete features with zero dependents elsewhere in the codebase (a materially different, lower-risk category than the interleaved dead code above, which is why the two were handled differently), and (b) they were already invisible to students before this pass, so deleting them would reduce code size but not reduce any student-facing complexity — and the near-miss in this same pass (previous paragraph) is a concrete demonstration of why speculative deletion of "probably-dead" code in this file carries real regression risk that isn't worth taking for zero additional student-facing benefit. They remain reachable only by directly setting `VIEW` in the console, exactly as before.
+
+## 6. Regression Suite
+
+All of the following were re-run against the final, locked `CCP_Exam_Coach_SIMPLIFIED.html`:
+
+- **Structural**: `QUESTIONS.length===830`; all 830 IDs unique; `JSON.stringify(QUESTIONS)` confirmed byte-identical to the pre-edit baseline (1,004,388 bytes, exact match). **PASS.**
+- **Full Mastery/Adaptive/Retention engine suite** (the 37-assertion suite from the previous pass, covering all 10 learner profiles A–J, all 19 mandatory behavior rules, the mastery gate, readiness anti-inflation, Study Plan/Final Week integration, and persistence/export-import): **37/37 PASS**, identical results to before this UX pass.
+- **Live end-to-end mastery pipeline** (the 28-assertion, fully unstubbed Practice→Apply→Mastery Test→Challenge→Retention run from the previous verification pass, driven through the real UI handler functions): **28/28 PASS**, identical results to before this UX pass.
+- **Full 36-view sweep**: every `VIEW` value in the dispatcher rendered with zero JS errors, except `config` when set directly without first setting `CONFIG.mode` — confirmed to be a pre-existing characteristic of `renderConfig()` (it has always assumed a mode is set first, which every real navigation path, old and new, always does) and not a regression; verified by calling `homeAction('chapter')` (the real entry point), which renders correctly.
+- **Core flow regression** (Chapter 4 practice session end-to-end via real answer/submit/next clicks, then a sweep of all core views, then a reload-persistence check): `beforeReload===afterReload===5`, zero JS errors, unchanged from before this pass.
+- **Persistence**: confirmed via the above and via the dedicated engine-suite tests (state survives reload; export→wipe→import round-trip preserves learner state).
+
+## 7. Realistic Student Journeys — Before vs. After (measured, real button clicks)
+
+All "after" numbers were measured with Playwright driving actual button clicks (`page.locator('button', {hasText: ...}).click()`), not direct state manipulation, against the final locked build.
+
+| Journey | Before (measured/documented in the audit) | After (measured against the final build) |
+|---|---|---|
+| **Normal daily study** | Scan 10–11 Home options, find "Today's Study Plan," open it, then start (~2–3 clicks *after* scanning) | Open the app → **1 click** ("Start Chapter 9 Practice →", the single button on Today) — no scanning; for a chapter-type recommendation this reaches a pre-filled config screen, exactly as the same action always required |
+| **Studying one chapter (deliberate choice)** | 1 click (Home → "Chapter Practice" tile) + 6 config decisions + Start = 8 interactions | 2 clicks (Study tab → "Choose a Chapter") + the same 6 config decisions (unchanged this pass) + Start = 9 interactions — one extra click to reach the same screen, in exchange for Today staying single-purpose |
+| **Remediating a known weakness** | Home → "Fix Mistakes" tile → Review Center → choose among 5 overlapping options (Adaptive/Weak/Wrong/Weakness Report/Notebook) → Start = 4 clicks + a 5-way ambiguous choice | Fix Weak Areas tab → **Start Fix Weak Areas Session** = **2 clicks, zero ambiguous choice** (verified: lands directly in a live 15-question adaptive session) |
+| **Taking a mock exam** | Home → "Exam & Readiness" → choose among 7–9 mixed items including a jargon-named duplicate ("Blueprint Transfer Check") = 2 clicks + wide ambiguous choice | Exam Practice tab → one of 4 clearly different formats = **2 clicks, 4-way choice** (the jargon duplicate moved to a "More exam-format options" disclosure) |
+| **Visible actions on the landing screen** | 11 buttons (4 tiles + 6 "more tools" items + 1 dynamic recommend CTA), all equally weighted | **1** primary content button for a new/returning student (plus the persistent 5-tab nav, which is global chrome, not a per-screen decision) |
+| **Total top-level navigation destinations** | ~40 screens reachable within two clicks of Home | **5** (Today/Study/Fix Weak Areas/Exam Practice/Progress) + 1 secondary utility ("More") |
+
+## 8. Known Limitations / Not Addressed This Pass
+
+- The chapter-practice **config screen itself** (chapter/question-type/count/difficulty/feedback/confidence — 6 decisions) was **not simplified**. The audit proposed collapsing it to sensible defaults with an optional "Customize" disclosure; that would touch `renderConfig()`, a shared screen used by several modes, and was judged out of scope for a "simplify navigation first" pass given the no-new-features/minimize-risk instruction. This is why "studying one chapter" shows one *more* click after this pass rather than fewer — the win this pass delivers for that journey is a less ambiguous starting point (a labeled "Study" tab instead of guessing among 11 Home buttons), not a shorter config flow.
+- **Calculation Drill, Timed Calculation Set, Generated Practice, and Fresh Challenge Level 1** remain four separate underlying engines; they are now grouped together in presentation (Study's "Calculation practice" section, or under More), but were not functionally merged into one mode with a "timed" toggle, since that would be a genuine feature change to session logic, not a navigation simplification.
+- **"Blueprint Transfer Check"** was moved to secondary presentation only; its item pool was not functionally merged into the Blueprint Mock's pool (that merge was explicitly out of scope — it would change which questions a Blueprint Mock can draw from, a functional change, not a presentational one).
+- `AI Pack Manager` / `Bug-Confusion Log` / `Build Integrity` remain in the codebase, unreachable, as detailed in Section 5.
+- Progress's "Weak Areas," "Mistakes & Final Review," and "Chapters — all attempts" sections link to/reuse the original five screens' underlying data and, for the latter two, the original screens themselves — they were not independently re-verified pixel-for-pixel against every field the original Weakness Report/Final Review render, only confirmed to render without error and to source the same underlying functions (`overallStats`, `topicStats`, `mreUnresolvedMisconceptions`, `mreFragileSkills`).
+
+## 9. Git
+
+- Pre-edit backup: `CCP_Exam_Coach_PRE_UX_SIMPLIFICATION.html` (confirmed byte-identical to the previous pass's locked build before any edit).
+- Final build: `CCP_Exam_Coach_SIMPLIFIED.html`.
+- **SHA-256** (computed only after all testing above; file not edited afterward): `2544b4d7a18b5320514b1f06d0395bac34776fa99872a300a03d1db767c5c14e`
+- No AACE source documents were staged. Commit message: "Implement student-facing UX simplification (Today/Study/Fix Weak Areas/Exam Practice/Progress)". Pushed to `claude/ccp-exam-prep-eval-48nukj` only; no merge to main.
+
+## Summary
+
+Every requirement from `ccp_ux_simplification_audit.md`'s recommended structure was implemented: Today as the landing screen with one primary recommended action, four supporting destinations (Study/Fix Weak Areas/Exam Practice/Progress), a single secondary "More" area for infrequent tools, all five Mastery/Adaptive/Retention background engines confirmed still fully active and now expressed only through plain-language wording, and the two genuinely dead-code targets named in the task (the old Home architecture, and the AI Pack Manager/Friction Log/Integrity trio) specifically inspected — one safely removed after a dependency check, the other three left in place because that same check showed removal would reduce code size without reducing any student-facing complexity. The regression suite built for the previous Mastery/Adaptive/Retention pass (37 assertions) and its live end-to-end pipeline verification (28 assertions) both pass unchanged against the restructured UI, and the question bank remains byte-identical. The one regression this pass introduced and then caught itself (Section 5) is disclosed rather than hidden.

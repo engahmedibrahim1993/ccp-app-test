@@ -1482,8 +1482,6 @@ function render(){
   if(VIEW === "practiceCenter"){ renderPracticeCenter(); return; }
   if(VIEW === "reviewCenter"){ renderReviewCenter(); return; }
   if(VIEW === "examCenter"){ renderExamCenter(); return; }
-  if(VIEW === "progress"){ renderProgress(); return; }
-  if(VIEW === "moreTools"){ renderMoreTools(); return; }
   if(VIEW === "coldConfig"){ renderColdConfig(); return; }
   if(VIEW === "coldReadiness"){ renderColdReadiness(); return; }
   if(VIEW === "drilldown"){ renderDrilldown(); return; }
@@ -1543,12 +1541,68 @@ function header(subtitle, showHome){
   </div>`;
 }
 
-// Restored after the dead-code cleanup below: this variable and these four
-// functions were interleaved with the removed dead Home architecture but are
-// themselves still live (nextAppropriateDevelopingChapter/openIndependentFreshRoute
-// are called from chapterExitNextAction; renderIndependentFreshRoute is a real
-// VIEW target; NEXT_STEP_ROUTE.evidencePrefill is read by renderEvidence()).
+var HOME_SECTIONS = [
+  { title:"Practice", items:[
+    {key:"chapter", label:"Chapter Practice", desc:"Choose one chapter and practice mixed questions, concepts only, or calculations only."},
+    {key:"random", label:"Random Practice", desc:"Mix questions from one or more chapters so you do not rely on chapter order or familiarity."},
+    {key:"calcdrill", label:"Calculation Drill", desc:"Solve calculation problems with fresh numbers from source-linked formula templates; useful for building calculation skill instead of memorizing answers."},
+    {key:"methoddrill", label:"Formula Selection / Method Selection Drill", desc:"See the scenario first, choose the governing formula or method family before any calculation, then solve. Source-bound and separate from bank accuracy."},
+    {key:"generatedpractice", label:"Generated Practice", desc:"Fresh generated practice from verified source-controlled skill families."},
+    {key:"freshchallenge", label:"Fresh Challenge", desc:"3 levels: fresh numbers, fresh scenarios, and unsignposted CCP-style reasoning."},
+  ]},
+  { title:"Review & Improve", items:[
+    {key:"adaptive", label:"Adaptive Practice", desc:"Blends weak skills, due reviews, confidence, and mixed practice."},
+    {key:"weak", label:"Weak Topics Practice", desc:"Practice the topics your performance data identifies as weak."},
+    {key:"wrong", label:"Wrong Answers Review", desc:"Retry only questions you most recently got wrong."},
+    {key:"weaknessreport", label:"Weakness Report", desc:"Analyze where you are weak, why, and what to review next."},
+    {key:"notebook", label:"Error Notebook", desc:"Review saved errors, notes, and learning points."},
+    {key:"relearn", label:"Topics to Relearn", desc:"Keep a focused list of concepts you want to revisit before re-testing."},
+  ]},
+  { title:"Mock & Exam Readiness", items:[
+    {key:"coldchapter", label:"Cold Chapter Certification", desc:"Unseen one-use static questions only: not exposed by Study Lab and never previously seen in this app."},
+    {key:"timed", label:"Training Timed Mock", desc:"Randomized training-bank mock. Useful for pacing/diagnosis; not cold readiness evidence."},
+    {key:"blueprint", label:"Training Blueprint Mock (119Q)", desc:"Exact domain weighting from the training bank. Repeats are possible; this is not sealed/cold evidence."},
+    {key:"memopractice", label:"Memo Practice", desc:"Original memo scenarios — structure checklist, timer, word count. Not officially scored."},
+    {key:"fullsim", label:"Training Full CCP Simulation", desc:"119 training-bank MCQs + 1 memo under a single 5-hour master timer. Exam mechanics, not sealed evidence."},
+    {key:"finalweek", label:"Final Week Mode", desc:"High-yield triage: errors, hard Qs, calc, weak domains."},
+    {key:"studyplan", label:"Study Plan", desc:"Your day-by-day study schedule and daily mission."},
+  ]},
+];
+var STUDY_RESOURCES = [
+  {key:"formulalab", label:"Formula Lab", desc:"Review formulas, variable definitions, common traps, and worked examples."},
+  {key:"readinesscenter", label:"Readiness Center", desc:"See your Training Readiness, Cold Evidence, Chapter Readiness, and pacing in one place."},
+  {key:"freshchallengecenter", label:"Fresh Challenge", desc:"Test whether you can transfer your understanding to new questions and scenarios instead of memorizing the training bank."},
+  {key:"finalreview", label:"My Final Review", desc:"A focused review of your mistakes, Fragile Correct answers, and High-Confidence Misses before the exam."},
+];
+var ADVANCED_RESOURCES = [
+  {key:"issues", label:"Question Issues / Suspensions"},
+  {key:"integrity", label:"Build Integrity / Self-check"},
+  {key:"coachreport", label:"Export Coach Diagnostic"},
+  {key:"frictionlog", label:"Bug / Confusion Log"},
+];
+
 var NEXT_STEP_ROUTE={independentFreshChapter:null,evidencePrefill:null};
+function chapterCoachingFacts(ch){
+  ch=String(ch);
+  const st=chapterStaticStats(ch), eligible=coldEligibleStaticQuestions(ch).length;
+  const cold=latestColdChapterSession(ch), independent=latestIndependentFreshEvidence(ch), sealedStrong=latestSealedStrongEvidence(ch);
+  const l2=latestFreshLevelEvidence(ch,2), l3=latestFreshLevelEvidence(ch,3);
+  const l2TransferPass=!!(l2&&l2.scorePct>=80), l3TransferPass=!!(l3&&l3.scorePct>=70);
+  const transferDemonstrated=!!(l2TransferPass||l3TransferPass);
+  const l3ClosedTransferPass=!!(l3TransferPass&&effectiveClosedBookEvidence(l3));
+  const coldState=coldFoundationHistoryState(ch,l3ClosedTransferPass?(l3.ts||0):0);
+  const coldFoundation=coldState.foundation;
+  const coldPass=!!(coldFoundation&&!coldState.preRetentionFullFailure);
+  const independentPass=!!(independent&&effectiveClosedBookEvidence(independent)&&independent.scorePct>=80);
+  const sealedStrongPass=!!(sealedStrong&&effectiveClosedBookEvidence(sealedStrong)&&Number(sealedStrong.questionCount||0)>=10&&sealedStrong.scorePct>=80);
+  const strongFoundationPass=!!(coldPass||independentPass||sealedStrongPass);
+  const strongTraining=!!(st.n>=8&&st.pct>=80);
+  const mastery=chapterMasteryStatus(ch);
+  const strongFoundationTs=Math.max(coldPass?(coldFoundation.ts||0):0,independentPass?(independent.ts||0):0,sealedStrongPass?(sealedStrong.ts||0):0);
+  const baseTs=Math.max(strongFoundationTs,l3ClosedTransferPass?(l3.ts||0):0);
+  const retentionDueTs=baseTs?baseTs+5*86400000:0;
+  return {ch,st,eligible,cold,coldFoundation,coldState,independent,sealedStrong,l2,l3,coldPass,independentPass,sealedStrongPass,strongFoundationPass,strongFoundationTs,l2TransferPass,l3TransferPass,transferDemonstrated,l3ClosedTransferPass,strongTraining,mastery,retentionDueTs};
+}
 function nextAppropriateDevelopingChapter(afterCh){
   const start=Number(afterCh||0);
   const candidates=CHAPTER_LIST.filter(c=>String(c.num)!==String(afterCh)&&chapterMasteryStatus(c.num).key!=="retained");
@@ -1577,189 +1631,286 @@ function renderIndependentFreshRoute(){
   </div>`;
 }
 
-function renderPracticeCenter(){
+function recommendedNextStep(){
   const stats=overallStats();
-  app.innerHTML=`${header("Study",true)}
-  ${primaryNav('practiceCenter')}
+  if(PENDING_ACTIVE_SESSION){
+    return {key:"resumeSession", title:"Resume your paused session", reason:"You have an unfinished saved session. Resume the same queue before starting new practice so the evidence remains clean and comparable.", cta:"Resume Session"};
+  }
+  if(PENDING_ACTIVE_FULLSIM){
+    return {key:"resumeFullSim", title:"Resume your Full CCP Simulation", reason:"You have a paused Full Simulation with its 5-hour state preserved. Resume it before starting another mode.", cta:"Resume Simulation"};
+  }
+  if(!stats.total){
+    return {key:"studyplan", title:"Start with your daily Study Plan", reason:"There is not enough Training Evidence yet. Start with Study Plan so the app can build a balanced queue of learning, review, and calculation practice.", cta:"Open Study Plan"};
+  }
+  const retention=CHAPTER_LIST.map(c=>({c,f:chapterCoachingFacts(c.num)})).filter(x=>['due','failed'].includes(x.f.mastery.key));
+  if(retention.length){
+    const first=retention[0];
+    return {key:"retentionfresh", chapter:first.c.num, level:3, title:`Run a fresh Retention Test for Chapter ${first.c.num}`, reason:`Chapter ${first.c.num} (${first.c.name}) currently has status ${first.f.mastery.label}. The app will build and seal a new Offline Derived Transfer retention test. After completion you must attest whether it was actually closed-book; it can support Retained Mastery only because a strong Cold Static / Independent Fresh foundation already exists.`, cta:"Generate & Start Retention Test"};
+  }
+  const hc=highConfidenceMissIds().length;
+  const wrong=wrongOnlyIds().length;
+  const weak=weakQuestionIds().length;
+  if(hc>0){
+    return {key:"reviewcenter", title:"Fix high-confidence mistakes first", reason:`You have ${hc} High-Confidence miss(es). These are more important than ordinary errors because they often indicate a misconception or incorrect method selection, so correct them before adding more certification volume.`, cta:"Open Review & Improve"};
+  }
+  const train=trainingAnalyticsAttempts();
+  const calc=train.filter(a=>{const q=IDX_BY_ID[a.qid];return q&&q.type==='calculation';});
+  const calcPct=calc.length?Math.round(calc.filter(a=>a.correct).length/calc.length*100):null;
+  if(calc.length>=10 && calcPct<75){
+    return {key:"calcdrill", title:"Focus on Calculation Drill", reason:`Your current calculation accuracy is ${calcPct}% across ${calc.length} training attempts. Before adding more certification volume, strengthen calculation execution and formula use until performance is more stable.`, cta:"Start Calculation Drill"};
+  }
+
+  const facts=CHAPTER_LIST.map(c=>({c,f:chapterCoachingFacts(c.num)}));
+
+  // Strong evidence may come from Cold Static, qualifying Independent Fresh, OR the app's own one-use Internal Mastery Test.
+  // Once that foundation exists, the next missing mastery gate is attested closed-book L3 Transfer.
+  const needsL3=facts.filter(x=>x.f.strongFoundationPass&&!x.f.l3ClosedTransferPass)
+    .sort((a,b)=>(Number(b.f.strongFoundationTs||0)-Number(a.f.strongFoundationTs||0))||(Number(a.c.num)-Number(b.c.num)));
+  if(needsL3.length){
+    const x=needsL3[0];
+    const src=x.f.coldPass?'Cold Static':(x.f.sealedStrongPass?'Internal Mastery':'Independent Fresh');
+    return {key:"autofresh",chapter:x.c.num,level:3,title:"Strong evidence passed — now prove unsignposted transfer on Fresh L3",reason:`Chapter ${x.c.num} (${x.c.name}) already has a qualifying strong foundation from ${src} evidence. The next gate is an attested closed-book Offline Fresh L3 transfer assessment.`,cta:"Generate & Start Fresh L3"};
+  }
+
+  // Transfer is useful but not a strong foundation by itself. Route to Cold if enough sealed reserve remains;
+  // otherwise use the app's internal one-use Internal Mastery Test so the chapter can be completed without leaving the app.
+  const transferNeedsFoundation=facts.filter(x=>x.f.transferDemonstrated&&!x.f.strongFoundationPass)
+    .sort((a,b)=>(Number(a.c.num)-Number(b.c.num)));
+  if(transferNeedsFoundation.length){
+    const coldReady=transferNeedsFoundation.filter(x=>x.f.eligible>=8);
+    if(coldReady.length){
+      const x=coldReady[0];
+      return {key:"coldchapter",chapter:x.c.num,title:`Transfer demonstrated — now validate Chapter ${x.c.num} with Cold Static`,reason:`You have demonstrated transfer in ${x.c.name}, and ${x.f.eligible} sealed Cold Static questions remain. The next useful step is Cold Chapter Certification, not another Transfer test.`,cta:"Start Cold Certification"};
+    }
+    const x=transferNeedsFoundation[0];
+    return {key:"sealedstrong",chapter:x.c.num,title:`Transfer demonstrated — now run the Internal Mastery Test for Chapter ${x.c.num}`,reason:`Chapter ${x.c.num} (${x.c.name}) has only ${x.f.eligible} sealed Cold Static question${x.f.eligible===1?'':'s'} remaining. The app will now build a one-use 10-question Internal Mastery Test, hide feedback until the end, permanently consume the displayed forms, and require a closed-book attestation. Score ≥80% to pass the Mastery Test gate.`,cta:"Start Internal Mastery Test"};
+  }
+
+  // Strong Training with adequate sealed reserve -> Cold. This also allows a new Cold attempt after a failed
+  // prior Cold session when >=8 truly eligible unseen questions still remain.
+  const coldCandidates=facts.filter(x=>x.f.strongTraining&&!x.f.strongFoundationPass&&x.f.eligible>=8)
+    .sort((a,b)=>(b.f.st.pct-a.f.st.pct)||(b.f.st.n-a.f.st.n)||(Number(a.c.num)-Number(b.c.num)));
+  if(coldCandidates.length){
+    const x=coldCandidates[0];
+    return {key:"coldchapter",chapter:x.c.num,title:`Chapter ${x.c.num} is ready for a Cold test`,reason:`Your training performance in ${x.c.name} has reached ${x.f.st.pct}% across ${x.f.st.n} attempts, and you still have ${x.f.eligible} Cold-eligible questions remaining. Use Cold Chapter Certification now instead of adding more familiar practice.`,cta:"Start Cold Certification"};
+  }
+
+  // If strong Training exists but the sealed static reserve is insufficient, establish Transfer first.
+  const freshL2Need=facts.filter(x=>x.f.strongTraining&&!x.f.strongFoundationPass&&x.f.eligible<8&&!x.f.transferDemonstrated)
+    .sort((a,b)=>(b.f.st.pct-a.f.st.pct)||(b.f.st.n-a.f.st.n)||(Number(a.c.num)-Number(b.c.num)));
+  if(freshL2Need.length){
+    const x=freshL2Need[0];
+    return {key:"autofresh",chapter:x.c.num,level:2,title:`Chapter ${x.c.num} needs Offline Fresh Transfer L2`,reason:`Training performance is ${x.f.st.pct}% across ${x.f.st.n} attempts, but only ${x.f.eligible} sealed Cold Static question${x.f.eligible===1?'':'s'} remain. First demonstrate transfer on a one-use Offline Derived L2 assessment. If that passes, the coach will automatically route you to the internal Internal Mastery Test.`,cta:"Generate & Start Fresh L2"};
+  }
+
+  // A provisionally mastered chapter should rest until the retention interval. Move study effort elsewhere.
+  const provisional=facts.filter(x=>x.f.mastery.key==="provisional").sort((a,b)=>Number(a.c.num)-Number(b.c.num));
+  if(provisional.length){
+    const x=provisional[0], next=nextAppropriateDevelopingChapter(x.c.num);
+    const days=x.f.retentionDueTs?Math.max(1,Math.ceil((x.f.retentionDueTs-Date.now())/86400000)):1;
+    return {key:"provisionalnext",chapter:x.c.num,nextChapter:next?next.num:null,title:`Chapter ${x.c.num} is provisionally mastered — retention due in ${days} day${days===1?'':'s'}`,reason:`Strong independent/cold evidence and the attested Fresh L3 transfer gate are complete for ${x.c.name}. Do not keep retesting this chapter before the retention interval; continue ${next?'with Chapter '+next.num+' ('+next.name+')':'with your Study Plan'} until the delayed retention test becomes due.`,cta:next?`Open Chapter ${next.num} Practice`:"Open Study Plan"};
+  }
+
+  if(wrong>0 || weak>0){
+    return {key:"reviewcenter", title:"Run a short remediation cycle", reason:`You have ${wrong} wrong answer(s) ready for retry and ${weak} weak question/topic item(s). Clear this backlog before adding another mock.`, cta:"Open Review & Improve"};
+  }
+  const due=Object.keys(PROGRESS.srs||{}).filter(id=>isDue(id)&&!isQuestionSuspended(id)).length;
+  if(due>0){
+    return {key:"studyplan", title:"Complete Today's Mission", reason:`You have ${due} SRS item(s) due for review. Study Plan will combine them with weak, calculation, and hard items instead of random review.`, cta:"Open Today's Mission"};
+  }
+
+  const retained=facts.filter(x=>x.f.mastery.key==="retained").sort((a,b)=>Number(b.c.num)-Number(a.c.num));
+  if(retained.length){
+    const x=retained[0], next=nextAppropriateDevelopingChapter(x.c.num);
+    if(next){
+      return {key:"nextchapter",chapter:next.num,title:`Chapter ${x.c.num} retained — move to Chapter ${next.num}`,reason:`Chapter ${x.c.num} has passed the delayed retention gate. Start Chapter ${next.num} (${next.name}) and build its Training Evidence before moving through Transfer, Mastery Test, L3, and Retention.`,cta:`Open Chapter ${next.num} Practice`};
+    }
+  }
+  const r=readinessScore();
+  if(r.score>=75 && stats.total>=80){
+    return {key:"examcenter", title:"Test pacing and exam mechanics", reason:`Your Training Readiness is ${r.score}/100 with a reasonable amount of training evidence. No chapter is currently waiting on a more specific mastery gate, so Timed or Blueprint practice is useful while keeping Cold evidence separate.`, cta:"Open Certification & Mocks"};
+  }
+  return {key:"practicecenter", title:"Continue targeted practice", reason:"There are no urgent retention, remediation, or chapter-mastery gates waiting right now. Continue targeted chapter practice with Calculation and Method Selection work.", cta:"Open Practice Center"};
+}
+function runRecommendedStep(){
+  const r=recommendedNextStep();
+  if(r.key==="resumeSession"){resumeInterruptedSession();return;}
+  if(r.key==="resumeFullSim"){resumeFullSimulation();return;}
+  if(r.key==="coldchapter" && r.chapter){COLD_CONFIG.chapter=String(r.chapter);}
+  if(r.key==="autofresh"){ autoGenerateAndStartFresh(String(r.chapter),Number(r.level)||3,10,{evidenceType:(Number(r.level)===2?"Offline Fresh L2":"Offline Fresh L3")}); return; }
+  if(r.key==="retentionfresh"){ autoGenerateAndStartFresh(String(r.chapter),3,10,{evidenceType:"Delayed Retest",retention:true}); return; }
+  if(r.key==="sealedstrong"){ autoGenerateAndStartFresh(String(r.chapter),2,10,{evidenceType:"Internal Mastery Test",sealedStrong:true}); return; }
+  if(r.key==="independentfresh"){ openIndependentFreshRoute(String(r.chapter)); return; }
+  if(r.key==="provisionalnext"){
+    if(r.nextChapter){ CONFIG={mode:"chapter",chapter:String(r.nextChapter),numQuestions:10,difficulty:"all",qtype:"all",timed:false,immediateFeedback:true,confidenceEnabled:true}; VIEW="config"; render(); }
+    else goStudyPlan();
+    return;
+  }
+  if(r.key==="nextchapter"){ CONFIG={mode:"chapter",chapter:String(r.chapter),numQuestions:10,difficulty:"all",qtype:"all",timed:false,immediateFeedback:true,confidenceEnabled:true}; VIEW="config"; render(); return; }
+  homeAction(r.key);
+}
+
+function renderHome(){
+  const stats = overallStats();
+  const weakCount = weakQuestionIds().length;
+  const wrongCount = wrongOnlyIds().length;
+  const readiness = readinessScore();
+  const rColor = readiness.score>=80?"var(--green)":readiness.score>=60?"var(--amber)":"var(--red)";
+  const recommendation = recommendedNextStep();
+
+  function tile(key,label,desc,stat){
+    return `<button class="mode" onclick="homeAction('${key}')">
+      <h3>${label}</h3>
+      <p>${desc}</p>
+      ${stat ? `<div class="stat">${stat}</div>` : ""}
+    </button>`;
+  }
+
+  app.innerHTML = `
+    ${header("AACE Certified Cost Professional — Skills & Knowledge of Cost Engineering, 6th Ed. · Exam Coach v5.4.4 — Self-Contained Mastery — Offline — English UI", false)}
+    ${(PROGRESS.questionIssues||[]).some(x=>!x.resolved&&x.suspended)?`<div style="font-family:var(--mono);font-size:10.5px;color:var(--amber);margin:-8px 0 12px;">${(PROGRESS.questionIssues||[]).filter(x=>!x.resolved&&x.suspended).length} question(s) suspended from future scored static sessions pending review.</div>`:''}
+
+    ${PENDING_ACTIVE_SESSION ? `<div class="card resume-banner">
+      <h2>Interrupted session found</h2>
+      <p class="sub">${PENDING_ACTIVE_SESSION.config?.mode==='blueprint'?'Blueprint Mock':PENDING_ACTIVE_SESSION.config?.mode==='timed'?'Timed Mock':'Practice'} — Question ${(PENDING_ACTIVE_SESSION.session?.idx||0)+1} of ${PENDING_ACTIVE_SESSION.session?.queue?.length||0}. Your exact queue, option order, answers, flags, timer deadline and rollback checkpoint were saved.</p>
+      <div class="btnrow"><button class="btn" onclick="resumeInterruptedSession()">Resume current session</button><button class="btn secondary" onclick="discardInterruptedSession()">Discard &amp; roll back</button></div>
+    </div>` : ""}
+
+    ${PENDING_ACTIVE_FULLSIM ? `<div class="card resume-banner">
+      <h2>Interrupted Full CCP Simulation found</h2>
+      <p class="sub">${PENDING_ACTIVE_FULLSIM.fullsim?.phase==='memo'?'Memo section':'MCQ section — Question '+((PENDING_ACTIVE_FULLSIM.fullsim?.mcqIdx||0)+1)+' of '+(PENDING_ACTIVE_FULLSIM.fullsim?.mcqQueue?.length||0)}. The 5-hour deadline, exact MCQ queue/option order, draft answers, flags, pacing and memo text were saved.</p>
+      <div class="btnrow"><button class="btn" onclick="resumeFullSimulation()">Resume Full Simulation</button><button class="btn secondary" onclick="discardInterruptedFullSimulation()">Discard Full Simulation</button></div>
+    </div>` : ""}
+
+    ${stats.total > 0 ? `
     <div class="card">
-      <h2>Study a chapter</h2>
-      <p class="sub">Pick a chapter and start. ${stats.total?`${stats.total} attempts so far.`:'This is the main way to learn new material.'}</p>
-      <div class="btnrow"><button class="btn" onclick="homeAction('chapter')">Choose a Chapter →</button><button class="btn secondary" onclick="homeAction('formulalab')">Formula Lab</button></div>
+      <div style="display:flex;gap:20px;flex-wrap:wrap;align-items:center;">
+        <div class="readiness-ring" style="background:${rColor};">${readiness.score}</div>
+        <div style="flex:1;min-width:200px;">
+          <div style="font-family:var(--serif);font-size:15px;color:var(--navy);margin-bottom:4px;">Training Readiness Index</div>
+          <div style="font-size:11px;color:var(--steel);margin-bottom:4px;">Training attempts only; Cold Chapter Certification attempts are excluded. Internal study metric — not an AACE score or predicted pass probability.</div>
+          <div style="font-size:12.8px;color:var(--ink-soft);">${readiness.drivers.length ? readiness.drivers[0] : "Coverage and accuracy both look solid — keep it up."}</div>
+        </div>
+      </div>
+    </div>` : `<p class="sub" style="margin:0 0 16px;font-size:12px;color:var(--steel);">Progress saves automatically as you go.</p>`}
+
+    ${(function(){const c=coldEvidenceSummary();const col=c.score===null?'var(--steel)':c.score>=80?'var(--green)':c.score>=65?'var(--amber)':'var(--red)';return `<div class="card"><div style="display:flex;gap:14px;align-items:center;"><span class="dot" style="background:${col};width:14px;height:14px;"></span><div><div style="font-family:var(--serif);font-size:15px;color:var(--navy);">Cold Exam Readiness: <b>${c.score===null?'Not enough evidence':c.score+'/100'}</b></div><div style="font-size:11px;color:var(--steel);margin-top:2px;">Driven primarily by Cold Static and qualifying Independent Fresh evidence. Internal Internal Mastery can complete chapter mastery when static reserve is insufficient; attested Offline Derived Transfer remains support only. Never inferred from repeated training-bank questions.</div></div></div></div>`;})()}
+
+    ${(function(){
+      const mr = memoReadiness();
+      const mrColor = mr.level==="Ready"?"var(--green)":mr.level==="Competent"?"var(--green)":mr.level==="Developing"?"var(--amber)":"var(--steel)";
+      return `<div class="card">
+        <div style="display:flex;gap:14px;align-items:center;">
+          <span class="dot" style="background:${mrColor};width:14px;height:14px;"></span>
+          <div>
+            <div style="font-family:var(--serif);font-size:15px;color:var(--navy);">Memo Readiness: <b>${mr.sourceLabel || mr.level}</b></div>
+            <div style="font-size:11px;color:var(--steel);margin-top:2px;">Separate from Training Readiness Index — set ONLY by a human-reviewed rating on a saved Memo Practice attempt, never by word count or checklist completion alone.</div>
+            <div style="font-size:12px;color:var(--ink-soft);margin-top:2px;">${mr.detail}</div>
+          </div>
+        </div>
+      </div>`;
+    })()}
+
+    <div class="card recommend-card">
+      <div class="recommend-kicker">Today's Priority</div>
+      <div class="recommend-title">${recommendation.title}</div>
+      <div class="recommend-reason">${recommendation.reason}</div>
+      <button class="btn" onclick="runRecommendedStep()">${recommendation.cta}</button>
     </div>
+
+    ${retentionCountdownCardHtml()}
+    ${chapterExitCriteriaHomeCard()}
+
     <div class="card">
-      <h2>Calculation practice</h2>
-      <p class="sub">Practice calculating instead of recalling a memorized answer — fresh numbers every time.</p>
-      <div class="btnrow">
-        <button class="btn secondary" onclick="homeAction('calcdrill')">Calculation Drill</button>
-        <button class="btn secondary" onclick="homeAction('timedcalc')">Timed Calculation Set</button>
-        <button class="btn secondary" onclick="homeAction('methoddrill')">Method Selection</button>
+      <h2>Study & Exam</h2>
+      <p class="resource-hub-note">Choose your current goal. The detailed modes are grouped inside each center to keep the Home screen simple.</p>
+      <div class="grid">
+        ${tile("practicecenter","Practice Center","Practice a specific chapter, calculations, method selection, or fresh questions from one place.", stats.total ? `${stats.total} attempts` : "start here")}
+        ${tile("reviewcenter","Review & Improve","Fix weaknesses using your wrong answers, Weak Topics, Adaptive Review, and Error Notebook.", weakCount || wrongCount ? `${weakCount} weak · ${wrongCount} wrong` : "no active backlog")}
+        ${tile("examcenter","Certification & Mocks","Use this when you want to test yourself through Cold Certification, Timed/Blueprint Mocks, Memo practice, or a Full Simulation.", "Cold + Mocks")}
+        ${tile("studyplan","Study Plan","See what to do today without browsing every mode; the app builds a daily mission from your evidence.", "daily plan")}
       </div>
     </div>
-    <details class="advanced-tools"><summary>More study options</summary><div class="btnrow" style="margin-top:12px;">
-      <button class="btn secondary" onclick="homeAction('random')">Random Practice (mix chapters)</button>
-      <button class="btn secondary" onclick="homeAction('generatedpractice')">Generated Practice</button>
-      <button class="btn secondary" onclick="homeAction('freshchallengecenter')">Fresh Challenge (manual)</button>
-    </div></details>`;
+
+    <div class="card">
+      <h2>Resources & Tools</h2>
+      <p class="resource-hub-note">Four core tools for daily study. Technical and maintenance tools are kept under Advanced Tools because you do not need them every day.</p>
+      <div class="resource-card-grid">
+        ${STUDY_RESOURCES.map(r=>`<button class="resource-card" onclick="homeAction('${r.key}')"><b>${r.label}</b><span>${r.desc}</span></button>`).join("")}
+      </div>
+      <details class="advanced-tools">
+        <summary>Advanced Tools</summary>
+        <div class="btnrow">
+          ${ADVANCED_RESOURCES.map(r=>`<button class="btn secondary" onclick="homeAction('${r.key}')">${r.label}</button>`).join("")}
+        </div>
+      </details>
+    </div>
+  `;
+}
+
+function renderPracticeCenter(){
+  app.innerHTML=`${header("Practice Center",true)}
+    <div class="card">
+      <h2>Practice</h2>
+      <p class="sub">Choose the type of practice that matches your current need. Training-bank and Fresh/Generated modes remain logically separate in the background without cluttering the Home screen.</p>
+      <div class="grid">
+        <button class="mode" onclick="homeAction('chapter')"><h3>Chapter Practice</h3><p>Pick one chapter — Mixed, Concept-only, or Calculation-only.</p></button>
+        <button class="mode" onclick="homeAction('random')"><h3>Random Practice</h3><p>Pick one or more chapters and mix questions across them.</p></button>
+        <button class="mode" onclick="homeAction('calcdrill')"><h3>Calculation Drill</h3><p>Fresh, computer-generated numbers using verified formula templates.</p></button>
+        <button class="mode" onclick="homeAction('methoddrill')"><h3>Formula Selection / Method Selection</h3><p>Read the scenario first, select the governing formula or method family, then calculate. This is the dedicated Formula Selection drill.</p></button>
+        <button class="mode" onclick="homeAction('timedcalc')"><h3>Timed Calculation Set</h3><p>10 fresh dynamic calculation questions in 25 minutes, with pacing feedback and root-cause classification for misses.</p></button>
+        <button class="mode" onclick="homeAction('generatedpractice')"><h3>Generated Practice</h3><p>Fresh generated practice from source-linked skill families, kept separate from static-bank accuracy.</p></button>
+        <button class="mode" onclick="homeAction('freshchallengecenter')"><h3>Fresh Challenge</h3><p>New numbers, sealed source-derived scenarios, and unsignposted reasoning — all offline in this HTML.</p></button>
+      </div>
+    </div>`;
 }
 
 function renderReviewCenter(){
   const weakCount=weakQuestionIds().length;
   const wrongCount=wrongOnlyIds().length;
-  const misc=mreUnresolvedMisconceptions().length;
-  const fragile=mreFragileSkills().length;
-  app.innerHTML=`${header("Fix Weak Areas",true)}
-  ${primaryNav('reviewCenter')}
+  app.innerHTML=`${header("Review & Improve",true)}
     <div class="card">
-      <h2>One session, automatically targeted</h2>
-      <p class="sub">The app picks what you most need to fix right now — a refresh check that's due, a mistake that needs a second look, or your current weak topics — so you don't have to choose the mechanism yourself.</p>
+      <h2>Review & Improve</h2>
+      <p class="sub">Use this after practice to turn mistakes, Fragile Correct answers, and Weak Topics into targeted review.</p>
       <div class="statgrid">
-        <div class="statbox"><div class="n">${weakCount}</div><div class="l">Weak questions</div></div>
-        <div class="statbox"><div class="n">${wrongCount}</div><div class="l">Wrong to retry</div></div>
-        <div class="statbox"><div class="n" style="color:${misc?'var(--red)':'inherit'};">${misc}</div><div class="l">Need another look</div></div>
-        <div class="statbox"><div class="n" style="color:${fragile?'var(--amber)':'inherit'};">${fragile}</div><div class="l">Not fully solid yet</div></div>
+        <div class="statbox"><div class="n">${weakCount}</div><div class="l">Weak Questions</div></div>
+        <div class="statbox"><div class="n">${wrongCount}</div><div class="l">Wrong to Retry</div></div>
       </div>
-      <button class="btn" onclick="startFixWeakAreasSession()">Start Fix Weak Areas Session →</button>
-    </div>
-    <div class="card">
-      <h2>Review what you've saved</h2>
-      <p class="sub">Read back through your saved mistakes, notes, and recurring traps.</p>
-      <button class="btn secondary" onclick="homeAction('notebook')">Open My Mistakes</button>
-    </div>
-    <details class="advanced-tools"><summary>Choose manually instead</summary><div class="btnrow" style="margin-top:12px;">
-      <button class="btn secondary" onclick="homeAction('adaptive')">Adaptive Practice</button>
-      <button class="btn secondary" onclick="homeAction('weak')">Weak Topics Only</button>
-      <button class="btn secondary" onclick="homeAction('wrong')">Wrong Answers Only</button>
-      <button class="btn secondary" onclick="homeAction('relearn')">Topics to Relearn</button>
-    </div></details>`;
+      <div class="grid">
+        <button class="mode" onclick="homeAction('adaptive')"><h3>Adaptive Practice</h3><p>Combines current weaknesses, due SRS reviews, confidence evidence, and varied questions.</p></button>
+        <button class="mode" onclick="homeAction('weak')"><h3>Weak Topics Practice</h3><p>Practice only the topics currently confirmed as weak.</p></button>
+        <button class="mode" onclick="homeAction('wrong')"><h3>Wrong Answers Review</h3><p>Retry questions whose most recent attempt was incorrect.</p></button>
+        <button class="mode" onclick="homeAction('weaknessreport')"><h3>Weakness Report</h3><p>See where you are weak, what is driving the weakness, and what to review next.</p></button>
+        <button class="mode" onclick="homeAction('notebook')"><h3>Error Notebook</h3><p>Review saved mistakes, your notes, learning points, and recurring traps.</p></button>
+        <button class="mode" onclick="homeAction('finalreview')"><h3>My Final Review</h3><p>A focused review of High-Confidence Misses and Fragile Correct answers before the exam.</p></button>
+        <button class="mode" onclick="homeAction('relearn')"><h3>Topics to Relearn</h3><p>Your learner-managed list of concepts to revisit. It does not create evidence or change readiness by itself.</p></button>
+      </div>
+    </div>`;
 }
 
 function renderExamCenter(){
   const c=coldEvidenceSummary();
-  let examDate='';try{examDate=localStorage.getItem('ccp-exam-date')||'';}catch(e){}
-  const daysLeft=examDate?Math.ceil((new Date(examDate)-new Date())/86400000):null;
-  const finalWeek=daysLeft!==null&&daysLeft<=10;
-  app.innerHTML=`${header("Exam Practice",true)}
-  ${primaryNav('examCenter')}
+  const fm=(PROGRESS.offlineFreshMockHistory||[]).slice().sort((a,b)=>b.ts-a.ts)[0]||null;
+  app.innerHTML=`${header("Certification & Mocks",true)}
     <div class="card">
-      <h2>Rehearse the real exam</h2>
-      <p class="sub">Four genuinely different formats. Cold Chapter Certification is the only one that uses truly unseen questions; the others train pacing and exam mechanics using the training bank.</p>
-      <div class="statgrid"><div class="statbox"><div class="n">${c.score===null?'—':c.score}</div><div class="l">Unseen Readiness</div></div></div>
+      <h2>Certification & Mocks</h2>
+      <p class="sub">Use Cold Chapter Certification only to measure a chapter with one-time unseen questions. Timed, Blueprint, and Full Simulation modes train exam format and pacing; they are not Cold Evidence.</p>
+      <div class="statgrid">
+        <div class="statbox"><div class="n">${c.score===null?'—':c.score}</div><div class="l">Cold Readiness</div></div>
+        <div class="statbox"><div class="n">119</div><div class="l">Blueprint MCQs</div></div>
+        <div class="statbox"><div class="n">${fm?fm.scorePct+'%':'—'}</div><div class="l">Last Transfer Blueprint</div></div>
+      </div>
       <div class="grid">
-        <button class="mode" onclick="homeAction('coldchapter')"><h3>Unseen Chapter Test</h3><p>One-time questions you have not seen before, to check whether it really transfers.</p></button>
-        <button class="mode" onclick="homeAction('timed')"><h3>Timed Practice Mock</h3><p>Practice pacing and diagnose weaknesses.</p></button>
-        <button class="mode" onclick="homeAction('blueprint')"><h3>Blueprint Practice Mock (119Q)</h3><p>Full-length mock with the current exam-domain weighting.</p></button>
-        <button class="mode" onclick="homeAction('fullsim')"><h3>Full CCP Simulation</h3><p>119 MCQs plus one memo under a single 5-hour timer.</p></button>
+        <button class="mode" onclick="homeAction('coldchapter')"><h3>Cold Chapter Certification</h3><p>One-time unseen questions only; they were not shown in Study Lab and have not previously appeared to you in Exam Coach.</p></button>
+        <button class="mode" onclick="homeAction('timed')"><h3>Training Timed Mock</h3><p>A training-bank mock for pacing and weakness diagnosis; it does not count as Cold Evidence.</p></button>
+        <button class="mode" onclick="homeAction('blueprint')"><h3>Training Blueprint Mock (119Q)</h3><p>119 questions distributed by domain to practice exam structure; repetition is possible and the result is not Sealed Evidence.</p></button>
+        <button class="mode" onclick="homeAction('offlinefreshblueprint')"><h3>Offline Fresh Transfer Blueprint (119Q)</h3><p>Domain-weighted one-use transfer check assembled offline from source-derived forms. Separate from the Cold Static pool and from the Training Blueprint Mock.</p></button>
+        <button class="mode" onclick="homeAction('memopractice')"><h3>Memo Practice</h3><p>Original Memo scenarios with a structure checklist, timer, and saved drafts.</p></button>
+        <button class="mode" onclick="homeAction('fullsim')"><h3>Training Full CCP Simulation</h3><p>119 training-bank MCQs plus one Memo under a combined 5-hour timer to rehearse full exam mechanics.</p></button>
+        <button class="mode" onclick="homeAction('finalweek')"><h3>Final Week Mode</h3><p>A focused final-week review emphasizing mistakes, hard questions, calculations, and weak domains.</p></button>
       </div>
-    </div>
-    ${finalWeek?`<div class="card recommend-card" style="border-left:4px solid var(--amber);"><div class="recommend-kicker">Exam is close — ${daysLeft} day(s) left</div><div class="recommend-reason">Final Week focuses on your remaining mistakes, hard questions, calculations, and weak domains.</div><button class="btn" onclick="homeAction('finalweek')">Start Final Week Review →</button></div>`:''}
-    <div class="card">
-      <h2>Also here</h2>
-      <div class="btnrow">
-        <button class="btn secondary" onclick="homeAction('memopractice')">Memo Practice</button>
-        ${!finalWeek?`<button class="btn secondary" onclick="homeAction('finalweek')">Final Week Review</button>`:''}
-        <button class="btn secondary" onclick="VIEW='progress';render();">See Full Progress →</button>
-      </div>
-    </div>
-    <details class="advanced-tools"><summary>More exam-format options</summary><div class="btnrow" style="margin-top:12px;">
-      <button class="btn secondary" onclick="homeAction('offlinefreshblueprint')">Blueprint Transfer Check (119Q)</button>
-    </div></details>`;
-}
-
-/* ---------- Progress: one overview, expandable detail underneath ----------
-   Consolidates what used to be five separate screens (Dashboard, Weakness
-   Report, Readiness Center, Chapter Readiness & Evidence, My Final Review).
-   Nothing here recomputes anything — it reads the exact same functions those
-   five screens already used, so every number stays identical; only the
-   layout and the chapter-status wording change (see plainChapterStatus /
-   humanizeStageText). The original five screens are left fully intact and
-   reachable as the "expandable detail" layer this section links to. */
-function renderProgress(){
-  const tr=readinessScore();
-  const cr=coldEvidenceSummary();
-  const stats=overallStats();
-  const cstats=chapterStats();
-  const misc=mreUnresolvedMisconceptions().length;
-  const fragile=mreFragileSkills().length;
-  const weak=topicStats().filter(t=>masteryLevel(t.pct,t.total)!=='green').sort((a,b)=>a.pct-b.pct||b.total-a.total).slice(0,8);
-  const trColor=tr.score>=80?"var(--green)":tr.score>=60?"var(--amber)":"var(--red)";
-  app.innerHTML=`${header("Progress",true)}
-  ${primaryNav('progress')}
-  <div class="card">
-    <h2>Readiness</h2>
-    <p class="sub">An internal study signal from your own training data — not an official AACE pass probability.</p>
-    <div style="display:flex;gap:24px;flex-wrap:wrap;align-items:center;">
-      <div class="readiness-ring" style="background:${trColor};">${tr.score}</div>
-      <div style="flex:1;min-width:240px;">
-        ${tr.drivers.length?tr.drivers.map(d=>`<div style="font-size:13px;color:var(--ink);margin-bottom:4px;">• ${escapeHtmlText(humanizeStageText(d))}</div>`).join(""):`<div style="font-size:13px;color:var(--green);">No major gaps detected — nice work.</div>`}
-      </div>
-    </div>
-    <p class="sub" style="margin-top:10px;">${cr.enough?`Unseen-question readiness: <b>${cr.score}/100</b>.`:'Not enough unseen-question evidence yet for a separate readiness number.'} <a href="#" onclick="VIEW='coldReadiness';render();return false;">Detail →</a></p>
-  </div>
-  <div class="card">
-    <h2>Your chapters</h2>
-    <p class="sub">Click a chapter for topic-level detail.</p>
-    ${CHAPTER_LIST.map(c=>{const m=chapterMasteryStatus(c.num);const label=plainChapterStatus(m.key);const lvl=m.key==='retained'?'green':(m.key==='failed'||m.key==='retestRequired')?'red':(m.key==='provisional'||m.key==='due')?'yellow':'none';return `<div class="topicrow" style="cursor:pointer;" onclick="openDrilldown('${c.num}')"><span class="dot ${lvl}"></span><div class="name" style="flex:1;">Ch.${c.num} — ${c.name}</div><div class="pct">${escapeHtmlText(label)}</div></div>`;}).join('')}
-    <p class="sub" style="margin-top:8px;"><a href="#" onclick="VIEW='evidence';render();return false;">Full technical evidence view →</a></p>
-  </div>
-  <details class="card advanced-tools" open><summary>Weak areas</summary><div style="margin-top:12px;">
-    <div class="statgrid">
-      <div class="statbox"><div class="n">${stats.acc}%</div><div class="l">Overall accuracy</div></div>
-      <div class="statbox"><div class="n" style="color:${misc?'var(--red)':'inherit'};">${misc}</div><div class="l">Need another look</div></div>
-      <div class="statbox"><div class="n" style="color:${fragile?'var(--amber)':'inherit'};">${fragile}</div><div class="l">Not fully solid yet</div></div>
-      <div class="statbox"><div class="n">${stats.uniquePct}%</div><div class="l">Bank coverage</div></div>
-    </div>
-    ${weak.length?weak.map(t=>`<div class="topicrow"><div class="name"><b>Ch.${t.chapter} · ${escapeHtmlText(t.topic)}</b></div><div class="pct">${Math.round(t.pct*100)}%</div></div>`).join(''):'<p class="emptystate">No reliable weak-topic evidence yet.</p>'}
-    <div class="btnrow" style="margin-top:10px;"><a href="#" onclick="VIEW='weaknessReport';render();return false;">Full weakness report →</a></div>
-  </div></details>
-  <details class="card advanced-tools"><summary>Mistakes & final review</summary><div class="btnrow" style="margin-top:12px;">
-    <button class="btn secondary" onclick="homeAction('notebook')">My Mistakes (Error Notebook)</button>
-    <button class="btn secondary" onclick="homeAction('finalreview')">My Final Review</button>
-  </div></details>
-  <details class="card advanced-tools"><summary>Chapters — all attempts (raw accuracy)</summary><div style="margin-top:12px;">
-    ${cstats.length?cstats.map(c=>{const lvl=masteryLevel(c.pct,c.total);return `<div class="drilldown-row" onclick="openDrilldown('${c.chapter}')"><span class="dot ${lvl}"></span><div class="name" style="flex:1;">Ch.${c.chapter} — ${c.chapterName}</div><div class="bar"><div style="width:${Math.round(c.pct*100)}%"></div></div><div class="pct">${Math.round(c.pct*100)}% (${c.correct}/${c.total})</div></div>`;}).join(""):`<p class="emptystate">No data yet.</p>`}
-  </div></details>
-  <details class="card advanced-tools"><summary>Session history & pacing</summary><div class="btnrow" style="margin-top:12px;"><button class="btn secondary" onclick="VIEW='sessionHistory';render();">Open Session History</button></div></details>
-  <details class="card advanced-tools"><summary>Data & export</summary><div class="btnrow" style="margin-top:12px;">
-    <button class="btn secondary" onclick="exportProgress()">Export progress (JSON)</button>
-    <button class="btn secondary" onclick="document.getElementById('progressImportFile').click()">Import progress (JSON)</button>
-    <input type="file" id="progressImportFile" accept="application/json" style="display:none;" onchange="importProgress(this.files[0])">
-    <button class="btn secondary" onclick="exportCoachDiagnostic()">Export Coach Diagnostic</button>
-  </div><div class="btnrow"><button class="reset-link" onclick="resetProgress()">Reset all progress</button></div></details>`;
-}
-
-/* ---------- More: secondary tools, kept reachable but out of primary navigation ---------- */
-function renderMoreTools(){
-  app.innerHTML=`${header("More Tools",true)}
-  ${primaryNav('moreTools')}
-  <div class="card">
-    <h2>Study</h2>
-    <div class="btnrow">
-      <button class="btn secondary" onclick="homeAction('random')">Random Practice</button>
-      <button class="btn secondary" onclick="homeAction('generatedpractice')">Generated Practice</button>
-      <button class="btn secondary" onclick="homeAction('freshchallengecenter')">Fresh Challenge (manual)</button>
-    </div>
-  </div>
-  <div class="card">
-    <h2>Exam formats</h2>
-    <div class="btnrow"><button class="btn secondary" onclick="homeAction('offlinefreshblueprint')">Blueprint Transfer Check (119Q)</button></div>
-  </div>
-  <div class="card">
-    <h2>Personal tools</h2>
-    <div class="btnrow">
-      <button class="btn secondary" onclick="homeAction('relearn')">Topics to Relearn</button>
-      <button class="btn secondary" onclick="VIEW='sessionHistory';render();">Session History</button>
-    </div>
-  </div>
-  <div class="card">
-    <h2>Records & export</h2>
-    <div class="btnrow">
-      <button class="btn secondary" onclick="exportProgress()">Export progress (JSON)</button>
-      <button class="btn secondary" onclick="document.getElementById('moreImportFile').click()">Import progress (JSON)</button>
-      <input type="file" id="moreImportFile" accept="application/json" style="display:none;" onchange="importProgress(this.files[0])">
-      <button class="btn secondary" onclick="exportCoachDiagnostic()">Export Coach Diagnostic</button>
-      <button class="btn secondary" onclick="VIEW='evidence';render();">Chapter Evidence (advanced)</button>
-    </div>
-  </div>`;
+      <div class="btnrow"><button class="btn secondary" onclick="homeAction('readinesscenter')">Open Readiness Center</button><button class="btn secondary" onclick="homeAction('sessionhistory')">Pacing & Session History</button></div>
+    </div>`;
 }
 
 function renderReadinessCenter(){
@@ -1849,30 +2000,6 @@ function practiceAgain(){
   if(CONFIG.mode==="random"){ VIEW="randomConfig"; render(); return; }
   if(CONFIG.mode==="weak"){ VIEW="weakConfig"; render(); return; }
   selectMode(CONFIG.mode);
-}
-
-/* ---------- Fix Weak Areas: one button, the app chooses the mechanism ----------
-   Priority mirrors recommendedNextStep()/Today: an overdue or failed retention
-   check on a studied chapter (the real, unmodified Retention Engine pipeline) comes
-   first since it is time-sensitive; otherwise the existing Adaptive Practice mode
-   already blends weak topics, due spaced-repetition reviews, confidence evidence
-   (including the high-confidence-wrong and fragile-knowledge priority boosts added
-   in the Mastery/Adaptive/Retention pass), and calculation weakness — so it is
-   reused as-is rather than reinventing a new session type. */
-function startFixWeakAreasSession(){
-  if(PENDING_ACTIVE_SESSION||PENDING_ACTIVE_FULLSIM){
-    alert("You already have a paused exam/session. Resume it or discard it first.");
-    return;
-  }
-  const studied=studiedChapterSet();
-  const retentionChapter=CHAPTER_LIST.find(c=>studied.has(String(c.num))&&['due','failed'].includes(chapterMasteryStatus(c.num).key));
-  if(retentionChapter){
-    const key=chapterMasteryStatus(retentionChapter.num).key==='failed'?'repair':'retention';
-    runChapterExitAction(String(retentionChapter.num), key, '');
-    return;
-  }
-  CONFIG = { mode:'adaptive', chapter:'all', numQuestions:15, difficulty:'all', qtype:'all', timed:false, immediateFeedback:true, confidenceEnabled:true };
-  startSession();
 }
 
 function selectMode(key){
@@ -3304,21 +3431,14 @@ const FORMULA_LAB = [
   // CCP_Quiz_V2_5_1_Hotfix_Report.md. No replacement entry was added for this chapter.
 ];
 function goFormulaLab(){ VIEW="formulaLab"; render(); }
-var FORMULA_LAB_FILTER = "all";
 function renderFormulaLab(){
-  const chapters=Array.from(new Set(FORMULA_LAB.map(f=>f.ch))).sort((a,b)=>Number(a)-Number(b));
-  const shown=FORMULA_LAB_FILTER==="all"?FORMULA_LAB:FORMULA_LAB.filter(f=>f.ch===FORMULA_LAB_FILTER);
   app.innerHTML = `
     ${header("Formula Lab", true)}
     <div class="card">
       <h2>Formula Lab</h2>
       <p class="sub">Curated source-verified quick reference from S&K6, organized by chapter — not an exhaustive CCP formula sheet. Only source-supported formulas are listed.</p>
-      <div class="field"><label>Chapter</label><select onchange="FORMULA_LAB_FILTER=this.value;render();">
-        <option value="all" ${FORMULA_LAB_FILTER==="all"?"selected":""}>All chapters (${FORMULA_LAB.length} formulas)</option>
-        ${chapters.map(ch=>{const c=CHAPTER_LIST.find(x=>x.num===ch);return `<option value="${ch}" ${FORMULA_LAB_FILTER===ch?"selected":""}>Ch.${ch} — ${c?c.name:''}</option>`;}).join('')}
-      </select></div>
     </div>
-    ${shown.map(f=>`
+    ${FORMULA_LAB.map(f=>`
       <div class="formula-card">
         <span class="badge">Ch.${f.ch}</span>
         <h3>${f.name}</h3>
@@ -6965,108 +7085,28 @@ function runRecommendedStep(){
   homeAction(r.key);
 }
 
-/* =========================================================
-   UX SIMPLIFICATION PASS
-   Presentation-only layer: renames/regroups screens and softens
-   internal mastery-pipeline vocabulary wherever it is shown on
-   the five primary destinations (Today / Study / Fix Weak Areas /
-   Exam Practice / Progress). Nothing here changes any evidence
-   rule, gate threshold, scoring function, or persisted field —
-   every function below either (a) reads already-computed values
-   through existing functions unchanged, or (b) does a plain text
-   substitution on already-computed label/hint strings. The
-   underlying Mastery Gate, Adaptive Retesting, Retention,
-   Fragile Knowledge, and High-Confidence Wrong engines keep
-   running exactly as before; only how their output is *worded*
-   and *organized on screen* changes.
-   ========================================================= */
-
-// Plain-language substitution for internal pipeline vocabulary. Only ever applied to
-// already-generated label/hint/detail STRINGS on primary/overview screens — it never
-// touches a status `.key` (which several functions branch on), so no dispatch logic
-// is affected by this function.
-function humanizeStageText(s){
-  if(!s) return s;
-  return String(s)
-    .replace(/Internal Mastery Test/gi, 'Mastery Check')
-    .replace(/Mastery Test/gi, 'Mastery Check')
-    .replace(/Challenge Test/gi, 'Challenge Check')
-    .replace(/Apply Test/gi, 'New-Question Check')
-    .replace(/Offline Fresh Transfer/gi, 'New-Question Check')
-    .replace(/Retention Test/gi, 'Refresh Check')
-    .replace(/Delayed Retest/gi, 'Refresh Check')
-    .replace(/closed-book attestation/gi, 'done without notes or help')
-    .replace(/closed-book/gi, 'no notes/no help')
-    .replace(/sealed,? one-use/gi, 'one-time')
-    .replace(/\bL3\b\s*/g, '')
-    .replace(/\bL2\b\s*/g, '')
-    .replace(/Provisional Mastery/gi, 'Nearly Ready')
-    .replace(/Retained Mastery/gi, 'Ready — Confirmed')
-    .replace(/Retention Gap/gi, 'Needs a Refresh')
-    .replace(/Retention Due/gi, 'Refresh Due')
-    .replace(/Retest Required/gi, 'Needs Another Look')
-    .replace(/\s{2,}/g, ' ')
-    .trim();
-}
-
-// Plain-language status word for a chapter, used on Today/Study/Progress overviews.
-// Detail screens (Evidence, Cold Readiness) keep their precise original wording —
-// this translation exists only for the simplified primary surfaces.
-function plainChapterStatus(key){
-  return ({
-    developing: 'Practicing',
-    transfer: 'Building Confidence',
-    retestRequired: 'Needs Another Look',
-    provisional: 'Nearly Ready',
-    due: 'Refresh Due',
-    failed: 'Needs a Refresh',
-    retained: 'Ready',
-  })[key] || 'Practicing';
-}
-
-// Final label/hint softening layer for chapterExitNextAction, applied after the
-// Mastery-Engine wrapper (MRE_baseChapterExitNextAction) that decides WHICH action is
-// next. This layer only rewrites the display text of that decision — the `key` field
-// every caller (runChapterExitAction, recommendedNextStep) dispatches on is untouched.
-var UX_baseChapterExitNextAction = chapterExitNextAction;
-chapterExitNextAction = function(ch){
-  const n = UX_baseChapterExitNextAction(ch);
-  return Object.assign({}, n, { label: humanizeStageText(n.label), hint: humanizeStageText(n.hint) });
-};
-
-// Five-destination primary navigation bar, shown only on the five top-level screens
-// (Today/Study/Fix Weak Areas/Exam Practice/Progress) — deliberately not injected into
-// header() itself, so quiz/config/result screens stay uncluttered during focused work.
-function primaryNav(activeKey){
-  const items = [
-    {key:'home', label:'Today'},
-    {key:'practiceCenter', label:'Study'},
-    {key:'reviewCenter', label:'Fix Weak Areas'},
-    {key:'examCenter', label:'Exam Practice'},
-    {key:'progress', label:'Progress'},
-  ];
-  return `<div class="chipset primary-nav" style="margin-bottom:16px;">${items.map(it=>`<button class="chip ${activeKey===it.key?'active':''}" onclick="VIEW='${it.key}';render();">${escapeHtmlText(it.label)}</button>`).join('')}<button class="chip" onclick="VIEW='moreTools';render();">More</button></div>`;
-}
-
 /* ---------- Home: one obvious action, everything else secondary ---------- */
 function renderHome(){
-  const rec=recommendedNextStep();
+  const rec=recommendedNextStep(),stats=overallStats(),wrong=wrongOnlyIds().length,weak=weakQuestionIds().length;
   const activeCh=rec.chapter?String(rec.chapter):null;
-  const mission=buildTodayMission();
-  const urgentItems=(mission.reasonItems||[]).filter(it=>it.kind==='misconception'||it.kind==='repeated');
-  const planItems=(mission.reasonItems||[]).slice(0,4);
-  app.innerHTML=`${header('Today',false)}
-  ${primaryNav('home')}
-  ${urgentItems.length?`<div class="card recommend-card" style="border-left:4px solid var(--red);"><div class="recommend-kicker" style="color:var(--red);">Needs a second look</div>${urgentItems.slice(0,2).map(it=>`<div class="recommend-reason">${escapeHtmlText(humanizeStageText(it.reason))}</div>`).join('')}</div>`:''}
-  <div class="card recommend-card">
-    <div class="recommend-kicker">What to do next</div>
-    <div class="recommend-title">${escapeHtmlText(humanizeStageText(rec.title))}</div>
-    <div class="recommend-reason">${escapeHtmlText(humanizeStageText(rec.reason))}</div>
-    ${!mission.needsStart&&planItems.length?`<ul style="margin:10px 0 14px;padding-left:18px;font-size:13px;color:var(--ink-soft);">${planItems.map(it=>`<li>${escapeHtmlText(humanizeStageText(it.reason))}</li>`).join('')}</ul>`:''}
-    <button class="btn" onclick="runRecommendedStep()">${escapeHtmlText(humanizeStageText(rec.cta))} →</button>
-  </div>
+  app.innerHTML=`${header('CCP Exam Coach v5.5',false)}
+  <div class="card recommend-card"><div class="recommend-kicker">Continue studying</div><div class="recommend-title">${escapeHtmlText(rec.title)}</div><div class="recommend-reason">${escapeHtmlText(rec.reason)}</div><button class="btn" onclick="runRecommendedStep()">${escapeHtmlText(rec.cta)} →</button></div>
   ${activeCh&&chapterTrainingGate(activeCh).unique?chapterExitCriteriaCardHtml(activeCh):''}
   ${retentionCountdownCardHtml()}
+  <div class="focus-home">
+    <button class="mode" onclick="homeAction('chapter')"><h3>Chapter Practice</h3><p>Study one chapter and build the Practice gate with unique questions and topic coverage.</p><div class="stat">${stats.total||0} attempts</div></button>
+    <button class="mode" onclick="goStudyPlan()"><h3>Today's Study Plan</h3><p>Reviews only chapters you have already studied, plus retention-due work.</p></button>
+    <button class="mode" onclick="homeAction('reviewcenter')"><h3>Fix Mistakes</h3><p>Wrong answers, weak topics, high-confidence misses and relearn items.</p><div class="stat">${wrong} wrong · ${weak} weak</div></button>
+    <button class="mode" onclick="homeAction('examcenter')"><h3>Exam & Readiness</h3><p>Cold certification, timed mocks, memo practice and full simulations.</p></button>
+  </div>
+  <details class="advanced-tools"><summary>More tools</summary><div class="resource-card-grid" style="margin-top:12px;">
+    <button class="resource-card" onclick="homeAction('calcdrill')"><b>Calculation Drill</b><span>Fresh-number calculation practice.</span></button>
+    <button class="resource-card" onclick="homeAction('methoddrill')"><b>Method Selection</b><span>Choose the method before calculating.</span></button>
+    <button class="resource-card" onclick="homeAction('adaptive')"><b>Adaptive Practice</b><span>Target weak and due items.</span></button>
+    <button class="resource-card" onclick="homeAction('readinesscenter')"><b>Readiness Center</b><span>Detailed evidence and pacing metrics.</span></button>
+    <button class="resource-card" onclick="homeAction('formulalab')"><b>Formula Lab</b><span>Formula review and traps.</span></button>
+    <button class="resource-card" onclick="homeAction('finalreview')"><b>Final Review</b><span>Mistakes and fragile knowledge.</span></button>
+  </div></details>
   <p class="human-qa-note" style="margin-top:14px;">Memo writing still requires human/instructor review for a defensible writing-quality judgment. The app does not pretend otherwise.</p>`;
 }
 
@@ -10109,33 +10149,34 @@ renderConfig=function(){
       preserved under a collapsible explanation for users who want the details. */
 renderExamCenter=function(){
   const c=coldEvidenceSummary();
-  let examDate='';try{examDate=localStorage.getItem('ccp-exam-date')||'';}catch(e){}
-  const daysLeft=examDate?Math.ceil((new Date(examDate)-new Date())/86400000):null;
-  const finalWeek=daysLeft!==null&&daysLeft<=10;
-  app.innerHTML=`${header('Exam Practice',true)}
-    ${primaryNav('examCenter')}
-    <div class="card"><h2>Rehearse the real exam</h2>
-      <p class="sub">Four genuinely different formats. Unseen Chapter Test is the only one using truly unseen questions; the others train pacing and exam mechanics using the training bank.</p>
-      <div class="statgrid"><div class="statbox"><div class="n">${c.score===null?'—':c.score}</div><div class="l">Unseen-Test Readiness</div></div></div>
-      <div class="grid">
-        <button class="mode" onclick="homeAction('coldchapter')"><h3>Unseen Chapter Test</h3><p>One-time questions you have not previously seen in practice. Use it to check whether chapter knowledge transfers without familiarity.</p></button>
-        <button class="mode" onclick="homeAction('timed')"><h3>Timed Practice Mock</h3><p>Practice pacing and diagnose weaknesses using the training bank.</p></button>
-        <button class="mode" onclick="homeAction('blueprint')"><h3>Blueprint Practice Mock (119Q)</h3><p>119 questions distributed by the current exam-domain weighting to rehearse exam structure.</p></button>
-        <button class="mode" onclick="homeAction('fullsim')"><h3>Full CCP Simulation</h3><p>119 MCQs plus one memo under a combined 5-hour timer to rehearse the full exam experience.</p></button>
+  const fm=(PROGRESS.offlineFreshMockHistory||[]).slice().sort((a,b)=>b.ts-a.ts)[0]||null;
+  app.innerHTML=`${header('Exam Practice & Readiness',true)}
+    <div class="card"><h2>Exam Practice & Readiness</h2>
+      <p class="sub">Choose by purpose: use practice and knowledge checks during normal study, then use rehearsal modes when you want to simulate exam conditions or prepare for the final stretch.</p>
+      <div class="statgrid"><div class="statbox"><div class="n">${c.score===null?'—':c.score}</div><div class="l">Unseen-Test Readiness</div></div><div class="statbox"><div class="n">119</div><div class="l">Blueprint MCQs</div></div><div class="statbox"><div class="n">${fm?fm.scorePct+'%':'—'}</div><div class="l">Last Transfer Check</div></div></div>
+
+      <div class="human-mode-group">
+        <div class="human-mode-group-head"><div><b>Practice & knowledge checks</b><span>Use during normal study to test transfer, pacing, and Blueprint coverage.</span></div></div>
+        <div class="grid">
+          <button class="mode" onclick="homeAction('coldchapter')"><h3>Unseen Chapter Test</h3><p>One-time questions you have not previously seen in practice. Use it to check whether chapter knowledge transfers without familiarity.</p></button>
+          <button class="mode" onclick="homeAction('timed')"><h3>Timed Practice Mock</h3><p>Practice pacing and diagnose weaknesses using the training bank.</p></button>
+          <button class="mode" onclick="homeAction('blueprint')"><h3>Blueprint Practice Mock (119Q)</h3><p>119 questions distributed by the current exam-domain weighting to rehearse exam structure.</p></button>
+          <button class="mode" onclick="homeAction('offlinefreshblueprint')"><h3>Blueprint Transfer Check (119Q)</h3><p>A one-use full-syllabus transfer check built from source-derived forms, separate from ordinary practice.</p></button>
+        </div>
       </div>
-    </div>
-    ${finalWeek?`<div class="card recommend-card" style="border-left:4px solid var(--amber);"><div class="recommend-kicker">Exam is close — ${daysLeft} day(s) left</div><div class="recommend-reason">Final Week focuses on your remaining mistakes, hard questions, calculations, and weak domains.</div><button class="btn" onclick="homeAction('finalweek')">Start Final Week Review →</button></div>`:''}
-    <div class="card">
-      <h2>Also here</h2>
-      <div class="btnrow">
-        <button class="btn secondary" onclick="homeAction('memopractice')">Memo Practice</button>
-        ${!finalWeek?`<button class="btn secondary" onclick="homeAction('finalweek')">Final Week Review</button>`:''}
-        <button class="btn secondary" onclick="VIEW='progress';render();">See Full Progress →</button>
+
+      <div class="human-mode-group">
+        <div class="human-mode-group-head"><div><b>Exam rehearsal & final preparation</b><span>Use when training the memo, rehearsing the full experience, or concentrating final-week review.</span></div></div>
+        <div class="grid">
+          <button class="mode" onclick="homeAction('memopractice')"><h3>Memo Practice</h3><p>Original memo scenarios with structure guidance, a timer, and saved drafts.</p></button>
+          <button class="mode" onclick="homeAction('fullsim')"><h3>Full CCP Simulation</h3><p>119 MCQs plus one memo under a combined 5-hour timer to rehearse the full exam experience.</p></button>
+          <button class="mode" onclick="homeAction('finalweek')"><h3>Final Week Mode</h3><p>Focused review of mistakes, calculations, hard questions, and weak domains.</p></button>
+        </div>
       </div>
-    </div>
-    <details class="advanced-tools"><summary>More exam-format options</summary><div class="btnrow" style="margin-top:12px;">
-      <button class="btn secondary" onclick="homeAction('offlinefreshblueprint')">Blueprint Transfer Check (119Q)</button>
-    </div></details>`;
+
+      <details class="advanced-tools"><summary>How the evidence labels work</summary><p class="human-qa-note">Internally, the app calls the reserved unseen static bank <b>Cold Static</b>, protected unseen results <b>Cold/Sealed Evidence</b>, and one-use source-derived forms <b>Offline Fresh Transfer</b>. These technical labels are kept here for traceability; the normal study flow uses the plain-language names above.</p></details>
+      <div class="btnrow"><button class="btn secondary" onclick="homeAction('readinesscenter')">Open Readiness Center</button><button class="btn secondary" onclick="homeAction('sessionhistory')">Pacing & Session History</button></div>
+    </div>`;
 };
 
 renderReadinessCenter=function(){
@@ -10452,33 +10493,16 @@ renderQuiz=function(){
 };
 
 var FINAL_COACH_BASE_RENDER_HOME=renderHome;
-/* ---------- Today: one obvious action, everything else secondary ----------
-   This is the final, live implementation of the landing screen (this app has
-   an extensive versioned history of renderHome reassignments above this
-   point; this is the one that actually executes, since JS runs top-level
-   assignments in source order and this is the last one before init() runs).
-   It reads recommendedNextStep()/buildTodayMission() exactly as the rest of
-   the app already did — no scoring, gating, or evidence rule changes — and
-   only changes the wording and the amount shown at once. */
 renderHome=function(){
+  FINAL_COACH_BASE_RENDER_HOME();
+  if(!app) return;
+  const stats=overallStats();
   const rec=recommendedNextStep();
-  const activeCh=rec.chapter?String(rec.chapter):null;
-  const mission=buildTodayMission();
-  const urgentItems=(mission.reasonItems||[]).filter(it=>it.kind==='misconception'||it.kind==='repeated');
-  const planItems=(mission.reasonItems||[]).slice(0,4);
-  app.innerHTML=`${header('Today',false)}
-  ${primaryNav('home')}
-  ${urgentItems.length?`<div class="card recommend-card" style="border-left:4px solid var(--red);"><div class="recommend-kicker" style="color:var(--red);">Needs a second look</div>${urgentItems.slice(0,2).map(it=>`<div class="recommend-reason">${escapeHtmlText(humanizeStageText(it.reason))}</div>`).join('')}</div>`:''}
-  <div class="card recommend-card">
-    <div class="recommend-kicker">What to do next</div>
-    <div class="recommend-title">${escapeHtmlText(humanizeStageText(rec.title))}</div>
-    <div class="recommend-reason">${escapeHtmlText(humanizeStageText(rec.reason))}</div>
-    ${!mission.needsStart&&planItems.length?`<ul style="margin:10px 0 14px;padding-left:18px;font-size:13px;color:var(--ink-soft);">${planItems.map(it=>`<li>${escapeHtmlText(humanizeStageText(it.reason))}</li>`).join('')}</ul>`:''}
-    <button class="btn" onclick="runRecommendedStep()">${escapeHtmlText(humanizeStageText(rec.cta))} →</button>
-  </div>
-  ${activeCh&&(chapterTrainingGate(activeCh).unique||officialStudyGuideGate(activeCh).complete)?chapterExitCriteriaCardHtml(activeCh):''}
-  ${retentionCountdownCardHtml()}
-  <p class="human-qa-note" style="margin-top:14px;">Memo writing still requires human/instructor review for a defensible writing-quality judgment. The app does not pretend otherwise.</p>`;
+  const kicker=app.querySelector('.recommend-card .recommend-kicker');
+  if(kicker){
+    const brandNew=(!stats.total && rec && rec.key==='nextchapter' && String(rec.chapter)==='1');
+    kicker.textContent=brandNew?'Start here':'Continue studying';
+  }
 };
 
 /* =========================================================
