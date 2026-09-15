@@ -1741,18 +1741,27 @@ function renderProgress(){
   const fragile=mreFragileSkills().length;
   const weak=topicStats().filter(t=>masteryLevel(t.pct,t.total)!=='green').sort((a,b)=>a.pct-b.pct||b.total-a.total).slice(0,8);
   const trColor=tr.score>=80?"var(--green)":tr.score>=60?"var(--amber)":"var(--red)";
+  const memoGate=memoExamReadinessGate();
+  const memoColor=memoGate.passed?"var(--green)":memoGate.level==='Not Assessed'?"var(--steel)":"var(--amber)";
   app.innerHTML=`${header("Progress",true)}
   ${primaryNav('progress')}
   <div class="card">
-    <h2>Readiness</h2>
+    <h2>Training Readiness (MCQ)</h2>
     <p class="sub">An internal study signal from your own training data — not an official AACE pass probability.</p>
     <div style="display:flex;gap:24px;flex-wrap:wrap;align-items:center;">
       <div class="readiness-ring" style="background:${trColor};">${tr.score}</div>
       <div style="flex:1;min-width:240px;">
-        ${tr.drivers.length?tr.drivers.map(d=>`<div style="font-size:13px;color:var(--ink);margin-bottom:4px;">• ${escapeHtmlText(humanizeStageText(d))}</div>`).join(""):`<div style="font-size:13px;color:var(--green);">No major gaps detected — nice work.</div>`}
+        ${tr.drivers.length?tr.drivers.map(d=>`<div style="font-size:13px;color:var(--ink);margin-bottom:4px;">• ${escapeHtmlText(humanizeStageText(d))}</div>`).join(""):(memoGate.passed?`<div style="font-size:13px;color:var(--green);">No major gaps detected — nice work.</div>`:`<div style="font-size:13px;color:var(--ink);">No MCQ gaps detected — but this covers multiple-choice practice only.</div>`)}
       </div>
     </div>
     <p class="sub" style="margin-top:10px;">${cr.enough?`Unseen-question readiness: <b>${cr.score}/100</b>.`:'Not enough unseen-question evidence yet for a separate readiness number.'} <a href="#" onclick="VIEW='coldReadiness';render();return false;">Detail →</a></p>
+    <div style="margin-top:14px;padding-top:12px;border-top:1px solid var(--line, #e5e5e5);">
+      <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;">
+        <span style="font-family:var(--mono);font-size:11px;letter-spacing:.05em;text-transform:uppercase;color:${memoColor};">Memo Readiness: ${escapeHtmlText(memoGate.level)}</span>
+        ${!memoGate.passed?`<button class="btn secondary" style="padding:4px 10px;font-size:12px;" onclick="goMemoPractice()">Practice Memo</button>`:''}
+      </div>
+      <p class="sub" style="margin-top:6px;">${escapeHtmlText(memoGate.status)} — the CCP exam scores Communication Competency (the memo) as one of four equally-weighted areas, so overall CCP readiness is not complete from MCQ practice alone.</p>
+    </div>
   </div>
   <div class="card">
     <h2>Your chapters</h2>
@@ -5689,6 +5698,36 @@ function memoReadiness(){
   const level = MEMO_READINESS_LABELS[latest.reviewerRating] || "Not Assessed";
   const sourceNote = latest.reviewerType ? ` — ${REVIEWER_TYPE_LABELS[latest.reviewerType]||latest.reviewerType} reviewed` : "";
   return { level, sourceLabel: `${level}${sourceNote}`, detail:`Based on the most recent human-reviewed attempt ("${latest.promptTitle}", rated "${latest.reviewerRating.replace('_',' ')}" by ${REVIEWER_TYPE_LABELS[latest.reviewerType]||"an unspecified reviewer"} on ${new Date(latest.ts).toLocaleDateString()}). This is informational only — it is not an AACE pass prediction, regardless of reviewer source.` };
+}
+
+/* =========================================================
+   v5.27 MEMO READINESS INTEGRATION — Part B
+   A qualitative TRAINING gate only. It never converts memoReadiness()'s
+   human-entered rating into a number, never touches readinessScore()'s
+   calculation, and never claims an official AACE pass criterion or pass
+   probability. memoReadiness() itself is completely unchanged: this
+   function only reads its result.
+   ========================================================= */
+function memoExamReadinessGate(){
+  const mr = memoReadiness();
+  const passed = mr.level === 'Competent' || mr.level === 'Ready';
+
+  let status;
+  if(mr.level === 'Not Assessed'){
+    status = 'Overall CCP readiness incomplete — memo not yet assessed';
+  } else if(mr.level === 'Needs Work' || mr.level === 'Developing'){
+    status = 'Overall CCP readiness not yet established — memo needs more work';
+  } else {
+    status = 'Memo readiness gate satisfied for training purposes';
+  }
+
+  return {
+    passed,
+    level: mr.level,
+    sourceLabel: mr.sourceLabel || mr.level,
+    detail: mr.detail,
+    status
+  };
 }
 
 function viewMemoHistory(){ VIEW="memoHistory"; render(); }
@@ -9989,10 +10028,52 @@ function v524SupportingTaskCodes(q){
   return v521InferBlueprintTasks(q);
 }
 
+/* =========================================================
+   v5.27 BLUEPRINT TASK COVERAGE REPAIR — Part A
+   Human-reviewed, support-only evidence overrides for Blueprint tasks that
+   have at least one explicit direct anchor but fewer than 3 total mapped
+   evidence items (structurally unable to reach MASTERED under the existing
+   >=3-unique-item gate). These IDs were semantically reviewed against the
+   current Blueprint and the AACE source hierarchy (S&K6 / RP 10S-90 / TCM /
+   Study Guide) and are supporting evidence ONLY:
+     - they never become direct evidence (q.blueprintTasks is never touched,
+       and v524ExplicitTaskCodes/v526ExplicitBlueprintCodes are untouched);
+     - they are consumed only inside v521TaskEvidence's own supporting-set
+       computation below, never inside v521InferBlueprintTasks/
+       v521QuestionTaskCodes, so Blueprint Mock's task-balanced selection
+       (v521PickTaskBalanced, which calls v521QuestionTaskCodes directly)
+       is completely unaffected by this map;
+     - the existing conservative, domain-bounded keyword inference
+       (v521InferBlueprintTasks) is untouched and still applies as before.
+   ========================================================= */
+const V527_TASK_SUPPORT_OVERRIDES = {
+  '1.H': ['BP524-1_N-1', 'BP524-4_A-1'],
+  '1.I': ['14-5', 'BP524-4_A-1'],
+  '1.J': ['25-2', 'BP522-2_L-3'],
+  '1.K': ['BP522-1_J-1', 'BP522-2_L-3'],
+  '1.M': ['BP524-1_Y-1', '24-11'],
+  '1.R': ['14-11', '27-9'],
+  '1.T': ['BP522-2_C-1', 'BP522-1_U-1'],
+  '1.U': ['14-11', '27-9'],
+  '1.W': ['25-1', 'BP522-2_L-1'],
+  '4.K': ['BP522-3_F-1', 'BP522-3_F-2'],
+  '4.L': ['2-16', '28-3'],
+  '5.A': ['BP524-5_B-1', 'BP524-5_D-1'],
+  '6.A': ['32-2', 'BP524-6_B-1'],
+  '4.A': ['BP522-1_I-1'],
+  '5.C': ['BP522-2_N-1'],
+};
+
 v521TaskEvidence=function(code){
   const quality=(QUESTIONS||[]).filter(staticQuestionIsQualityApproved);
+  const overrideIds=new Set(V527_TASK_SUPPORT_OVERRIDES[code]||[]);
   const direct=quality.filter(q=>v524ExplicitTaskCodes(q).includes(code));
-  const supporting=quality.filter(q=>!v524ExplicitTaskCodes(q).length&&v521InferBlueprintTasks(q).includes(code));
+  const supporting=quality.filter(q=>{
+    if(v524ExplicitTaskCodes(q).includes(code))return false;
+    const manualSupport=overrideIds.has(q.id);
+    const legacySupport=!v524ExplicitTaskCodes(q).length&&v521InferBlueprintTasks(q).includes(code);
+    return manualSupport||legacySupport;
+  });
   const directIds=new Set(direct.map(q=>q.id)),supportIds=new Set(supporting.map(q=>q.id));
   const allIds=new Set([...directIds,...supportIds]);
   const a=(PROGRESS.attempts||[]).filter(x=>allIds.has(x.qid)&&x.evidenceClass!=='cold');
@@ -10373,9 +10454,12 @@ renderReadinessCenter=function(){
   const tr=readinessScore(),cr=coldEvidenceSummary();
   const trColor=tr.score>=80?'var(--green)':tr.score>=60?'var(--amber)':'var(--red)';
   const crColor=cr.score===null?'var(--steel)':cr.score>=80?'var(--green)':cr.score>=65?'var(--amber)':'var(--red)';
+  const memoGate=memoExamReadinessGate();
+  const memoColor=memoGate.passed?'var(--green)':memoGate.level==='Not Assessed'?'var(--steel)':'var(--amber)';
   app.innerHTML=`${header('Readiness Center',true)}
-    <div class="card"><h2>Your readiness</h2><p class="sub">Training Readiness summarizes what your practice history is showing. Unseen-Test Readiness is deliberately separate and uses protected questions so familiar wording cannot inflate the signal.</p>
-      <div class="statgrid"><div class="statbox"><div class="n" style="color:${trColor};">${tr.score}</div><div class="l">Training Readiness</div></div><div class="statbox"><div class="n" style="color:${crColor};">${cr.score===null?'—':cr.score}</div><div class="l">Unseen-Test Readiness</div></div></div>
+    <div class="card"><h2>Your readiness</h2><p class="sub">Training Readiness (MCQ) summarizes what your practice history is showing. Unseen-Test Readiness is deliberately separate and uses protected questions so familiar wording cannot inflate the signal. Memo Readiness is a third, separate signal based only on human review.</p>
+      <div class="statgrid"><div class="statbox"><div class="n" style="color:${trColor};">${tr.score}</div><div class="l">Training Readiness (MCQ)</div></div><div class="statbox"><div class="n" style="color:${crColor};">${cr.score===null?'—':cr.score}</div><div class="l">Unseen-Test Readiness</div></div><div class="statbox"><div class="n" style="color:${memoColor};font-size:16px;">${escapeHtmlText(memoGate.level)}</div><div class="l">Memo Readiness</div></div></div>
+      <p class="sub">${escapeHtmlText(memoGate.status)}</p>
       <div class="grid">
         <button class="mode" onclick="homeAction('dashboard')"><h3>Performance Dashboard</h3><p>See accuracy, coverage, confidence patterns, weak domains, and performance trends.</p></button>
         <button class="mode" onclick="homeAction('coldreadiness')"><h3>Unseen Evidence</h3><p>See how much protected unseen evidence remains and how it is distributed across domains.</p></button>
@@ -10394,7 +10478,8 @@ renderColdReadiness=function(){
   app.innerHTML=app.innerHTML
     .replace(/Cold Pool &amp; Exam Readiness/g,'Unseen Evidence &amp; Exam Readiness')
     .replace(/Cold Pool & Exam Readiness/g,'Unseen Evidence & Exam Readiness')
-    .replace(/Two different readiness signals/g,'Two readiness signals')
+    .replace(/Two different readiness signals/g,'Two MCQ readiness signals')
+    .replace(/Two readiness signals/g,'Two MCQ readiness signals')
     .replace(/Cold Exam Readiness/g,'Unseen-Test Readiness')
     .replace(/Cold Readiness/g,'Unseen-Test Readiness')
     .replace(/Cold Evidence/g,'unseen evidence')
@@ -10405,7 +10490,7 @@ renderColdReadiness=function(){
     .replace(/Offline Derived Transfer/g,'one-use transfer')
     .replace(/Internal Mastery/g,'internal mastery')
     .replace(/Cold-eligible/g,'unseen-eligible');
-  app.innerHTML=app.innerHTML.replace('<h2>Two readiness signals</h2>','<h2>Two readiness signals</h2><details class="advanced-tools"><summary>Technical terms used by the evidence engine</summary><p class="human-qa-note">The original internal names are Cold Static (reserved unseen questions), Cold/Sealed Evidence (protected unseen results), Internal Mastery, and Offline Fresh Transfer. The simpler labels on this screen refer to the same evidence categories.</p></details>');
+  app.innerHTML=app.innerHTML.replace('<h2>Two MCQ readiness signals</h2>','<h2>Two MCQ readiness signals</h2><details class="advanced-tools"><summary>Technical terms used by the evidence engine</summary><p class="human-qa-note">The original internal names are Cold Static (reserved unseen questions), Cold/Sealed Evidence (protected unseen results), Internal Mastery, and Offline Fresh Transfer. The simpler labels on this screen refer to the same evidence categories.</p></details>');
 };
 
 var HUMAN_BASE_EVIDENCE=renderEvidence;
