@@ -1082,8 +1082,18 @@ function timeForIndex(idx){ return Math.max(0,Math.round(Number(SESSION.timeSpen
 function persistSessionState(){ saveActiveSession(); }
 async function resumeInterruptedSession(){
   if(!PENDING_ACTIVE_SESSION){ alert("No interrupted session is available."); return; }
+  // Safety net: if the saved queue is missing/malformed (e.g. a stale record saved
+  // before the compact/expand fix), resuming would crash on undefined question data.
+  // Detect that up front and discard safely instead of leaving the student stuck.
+  const restoredSessionCheck=deepClonePlain(PENDING_ACTIVE_SESSION.session);
+  const firstQ=restoredSessionCheck&&Array.isArray(restoredSessionCheck.queue)?restoredSessionCheck.queue[0]:null;
+  if(!restoredSessionCheck||!Array.isArray(restoredSessionCheck.queue)||!restoredSessionCheck.queue.length||!firstQ||!Array.isArray(firstQ.options)||!firstQ.options.length){
+    alert("This paused session's saved data is invalid and can't be resumed. It will be discarded now — your other progress is not affected.");
+    await discardInterruptedSession(true);
+    return;
+  }
   CONFIG=deepClonePlain(PENDING_ACTIVE_SESSION.config);
-  SESSION=Object.assign(newEmptySession(), deepClonePlain(PENDING_ACTIVE_SESSION.session));
+  SESSION=Object.assign(newEmptySession(), restoredSessionCheck);
   SESSION_CHECKPOINT=deepClonePlain(PENDING_ACTIVE_SESSION.checkpoint);
   // Time spent while the page was closed is not counted as question-solving time.
   SESSION.questionEnterTs=(isMockSession() || SESSION.answered===null) ? Date.now() : null;
@@ -1096,12 +1106,17 @@ async function resumeInterruptedSession(){
     else startTimer();
   }
 }
-async function discardInterruptedSession(){
+async function discardInterruptedSession(skipConfirm){
   if(!PENDING_ACTIVE_SESSION) return;
-  if(!confirm("Discard the interrupted session and roll back every result it recorded? Previous sessions, bookmarks and notes are kept.")) return;
-  SESSION_CHECKPOINT=deepClonePlain(PENDING_ACTIVE_SESSION.checkpoint);
-  restoreSessionAnalytics(SESSION_CHECKPOINT.progress);
-  await saveProgress();
+  if(!skipConfirm && !confirm("Discard the interrupted session and roll back every result it recorded? Previous sessions, bookmarks and notes are kept.")) return;
+  // Restoring the checkpoint is best-effort: a genuinely invalid/corrupted saved record
+  // (the case this is a safety net for) must still be discardable even if its checkpoint
+  // can't be applied — the session is cleared either way.
+  try{
+    SESSION_CHECKPOINT=deepClonePlain(PENDING_ACTIVE_SESSION.checkpoint);
+    restoreSessionAnalytics(SESSION_CHECKPOINT.progress);
+    await saveProgress();
+  }catch(e){}
   await clearActiveSession();
   SESSION=newEmptySession(); SESSION_CHECKPOINT=null;
   render();
@@ -1162,6 +1177,34 @@ const BLUEPRINT_DOMAINS = [
   {domain:"Domain 6: Inform the Risk Management Process", n:9},
   {domain:"Domain 5: Support/Inform Scheduling", n:6},
 ];
+
+/* =========================================================
+   OFFICIAL EXAM SCORING MODEL (per the current CCP Candidate Handbook's
+   "Exam Breakdown and Scoring" section) — deliberately kept SEPARATE
+   from BLUEPRINT_DOMAINS above and never merged with it. BLUEPRINT_DOMAINS
+   is the 6-domain content/task map used to build Blueprint-weighted mocks
+   and to organize what to study; it is NOT how the real exam is scored.
+   The Handbook instead scores exactly 4 domains and averages them EQUALLY
+   (never weighted by question count) for one overall result, with 70%
+   overall required to pass — the memo (Communication Competency) is a
+   full quarter of that average, on equal footing with a 55-question
+   domain. This is presentational only: it explains an official fact
+   using data the app already has; it does not compute, fabricate, or
+   predict an actual pass/fail result. ========================================================= */
+const OFFICIAL_SCORING_DOMAINS = [
+  {name:'Cost Management', detail:'55 multiple-choice questions'},
+  {name:'Communication Competency', detail:'the memo'},
+  {name:'Interfacing with Other Disciplines', detail:'24 multiple-choice questions'},
+  {name:'Performance Analysis', detail:'40 multiple-choice questions'},
+];
+function officialScoringModelCardHtml(){
+  return `<div class="card">
+    <h2>How the real CCP exam is actually scored</h2>
+    <p class="sub">Per the current CCP Candidate Handbook. This is <b>different</b> from the 6-domain Blueprint map used elsewhere in this app (Progress, mock domain breakdowns) to organize study content and build mock question sets — that structure tells you <i>what</i> to study; this one is how AACE actually <i>scores</i> the exam.</p>
+    <div class="statgrid">${OFFICIAL_SCORING_DOMAINS.map(d=>`<div class="statbox"><div class="n" style="font-size:13px;line-height:1.3;">${escapeHtmlText(d.name)}</div><div class="l">${escapeHtmlText(d.detail)}</div></div>`).join('')}</div>
+    <p class="sub" style="margin-top:10px;"><b>These 4 domain scores are averaged together with equal weight — not weighted by question count</b> — for one overall result, and you need <b>70% overall</b> to pass. A 24-question domain counts exactly as much toward your overall result as the 55-question domain, and the memo (Communication Competency) counts exactly as much as either. It is possible to pass 3 domains and fail the exam overall, or fail 3 domains and still pass overall, depending on the numbers — the Handbook gives worked examples of both. A strong overall multiple-choice percentage from this app does <b>not</b> by itself mean you would pass the real exam if your memo is weak or untested.</p>
+  </div>`;
+}
 
 /* =========================================================
    V4 COLD-EVIDENCE FIREWALL
@@ -2386,6 +2429,7 @@ function renderPostExamDiagnostic(){
         <div class="statbox"><div class="n">${conceptAcc===null?"—":conceptAcc+"%"}</div><div class="l">Concept</div></div>
       </div>
     </div>
+    ${snap.mode==="blueprint"?officialScoringModelCardHtml():""}
 
     ${mockPacingCardHtml(snap)}
     ${sessionCloseoutCardForTag(snap.sessionTag,snap.mode)}
@@ -5694,18 +5738,34 @@ function returnFullSimToMcq(){FULLSIM.phase="mcq";beginFullSimQuestionTime();sav
 function setFullSimMemoText(v){FULLSIM.memoText=v;const e=document.getElementById('fsWc');if(e)e.textContent=memoWordCount(v)+' words';scheduleFullSimSave();}
 function pauseFullSimulation(showNotice){
   if(!FULLSIM||!FULLSIM.startTs)return;
-  if(FULLSIM.phase==="mcq")commitFullSimQuestionTime();clearInterval(FULLSIM_TIMER);saveFullSimStateSync();PENDING_ACTIVE_FULLSIM=fullSimPayload();VIEW="home";render();
+  // Bugfix: fullSimPayload() returns the *compact* storage representation (question
+  // stubs, not full question objects) since the v58 compaction override. resumeFullSimulation()
+  // expects PENDING_ACTIVE_FULLSIM to already be the expanded form (same assumption goBack()'s
+  // equivalent path already honors) — without expanding here, resuming in the same browser
+  // session (no reload) crashed on undefined q.options. Reuses the same v58ExpandFullPayload()
+  // goBack() already calls; no new mechanism.
+  if(FULLSIM.phase==="mcq")commitFullSimQuestionTime();clearInterval(FULLSIM_TIMER);saveFullSimStateSync();PENDING_ACTIVE_FULLSIM=v58ExpandFullPayload(fullSimPayload());VIEW="home";render();
   if(showNotice){/* UI banner is the confirmation; no blocking alert needed */}
 }
 async function resumeFullSimulation(){
   if(!PENDING_ACTIVE_FULLSIM){alert("No paused Full Simulation is available.");return;}
-  FULLSIM=Object.assign(newEmptyFullSim(),deepClonePlain(PENDING_ACTIVE_FULLSIM.fullsim));
+  // Safety net: if the saved mcqQueue is missing/malformed (e.g. a stale record saved
+  // before the compact/expand fix), resuming would crash on undefined question data.
+  // Detect that up front and discard safely instead of leaving the student stuck.
+  const restoredCheck=deepClonePlain(PENDING_ACTIVE_FULLSIM.fullsim);
+  const firstQ=restoredCheck&&Array.isArray(restoredCheck.mcqQueue)?restoredCheck.mcqQueue[0]:null;
+  if(!restoredCheck||!Array.isArray(restoredCheck.mcqQueue)||!restoredCheck.mcqQueue.length||!firstQ||!Array.isArray(firstQ.options)||!firstQ.options.length){
+    alert("This paused simulation's saved data is invalid and can't be resumed. It will be discarded now — no completed result had been recorded yet.");
+    await discardInterruptedFullSimulation(true);
+    return;
+  }
+  FULLSIM=Object.assign(newEmptyFullSim(),restoredCheck);
   FULLSIM.masterTimeLimitSec=FULLSIM.deadlineTs?Math.max(0,Math.ceil((FULLSIM.deadlineTs-Date.now())/1000)):FULLSIM.masterTimeLimitSec;
   if(FULLSIM.phase==="mcq")beginFullSimQuestionTime();PENDING_ACTIVE_FULLSIM=null;VIEW="fullSimQuiz";render();
   if(FULLSIM.masterTimeLimitSec<=0)finishFullSimulation(true);else startFullSimTimer();
 }
-async function discardInterruptedFullSimulation(){
-  if(!PENDING_ACTIVE_FULLSIM)return;if(!confirm("Discard this paused Full CCP Simulation? No completed simulation result has been recorded yet."))return;
+async function discardInterruptedFullSimulation(skipConfirm){
+  if(!PENDING_ACTIVE_FULLSIM)return;if(!skipConfirm && !confirm("Discard this paused Full CCP Simulation? No completed simulation result has been recorded yet."))return;
   await clearActiveFullSimulation();FULLSIM=newEmptyFullSim();render();
 }
 function finishFullSimulation(autoSubmit){
@@ -5720,7 +5780,7 @@ function renderFullSimResult(){
   const simIdx=PROGRESS.fullSimHistory.length-1,sim=PROGRESS.fullSimHistory[simIdx];
   if(!sim){VIEW="home";render();return;}
   const pct=sim.mcqTotal?Math.round(sim.mcqScore/sim.mcqTotal*100):0,alreadyLinked=PROGRESS.simMemoLinks[simIdx]!==undefined;
-  app.innerHTML=`${header("Full CCP Simulation — Results",true)}<div class="card"><h2>MCQ Result</h2><div class="statgrid"><div class="statbox"><div class="n">${sim.mcqScore}/${sim.mcqTotal}</div><div class="l">Score</div></div><div class="statbox"><div class="n">${pct}%</div><div class="l">Accuracy</div></div><div class="statbox"><div class="n">${sim.avgQuestionTimeSec||0}s</div><div class="l">Avg / question</div></div><div class="statbox"><div class="n">${sim.mcqUnanswered||0}</div><div class="l">Unanswered</div></div></div></div><div class="card"><h2>Memo Status</h2><p class="sub">${sim.memoSubmitted?`Submitted (${sim.memoWordCount} words) — "${sim.memoPromptTitle}"`:"Not submitted"}</p><p class="sub" style="color:var(--amber);">Memo scoring requires human/instructor review — this app does not fabricate an official AACE writing score.</p>${sim.memoSubmitted?`<div class="btnrow">${alreadyLinked?`<button class="btn secondary" disabled>Already added to Memo Review</button>`:`<button class="btn secondary" onclick="addSimMemoToReview(${simIdx})">Add Simulation Memo to Review</button>`}</div>`:""}</div><div class="card"><h2>Study Interpretation</h2><p class="sub">This Full CCP Simulation combines the MCQ Blueprint Mock with an original memo prompt under a single 5-hour deadline. The MCQ and pacing figures are study diagnostics; there is <b>no official combined pass/fail result</b> generated by this app.</p>${fullSimCloseoutHtml(sim)}<div class="btnrow"><button class="btn secondary" onclick="goWeaknessReport()">Full Weakness Report</button><button class="btn secondary" onclick="goHome()">Return Home</button></div></div>`;
+  app.innerHTML=`${header("Full CCP Simulation — Results",true)}<div class="card"><h2>MCQ Result</h2><div class="statgrid"><div class="statbox"><div class="n">${sim.mcqScore}/${sim.mcqTotal}</div><div class="l">Score</div></div><div class="statbox"><div class="n">${pct}%</div><div class="l">Accuracy</div></div><div class="statbox"><div class="n">${sim.avgQuestionTimeSec||0}s</div><div class="l">Avg / question</div></div><div class="statbox"><div class="n">${sim.mcqUnanswered||0}</div><div class="l">Unanswered</div></div></div></div><div class="card"><h2>Memo Status</h2><p class="sub">${sim.memoSubmitted?`Submitted (${sim.memoWordCount} words) — "${sim.memoPromptTitle}"`:"Not submitted"}</p><p class="sub" style="color:var(--amber);">Memo scoring requires human/instructor review — this app does not fabricate an official AACE writing score.</p>${sim.memoSubmitted?`<div class="btnrow">${alreadyLinked?`<button class="btn secondary" disabled>Already added to Memo Review</button>`:`<button class="btn secondary" onclick="addSimMemoToReview(${simIdx})">Add Simulation Memo to Review</button>`}</div>`:""}</div>${officialScoringModelCardHtml()}<div class="card"><h2>Study Interpretation</h2><p class="sub">This Full CCP Simulation combines the MCQ Blueprint Mock with an original memo prompt under a single 5-hour deadline. The MCQ and pacing figures are study diagnostics; there is <b>no official combined pass/fail result</b> generated by this app.</p>${fullSimCloseoutHtml(sim)}<div class="btnrow"><button class="btn secondary" onclick="goWeaknessReport()">Full Weakness Report</button><button class="btn secondary" onclick="goHome()">Return Home</button></div></div>`;
 }
 
 /* =========================================================
@@ -6604,7 +6664,10 @@ function goHome(){
   NAV_BACK_IN_PROGRESS=true;
   if(VIEW==="quiz" && SESSION && SESSION.queue && SESSION.queue.length && SESSION.sessionTag){
     commitCurrentQuestionTime(); saveActiveSessionSync(); clearInterval(TIMER_INTERVAL);
-    PENDING_ACTIVE_SESSION=activeSessionPayload();
+    // Bugfix: same compact/expand mismatch as pauseFullSimulation() — activeSessionPayload()
+    // returns the compact form; expand it (as goBack()'s equivalent path already does) before
+    // resumeSession() reads it, or resuming crashed on undefined question data.
+    PENDING_ACTIVE_SESSION=v58ExpandActivePayload(activeSessionPayload());
   }
   if(VIEW==="fullSimQuiz" && FULLSIM && FULLSIM.startTs){
     pauseFullSimulation(false); return;
@@ -10215,6 +10278,7 @@ renderExamCenter=function(){
         <button class="mode" onclick="homeAction('fullsim')"><h3>Full CCP Simulation</h3><p>119 MCQs plus one memo under a combined 5-hour timer to rehearse the full exam experience.</p></button>
       </div>
     </div>
+    ${officialScoringModelCardHtml()}
     ${finalWeek?`<div class="card recommend-card" style="border-left:4px solid var(--amber);"><div class="recommend-kicker">Exam is close — ${daysLeft} day(s) left</div><div class="recommend-reason">Final Week focuses on your remaining mistakes, hard questions, calculations, and weak domains.</div><button class="btn" onclick="homeAction('finalweek')">Start Final Week Review →</button></div>`:''}
     <div class="card">
       <h2>Also here</h2>
@@ -10586,6 +10650,8 @@ renderHome=function(){
     <div class="recommend-title">${escapeHtmlText(humanizeStageText(rec.title))}</div>
     <div class="recommend-reason">${escapeHtmlText(primaryReasonPlain)}</div>
     <button class="btn" onclick="runRecommendedStep()">${escapeHtmlText(humanizeStageText(rec.cta))} →</button>
+    ${rec.key==='resumeSession'?`<button class="btn secondary" onclick="discardInterruptedSession()">Discard paused session</button>`:''}
+    ${rec.key==='resumeFullSim'?`<button class="btn secondary" onclick="discardInterruptedFullSimulation()">Discard paused simulation</button>`:''}
   </div>
   ${secondaryItems.length?`<div class="card" style="padding:14px 18px;"><div style="font-family:var(--mono);font-size:11px;text-transform:uppercase;color:var(--steel);margin-bottom:6px;">Also worth knowing</div>${secondaryItems.map(it=>`<div style="font-size:12.5px;color:var(--ink-soft);padding:3px 0;">• ${escapeHtmlText(humanizeStageText(it.reason))}</div>`).join('')}</div>`:''}
   ${activeCh&&(chapterTrainingGate(activeCh).unique||officialStudyGuideGate(activeCh).complete)?chapterExitCriteriaCardHtml(activeCh):''}
