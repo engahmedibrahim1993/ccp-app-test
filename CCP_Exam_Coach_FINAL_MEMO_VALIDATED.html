@@ -10064,9 +10064,63 @@ const V527_TASK_SUPPORT_OVERRIDES = {
   '5.C': ['BP522-2_N-1'],
 };
 
+/* =========================================================
+   v5.28 BLUEPRINT REACHABILITY CORRECTION — additive support map
+   Corrects the v5.27 pass, whose input audit undercounted the number of
+   genuinely blocked tasks. Additive only: V527_TASK_SUPPORT_OVERRIDES is
+   kept unchanged; these IDs are merged with it (union, de-duplicated) by
+   v528SupportIdsFor() and consumed only inside v521TaskEvidence's own
+   supporting-set computation below — same non-goals as v5.27: never
+   direct evidence, q.blueprintTasks untouched, v521InferBlueprintTasks/
+   v521QuestionTaskCodes untouched, so Blueprint Mock's task-balanced
+   selection (v521PickTaskBalanced) is unaffected by this map.
+   ========================================================= */
+const V528_TASK_SUPPORT_ADDITIONS = {
+  '1.A':  ['2-5'],
+  '1.E':  ['9-1', '9-6'],
+  '1.F':  ['BP524-1_D-1'],
+  '1.G':  ['BP524-1_D-1', 'BP524-1_F-1'],
+  '1.I':  ['BP522-1_H-1'],
+  '1.L':  ['BP522-3_G-1', 'BP522-3_G-2'],
+  '1.N':  ['BP522-1_H-1', 'BP522-1_I-1'],
+  '1.O':  ['BP524-1_N-1', 'BP522-1_H-1'],
+  '1.P':  ['1-4', '1-5'],
+  '1.Q':  ['1-4', 'BP524-1_P-1'],
+  '1.R':  ['BP522-1_U-1', 'BP524-1_T-1'],
+  '1.S':  ['BP524-1_Q-1', 'BP522-1_R-1'],
+  '1.U':  ['BP522-1_R-1', 'BP524-1_T-1'],
+  '1.V':  ['8-13'],
+  '1.W':  ['BP522-2_L-3'],
+  '1.X':  ['BP522-2_K-3', 'BP524-5_B-1'],
+  '1.Z':  ['19-5', '19-6'],
+  '1.AA': ['2-5'],
+
+  '4.A':  ['BP522-1_H-1'],
+  '4.B':  ['19-2', '19-4'],
+  '4.C':  ['19-3', 'BP524-4_J-1'],
+  '4.E':  ['4-5', '19-1'],
+  '4.H':  ['4-5', '14-23'],
+  '4.I':  ['19-27', '19-2'],
+  '4.M':  ['BP522-2_Q-1', 'BP522-2_Q-2'],
+
+  '5.B':  ['BP522-5_A-1'],
+  '5.C':  ['BP522-2_N-2'],
+  '5.D':  ['BP522-5_A-1', 'BP524-5_B-1'],
+
+  '6.D':  ['32-8', '31-19'],
+  '6.E':  ['31-10', '32-19'],
+  '6.F':  ['BP522-2_K-2', 'BP524-6_E-1']
+};
+function v528SupportIdsFor(code){
+  return Array.from(new Set([
+    ...(V527_TASK_SUPPORT_OVERRIDES[code] || []),
+    ...(V528_TASK_SUPPORT_ADDITIONS[code] || [])
+  ]));
+}
+
 v521TaskEvidence=function(code){
   const quality=(QUESTIONS||[]).filter(staticQuestionIsQualityApproved);
-  const overrideIds=new Set(V527_TASK_SUPPORT_OVERRIDES[code]||[]);
+  const overrideIds=new Set(v528SupportIdsFor(code));
   const direct=quality.filter(q=>v524ExplicitTaskCodes(q).includes(code));
   const supporting=quality.filter(q=>{
     if(v524ExplicitTaskCodes(q).includes(code))return false;
