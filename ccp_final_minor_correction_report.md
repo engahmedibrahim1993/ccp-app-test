@@ -1,9 +1,10 @@
 # CCP Exam Coach — Final Minor Correction Report
 
-**Scope:** `CCP_Exam_Coach_AACE_VALIDATED.html` — fixes for F1–F4 only, from the blind re-evaluation's confirmed findings.
+**Scope:** `CCP_Exam_Coach_AACE_VALIDATED.html` — fixes for F1–F4 only, from the blind re-evaluation's confirmed findings, plus §9's addendum reconciling this pass against the original four MUST FIX findings in `ccp_ux_blind_evaluation.md`.
 **Branch:** `claude/ccp-exam-prep-eval-48nukj` (confirmed active before any edit; no other branch used)
-**Pre-edit SHA-256:** `452ba7c831559d86af2313f74d44539bdb0f19b6e06bdf33aea146cdfb81efc4`
-**Final SHA-256:** `6beea842f739c3fd51bc9b5fc17842fbe64e74cd7bc819556de135b50a921270`
+**Pre-edit SHA-256 (this session's first edit):** `452ba7c831559d86af2313f74d44539bdb0f19b6e06bdf33aea146cdfb81efc4`
+**SHA-256 after F1–F4:** `6beea842f739c3fd51bc9b5fc17842fbe64e74cd7bc819556de135b50a921270`
+**Final SHA-256 (after §9's addendum fix):** `964831538d0b02c70265cf7221fa9d07c2fce17b6176b91c72b80cffd6c2b4e2`
 **Pre-existing modified/untracked files at session start:** none (`git status` was clean).
 
 ---
@@ -111,12 +112,73 @@ Of the 61 distinct `VIEW` states identified in the source: 52 rendered cleanly u
 
 `6beea842f739c3fd51bc9b5fc17842fbe64e74cd7bc819556de135b50a921270`
 
-No edits were made to the application file after this hash was recorded; all verification in sections 3–6 above was run against this exact file state.
+All verification in sections 3–6 above was run against this exact file state. **This hash was subsequently superseded** — see §9, which reconciles this pass against the original blind evaluation's four MUST FIX findings and required one additional small correction. §10 below carries the true final hash and verdict.
 
 ---
 
-## 8. Release Verdict
+## 9. Reconciliation Against the Original Four MUST FIX Findings (`ccp_ux_blind_evaluation.md`)
+
+Requested as a follow-up check: verify, through the live UI on the exact file above (not by re-reading old reports or assuming prior fixes still hold), whether each of the *original* blind evaluation's four MUST FIX findings still reproduces on the current build.
+
+**Original MUST FIX #1 — Today's headline/CTA mismatch.** Already confirmed fixed by the prior UX correction pass (`recommendedNextStep()`'s `'fixMisconception'` branch routes through `startFixWeakAreasSession()`) and now additionally reinforced by this session's F2 fix (the *secondary* per-chapter "Resolve Chapter X Misconception" button also now launches a real misconception-weighted session instead of an unrelated pipeline step). Not re-litigated further here since F2's live-click verification in §3 already covers it.
+
+**Original MUST FIX #2 — Repeated misconception information on Today.** **Confirmed already fixed; no reproduction.** Live evidence: reconstructed the original scenario (a Ch.9 misconception + a genuinely distinct Ch.18 misconception + a Ch.4 fragile-knowledge flag, via real `recordAttempt()` calls) and rendered Today. The Ch.9 fact now appears **exactly once** (in the recommend-card's reason line), not three times. Distinct secondary issues are separated into a clearly-labeled "ALSO WORTH KNOWING" section:
+  ```
+  WHAT TO DO NEXT
+  Resolve 2 high-confidence mistakes
+  Starting with High-confidence misconception — Estimate Classification (Ch.9). Each one needs a
+  different, correctly-answered question on the same skill before it counts as resolved.
+  Fix This Now →
+  ALSO WORTH KNOWING
+  • High-confidence misconception — Stakeholder Communication (Ch.18)
+  • Fragile knowledge — Fully Loaded Rate (Ch.4)
+  ```
+  This was fixed by the prior UX correction pass's Today dedup logic (`secondaryItems` filtered against the primary reason, rendered in a visually distinct "Also worth knowing" block) — untouched by, and unaffected by, this session's F1–F4 edits. No changes were made for this finding.
+
+**Original MUST FIX #3 — Meaningless "Practicing" chapter statuses on Progress.** **Confirmed already fixed; no reproduction.** Live evidence: built all seven required scenarios (zero attempts, early learning, weak performance, retest required, mastered, retention due, retained) across seven different chapters via real attempts (plus a scoped mastery-status stub only for the four states whose real pipeline climb was already independently verified in the original blind evaluation, isolating this check to the display-differentiation question actually being asked) and rendered Progress:
+
+  | Chapter | Scenario | Displayed state | Dot |
+  |---|---|---|---|
+  | 1 | zero attempts | Not Started | none |
+  | 2 | early learning | Learning | none |
+  | 3 | weak performance | Weak | red |
+  | 4 | retest required | Needs Another Look | red |
+  | 5 | mastered | Mastered | green |
+  | 6 | retention due | Retention Due | yellow |
+  | 7 | retained | Retained | green |
+
+  Seven distinct states for seven distinct scenarios — none collapse to "Practicing" (that label no longer exists anywhere in the live code; it was replaced by `studentChapterState()` in the prior correction pass). This finding required no changes here either.
+
+**Original MUST FIX #4 — Pipeline jargon visible unsoftened on Today.** **Partially still reproduced — one small residual leak found and fixed.** Systematically scanned Today, Study, the chapter-practice config screen, and Progress for "Apply Test", "Mastery Test", "Challenge Test", "L2"/"L3", "closed-book", and related internal shorthand, with a populated multi-chapter history so the chapter-progress checklist was rendered (not just its empty state).
+  - Chapter headings and the "Next: ..." line were already fully translated by the prior correction pass ("New Questions" / "Mastery Check" / "Challenge Check" / "Refresh Check") and remained clean.
+  - However, each step's **detail** line still leaked two fragments the central translator (`humanizeStageText()`) doesn't cover, because they weren't phrased as the exact multi-word terms it matches: `"Pass 10Q closed-book Mastery Test (≥85%)"` → humanized to `"Pass 10Q no notes/no help Mastery Check (≥85%)"`, leaving the internal shorthand **"10Q"** exposed (this is the same fragment the original finding quoted almost verbatim); and `"Pass closed-book Challenge (≥75%)"` → humanized to `"Pass no notes/no help Challenge (≥75%)"`, leaving a bare, incomplete **"Challenge"** (missing "Check", inconsistent with the "Challenge Check" heading directly above it).
+  - **Root cause:** `chapterExitCriteria()`'s step-detail templates (the only live definition, confirmed by tracing all reassignments of this function) wrote `"10Q"` as raw shorthand and `"Challenge"` alone instead of the full `"Challenge Test"` phrase the central translator expects.
+  - **Minimal fix:** two string-only changes to those templates — `"Pass 10Q closed-book Mastery Test"` → `"Pass a 10-question closed-book Mastery Test"` (spells out the count instead of using shorthand; keeps "Mastery Test"/"closed-book" so the existing central translator still fires), and `"Pass closed-book Challenge"` / `"Closed-book Challenge passed"` → `"Pass a closed-book Challenge Test"` / `"Closed-book Challenge Test passed"` (adds the word the translator matches on). No gate logic, targets, or `done` conditions were touched.
+  - **Verification after the fix:** the same systematic scan now finds **zero** raw jargon matches on Today, Study, the chapter config screen, or Progress. Rendered text now reads "Pass a 10-question no notes/no help Mastery Check (≥85%)" and "Pass a no notes/no help Challenge Check (≥75%)" — fully plain language, nothing internal-only exposed.
+  - Re-ran MUST FIX #2's and #3's live checks after this fix: both still hold exactly as above (this change only touched detail-string wording, not any state/routing logic).
+
+### Regression after the §9 fix
+
+| Suite | Result |
+|---|---|
+| Engine regression | 36/36 pass |
+| Core regression | 12/12 pass |
+| Targeted UX checks | 13/13 pass |
+| Live pipeline | 17/17 pass |
+| **Total** | **78/78 pass** |
+
+View sweep re-run: 61/61 clean (52 direct + 9 confirmed via proper entry flow — same as before, unaffected by this string-only change). Question bank re-verified: 830/830, byte-identical.
+
+---
+
+## 10. Final SHA-256 (after §9)
+
+`964831538d0b02c70265cf7221fa9d07c2fce17b6176b91c72b80cffd6c2b4e2`
+
+No edits were made to the application file after this hash was recorded.
+
+## 11. Release Verdict
 
 **READY**
 
-All four in-scope findings (F1–F4) are fixed and verified through real application interaction; the reconstructed regression suite, view sweep, and question-bank integrity check all pass fully against the exact final build; F5/F6 were left untouched as instructed; no unrelated files, AACE source documents, or question content were modified.
+All four in-scope F1–F4 findings and all four original blind-evaluation MUST FIX findings were explicitly re-verified through live UI interaction on the current build. Three of the four original MUST FIX findings (#1 via F2, #2, #3) were already fully resolved by prior correction work and required no further changes. The fourth (#4, pipeline jargon) was still partially reproducing in one narrow spot and has now been fixed with a two-line, string-only change. The reconstructed regression suite (78/78), view sweep (61/61), and question-bank integrity check (830/830 byte-identical) all pass against the exact final build. F5/F6 remain untouched as instructed; no unrelated files, AACE source documents, or question content were modified.

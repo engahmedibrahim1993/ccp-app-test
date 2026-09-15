@@ -7548,8 +7548,8 @@ chapterExitCriteria=function(ch){
   return {facts:f,steps:[
     {label:'Practice',done:f.strongTraining,detail:practiceDetail},
     {label:'Apply',done:f.transferDemonstrated,detail:f.transferDemonstrated?'Apply target passed':`Pass Apply Test (≥${V56_APPLY_TARGET}%)`},
-    {label:'Mastery Test',done:f.strongFoundationPass,detail:f.strongFoundationPass?(f.coldPass?'Cold test passed':f.independentPass?'Independent test passed':'Internal Mastery Test passed'):`Pass 10Q closed-book Mastery Test (≥${V56_MASTERY_TARGET}%)`},
-    {label:'Challenge',done:f.l3ClosedTransferPass,detail:f.l3ClosedTransferPass?'Closed-book Challenge passed':`Pass closed-book Challenge (≥${V56_CHALLENGE_TARGET}%)`},
+    {label:'Mastery Test',done:f.strongFoundationPass,detail:f.strongFoundationPass?(f.coldPass?'Cold test passed':f.independentPass?'Independent test passed':'Internal Mastery Test passed'):`Pass a 10-question closed-book Mastery Test (≥${V56_MASTERY_TARGET}%)`},
+    {label:'Challenge',done:f.l3ClosedTransferPass,detail:f.l3ClosedTransferPass?'Closed-book Challenge Test passed':`Pass a closed-book Challenge Test (≥${V56_CHALLENGE_TARGET}%)`},
     {label:'Retention',done:retained,waiting:f.mastery.key==='provisional'||f.mastery.key==='due',detail:retained?'Retained':f.mastery.key==='provisional'?'Waiting for retention date':f.mastery.key==='due'?'Retention due now':'Not reached'}
   ]};
 };
