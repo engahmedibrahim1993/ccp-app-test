@@ -1698,7 +1698,7 @@ function renderProgress(){
   <div class="card">
     <h2>Your chapters</h2>
     <p class="sub">Click a chapter for topic-level detail.</p>
-    ${CHAPTER_LIST.map(c=>{const state=studentChapterState(c.num);const lvl=(state==='Retained'||state==='Mastered')?'green':(state==='Retest Required'||state==='Weak')?'red':(state==='Retention Due')?'yellow':'none';return `<div class="topicrow" style="cursor:pointer;" onclick="openDrilldown('${c.num}')"><span class="dot ${lvl}"></span><div class="name" style="flex:1;">Ch.${c.num} — ${c.name}</div><div class="pct">${escapeHtmlText(state)}</div></div>`;}).join('')}
+    ${CHAPTER_LIST.map(c=>{const m=chapterMasteryStatus(c.num);const label=plainChapterStatus(m.key);const lvl=m.key==='retained'?'green':(m.key==='failed'||m.key==='retestRequired')?'red':(m.key==='provisional'||m.key==='due')?'yellow':'none';return `<div class="topicrow" style="cursor:pointer;" onclick="openDrilldown('${c.num}')"><span class="dot ${lvl}"></span><div class="name" style="flex:1;">Ch.${c.num} — ${c.name}</div><div class="pct">${escapeHtmlText(label)}</div></div>`;}).join('')}
     <p class="sub" style="margin-top:8px;"><a href="#" onclick="VIEW='evidence';render();return false;">Full technical evidence view →</a></p>
   </div>
   <details class="card advanced-tools" open><summary>Weak areas</summary><div style="margin-top:12px;">
@@ -1708,7 +1708,7 @@ function renderProgress(){
       <div class="statbox"><div class="n" style="color:${fragile?'var(--amber)':'inherit'};">${fragile}</div><div class="l">Not fully solid yet</div></div>
       <div class="statbox"><div class="n">${stats.uniquePct}%</div><div class="l">Bank coverage</div></div>
     </div>
-    ${weak.length?weak.map(t=>`<div class="topicrow"><div class="name"><b>Ch.${t.chapter} · ${escapeHtmlText(t.topic)}</b>${t.lowEvidence?' <span style="color:var(--steel);font-size:11px;">(low evidence)</span>':''}</div><div class="pct">${Math.round(t.pct*100)}%</div></div>`).join(''):'<p class="emptystate">No reliable weak-topic evidence yet.</p>'}
+    ${weak.length?weak.map(t=>`<div class="topicrow"><div class="name"><b>Ch.${t.chapter} · ${escapeHtmlText(t.topic)}</b></div><div class="pct">${Math.round(t.pct*100)}%</div></div>`).join(''):'<p class="emptystate">No reliable weak-topic evidence yet.</p>'}
     <div class="btnrow" style="margin-top:10px;"><a href="#" onclick="VIEW='weaknessReport';render();return false;">Full weakness report →</a></div>
   </div></details>
   <details class="card advanced-tools"><summary>Mistakes & final review</summary><div class="btnrow" style="margin-top:12px;">
@@ -1738,6 +1738,10 @@ function renderMoreTools(){
       <button class="btn secondary" onclick="homeAction('generatedpractice')">Generated Practice</button>
       <button class="btn secondary" onclick="homeAction('freshchallengecenter')">Fresh Challenge (manual)</button>
     </div>
+  </div>
+  <div class="card">
+    <h2>Exam formats</h2>
+    <div class="btnrow"><button class="btn secondary" onclick="homeAction('offlinefreshblueprint')">Blueprint Transfer Check (119Q)</button></div>
   </div>
   <div class="card">
     <h2>Personal tools</h2>
@@ -1932,15 +1936,6 @@ function renderConfig(){
         </select>
       </div>` : ""}
 
-      <p class="sub" style="margin:2px 0 14px;">Ready to start: ${CONFIG.numQuestions===9999?'all '+eligiblePoolSize+' available':CONFIG.numQuestions} question${CONFIG.numQuestions===1?'':'s'}, ${CONFIG.difficulty==='all'?'all difficulties':CONFIG.difficulty+' difficulty'}, ${CONFIG.immediateFeedback?'immediate feedback':'feedback at the end'}, confidence check ${CONFIG.confidenceEnabled?'on':'off'}. Open "Advanced options" below to change any of that.</p>
-
-      <div class="btnrow">
-        <button class="btn" onclick="startSession()">Start session</button>
-        <button class="btn secondary" onclick="goHome()">Cancel</button>
-      </div>
-
-      <details class="advanced-tools" style="margin-top:16px;"><summary>Advanced options</summary><div style="margin-top:12px;">
-
       ${CONFIG.mode==="chapter" ? `
       <div class="field">
         <label>Question type (this is the "Mixed / Concept-only / Calculation-only chapter test" selector)</label>
@@ -1989,7 +1984,10 @@ function renderConfig(){
         </div>
       </div>
 
-      </div></details>
+      <div class="btnrow">
+        <button class="btn" onclick="startSession()">Start session</button>
+        <button class="btn secondary" onclick="goHome()">Cancel</button>
+      </div>
     </div>
   `;
 }
@@ -4199,21 +4197,15 @@ function skillMasteryLabel(skillId){
    ========================================================= */
 var DRILL_NAV = { chapter:null, skillId:null };
 
-var CALC_DRILL_FILTER = "all";
 function renderCalcDrillHome(){
   const chapters = Object.keys(CALC_SKILL_CHAPTERS).sort((a,b)=>Number(a)-Number(b));
-  const shown = CALC_DRILL_FILTER==="all" ? chapters : chapters.filter(ch=>ch===CALC_DRILL_FILTER);
   app.innerHTML = `
     ${header("Calculation Drill", true)}
     <div class="card">
       <h2>Calculation Drill <span class="badge hot">DYNAMIC</span></h2>
-      <p class="sub">Every problem here is freshly generated by a verified formula template — never a replay of a static bank question. Prefer fixed, already-reviewed questions from the main question bank instead? Use <button class="small-btn" onclick="selectMode('calc')">Calculation Questions (Static Bank)</button>.</p>
-      <div class="field"><label>Chapter</label><select onchange="CALC_DRILL_FILTER=this.value;render();">
-        <option value="all" ${CALC_DRILL_FILTER==="all"?"selected":""}>All chapters (${chapters.length})</option>
-        ${chapters.map(ch=>{const c=CHAPTER_LIST.find(x=>x.num===ch);return `<option value="${ch}" ${CALC_DRILL_FILTER===ch?"selected":""}>Ch.${ch} — ${c?c.name:''}</option>`;}).join('')}
-      </select></div>
+      <p class="sub">Every problem here is freshly generated by a verified formula template — never a replay of a static bank question. Compare with <button class="small-btn" onclick="selectMode('calc')">Calculation Practice</button>, which uses fixed, human-reviewed questions from the Master Bank.</p>
       <div class="grid">
-        ${shown.map(ch=>{
+        ${chapters.map(ch=>{
           const chName = (CHAPTER_LIST.find(c=>c.num===ch)||{}).name || ch;
           const skills = CALC_SKILL_CHAPTERS[ch];
           return `<button class="mode" onclick="openDrillChapter('${ch}')">
@@ -6337,25 +6329,12 @@ function runChapterExitAction(ch,key,nextChapter){
   }
   if(key==='studyplan'){goStudyPlan();return;}
 }
-// Plain student-facing name for a chapter checklist step. Only changes what is
-// DISPLAYED — st.label itself (used above to match next.gate for highlighting, and
-// inside chapterExitCriteria()/chapterExitNextAction() for their own bookkeeping) is
-// never altered, so no dispatch/highlight logic is affected by this translation.
-function humanizeStepLabel(label){
-  return ({
-    'Practice':'Practice',
-    'Apply':'New Questions',
-    'Mastery Test':'Mastery Check',
-    'Challenge':'Challenge Check',
-    'Retention':'Refresh Check',
-  })[label] || label;
-}
 function exitChecklistHtml(ch){
   const x=chapterExitCriteria(ch),next=chapterExitNextAction(ch);
   return `<div class="exit-checklist">${x.steps.map(st=>{
     const actionable=next.gate===st.label&&!st.done;
     const cls=`exit-step ${st.done?'done':st.waiting?'wait':'locked'}${actionable?' actionable':''}`;
-    const body=`<b>${st.done?'✓':st.waiting?'⏳':'○'} ${humanizeStepLabel(st.label)}</b><div style="font-size:9.5px;margin-top:4px;">${escapeHtmlText(humanizeStageText(st.detail))}</div>`;
+    const body=`<b>${st.done?'✓':st.waiting?'⏳':'○'} ${st.label}</b><div style="font-size:9.5px;margin-top:4px;">${escapeHtmlText(st.detail)}</div>`;
     return actionable?`<button type="button" class="${cls}" onclick="runChapterExitAction('${escapeJsStr(ch)}','${escapeJsStr(next.key)}','${escapeJsStr(next.nextChapter||'')}')" title="${escapeHtmlText(next.label)}">${body}</button>`:`<div class="${cls}">${body}</div>`;
   }).join('')}</div>`;
 }
@@ -6979,7 +6958,6 @@ function recommendedNextStep(){
 }
 function runRecommendedStep(){
   const r=recommendedNextStep();if(r.key==='resumeSession'){resumeInterruptedSession();return;}if(r.key==='resumeFullSim'){resumeFullSimulation();return;}
-  if(r.key==='fixMisconception'){startFixWeakAreasSession();return;}
   if(r.key==='reviewcenter'){homeAction('reviewcenter');return;}
   if(r.key==='retentionfresh'){if(r.cta.indexOf('Repair')===0){runChapterExitAction(String(r.chapter),'repair','');}else runChapterExitAction(String(r.chapter),'retention','');return;}
   if(r.key==='chapterExit'){runChapterExitAction(String(r.chapter),String(r.exitKey),String(r.nextChapter||''));return;}
@@ -7044,34 +7022,6 @@ function plainChapterStatus(key){
     failed: 'Needs a Refresh',
     retained: 'Ready',
   })[key] || 'Practicing';
-}
-
-// UX correction: plainChapterStatus() above only ever looks at chapterMasteryStatus()'s
-// `.key`, which is 'developing' for EVERY chapter from "never touched" through "practice
-// complete, about to start Apply" — so Progress's chapter list showed the identical word
-// for a chapter with zero attempts and one with real, substantial history. This derives a
-// richer, real-evidence-based state using ONLY existing functions (chapterMasteryStatus,
-// chapterTrainingGate, masteryLevel) — no new scoring logic, per the correction brief —
-// matching the requested vocabulary: Not Started / Learning / Weak / Retest Required /
-// Mastered / Retention Due / Retained.
-function studentChapterState(ch){
-  ch=String(ch);
-  const m=chapterMasteryStatus(ch);
-  if(m.key==='retained') return 'Retained';
-  if(m.key==='due') return 'Retention Due';
-  if(m.key==='failed') return 'Retest Required';
-  if(m.key==='retestRequired') return 'Retest Required';
-  if(m.key==='provisional') return 'Mastered';
-  if(m.key==='transfer') return 'Learning';
-  // m.key==='developing' covers everything from untouched to practice-complete —
-  // disambiguate using the same training-gate evidence (unique questions, accuracy)
-  // and the same red/yellow/green thresholds (masteryLevel) already used elsewhere.
-  const g=chapterTrainingGate(ch);
-  if(!g.unique) return 'Not Started';
-  const lvl=masteryLevel(g.pct/100, g.unique);
-  if(lvl==='red') return 'Weak';
-  return 'Learning'; // covers yellow/green, and low-evidence ("none") rather than
-                      // over-calling a chapter "Weak" or "Mastered" off 1-2 attempts
 }
 
 // Final label/hint softening layer for chapterExitNextAction, applied after the
@@ -7534,7 +7484,7 @@ runChapterExitAction=function(ch,key,nextChapter){
   if(String(key)==='sealedstrong'){
     ch=String(ch);
     if(PENDING_ACTIVE_SESSION||PENDING_ACTIVE_FULLSIM){alert('Resume or discard the paused assessment before starting another scored test.');return;}
-    if(confirm(humanizeStageText(`Start Chapter ${ch} Mastery Test now? It is a one-use 10-question set. Feedback stays hidden until the end. Complete it closed-book and score at least ${V56_MASTERY_TARGET}%.`)))autoGenerateAndStartFresh(ch,2,10,{evidenceType:'Internal Mastery Test',sealedStrong:true});
+    if(confirm(`Start Chapter ${ch} Mastery Test now? It is a one-use 10-question set. Feedback stays hidden until the end. Complete it closed-book and score at least ${V56_MASTERY_TARGET}%.`))autoGenerateAndStartFresh(ch,2,10,{evidenceType:'Internal Mastery Test',sealedStrong:true});
     return;
   }
   return V56_baseRunChapterExitAction(ch,key,nextChapter);
@@ -8232,13 +8182,13 @@ runChapterExitAction=function(ch,key,nextChapter){
   ch=String(ch);key=String(key);const a=v510StageAvailability(ch);
   if(key==='transfer'){
     if(a.applyCount<5){alert('Not enough distinct quality-approved Apply/Challenge source cases remain to preserve the two scored stages. The app is failing closed instead of recycling exposed cases.');return;}
-    if(confirm(humanizeStageText(`Start the Chapter ${ch} Apply Test now? ${a.applyCount} distinct scored cases will be used, with a separate source reserve protected for Challenge.`)))autoGenerateAndStartFresh(ch,2,a.applyCount,{evidenceType:'Offline Fresh L2'});return;
+    if(confirm(`Start the Chapter ${ch} Apply Test now? ${a.applyCount} distinct scored cases will be used, with a separate source reserve protected for Challenge.`))autoGenerateAndStartFresh(ch,2,a.applyCount,{evidenceType:'Offline Fresh L2'});return;
   }
   if(key==='l3'){
     if(a.challengeCount<5){alert('Fewer than five unexposed Challenge source cases remain. The app will not recycle Apply cases as scored Challenge evidence.');return;}
-    if(confirm(humanizeStageText(`Start the Chapter ${ch} Challenge Test now? ${a.challengeCount} source cases remain that were not used in your prior transfer tests. Complete it closed-book.`)))autoGenerateAndStartFresh(ch,3,a.challengeCount,{evidenceType:'Offline Fresh L3'});return;
+    if(confirm(`Start the Chapter ${ch} Challenge Test now? ${a.challengeCount} source cases remain that were not used in your prior transfer tests. Complete it closed-book.`))autoGenerateAndStartFresh(ch,3,a.challengeCount,{evidenceType:'Offline Fresh L3'});return;
   }
-  if(key==='retention'){if(confirm(humanizeStageText(`Start the delayed Retention Test for Chapter ${ch}? This is a spaced recheck, not an independent-fresh test.`)))autoGenerateAndStartFresh(ch,3,10,{evidenceType:'Delayed Retest',retention:true});return;}
+  if(key==='retention'){if(confirm(`Start the delayed Retention Test for Chapter ${ch}? This is a spaced recheck, not an independent-fresh test.`))autoGenerateAndStartFresh(ch,3,10,{evidenceType:'Delayed Retest',retention:true});return;}
   return V510_BASE_RUN_EXIT(ch,key,nextChapter);
 };
 
@@ -10514,39 +10464,18 @@ renderHome=function(){
   const rec=recommendedNextStep();
   const activeCh=rec.chapter?String(rec.chapter):null;
   const mission=buildTodayMission();
-  // Exam-proximity awareness: reuses the exam date already collected on the Study
-  // Plan screen (localStorage 'ccp-exam-date') and the same <=10-day threshold Exam
-  // Practice already uses for its Final Week card — no new data, no new feature.
-  let examUrgency='';
-  try{
-    const ed=localStorage.getItem('ccp-exam-date');
-    if(ed){
-      const days=Math.ceil((new Date(ed)-new Date())/86400000);
-      if(days>=0){
-        const close=days<=10;
-        examUrgency=`<p style="font-family:var(--mono);font-size:11px;letter-spacing:.05em;text-transform:uppercase;color:${close?'var(--red)':'var(--steel)'};margin:0 0 12px;">${days} day${days===1?'':'s'} until your exam${close?' — Final Week focus is active':''}</p>`;
-      }
-    }
-  }catch(e){}
-  // Information hierarchy fix: show the highest-priority issue exactly once (in the
-  // primary card below, whose title/reason/CTA now always describe the same action —
-  // see recommendedNextStep()), then list every other flagged item once, compactly,
-  // in its own section — never restating what the primary card already said.
-  const primaryReasonPlain=rec.reason?humanizeStageText(rec.reason):'';
-  const secondaryItems=(mission.reasonItems||[]).filter(it=>{
-    const t=humanizeStageText(it.reason);
-    return t && !primaryReasonPlain.includes(t);
-  }).slice(0,4);
+  const urgentItems=(mission.reasonItems||[]).filter(it=>it.kind==='misconception'||it.kind==='repeated');
+  const planItems=(mission.reasonItems||[]).slice(0,4);
   app.innerHTML=`${header('Today',false)}
   ${primaryNav('home')}
-  ${examUrgency}
-  <div class="card recommend-card" style="${rec.key==='fixMisconception'?'border-left:4px solid var(--red);':''}">
+  ${urgentItems.length?`<div class="card recommend-card" style="border-left:4px solid var(--red);"><div class="recommend-kicker" style="color:var(--red);">Needs a second look</div>${urgentItems.slice(0,2).map(it=>`<div class="recommend-reason">${escapeHtmlText(humanizeStageText(it.reason))}</div>`).join('')}</div>`:''}
+  <div class="card recommend-card">
     <div class="recommend-kicker">What to do next</div>
     <div class="recommend-title">${escapeHtmlText(humanizeStageText(rec.title))}</div>
-    <div class="recommend-reason">${escapeHtmlText(primaryReasonPlain)}</div>
+    <div class="recommend-reason">${escapeHtmlText(humanizeStageText(rec.reason))}</div>
+    ${!mission.needsStart&&planItems.length?`<ul style="margin:10px 0 14px;padding-left:18px;font-size:13px;color:var(--ink-soft);">${planItems.map(it=>`<li>${escapeHtmlText(humanizeStageText(it.reason))}</li>`).join('')}</ul>`:''}
     <button class="btn" onclick="runRecommendedStep()">${escapeHtmlText(humanizeStageText(rec.cta))} →</button>
   </div>
-  ${secondaryItems.length?`<div class="card" style="padding:14px 18px;"><div style="font-family:var(--mono);font-size:11px;text-transform:uppercase;color:var(--steel);margin-bottom:6px;">Also worth knowing</div>${secondaryItems.map(it=>`<div style="font-size:12.5px;color:var(--ink-soft);padding:3px 0;">• ${escapeHtmlText(humanizeStageText(it.reason))}</div>`).join('')}</div>`:''}
   ${activeCh&&(chapterTrainingGate(activeCh).unique||officialStudyGuideGate(activeCh).complete)?chapterExitCriteriaCardHtml(activeCh):''}
   ${retentionCountdownCardHtml()}
   <p class="human-qa-note" style="margin-top:14px;">Memo writing still requires human/instructor review for a defensible writing-quality judgment. The app does not pretend otherwise.</p>`;
@@ -10776,21 +10705,11 @@ recommendedNextStep = function(){
   if(PENDING_ACTIVE_SESSION || PENDING_ACTIVE_FULLSIM) return MRE_baseRecommendedNextStep();
   const misc = mreUnresolvedMisconceptions();
   if(misc.length){
-    // UX correction: this branch previously paired a "Resolve Chapter X misconception"
-    // headline with whatever chapterExitNextAction() said was next for that chapter
-    // (e.g. "Complete Official Questions", "Continue Chapter X Practice") — an earlier,
-    // unrelated pipeline gate that does nothing to resolve the misconception itself.
-    // The CTA here now always launches the actual remediation path (the same
-    // startFixWeakAreasSession() used by the Fix Weak Areas tab, which prioritizes
-    // unresolved misconceptions via adaptiveScore's existing weighting), so headline,
-    // explanation, and button always describe the same action.
-    const ch = misc[0].chapter;
-    const base = mreReasonForSkill(misc[0].skillId,'misconception');
-    const title = misc.length===1 ? `Resolve Chapter ${ch} misconception` : `Resolve ${misc.length} high-confidence mistakes`;
-    const reason = misc.length===1
-      ? `${base}. A same-question retry did not resolve this — a different question on the same skill must be answered correctly.`
-      : `Starting with ${base}. Each one needs a different, correctly-answered question on the same skill before it counts as resolved.`;
-    return {key:'fixMisconception', chapter:ch, title, reason, cta:'Fix This Now'};
+    const ch = misc[0].chapter, n = chapterExitNextAction(String(ch));
+    return {key:'chapterExit', chapter:ch, exitKey:n.key, nextChapter:n.nextChapter,
+      title:`Resolve Chapter ${ch} misconception`,
+      reason:mreReasonForSkill(misc[0].skillId,'misconception')+' — a same-question retry did not resolve this; a different question on the same skill must be answered correctly.',
+      cta:n.label};
   }
   return MRE_baseRecommendedNextStep();
 };
@@ -10878,15 +10797,7 @@ renderStudyPlan = function(){
 // under the existing exit-criteria card, without redesigning it. ----
 var MRE_baseChapterExitCriteriaCardHtml = chapterExitCriteriaCardHtml;
 chapterExitCriteriaCardHtml = function(ch){
-  // UX correction: the checklist step labels (exitChecklistHtml) and the "Next: ..."
-  // line (chapterExitNextAction) are already translated to plain language at their
-  // source; this pass also covers chapterMasteryStatus()'s own label/detail text
-  // (e.g. "Provisional Mastery", "closed-book"), which reaches this card's "Current
-  // status" / "Evidence details" text unmodified otherwise. humanizeStageText() is a
-  // plain string substitution — it never touches an evidence rule, a `.key` used for
-  // dispatch, or PROGRESS data, so the underlying Mastery/Retention engine this card
-  // describes is completely unchanged; only its wording is.
-  let html = humanizeStageText(MRE_baseChapterExitCriteriaCardHtml(ch));
+  let html = MRE_baseChapterExitCriteriaCardHtml(ch);
   try{
     const misc = mreUnresolvedMisconceptionsForChapter(ch), fragile = mreFragileSkillsForChapter(ch);
     if(misc.length || fragile.length){
