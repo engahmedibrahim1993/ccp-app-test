@@ -1324,10 +1324,26 @@ function adaptiveScore(q){
   return score;
 }
 function buildAdaptivePool(){
-  const scored = QUESTIONS.filter(q=>!isQuestionSuspended(q.id)).map(q=>({q, s:adaptiveScore(q) + Math.random()*0.5}));
+  // F2 fix: every existing adaptive-mode caller sets CONFIG.chapter:'all' (Adaptive
+  // Practice, Fix Weak Areas), so this scoping is a no-op for them; it only takes
+  // effect for a caller that deliberately requests a single-chapter adaptive session
+  // (e.g. resolving a specific chapter's misconception), reusing the same
+  // misconception-weighted adaptiveScore() instead of a separate mechanism.
+  const chapterScoped = CONFIG.chapter && CONFIG.chapter !== 'all';
+  const base = chapterScoped ? (IDX_BY_CHAPTER[CONFIG.chapter] || []) : QUESTIONS;
+  const scored = base.filter(q=>!isQuestionSuspended(q.id)).map(q=>({q, s:adaptiveScore(q) + Math.random()*0.5}));
   scored.sort((a,b)=>b.s-a.s);
-  // take a wide top slice then shuffle so ordering isn't robotic, but keep priority weighting
-  const top = scored.slice(0, Math.max(40, CONFIG.numQuestions*4)).map(x=>x.q);
+  // take a wide top slice then shuffle so ordering isn't robotic, but keep priority weighting.
+  // F2 fix: the 40-question floor below was sized for the whole-bank pool (830+
+  // questions); applied unmodified to a single chapter's much smaller pool it covered
+  // almost the entire chapter, which diluted adaptiveScore's weighting back down to
+  // near-uniform chance. Scale the slice to the chapter's own size in that case so a
+  // flagged (highly-scored) question is actually concentrated near the top of what
+  // gets shuffled into the final selection, instead of just being chapter-eligible.
+  const sliceSize = chapterScoped
+    ? Math.max(CONFIG.numQuestions, Math.ceil(base.length*0.25))
+    : Math.max(40, CONFIG.numQuestions*4);
+  const top = scored.slice(0, sliceSize).map(x=>x.q);
   return top;
 }
 function buildFinalWeekPool(){
@@ -1698,7 +1714,7 @@ function renderProgress(){
   <div class="card">
     <h2>Your chapters</h2>
     <p class="sub">Click a chapter for topic-level detail.</p>
-    ${CHAPTER_LIST.map(c=>{const state=studentChapterState(c.num);const lvl=(state==='Retained'||state==='Mastered')?'green':(state==='Retest Required'||state==='Weak')?'red':(state==='Retention Due')?'yellow':'none';return `<div class="topicrow" style="cursor:pointer;" onclick="openDrilldown('${c.num}')"><span class="dot ${lvl}"></span><div class="name" style="flex:1;">Ch.${c.num} — ${c.name}</div><div class="pct">${escapeHtmlText(state)}</div></div>`;}).join('')}
+    ${CHAPTER_LIST.map(c=>{const state=studentChapterState(c.num);const lvl=(state==='Retained'||state==='Mastered')?'green':(state==='Needs Another Look'||state==='Weak')?'red':(state==='Retention Due')?'yellow':'none';return `<div class="topicrow" style="cursor:pointer;" onclick="openDrilldown('${c.num}')"><span class="dot ${lvl}"></span><div class="name" style="flex:1;">Ch.${c.num} — ${c.name}</div><div class="pct">${escapeHtmlText(state)}</div></div>`;}).join('')}
     <p class="sub" style="margin-top:8px;"><a href="#" onclick="VIEW='evidence';render();return false;">Full technical evidence view →</a></p>
   </div>
   <details class="card advanced-tools" open><summary>Weak areas</summary><div style="margin-top:12px;">
@@ -6400,7 +6416,13 @@ function sessionCloseoutModel(results,sessionTag,mode,evidenceClass){
     if(prior.length>=2){const pp=pctOf(prior.filter(a=>a.correct).length,prior.length),cp=pctOf(g.correct,g.total),delta=cp-pp;if(!best||delta>best.delta)best={g,pp,cp,delta};}
   });
   if(best&&best.delta>=5)improved=`${best.g.topic}: ${best.pp}% prior → ${best.cp}% this session (+${best.delta} pts).`;
-  else if(groups.length){const top=groups.slice().sort((a,b)=>(b.correct/b.total)-(a.correct/a.total)||b.total-a.total)[0];improved=`Strongest area this session: ${top.topic} (${pctOf(top.correct,top.total)}%).`;}
+  else if(groups.length){
+    const top=groups.slice().sort((a,b)=>(b.correct/b.total)-(a.correct/a.total)||b.total-a.total)[0];
+    // F4 fix: a topic with zero correct answers has no demonstrated strength and must
+    // not be reported as the "strongest area" just because it sorts first.
+    if(top.correct>0)improved=`Strongest area this session: ${top.topic} (${pctOf(top.correct,top.total)}%).`;
+    else improved='No strong area identified this session.';
+  }
   const weak=groups.filter(g=>g.miss>0).sort((a,b)=>b.miss-a.miss||(a.correct/a.total)-(b.correct/b.total))[0];
   const weakness=weak?`${weak.topic}: ${weak.miss} miss${weak.miss===1?'':'es'} (${pctOf(weak.correct,weak.total)}% this session).`:'No active weakness detected in this session.';
   const rec=recommendedNextStep();
@@ -6920,8 +6942,21 @@ function chapterExitCriteriaCardHtml(ch){
 }
 function runChapterExitAction(ch,key,nextChapter){
   ch=String(ch);key=String(key||'');
-  if((PENDING_ACTIVE_SESSION||PENDING_ACTIVE_FULLSIM)&&['transfer','l3','retention','cold','sealedstrong'].includes(key)){alert('You already have a paused exam/session. Resume or discard it before starting another assessment.');return;}
-  if(key==='training'||key==='repair'){CONFIG={mode:'chapter',chapter:ch,numQuestions:10,difficulty:'all',qtype:'all',timed:false,immediateFeedback:true,confidenceEnabled:true};VIEW='config';render();return;}
+  if((PENDING_ACTIVE_SESSION||PENDING_ACTIVE_FULLSIM)&&['transfer','l3','retention','cold','sealedstrong','repair'].includes(key)){alert('You already have a paused exam/session. Resume or discard it before starting another assessment.');return;}
+  if(key==='training'){CONFIG={mode:'chapter',chapter:ch,numQuestions:10,difficulty:'all',qtype:'all',timed:false,immediateFeedback:true,confidenceEnabled:true};VIEW='config';render();return;}
+  // F2 fix: 'repair' previously launched the same plain, exposure-based chapter
+  // practice as 'training' — no different from ordinary practice, so it did not
+  // actually prioritize the flagged misconception the CTA promised to resolve.
+  // Reuses the existing misconception-weighted adaptive engine (adaptiveScore's
+  // +12 unresolved-misconception boost), scoped to this one chapter via
+  // buildAdaptivePool()'s CONFIG.chapter handling — no new remediation mechanism.
+  if(key==='repair'){
+    if(confirm(`Start a Chapter ${ch} misconception-focused practice session now? Questions on your flagged skill are prioritized first.`)){
+      CONFIG={mode:'adaptive',chapter:ch,numQuestions:10,difficulty:'all',qtype:'all',timed:false,immediateFeedback:true,confidenceEnabled:true};
+      startSession();
+    }
+    return;
+  }
   if(key==='transfer'){AUTO_FRESH_CONFIG.chapter=ch;if(confirm(`Start the Chapter ${ch} Apply Test now?`))autoGenerateAndStartFresh(ch,2,10,{evidenceType:'Offline Fresh L2'});return;}
   if(key==='cold'){const max=coldEligibleStaticQuestions(ch).length;COLD_CONFIG.chapter=ch;COLD_CONFIG.numQuestions=Math.min(10,max);VIEW='coldConfig';render();return;}
   if(key==='sealedstrong'){if(confirm(`Start the Chapter ${ch} Internal Mastery Test now? It is one-use, feedback stays hidden until the end, and the target is 85% closed-book. The test length adapts to the number of distinct quality-approved concepts in this chapter.`))autoGenerateAndStartFresh(ch,2,masteryRequiredCount(ch),{evidenceType:'Internal Mastery Test',sealedStrong:true});return;}
@@ -6972,7 +7007,13 @@ function recommendedNextStep(){
   const due=facts.find(x=>['due','failed'].includes(x.f.mastery.key));if(due)return {key:'retentionfresh',chapter:due.c.num,title:`Retention check — Chapter ${due.c.num}`,reason:due.f.mastery.key==='failed'?'Repair this chapter, then retest.':'The retention delay is complete.',cta:due.f.mastery.key==='failed'?'Repair Chapter':'Start Retention Test'};
   const hc=highConfidenceMissIds().length;if(hc)return {key:'reviewcenter',title:'Fix high-confidence mistakes',reason:`${hc} high-confidence miss(es) can hide a real misconception. Fix these before adding more test volume.`,cta:'Review Mistakes'};
   const started=facts.filter(x=>x.f.gate.unique>0||x.f.transferDemonstrated||x.f.strongFoundationPass).sort((a,b)=>Number(a.c.num)-Number(b.c.num));
-  for(const x of started){const n=chapterExitNextAction(x.c.num);if(x.f.mastery.key!=='retained'&&!(x.f.mastery.key==='provisional'&&n.key==='nextchapter'))return {key:'chapterExit',chapter:x.c.num,exitKey:n.key,nextChapter:n.nextChapter,title:`Continue Chapter ${x.c.num}: ${n.label}`,reason:n.hint,cta:n.label};}
+  for(const x of started){const n=chapterExitNextAction(x.c.num);if(x.f.mastery.key!=='retained'&&!(x.f.mastery.key==='provisional'&&n.key==='nextchapter')){
+    // F3 fix: n.label already names the chapter for some gates (e.g. "Continue Chapter
+    // X Practice"); prefixing "Continue Chapter X: " in that case doubled the phrase.
+    // Only prepend the chapter-context prefix when the label doesn't already include it.
+    const alreadyNamesChapter=n.label.indexOf(`Chapter ${x.c.num}`)!==-1;
+    return {key:'chapterExit',chapter:x.c.num,exitKey:n.key,nextChapter:n.nextChapter,title:alreadyNamesChapter?n.label:`Continue Chapter ${x.c.num}: ${n.label}`,reason:n.hint,cta:n.label};
+  }}
   const provisional=facts.find(x=>x.f.mastery.key==='provisional');if(provisional){const n=chapterExitNextAction(provisional.c.num);return {key:'chapterExit',chapter:provisional.c.num,exitKey:n.key,nextChapter:n.nextChapter,title:n.label,reason:n.hint,cta:n.label};}
   const retained=facts.filter(x=>x.f.mastery.key==='retained').sort((a,b)=>Number(b.c.num)-Number(a.c.num));if(retained.length){const next=nextAppropriateDevelopingChapter(retained[0].c.num);if(next)return {key:'nextchapter',chapter:next.num,title:`Start Chapter ${next.num}`,reason:`Chapter ${retained[0].c.num} is retained. Move forward.`,cta:`Open Chapter ${next.num} Practice`};}
   return {key:'nextchapter',chapter:'1',title:'Start Chapter 1 Practice',reason:'No chapter activity is recorded yet. Start with a chapter you have studied; the Study Plan will not test unstudied material.',cta:'Start Chapter 1'};
@@ -7059,8 +7100,8 @@ function studentChapterState(ch){
   const m=chapterMasteryStatus(ch);
   if(m.key==='retained') return 'Retained';
   if(m.key==='due') return 'Retention Due';
-  if(m.key==='failed') return 'Retest Required';
-  if(m.key==='retestRequired') return 'Retest Required';
+  if(m.key==='failed') return 'Needs Another Look';
+  if(m.key==='retestRequired') return 'Needs Another Look';
   if(m.key==='provisional') return 'Mastered';
   if(m.key==='transfer') return 'Learning';
   // m.key==='developing' covers everything from untouched to practice-complete —
@@ -9826,7 +9867,7 @@ v521TaskEvidence=function(code){
   if(n){key='tested';label='TESTED';}
   if(n&&directN===0){key='directneeded';label='DIRECT TASK CHECK REQUIRED';}
   if(n>=2&&pct<70){key='weak';label='WEAK';}
-  if(hcWrong||directWrong){key='retest';label='RETEST REQUIRED';}
+  if(hcWrong||directWrong){key='retest';label='Needs Another Look';}
   if(n>=3&&pct>=85&&directC>=1&&!hcWrong&&!directWrong){key='mastered';label='MASTERED';}
   if(key==='mastered'&&lastTs&&Date.now()-lastTs>=5*86400000){key='due';label='RETENTION DUE';}
   return {code,mapped:direct.length+supporting.length,directMapped:direct.length,supportingMapped:supporting.length,n,c,pct,directN,directC,hcWrong,lastTs,key,label};
@@ -10893,7 +10934,7 @@ chapterExitCriteriaCardHtml = function(ch){
       const lines = [];
       lines.push(`High-confidence misconception: ${misc.length} unresolved${misc.length?' ('+Array.from(new Set(misc.map(u=>u.topic))).join(', ')+')':''}`);
       lines.push(`Fragile knowledge: ${fragile.length} topic(s) not yet confirmed with fresh evidence`);
-      lines.push(`Therefore: ${misc.length?'RETEST REQUIRED':'not yet fully confirmed'}`);
+      lines.push(`Therefore: ${misc.length?'Needs Another Look':'not yet fully confirmed'}`);
       html += `<div class="card"><h2>Why am I not mastered yet? — Chapter ${escapeHtmlText(ch)}</h2><p class="sub">${lines.map(escapeHtmlText).join('<br>')}</p></div>`;
     }
   }catch(e){}
