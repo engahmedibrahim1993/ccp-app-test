@@ -7742,7 +7742,19 @@ chapterExitNextAction=function(ch){
   }
   if(!f.l3ClosedTransferPass)return {gate:'Challenge',key:'l3',label:'Start Challenge Test',hint:`Unsignposted application. Target ≥${V56_CHALLENGE_TARGET}% and complete it closed-book.`};
   if(f.mastery.key==='due')return {gate:'Retention',key:'retention',label:'Start Retention Test',hint:`The delay is complete. Target ≥${V56_RETENTION_TARGET}% closed-book.`};
-  if(f.mastery.key==='failed')return {gate:'Retention',key:'repair',label:`Repair Chapter ${ch}`,hint:'Review the failed concepts, then repeat the delayed retention check.'};
+  if(f.mastery.key==='failed'){
+    // BUGFIX: previously this always returned key:'repair', and 'repair' only ever
+    // launches ordinary adaptive practice (no new Delayed Retest evidence), so
+    // chapterMasteryStatus never left 'failed' and the chapter could never reach
+    // 'retained' again — "Repair Chapter" was offered forever with no way back to
+    // retrying Retention. Once the learner has done at least one practice attempt
+    // on this chapter since the failed retest, offer the retry directly; until then,
+    // keep sending them to repair first, exactly as before.
+    const failedRetest=latestOfflineTransferRetest(ch);
+    const repairedSince=!!(failedRetest&&(PROGRESS.attempts||[]).some(a=>String(a.chapter)===ch&&a.evidenceClass!=='cold'&&(a.ts||0)>(failedRetest.ts||0)));
+    if(repairedSince)return {gate:'Retention',key:'retention',label:'Start Retention Test',hint:`You repaired this chapter. Retry the delayed retention check now. Target ≥${V56_RETENTION_TARGET}% closed-book.`};
+    return {gate:'Retention',key:'repair',label:`Repair Chapter ${ch}`,hint:'Review the failed concepts, then repeat the delayed retention check.'};
+  }
   if(f.mastery.key==='provisional'){const next=nextAppropriateDevelopingChapter(ch);return {gate:'Retention',key:next?'nextchapter':'studyplan',nextChapter:next?String(next.num):null,label:next?`Continue with Ch.${next.num} While Retention Waits`:'Open Study Plan',hint:'Do not over-test this chapter early. Continue studying while the retention delay creates real spacing.'};}
   if(f.mastery.key==='retained'){const next=nextAppropriateDevelopingChapter(ch);return {gate:null,key:next?'nextchapter':'studyplan',nextChapter:next?String(next.num):null,label:next?`Chapter Retained — Open Ch.${next.num}`:'Chapter Retained — Open Study Plan',hint:'All chapter gates are complete. Move forward.'};}
   return {gate:null,key:'studyplan',label:'Open Study Plan',hint:'Use the Study Plan to choose the next useful action.'};
@@ -8350,7 +8362,25 @@ function v510CandidateItems(ch,stage){
   }
   const seen=new Set();return arr.filter(x=>{if(!x.key||seen.has(x.key))return false;seen.add(x.key);return true;}).sort((a,b)=>b.rank-a.rank);
 }
-function v510PriorSourceKeys(ch){return v57PriorSourceKeys(String(ch));}
+// BUGFIX: Apply/Challenge/Retention availability and pack-building must not be
+// reduced by the Internal Mastery Test's consumption of the shared v5.7 source-key
+// ledger. v57PriorSourceKeys(ch) aggregated sourceKeys across every stage
+// (apply/challenge/retention/mastery) with no separation, so completing Mastery
+// (which, absent a curated HMB pack, falls back to the same native/curated/
+// supplement/dynamic sources as Apply/Challenge/Retention) could silently drop
+// Challenge's remaining reserve below the 5-case safety floor, permanently
+// stranding the chapter at "Challenge Test still required" with no recovery path
+// short of a full Reset. Mastery's own one-use protection is untouched: its pack
+// build still calls the original, unfiltered v57PriorSourceKeys(ch) directly, so
+// it continues to avoid reusing anything Apply/Challenge/Retention (or an earlier
+// Mastery attempt) already used. This only restores availability that was being
+// incorrectly withheld — it does not weaken any quality/evidence gate.
+function v510PriorSourceKeys(ch){
+  v57EnsureProgress();
+  const s=new Set();
+  (PROGRESS.v57PackHistory||[]).filter(h=>String(h.chapter)===String(ch)&&h.stage!=='mastery').forEach(h=>(h.sourceKeys||[]).forEach(k=>s.add(k)));
+  return s;
+}
 function v510PairPlan(ch,history){
   ch=String(ch);history=history||new Set();
   const A=v510CandidateItems(ch,'apply').filter(x=>!history.has(x.key));
@@ -8448,7 +8478,13 @@ chapterExitNextAction=function(ch){
 };
 var V510_BASE_RUN_EXIT=runChapterExitAction;
 runChapterExitAction=function(ch,key,nextChapter){
-  ch=String(ch);key=String(key);const a=v510StageAvailability(ch);
+  ch=String(ch);key=String(key);
+  // BUGFIX: this override intercepts 'transfer'/'l3'/'retention' directly and never
+  // reaches the base function's paused-session guard (still active for 'sealedstrong',
+  // 'cold', and 'repair'), so starting one of these three scored assessments while a
+  // session/Full Simulation is paused was silently allowed instead of being blocked.
+  if((PENDING_ACTIVE_SESSION||PENDING_ACTIVE_FULLSIM)&&['transfer','l3','retention'].includes(key)){alert('You already have a paused exam/session. Resume or discard it before starting another assessment.');return;}
+  const a=v510StageAvailability(ch);
   if(key==='transfer'){
     if(a.applyCount<5){alert('Not enough distinct quality-approved Apply/Challenge source cases remain to preserve the two scored stages. The app is failing closed instead of recycling exposed cases.');return;}
     if(confirm(humanizeStageText(`Start the Chapter ${ch} Apply Test now? ${a.applyCount} distinct scored cases will be used, with a separate source reserve protected for Challenge.`)))autoGenerateAndStartFresh(ch,2,a.applyCount,{evidenceType:'Offline Fresh L2'});return;
