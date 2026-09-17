@@ -401,6 +401,38 @@ function defaultProgress(){
   };
 }
 
+// Corrupted/legacy storage safety net: a saved or imported PROGRESS object can carry an
+// explicit null (not merely a missing key) for any array/object field — Object.assign() copies
+// that null verbatim over the correct default, and later code (recordAttempt, srsUpdate,
+// toggleBookmark, setNote, ...) then crashes on the first read/write. Force every field back to
+// its correct empty shape whenever the persisted/imported value doesn't match.
+function sanitizeProgressShape(p){
+  const d = defaultProgress();
+  Object.keys(d).forEach(k=>{
+    if(Array.isArray(d[k])){
+      if(!Array.isArray(p[k])) p[k]=[];
+    }else if(d[k]&&typeof d[k]==="object"){
+      if(!p[k]||typeof p[k]!=="object"||Array.isArray(p[k])) p[k]={};
+    }
+  });
+  return p;
+}
+
+// Anything already represented in attempts/exposure/etc. was certainly seen before — rebuild the
+// permanent seen-ledger from that evidence. Shared by loadProgress() (boot) and importProgress()
+// (restoring a backup): without this, a freshly imported backup would report every previously
+// attempted question as still "unseen" until the next full page reload, letting Cold Chapter
+// Certification serve already-seen stems as if they were fresh evidence.
+function rebuildEverSeenIds(){
+  const legacySeen=new Set(PROGRESS.everSeenIds);
+  (PROGRESS.attempts||[]).forEach(a=>legacySeen.add(a.qid));
+  (PROGRESS.methodSelectionAttempts||[]).forEach(a=>legacySeen.add(a.qid));
+  (PROGRESS.fullSimHistory||[]).forEach(h=>(h.mcqQids||[]).forEach(id=>legacySeen.add(id)));
+  Object.keys(PROGRESS.exposure||{}).forEach(id=>legacySeen.add(id));
+  (PROGRESS.recentQueue||[]).forEach(id=>legacySeen.add(id));
+  PROGRESS.everSeenIds=Array.from(legacySeen).filter(Boolean);
+}
+
 var PROGRESS = defaultProgress();
 var storageReady = false;
 var hasLocalStorage = (function(){
@@ -438,6 +470,7 @@ async function loadProgress(){
     if(v2 && v2.value){
       PROGRESS = Object.assign(defaultProgress(), JSON.parse(v2.value));
       PROGRESS.version = defaultProgress().version; // always stamp the CURRENT schema version after merging in old data
+      sanitizeProgressShape(PROGRESS);
       PROGRESS.everSeenIds=Array.isArray(PROGRESS.everSeenIds)?PROGRESS.everSeenIds:[];
       PROGRESS.coldSessionHistory=Array.isArray(PROGRESS.coldSessionHistory)?PROGRESS.coldSessionHistory:[];
       PROGRESS.offlineFreshSeenIds=Array.isArray(PROGRESS.offlineFreshSeenIds)?PROGRESS.offlineFreshSeenIds:[];
@@ -471,13 +504,7 @@ async function loadProgress(){
         }
       });
       // Migration safety: anything already represented in attempts/exposure was certainly seen before v4.
-      const legacySeen=new Set(PROGRESS.everSeenIds);
-      (PROGRESS.attempts||[]).forEach(a=>legacySeen.add(a.qid));
-      (PROGRESS.methodSelectionAttempts||[]).forEach(a=>legacySeen.add(a.qid));
-      (PROGRESS.fullSimHistory||[]).forEach(h=>(h.mcqQids||[]).forEach(id=>legacySeen.add(id)));
-      Object.keys(PROGRESS.exposure||{}).forEach(id=>legacySeen.add(id));
-      (PROGRESS.recentQueue||[]).forEach(id=>legacySeen.add(id));
-      PROGRESS.everSeenIds=Array.from(legacySeen).filter(Boolean);
+      rebuildEverSeenIds();
       // Migrate legacy recentSessionIds (pre-Final-Training-System) into the new split fields if
       // the new fields don't already have data — safe, non-destructive, no data loss.
       if((!PROGRESS.recentPracticeIds || PROGRESS.recentPracticeIds.length===0) &&
@@ -512,8 +539,8 @@ async function loadProgress(){
   storageReady = true;
 }
 async function saveProgress(){
-  try{ await storageSet(STORE_KEY_V2, JSON.stringify(PROGRESS)); }
-  catch(e){ console.error("Storage save failed", e); }
+  try{ await storageSet(STORE_KEY_V2, JSON.stringify(PROGRESS)); return true; }
+  catch(e){ console.error("Storage save failed", e); return false; }
 }
 
 /* =========================================================
@@ -6756,8 +6783,14 @@ function importProgress(file){
         return;
       }
       PROGRESS = Object.assign(defaultProgress(), data);
-      await saveProgress();
-      alert("Progress imported successfully.");
+      sanitizeProgressShape(PROGRESS);
+      rebuildEverSeenIds();
+      const saved = await saveProgress();
+      if(saved){
+        alert("Progress imported successfully.");
+      }else{
+        alert("The file loaded, but this browser could not save it to storage (it may be full or restricted). Do not close this tab — free up space or try a different browser, then import again, or your imported progress will be lost.");
+      }
       goDashboard();
     }catch(err){
       alert("Could not parse that file as valid JSON progress data.");
@@ -10154,8 +10187,13 @@ function v528SupportIdsFor(code){
   ]));
 }
 
-v521TaskEvidence=function(code){
-  const quality=(QUESTIONS||[]).filter(staticQuestionIsQualityApproved);
+v521TaskEvidence=function(code, precomputedQuality){
+  // precomputedQuality lets a caller that loops over every task code (v521TaskSummary, on every
+  // Dashboard render) pass in the quality-approved bank once instead of re-running
+  // staticQuestionIsQualityApproved() over all ~800+ questions on every one of the 76 tasks
+  // (measured at 2.5-4.5s per Dashboard render, independent of learner history size). The
+  // direct/supporting/mastery classification logic below is unchanged either way.
+  const quality=precomputedQuality || (QUESTIONS||[]).filter(staticQuestionIsQualityApproved);
   const overrideIds=new Set(v528SupportIdsFor(code));
   const direct=quality.filter(q=>v524ExplicitTaskCodes(q).includes(code));
   const supporting=quality.filter(q=>{
@@ -10184,7 +10222,8 @@ v521TaskEvidence=function(code){
 };
 
 v521TaskSummary=function(){
-  const all=V521_BLUEPRINT_TASKS.map(t=>({...t,e:v521TaskEvidence(t.code)}));
+  const quality=(QUESTIONS||[]).filter(staticQuestionIsQualityApproved);
+  const all=V521_BLUEPRINT_TASKS.map(t=>({...t,e:v521TaskEvidence(t.code, quality)}));
   const counts={notstudied:0,tested:0,directneeded:0,weak:0,retest:0,mastered:0,due:0};all.forEach(x=>counts[x.e.key]=(counts[x.e.key]||0)+1);
   return {all,counts};
 };
@@ -10376,7 +10415,12 @@ try{v58ClearDerived();}catch(e){}
 var V526_BASE_TASK_CARD=v521TaskCoverageCard;
 v521TaskCoverageCard=function(){
   let html=V526_BASE_TASK_CARD();
-  const directLive=V521_BLUEPRINT_TASKS.filter(t=>(QUESTIONS||[]).some(q=>staticQuestionIsQualityApproved(q)&&v524ExplicitTaskCodes(q).includes(t.code))).length;
+  // Same fix as v521TaskSummary(): compute quality-approval and each question's explicit task
+  // codes once (O(questions)) instead of re-scanning the whole bank once per task (O(tasks*questions),
+  // the other half of the measured 2.5-4.5s Dashboard-render cost on top of v521TaskSummary's).
+  const codesWithDirectAnchor=new Set();
+  (QUESTIONS||[]).forEach(q=>{ if(staticQuestionIsQualityApproved(q)) v524ExplicitTaskCodes(q).forEach(c=>codesWithDirectAnchor.add(c)); });
+  const directLive=V521_BLUEPRINT_TASKS.filter(t=>codesWithDirectAnchor.has(t.code)).length;
   const liveNote=`<b>Live quality-approved explicit-anchor coverage: ${directLive}/76 tasks.</b> ${directLive===76?'':'Some Blueprint tasks currently lack a valid direct anchor and cannot be treated as fully covered. '}Explicit task-tag semantics are human-reviewed; automated integrity checks cannot prove semantic alignment by themselves. `;
   html=html.replace('<p class=\"sub\">May 2026 Blueprint task tracking. ','<p class=\"sub\">May 2026 Blueprint task tracking. '+liveNote);
   html=html.replace('Legacy keyword inference is shown only as supporting evidence and cannot by itself produce MASTERED status.','Legacy inference is conservative, approximate supporting context only; it is never counted as direct Blueprint coverage and cannot by itself produce MASTERED status.');
