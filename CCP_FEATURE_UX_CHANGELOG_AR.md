@@ -33,7 +33,7 @@
 - شاشة **Fix Weak Areas**: زر "Start Fix Weak Areas Session →" + "Open My Mistakes" — بدون أي تغيير.
 - شاشة **Progress**: Training Readiness، Memo Readiness، قائمة الفصول الـ 34، Weak areas — بدون أي تغيير.
 - شاشة **More**: كل عناصرها الثمانية — بدون أي تغيير.
-- في **Exam Practice**: الصيغ الخمس نفسها (Timed Practice Mock, Unseen Chapter Test, Blueprint Practice Mock, Blueprint Transfer Check, Memo Practice, Full CCP Simulation) بقيت **جميعها ظاهرة مباشرة بدون نقرة إضافية** — تم فقط **تجميعها** بعناوين مرحلية واضحة (Practice/Pacing، Readiness/Transfer، Communication، Full Simulation) بدلاً من عرضها كقائمة مسطّحة، ونُقل Blueprint Transfer Check تحديدًا من مكان مطوٍ منعزل إلى الظهور المباشر ضمن مجموعته المنطقية.
+- في **Exam Practice**: الصيغ الست نفسها (Timed Practice Mock, Unseen Chapter Test, Blueprint Practice Mock, Blueprint Transfer Check, Memo Practice, Full CCP Simulation) بقيت **جميعها ظاهرة مباشرة بدون نقرة إضافية** — تم فقط **تجميعها** بعناوين مرحلية واضحة (Practice/Pacing، Readiness/Transfer، Communication، Full Simulation) بدلاً من عرضها كقائمة مسطّحة، ونُقل Blueprint Transfer Check تحديدًا من مكان مطوٍ منعزل إلى الظهور المباشر ضمن مجموعته المنطقية.
 
 ## ما لم يتغيّر إطلاقًا (What was not changed)
 
