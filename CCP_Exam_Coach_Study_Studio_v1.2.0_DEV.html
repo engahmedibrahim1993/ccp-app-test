@@ -12166,6 +12166,104 @@ runRecommendedStep = function(){
 })();
 </script>
 
+<script id="phase-v120-batchB-corrections">
+/* =========================================================
+   v1.2.0 BATCH B — CHAPTERS 7-12 CORRECTIONS
+   Applies the confirmed, source-supported corrections from the
+   Batch B (Chapters 7-12) content audit, using the identical
+   live-data-overlay mechanism as phase-v120-batchA-qa-closeout:
+   no native QUESTIONS wording, options, or answer keys are
+   rewritten. Only .source citation strings are corrected, plus
+   one Study Guide item flagged (not rewritten) via the same
+   sourceConflict mechanism used for sg6_4.
+   ========================================================= */
+(function(){
+  // ---- A. Page-citation-only corrections (18 native QUESTIONS items, Ch.7/9/10/11) ----
+  const CITATION_FIXES_B = Object.freeze({
+    '7-2':'S&K6 Ch.7, p.71 (Sunk Costs; corrected from p.70 during Batch B audit)',
+    '7-5':'S&K6 Ch.7, p.73 (Straight-Line Depreciation; corrected from p.72 during Batch B audit)',
+    '7-6':'S&K6 Ch.7, p.72 (Cost-push inflation; corrected from p.71 during Batch B audit)',
+    '7-7':'S&K6 Ch.7, p.72 (Escalation; corrected from p.71 during Batch B audit)',
+    '7-8':'S&K6 Ch.7, p.73 (Effective vs Marginal Tax Rate; corrected from p.72 during Batch B audit)',
+    '7-9':'S&K6 Ch.7, p.73 (Depletion vs Depreciation; corrected from p.72 during Batch B audit)',
+    '7-10':'S&K6 Ch.7, p.73 (Investment Tax Credits; corrected from p.72 during Batch B audit)',
+    '7-13':'Ch.7, p.72, Governmental Regulations (corrected from "p.71-72" during Batch B audit; the regulatory-enforcement-uncertainty text is entirely on p.72, not p.71)',
+    '8-1':'S&K6 Ch.8, p.81 (Impact of Diversity in Products, Service Lines, Channels, and Customers; corrected from p.80 during Batch B audit)',
+    '8-3':'S&K6 Ch.8, Fig.8.2, p.81 (corrected from p.80 during Batch B audit)',
+    '8-7':'S&K6 Ch.8, p.81 (Impact of Diversity in Products, Service Lines, Channels, and Customers; corrected from p.80 during Batch B audit)',
+    '9-2':'S&K6 Ch.9, p.92 (Estimate Classification - primary/driving characteristic; corrected from p.91 during Batch B audit)',
+    '9-22':'Ch.9, p.109, Take-Off (corrected from p.107 during Batch B audit)',
+    '9-24':'Ch.9, p.117, Contingency and Risk Analysis (corrected from p.116 during Batch B audit)',
+    '10-7':'S&K6 Ch.10, p.153 (MACRS depreciation allowances do not consider salvage value; corrected from p.164 during Batch B audit)',
+    '11-2':'S&K6 Ch.11, p.157 (Concurrent Engineering; corrected from p.156 during Batch B audit)',
+    '11-3':'S&K6 Ch.11, p.157 (CAPP variant approach; corrected from p.156 during Batch B audit)',
+    '11-9':'S&K6 Ch.11, p.164 (Cost Bases - time-based fixed/variable reclassification; corrected from p.163 during Batch B audit)'
+  });
+  window.BATCHB_CITATION_FIXES = CITATION_FIXES_B;
+  Object.entries(CITATION_FIXES_B).forEach(([id,src])=>{
+    const q = Array.isArray(QUESTIONS) ? QUESTIONS.find(x=>String(x.id)===id) : null;
+    if(q) q.source = src;
+  });
+
+  // ---- B. 8-4: content misattribution, not a page drift. The tested sentence ("This method
+  //         of collecting and summarizing cost elements reveals which resources and activities
+  //         are the most significant contributors (drivers) to the cost of the cost objective")
+  //         is verbatim S&K6 Ch.1, p.14 text, not Ch.8 text. Ch.8's own ABC/M discussion covers
+  //         the same underlying concept (activity drivers, cost assignment network) using
+  //         different wording. The question is topically appropriate for the Ch.8 practice set
+  //         and is left in place; only the citation is corrected to its true source.
+  const q84 = Array.isArray(QUESTIONS) ? QUESTIONS.find(x=>String(x.id)==='8-4') : null;
+  if(q84) q84.source = 'S&K6 Ch.1, p.14 (corrected during Batch B audit - this exact sentence is verbatim Ch.1 text on Activity-Based Costing, misattributed to Ch.8/p.80; the underlying ABC/M cost-driver concept is also covered in Ch.8 itself, using different wording, e.g. the Cost Assignment Network and activity-driver discussion on pp.81-83)';
+
+  // ---- C. appa_2e (Study Guide Ch.10 Appendix A, Part A) source-conflict flag ----
+  // Digitization fidelity: VERIFIED (byte-for-byte match against the raw extracted Study
+  // Guide PDF text for both the question/options and the answer key entry "A.2e. A").
+  // Technical status: SOURCE SUPPORT INSUFFICIENT - none of the 5 mandatory sources defines
+  // or uses "Proportional Costs" as a synonym for "semi-variable costs." RP 10S-90 (Cost
+  // Engineering Terminology) has entries for FIXED COST and VARIABLE COSTS but no entry at
+  // all for semi-variable cost or proportional cost. S&K6 Ch.10 itself only ever calls these
+  // "semi-variable costs" and describes them as "partially proportional" to production - if
+  // anything, "proportional" cost more naturally describes a fully variable cost, not a
+  // semi-variable one. Same digitization-fidelity-vs-technical-validity split as sg6_4;
+  // official item/answer preserved unedited for provenance, flagged, and excluded from the
+  // auto-graded score.
+  const BATCHB_SG_SOURCE_CONFLICT_IDS = Object.freeze(['appa_2e']);
+  window.BATCHB_SG_SOURCE_CONFLICT_IDS = BATCHB_SG_SOURCE_CONFLICT_IDS;
+  Object.values(EXAM_STUDY_GUIDE_BANK||{}).forEach(arr=>{
+    (arr||[]).forEach(q=>{
+      if (BATCHB_SG_SOURCE_CONFLICT_IDS.includes(q.id)){
+        q.sourceConflict = true;
+        const flag = 'SOURCE SUPPORT INSUFFICIENT: this item and its printed answer ("A. Proportional costs") are a byte-for-byte accurate digitization of the official Study Guide Appendix A question and answer key. However, no source among the 5 mandatory CCP sources - including AACE RP 10S-90, Cost Engineering Terminology, which defines FIXED COST and VARIABLE COSTS but has no entry for semi-variable cost or proportional cost - supports "Proportional Costs" as another name for "semi-variable costs." S&K6 Ch.10 itself describes semi-variable costs as only "partially proportional" to production, distinct from variable costs which are fully proportional. Digitization fidelity: VERIFIED. Technical status: SOURCE SUPPORT INSUFFICIENT - not used as an authoritative teaching item, and excluded from this Official Study Guide set\'s auto-graded score pending resolution.';
+        q.auditNote = q.auditNote ? (flag+'\n\n'+q.auditNote) : flag;
+      }
+    });
+  });
+
+  // ---- Integrity checks for A-C ----
+  if(typeof integrityResults === 'function'){
+    const priorIntegrityB = integrityResults;
+    integrityResults = function(){
+      const rs = priorIntegrityB();
+
+      const citFixedB = Object.keys(CITATION_FIXES_B).filter(id=>{
+        const q=QUESTIONS.find(x=>String(x.id)===id);
+        return q && q.source===CITATION_FIXES_B[id];
+      });
+      rs.push({name:'Batch B citation-only corrections applied',ok:citFixedB.length===Object.keys(CITATION_FIXES_B).length,detail:`${citFixedB.length}/${Object.keys(CITATION_FIXES_B).length} Batch B page-citation corrections are live on the native QUESTIONS objects (Ch.7/9/10/11).`});
+
+      const q84fixed = QUESTIONS.find(x=>String(x.id)==='8-4');
+      const q84Ok = q84fixed && /S&K6 Ch\.1, p\.14/.test(String(q84fixed.source||''));
+      rs.push({name:'8-4 content-misattribution citation corrected',ok:!!q84Ok,detail:'8-4 now cites S&K6 Ch.1, p.14 (its true source) instead of the incorrect Ch.8, p.80 attribution; question text, options, and answer key are unchanged.'});
+
+      const appa2e=Object.values(EXAM_STUDY_GUIDE_BANK||{}).flat().find(x=>x.id==='appa_2e');
+      rs.push({name:'appa_2e source-support-insufficient flag active',ok:!!(appa2e&&appa2e.sourceConflict===true&&/SOURCE SUPPORT INSUFFICIENT/.test(String(appa2e.auditNote||''))),detail:'appa_2e keeps its official Study Guide question/answer for provenance, carries a source-support audit note, and is excluded from the auto-graded Official Study Guide score (same mechanism as sg6_4).'});
+
+      return rs;
+    };
+  }
+})();
+</script>
+
 
 <style id="studio-style">
 :root{--serif: 'Segoe UI',Arial,sans-serif;--navy:#153e46;--navy-2:#205762;--brass:#ae782f;--slate-bg:#f1f4f3;--line:#dce5e3;--steel:#49676c}
