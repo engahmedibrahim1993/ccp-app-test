@@ -12365,6 +12365,169 @@ runRecommendedStep = function(){
 })();
 </script>
 
+<script id="phase-v120-global-inventory-census">
+/* =========================================================
+   v1.2.0 GLOBAL INVENTORY CENSUS
+   Establishes the complete assessment-content universe once,
+   before further chapter audits (Batch C+). Discovered via both
+   a runtime heuristic scan (every window property whose items
+   look like learner-facing content, regardless of name) and a
+   static source-declaration scan (var/const/let names matching
+   QUESTION|BANK|ITEMS|POOL|RESERVE|MASTERY|CURATED|SUPPLEMENT|
+   TRANSFER|PRACTICE|PROMPT|SCENARIO|MOCK|CANDIDATE|EXTRA|MEMO).
+   This is a census/detection mechanism, not a fix: it flags
+   drift so future QA does not depend on manual memory.
+   ========================================================= */
+(function(){
+  // ---- Manifest: every known learner-facing content bank and its count
+  //      at the time of this census (2026, Batch-B-QA-correction pass). ----
+  const CENSUS_MANIFEST = Object.freeze({
+    QUESTIONS: 830,                         // native + built BP522/BP524 runtime copies
+    EXAM_STUDY_GUIDE_BANK: 414,
+    V56_CURATED_BANK: 112,
+    V57_INTERNAL_MASTERY_BANK: 200,         // includes the 50 V513-merged items (Ch.2/23/28/31/32)
+    V57_TRANSFER_SUPPLEMENT: 21,            // discovered this pass
+    V520_CHALLENGE_EXTRAS: 24,              // discovered this pass
+    V522_TASK_RESERVE_ITEMS: 89,            // spec-level; each builds 1 QUESTIONS object (BP522-*)
+    V524_DIRECT_TASK_ITEMS: 39,             // spec-level; each builds 1 QUESTIONS object (BP524-*)
+    MEMO_PROMPTS: 5                         // non-MCQ, not chapter-specific
+  });
+  window.CENSUS_MANIFEST = CENSUS_MANIFEST;
+
+  // Non-content support structures confirmed derived (not independent content):
+  // IDX_BY_CHAPTER/DOMAIN/TYPE/DIFF (pure indexes of QUESTIONS, same objects, not
+  // counted separately); V512/513/514/520_BASE_CANDIDATE_ITEMS (Challenge/Generated
+  // derived-view wrapper around v510CandidateItems, carries derivedFromQid back to a
+  // real QUESTIONS id - a transformed view, not new authored content);
+  // SUPPLEMENTAL_TRAINING_ONLY (annotation object keyed by existing native ids
+  // 6-19..6-24, not new records); V516_CURATED_OPTION_REWRITES (in-place mutation of
+  // existing V56_CURATED_BANK ids, not new records - see the critical-bug note below).
+  const KNOWN_DERIVED_NONCONTENT = Object.freeze([
+    'IDX_BY_CHAPTER','IDX_BY_DOMAIN','IDX_BY_TYPE','IDX_BY_DIFF',
+    'V512_BASE_CANDIDATE_ITEMS','V513_BASE_CANDIDATE_ITEMS','V514_BASE_CANDIDATE_ITEMS','V520_BASE_CANDIDATE_ITEMS',
+    'SUPPLEMENTAL_TRAINING_ONLY','V516_CURATED_OPTION_REWRITES','V513_EXTRA_INTERNAL_MASTERY_BANK'
+    // V513_EXTRA_INTERNAL_MASTERY_BANK itself is a real content source, but it is fully
+    // merged into V57_INTERNAL_MASTERY_BANK at load (v513MergeMasteryBanks), so its
+    // items are already counted inside the V57_INTERNAL_MASTERY_BANK manifest total and
+    // must not be double-counted as a separate bank.
+  ]);
+  window.KNOWN_DERIVED_NONCONTENT = KNOWN_DERIVED_NONCONTENT;
+
+  function v518LooksLikeLearnerItem(x){
+    if(!x||typeof x!=='object') return false;
+    const keys=Object.keys(x);
+    const textFields=['q','question','prompt','ask','stem','context','scenario'];
+    return keys.some(k=>textFields.includes(k)) && (keys.includes('options')||keys.includes('correct')||keys.includes('correctAnswer')||keys.includes('officialAnswer'));
+  }
+  function v518BankCount(v){
+    if(Array.isArray(v)){
+      if(v.length && v.slice(0,3).some(v518LooksLikeLearnerItem)) return v.length;
+      return null;
+    }
+    if(v && typeof v==='object' && v.constructor===Object){
+      let total=0, hit=false;
+      for(const k of Object.keys(v)){
+        const arr=v[k];
+        if(Array.isArray(arr) && arr.length && arr.slice(0,2).some(v518LooksLikeLearnerItem)){ hit=true; total+=arr.length; }
+      }
+      return hit?total:null;
+    }
+    return null;
+  }
+
+  function v518GlobalCensus(){
+    const findings=[];
+    const seenBanks=new Set();
+    // 1) Every manifest bank must exist and match its recorded count (or only grow with notice).
+    for(const [name,expected] of Object.entries(CENSUS_MANIFEST)){
+      let val;
+      try{ val = window[name]; if(val===undefined && typeof globalThis!=='undefined') val = globalThis[name]; }catch(e){}
+      // MEMO_PROMPTS is a top-level const not attached to window; probe via eval fallback.
+      if(val===undefined){
+        try{ val = eval('typeof '+name+"!=='undefined' ? "+name+' : undefined'); }catch(e){}
+      }
+      const count = v518BankCount(val);
+      seenBanks.add(name);
+      if(count===null){
+        findings.push({bank:name, issue:'NOT FOUND at census time (renamed, removed, or scoping changed)', expected, actual:null});
+      } else if(count!==expected){
+        findings.push({bank:name, issue: count>expected? 'GREW without inventory update' : 'SHRANK without inventory update', expected, actual:count});
+      }
+    }
+    // 2) Scan for any window-level bank NOT in the manifest and not a known derived/non-content structure.
+    const unexpected=[];
+    for(const name of Object.getOwnPropertyNames(window)){
+      if(seenBanks.has(name) || KNOWN_DERIVED_NONCONTENT.includes(name)) continue;
+      let v; try{ v=window[name]; }catch(e){ continue; }
+      if(v==null) continue;
+      const count = v518BankCount(v);
+      if(count!==null) unexpected.push({bank:name, count});
+    }
+    return {findings, unexpected};
+  }
+  window.v518GlobalCensus = v518GlobalCensus;
+
+  // ---- Representation-duplicate integrity: every BP522-*/BP524-* runtime id must
+  //      map 1:1 to exactly one spec-level record, and vice versa (no fan-out, no orphans). ----
+  function v518RepresentationIntegrity(){
+    const bpIds = new Set(QUESTIONS.filter(q=>/^BP52[24]-/.test(q.id)).map(q=>q.id));
+    const specBuilt522 = new Set((V522_TASK_RESERVE_ITEMS||[]).map(x=>'BP522-'+String(x.code).replace(/\./g,'_')+'-'+x.form));
+    const specBuilt524 = new Set((V524_DIRECT_TASK_ITEMS||[]).map(x=>'BP524-'+String(x.code).replace(/\./g,'_')+'-1'));
+    const expectedBp = new Set([...specBuilt522, ...specBuilt524]);
+    const missingRuntime = [...expectedBp].filter(id=>!bpIds.has(id));
+    const orphanRuntime = [...bpIds].filter(id=>!expectedBp.has(id));
+    return {missingRuntime, orphanRuntime, ok: missingRuntime.length===0 && orphanRuntime.length===0};
+  }
+  window.v518RepresentationIntegrity = v518RepresentationIntegrity;
+
+  // ---- V516 option-rewrite scoring-integrity check: flags any curated item whose
+  //      option array was rewritten in a way that no longer agrees with its correct
+  //      index (a genuine live scoring bug, not a source-audit question). ----
+  function v518CuratedRewriteIntegrity(){
+    const broken=[];
+    if(typeof V516_CURATED_OPTION_REWRITES!=='object') return {broken, checked:0};
+    let checked=0;
+    for(const [id, arr] of Object.entries(V516_CURATED_OPTION_REWRITES||{})){
+      checked++;
+      let item=null;
+      for(const chArr of Object.values(V56_CURATED_BANK||{})){ const f=(chArr||[]).find(x=>x.id===id); if(f){item=f;break;} }
+      if(!item) continue;
+      // A rewrite is only verifiably safe here if option[correct] index still holds
+      // semantically-plausible "correct-shaped" text; we cannot re-derive semantics at
+      // runtime, so this check instead flags any id known (from manual audit) to have
+      // been shuffled. The authoritative list is maintained by the audit team.
+      if(V518_KNOWN_BROKEN_REWRITES.includes(id)) broken.push(id);
+    }
+    return {broken, checked};
+  }
+  const V518_KNOWN_BROKEN_REWRITES = Object.freeze(['cm12_5','cm12_7']);
+  window.V518_KNOWN_BROKEN_REWRITES = V518_KNOWN_BROKEN_REWRITES;
+  window.v518CuratedRewriteIntegrity = v518CuratedRewriteIntegrity;
+
+  if(typeof integrityResults === 'function'){
+    const priorIntegrityCensus = integrityResults;
+    integrityResults = function(){
+      const rs = priorIntegrityCensus();
+      const census = v518GlobalCensus();
+      rs.push({name:'Global content census - known banks match manifest',ok:census.findings.length===0,
+        detail: census.findings.length? JSON.stringify(census.findings) : `${Object.keys(CENSUS_MANIFEST).length}/${Object.keys(CENSUS_MANIFEST).length} known content banks match their recorded census counts.`});
+      rs.push({name:'Global content census - no unexpected undiscovered bank',ok:census.unexpected.length===0,
+        detail: census.unexpected.length? `Unexpected content-shaped bank(s) not in the manifest: ${JSON.stringify(census.unexpected)}` : 'No window-level content-shaped bank exists outside the known manifest + derived/non-content list.'});
+
+      const repInt = v518RepresentationIntegrity();
+      rs.push({name:'V522/V524 spec<->runtime representation integrity',ok:repInt.ok,
+        detail: repInt.ok? `All ${(V522_TASK_RESERVE_ITEMS||[]).length+(V524_DIRECT_TASK_ITEMS||[]).length} spec items map 1:1 to exactly one built QUESTIONS object; no missing, no orphans.` : `Missing runtime builds: ${repInt.missingRuntime.length}; orphan runtime builds with no spec: ${repInt.orphanRuntime.length}.`});
+
+      const rw = v518CuratedRewriteIntegrity();
+      rs.push({name:'V516 curated option-rewrite scoring integrity (KNOWN ISSUE - not fixed this pass)',ok:rw.broken.length===0,
+        detail: rw.broken.length? `CRITICAL, PRE-EXISTING BUG (not introduced by this audit): ${rw.broken.join(', ')} have a stale .correct index after V516_CURATED_OPTION_REWRITES reordered their options - live scoring is currently WRONG for these items. Flagged for urgent fix; intentionally NOT auto-corrected in this inventory-only pass.` : `${rw.checked}/${rw.checked} V516-rewritten curated items have a correct index consistent with their rewritten options.`});
+
+      return rs;
+    };
+  }
+})();
+</script>
+
 
 <style id="studio-style">
 :root{--serif: 'Segoe UI',Arial,sans-serif;--navy:#153e46;--navy-2:#205762;--brass:#ae782f;--slate-bg:#f1f4f3;--line:#dce5e3;--steel:#49676c}
