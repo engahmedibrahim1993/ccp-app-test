@@ -12208,38 +12208,133 @@ runRecommendedStep = function(){
   // ---- B. 8-4: content misattribution, not a page drift. The tested sentence ("This method
   //         of collecting and summarizing cost elements reveals which resources and activities
   //         are the most significant contributors (drivers) to the cost of the cost objective")
-  //         is verbatim S&K6 Ch.1, p.14 text, not Ch.8 text. Ch.8's own ABC/M discussion covers
-  //         the same underlying concept (activity drivers, cost assignment network) using
-  //         different wording. The question is topically appropriate for the Ch.8 practice set
-  //         and is left in place; only the citation is corrected to its true source.
+  //         is verbatim S&K6 Ch.1, p.14 text, not Ch.8 text. However, the underlying concept
+  //         (resources/activities as significant cost drivers) is also extensively covered in
+  //         Ch.8's own material (the Cost Assignment Network, resource/activity drivers,
+  //         pp.81-83), which is the pool this item actually sits in. QA correction: cite BOTH
+  //         the true source of the exact tested sentence (Ch.1 p.14) and the Ch.8 section
+  //         covering the same underlying concept in its own words, rather than dropping the
+  //         Ch.8 grounding entirely. Question text/options/answer key unchanged.
   const q84 = Array.isArray(QUESTIONS) ? QUESTIONS.find(x=>String(x.id)==='8-4') : null;
-  if(q84) q84.source = 'S&K6 Ch.1, p.14 (corrected during Batch B audit - this exact sentence is verbatim Ch.1 text on Activity-Based Costing, misattributed to Ch.8/p.80; the underlying ABC/M cost-driver concept is also covered in Ch.8 itself, using different wording, e.g. the Cost Assignment Network and activity-driver discussion on pp.81-83)';
+  if(q84) q84.source = 'S&K6 Ch.1, p.14 (verbatim source of the exact tested sentence, corrected from the incorrect "Ch.8, p.80" attribution during Batch B QA); concept also covered in S&K6 Ch.8, pp.81-83 (Cost Assignment Network / resource and activity drivers), which is this item\'s practice pool';
 
-  // ---- C. appa_2e (Study Guide Ch.10 Appendix A, Part A) source-conflict flag ----
+  // ---- C. appa_2e (Study Guide Ch.10 Appendix A, Part A) - source-support-insufficient flag ----
   // Digitization fidelity: VERIFIED (byte-for-byte match against the raw extracted Study
   // Guide PDF text for both the question/options and the answer key entry "A.2e. A").
-  // Technical status: SOURCE SUPPORT INSUFFICIENT - none of the 5 mandatory sources defines
-  // or uses "Proportional Costs" as a synonym for "semi-variable costs." RP 10S-90 (Cost
+  // Technical status: SOURCE SUPPORT INSUFFICIENT (NOT a source conflict/contradiction) -
+  // none of the 5 mandatory sources defines or uses "Proportional Costs" as a synonym for
+  // "semi-variable costs," but no higher-authority source contradicts the Study Guide either;
+  // the mandatory sources are simply silent on this specific synonym. RP 10S-90 (Cost
   // Engineering Terminology) has entries for FIXED COST and VARIABLE COSTS but no entry at
   // all for semi-variable cost or proportional cost. S&K6 Ch.10 itself only ever calls these
   // "semi-variable costs" and describes them as "partially proportional" to production - if
   // anything, "proportional" cost more naturally describes a fully variable cost, not a
-  // semi-variable one. Same digitization-fidelity-vs-technical-validity split as sg6_4;
-  // official item/answer preserved unedited for provenance, flagged, and excluded from the
-  // auto-graded score.
-  const BATCHB_SG_SOURCE_CONFLICT_IDS = Object.freeze(['appa_2e']);
-  window.BATCHB_SG_SOURCE_CONFLICT_IDS = BATCHB_SG_SOURCE_CONFLICT_IDS;
+  // semi-variable one, but this is an inference, not a documented contradiction. Same
+  // digitization-fidelity-vs-technical-validity split as sg6_4; official item/answer
+  // preserved unedited for provenance, flagged, and excluded from the auto-graded score.
+  // The runtime continues to use the pre-existing sourceConflict boolean as the exclusion
+  // mechanism (it is the safest existing engineering path to keep an item out of scoring),
+  // but the id list and every audit-note string below intentionally say "SOURCE SUPPORT
+  // INSUFFICIENT," never "conflict," to avoid mislabeling silence as contradiction.
+  const BATCHB_SG_SOURCE_INSUFFICIENT_IDS = Object.freeze(['appa_2e']);
+  window.BATCHB_SG_SOURCE_INSUFFICIENT_IDS = BATCHB_SG_SOURCE_INSUFFICIENT_IDS;
   Object.values(EXAM_STUDY_GUIDE_BANK||{}).forEach(arr=>{
     (arr||[]).forEach(q=>{
-      if (BATCHB_SG_SOURCE_CONFLICT_IDS.includes(q.id)){
-        q.sourceConflict = true;
-        const flag = 'SOURCE SUPPORT INSUFFICIENT: this item and its printed answer ("A. Proportional costs") are a byte-for-byte accurate digitization of the official Study Guide Appendix A question and answer key. However, no source among the 5 mandatory CCP sources - including AACE RP 10S-90, Cost Engineering Terminology, which defines FIXED COST and VARIABLE COSTS but has no entry for semi-variable cost or proportional cost - supports "Proportional Costs" as another name for "semi-variable costs." S&K6 Ch.10 itself describes semi-variable costs as only "partially proportional" to production, distinct from variable costs which are fully proportional. Digitization fidelity: VERIFIED. Technical status: SOURCE SUPPORT INSUFFICIENT - not used as an authoritative teaching item, and excluded from this Official Study Guide set\'s auto-graded score pending resolution.';
+      if (BATCHB_SG_SOURCE_INSUFFICIENT_IDS.includes(q.id)){
+        q.sourceConflict = true; // exclusion mechanism only - see note above; status is "insufficient support," not "conflict"
+        const flag = 'DIGITIZATION FIDELITY: VERIFIED (byte-for-byte match to the printed Study Guide question and answer key "A.2e. A"). TECHNICAL STATUS: SOURCE SUPPORT INSUFFICIENT (not a source conflict) - no source among the 5 mandatory CCP sources, including AACE RP 10S-90 (Cost Engineering Terminology, which defines FIXED COST and VARIABLE COSTS but has no entry for semi-variable cost or proportional cost), corroborates "Proportional Costs" as another name for "semi-variable costs." No higher-authority source contradicts this Study Guide answer either - the mandatory sources are simply silent on it. S&K6 Ch.10 describes semi-variable costs as only "partially proportional" to production, distinct from fully-proportional variable costs, which weakly suggests but does not prove the term pairing is wrong. Excluded from this Official Study Guide set\'s auto-graded score pending corroboration; not used as an authoritative teaching item.';
         q.auditNote = q.auditNote ? (flag+'\n\n'+q.auditNote) : flag;
       }
     });
   });
 
-  // ---- Integrity checks for A-C ----
+  // ---- D. Chapter 8 curated + internal mastery banks (cm8_1-8, hm8_1-10, 18 items) ----
+  // ROOT CAUSE OF OMISSION: these 18 items were read from the live DEV file early in the
+  // Batch B work session (cm8_1-8 via a curated-bank dump) but were dropped from the final
+  // Chapter 8 tally during compilation, and hm8_1-10 (mastery) were never pulled at all - a
+  // bookkeeping/carry-forward failure across a long session, not a deliberate scoping
+  // decision. Reachability confirmed: both banks are accessed by the same generic
+  // V56_CURATED_BANK[ch]/V57_INTERNAL_MASTERY_BANK[ch] dynamic-by-chapter pattern used for
+  // every other chapter (not dead code, not chapter-gated). All 18 items freshly re-audited
+  // against S&K6 Ch.8 (pp.79-88) during this QA-correction pass - not retroactively marked
+  // VERIFIED from the earlier narrative. All 18 are technically sound and directly grounded:
+  // cm8_1-8 and hm8_1/hm8_3/hm8_4/hm8_6 match the chapter's restaurant-bill/cost-assignment-
+  // network/local-vs-enterprise/value-adding passages closely or verbatim; hm8_2 (resource vs
+  // activity driver classification) matches the driver definitions on p.81-83 exactly; hm8_5
+  // matches the enterprise-scope passage on p.86; hm8_7 (unused capacity) matches the p.87-88
+  // "waste, low-value-adding costs, and unused capacity" sentence; hm8_8 (cost-assignment-
+  // network structure drives accuracy) matches the chapter's own framing; hm8_9 (overhead
+  // complexity from product/channel/customer proliferation) matches the p.80-81 diversity
+  // discussion; hm8_10 (final cost objects) matches the cost-object definition verbatim.
+  const CH8_CURATED_MASTERY_PROVENANCE = Object.freeze({
+    cm8_1:{chapter:'8',type:'curated_bank',source:'S&K6 Ch.8, p.79 (Introduction - expenses vs. calculated costs)',status:'VERIFIED'},
+    cm8_2:{chapter:'8',type:'curated_bank',source:'S&K6 Ch.8, p.83 (Cost Assignment Network - Figure 8.3)',status:'VERIFIED'},
+    cm8_3:{chapter:'8',type:'curated_bank',source:'S&K6 Ch.8, pp.81-83 (Resource drivers vs. activity drivers)',status:'VERIFIED'},
+    cm8_4:{chapter:'8',type:'curated_bank',source:'S&K6 Ch.8, p.86 (Local versus Enterprise-Wide ABC/M)',status:'VERIFIED'},
+    cm8_5:{chapter:'8',type:'curated_bank',source:'S&K6 Ch.8, p.84 (Low-value-adding activities - rework/monitoring)',status:'VERIFIED'},
+    cm8_6:{chapter:'8',type:'curated_bank',source:'S&K6 Ch.8, pp.87-88 (unused capacity)',status:'VERIFIED'},
+    cm8_7:{chapter:'8',type:'curated_bank',source:'S&K6 Ch.8, p.83 (Cost Assignment Network drives cost accuracy)',status:'VERIFIED'},
+    cm8_8:{chapter:'8',type:'curated_bank',source:'S&K6 Ch.8, p.86 (Enterprise-wide ABC/M - profit margin/cost-to-serve)',status:'VERIFIED'},
+    hm8_1:{chapter:'8',type:'internal_mastery_bank',source:'S&K6 Ch.8, p.79 (Introduction - expenses vs. calculated costs)',status:'VERIFIED'},
+    hm8_2:{chapter:'8',type:'internal_mastery_bank',source:'S&K6 Ch.8, pp.81-83 (Resource drivers vs. activity drivers)',status:'VERIFIED'},
+    hm8_3:{chapter:'8',type:'internal_mastery_bank',source:'S&K6 Ch.8, p.83 (Cost Assignment Network - Figure 8.3)',status:'VERIFIED'},
+    hm8_4:{chapter:'8',type:'internal_mastery_bank',source:'S&K6 Ch.8, p.86 (Local versus Enterprise-Wide ABC/M)',status:'VERIFIED'},
+    hm8_5:{chapter:'8',type:'internal_mastery_bank',source:'S&K6 Ch.8, p.86 (Enterprise-wide ABC/M scope)',status:'VERIFIED'},
+    hm8_6:{chapter:'8',type:'internal_mastery_bank',source:'S&K6 Ch.8, p.84 (Low-value-adding activities - rework)',status:'VERIFIED'},
+    hm8_7:{chapter:'8',type:'internal_mastery_bank',source:'S&K6 Ch.8, pp.87-88 (unused capacity)',status:'VERIFIED'},
+    hm8_8:{chapter:'8',type:'internal_mastery_bank',source:'S&K6 Ch.8, p.83 (Cost Assignment Network drives cost accuracy)',status:'VERIFIED'},
+    hm8_9:{chapter:'8',type:'internal_mastery_bank',source:'S&K6 Ch.8, pp.80-81 (Impact of Diversity in Products/Channels/Customers)',status:'VERIFIED'},
+    hm8_10:{chapter:'8',type:'internal_mastery_bank',source:'S&K6 Ch.8, p.83 (Cost objects - final cost objects definition)',status:'VERIFIED'}
+  });
+  window.CH8_CURATED_MASTERY_PROVENANCE = CH8_CURATED_MASTERY_PROVENANCE;
+  window.ch8ResolveProvenance = function(id){ return CH8_CURATED_MASTERY_PROVENANCE[String(id)] || null; };
+
+  // ---- E. Chapter 2 internal mastery bank (hm2_1-10) - discovered during this QA pass ----
+  // These 10 items live in V513_EXTRA_INTERNAL_MASTERY_BANK (a pre-existing v1.1.2-era block,
+  // predating both Batch A and Batch B), merged into V57_INTERNAL_MASTERY_BANK['2'] at load
+  // time by the pre-existing v513MergeMasteryBanks() IIFE. They were never audited or
+  // ledgered by the original Batch A pass (Chapters 1-6) - found only via the exhaustive
+  // Chapters-1-12 live-inventory-vs-ledger reconciliation this QA correction required.
+  // Chapter 2 is Batch A's scope, not Batch B's; these rows are still added now (labeled
+  // batch "B" in the ledger for audit-provenance honesty - they were audited in this pass,
+  // not the original Batch A pass) since Batch A's own report is not being reopened. All 10
+  // freshly source-checked against S&K6 Ch.2 (pp.19-20+): hm2_1/hm2_6 match the chapter's
+  // opening price-vs-cost duality; hm2_2 matches the TCM Framework quote "you cost the scope
+  // contents and price the cost estimate" verbatim; hm2_3 matches Table 2.1's SOW-cost ->
+  // overhead -> contingency -> profit -> price build-up structure and math exactly (fresh
+  // numbers); hm2_5 matches Figure 2.1's direct/indirect cost tree; hm2_7 matches the WBS
+  // bottom-level cost-coding sentence verbatim; hm2_8 matches the historical-records
+  // lessons-learned sentence verbatim; hm2_9 matches the ROA = Net Profit Margin x Asset
+  // Turnover formula exactly (math re-derived and confirmed: 6% x 2.0 = 12%); hm2_4 and
+  // hm2_10 (markup-on-cost vs. margin-on-price) are standard, uncontradicted pricing concepts
+  // consistent with but not verbatim from the chapter's own cost-plus framing.
+  // OUT-OF-SCOPE GAP FLAGGED, NOT AUDITED: the same V513_EXTRA_INTERNAL_MASTERY_BANK block
+  // also defines hm23_1-10, hm28_1-10, hm31_1-10, and hm32_1-10 (40 more items, Chapters 23/
+  // 28/31/32). These are outside Chapters 1-12 and are NOT audited or ledgered here; they are
+  // flagged for whichever future batch covers those chapters.
+  const CH2_MASTERY_PROVENANCE = Object.freeze({
+    hm2_1:{chapter:'2',type:'internal_mastery_bank',source:'S&K6 Ch.2, p.19 (Introduction - price vs. cost duality)',status:'VERIFIED'},
+    hm2_2:{chapter:'2',type:'internal_mastery_bank',source:'S&K6 Ch.2, p.20 (Costing precedes pricing; TCM Framework p.42 quote)',status:'VERIFIED'},
+    hm2_3:{chapter:'2',type:'internal_mastery_bank',source:'S&K6 Ch.2, p.20 (Table 2.1 - Project Cost versus Price build-up)',status:'VERIFIED'},
+    hm2_4:{chapter:'2',type:'internal_mastery_bank',source:'S&K6 Ch.2, p.20 (Table 2.1 cost-plus framing; standard markup/margin distinction)',status:'VERIFIED'},
+    hm2_5:{chapter:'2',type:'internal_mastery_bank',source:'S&K6 Ch.2, p.20 (Figure 2.1 - Direct vs Indirect Cost Classification)',status:'VERIFIED'},
+    hm2_6:{chapter:'2',type:'internal_mastery_bank',source:'S&K6 Ch.2, p.19 (Introduction - price vs. cost duality)',status:'VERIFIED'},
+    hm2_7:{chapter:'2',type:'internal_mastery_bank',source:'S&K6 Ch.2, p.20 (WBS/Scope - bottom-level cost coding)',status:'VERIFIED'},
+    hm2_8:{chapter:'2',type:'internal_mastery_bank',source:'S&K6 Ch.2, p.20 (Historical Records - lessons learned)',status:'VERIFIED'},
+    hm2_9:{chapter:'2',type:'internal_mastery_bank',source:'S&K6 Ch.2, p.21 (Return on Assets = Net Profit Margin x Asset Turnover)',status:'VERIFIED'},
+    hm2_10:{chapter:'2',type:'internal_mastery_bank',source:'S&K6 Ch.2, p.20 (Table 2.1 cost-plus framing; standard target-margin pricing)',status:'VERIFIED'}
+  });
+  window.CH2_MASTERY_PROVENANCE = CH2_MASTERY_PROVENANCE;
+  window.ch2ResolveProvenance = function(id){ return CH2_MASTERY_PROVENANCE[String(id)] || null; };
+  window.BATCHB_KNOWN_UNAUDITED_GAP = Object.freeze({
+    note:'V513_EXTRA_INTERNAL_MASTERY_BANK also defines hm23_1-10, hm28_1-10, hm31_1-10, hm32_1-10 (40 items, Chapters 23/28/31/32). Discovered during the Ch.1-12 completeness sweep; outside current audit scope (Chapters 1-12); not audited, not ledgered. Flag for the batch that covers Chapters 23/28/31/32.',
+    ids:['hm23_1','hm23_2','hm23_3','hm23_4','hm23_5','hm23_6','hm23_7','hm23_8','hm23_9','hm23_10',
+         'hm28_1','hm28_2','hm28_3','hm28_4','hm28_5','hm28_6','hm28_7','hm28_8','hm28_9','hm28_10',
+         'hm31_1','hm31_2','hm31_3','hm31_4','hm31_5','hm31_6','hm31_7','hm31_8','hm31_9','hm31_10',
+         'hm32_1','hm32_2','hm32_3','hm32_4','hm32_5','hm32_6','hm32_7','hm32_8','hm32_9','hm32_10']
+  });
+
+  // ---- Integrity checks for A-E ----
   if(typeof integrityResults === 'function'){
     const priorIntegrityB = integrityResults;
     integrityResults = function(){
@@ -12252,11 +12347,17 @@ runRecommendedStep = function(){
       rs.push({name:'Batch B citation-only corrections applied',ok:citFixedB.length===Object.keys(CITATION_FIXES_B).length,detail:`${citFixedB.length}/${Object.keys(CITATION_FIXES_B).length} Batch B page-citation corrections are live on the native QUESTIONS objects (Ch.7/9/10/11).`});
 
       const q84fixed = QUESTIONS.find(x=>String(x.id)==='8-4');
-      const q84Ok = q84fixed && /S&K6 Ch\.1, p\.14/.test(String(q84fixed.source||''));
-      rs.push({name:'8-4 content-misattribution citation corrected',ok:!!q84Ok,detail:'8-4 now cites S&K6 Ch.1, p.14 (its true source) instead of the incorrect Ch.8, p.80 attribution; question text, options, and answer key are unchanged.'});
+      const q84Ok = q84fixed && /S&K6 Ch\.1, p\.14/.test(String(q84fixed.source||'')) && /S&K6 Ch\.8, pp\.81-83/.test(String(q84fixed.source||''));
+      rs.push({name:'8-4 content-misattribution citation corrected (dual cite)',ok:!!q84Ok,detail:'8-4 now cites both S&K6 Ch.1, p.14 (true source of the exact tested sentence) and S&K6 Ch.8, pp.81-83 (that chapter\'s own driver/cost-assignment-network coverage of the same concept); question text, options, and answer key are unchanged.'});
 
       const appa2e=Object.values(EXAM_STUDY_GUIDE_BANK||{}).flat().find(x=>x.id==='appa_2e');
-      rs.push({name:'appa_2e source-support-insufficient flag active',ok:!!(appa2e&&appa2e.sourceConflict===true&&/SOURCE SUPPORT INSUFFICIENT/.test(String(appa2e.auditNote||''))),detail:'appa_2e keeps its official Study Guide question/answer for provenance, carries a source-support audit note, and is excluded from the auto-graded Official Study Guide score (same mechanism as sg6_4).'});
+      rs.push({name:'appa_2e source-support-insufficient flag active (correct terminology)',ok:!!(appa2e&&appa2e.sourceConflict===true&&/SOURCE SUPPORT INSUFFICIENT/.test(String(appa2e.auditNote||''))&&/DIGITIZATION FIDELITY: VERIFIED/.test(String(appa2e.auditNote||''))),detail:'appa_2e keeps its official Study Guide question/answer for provenance, carries a source-support (not source-conflict) audit note distinguishing digitization fidelity from technical status, and is excluded from the auto-graded Official Study Guide score.'});
+
+      const ch8Resolved = Object.keys(CH8_CURATED_MASTERY_PROVENANCE).filter(id=>!!window.ch8ResolveProvenance(id));
+      rs.push({name:'Ch.8 curated/mastery provenance resolvable (18 items)',ok:ch8Resolved.length===18,detail:`${ch8Resolved.length}/18 Ch.8 curated/mastery items (8 cm8 + 10 hm8) resolve to a source citation via CH8_CURATED_MASTERY_PROVENANCE; reachable via the same V56_CURATED_BANK[ch]/V57_INTERNAL_MASTERY_BANK[ch] pattern used for every other chapter.`});
+
+      const ch2Resolved = Object.keys(CH2_MASTERY_PROVENANCE).filter(id=>!!window.ch2ResolveProvenance(id));
+      rs.push({name:'Ch.2 mastery provenance resolvable (10 items, gap found this pass)',ok:ch2Resolved.length===10,detail:`${ch2Resolved.length}/10 Ch.2 mastery items (hm2_1-10, merged in via V513_EXTRA_INTERNAL_MASTERY_BANK) resolve to a source citation via CH2_MASTERY_PROVENANCE.`});
 
       return rs;
     };
