@@ -11959,6 +11959,214 @@ runRecommendedStep = function(){
 </script>
 
 
+<script id="phase-v120-batchA-qa-closeout">
+/* =========================================================
+   v1.2.0 BATCH A — QA CLOSEOUT
+   Applies the confirmed, source-supported corrections from the
+   Batch A (Chapters 1-6) content audit. All fixes are live-data
+   overlays in the established PATCHES/SOURCE_AUTHORITY_QUARANTINE
+   style: no native QUESTIONS wording is rewritten except the two
+   explicitly-approved 1-20 stem/explanation edits, applied here via
+   direct field assignment (same mechanism as PHASE2_CALC_PATCHES),
+   not by editing the literal array text.
+   1-17 is quarantined via a new, separate list (BATCHA_QA_QUARANTINE)
+   so the frozen SYSTEM_QUARANTINE_IDS / FINAL_RELEASE_MANIFEST count
+   of 9 is left untouched.
+   ========================================================= */
+(function(){
+  // ---- A. Page-citation-only corrections (17 native QUESTIONS items) ----
+  const CITATION_FIXES = Object.freeze({
+    '1-6':'S&K6 Ch.1, p.14 (Activity-Based Costing definition; corrected from p.13 during Batch A QA)',
+    '2-9':'S&K6 Ch.2, p.19 (financial ratios sentence; corrected from p.20 during Batch A QA)',
+    '3-1':'S&K6 Ch.3, p.27 (Bulk Materials; corrected from p.26 during Batch A QA)',
+    '3-6':'S&K6 Ch.3, p.29 (Just-In-Time Inventory Techniques; corrected from p.28 during Batch A QA)',
+    '3-7':'S&K6 Ch.3, p.28 (Materials Vendor Surveillance and Traceability; corrected from p.27 during Batch A QA)',
+    '3-8':'S&K6 Ch.3, p.28 (Materials Quality; corrected from p.27 during Batch A QA)',
+    '3-9':'S&K6 Ch.3, p.27 (Fabricated Materials; corrected from p.26 during Batch A QA)',
+    '3-12':'S&K6 Ch.3, p.28 (Materials Vendor Surveillance and Traceability; corrected from p.27 during Batch A QA)',
+    '4-4':'S&K6 Ch.4, Table 4.4, p.37 (corrected from p.36 during Batch A QA)',
+    '4-5':'S&K6 Ch.4, Table 4.10, p.44 (corrected from p.40 during Batch A QA)',
+    '4-6':'S&K6 Ch.4, p.33, Labor Classifications (corrected from "Table 4.5, p.37" during Batch A QA; Table 4.5 is itself on p.39, and the concept is stated directly in the chapter-opening Labor Classifications definitions on p.33)',
+    '4-9':'S&K6 Ch.4, p.37 (Weighted Average Rates/Crew Composite Rates; corrected from p.36 during Batch A QA)',
+    '4-10':'S&K6 Ch.4, Example 1, p.44-45 (corrected from p.42 during Batch A QA)',
+    '4-11':'S&K6 Ch.4, Table 4.4, p.37 (corrected from p.36 during Batch A QA)',
+    '4-12':'S&K6 Ch.4, Table 4.6, p.40 (corrected from p.38 during Batch A QA)',
+    '6-3':'S&K6 Ch.6, p.60 (high obsolescence curve; corrected from p.59 during Batch A QA)',
+    '6-6':'S&K6 Ch.6, p.60-62 (Variables That Affect Residual Value / Changes in Technology; corrected from p.59 during Batch A QA)'
+  });
+  window.BATCHA_CITATION_FIXES = CITATION_FIXES;
+  Object.entries(CITATION_FIXES).forEach(([id,src])=>{
+    const q = Array.isArray(QUESTIONS) ? QUESTIONS.find(x=>String(x.id)===id) : null;
+    if(q) q.source = src;
+  });
+
+  // ---- B. V522 task-reserve citation-scope corrections (task 2.C, chapter-1 pool, 3 forms) ----
+  // These are live QUESTIONS-array objects already built by v522BuildReserveQuestions() earlier
+  // in file order; their .source string is "Current CCP Candidate Handbook (May 2026 Blueprint)
+  // 2.C; S&K6 Ch.1; Ch.9" and MUST keep the "Current CCP Candidate Handbook" substring intact
+  // (v522TaskReserveIsVetted requires it) - only the trailing citation is corrected.
+  const V522_SCOPE_FIX_IDS = Object.freeze(['BP522-2_C-1','BP522-2_C-2','BP522-2_C-3']);
+  window.BATCHA_V522_SCOPE_FIX_IDS = V522_SCOPE_FIX_IDS;
+  V522_SCOPE_FIX_IDS.forEach(id=>{
+    const q = Array.isArray(QUESTIONS) ? QUESTIONS.find(x=>String(x.id)===id) : null;
+    if(q && typeof q.source==='string' && q.source.includes('S&K6 Ch.1; Ch.9')){
+      q.source = q.source.replace('S&K6 Ch.1; Ch.9','S&K6 Ch.9 (corrected during Batch A QA - dropped unsupported Ch.1 reference; this task tests Ch.9 Take-Off content only)');
+    }
+  });
+
+  // ---- C. Live-wire the already-validated RP 10S-90 source overrides for 2-11/2-12/2-13 ----
+  ['2-11','2-12','2-13'].forEach(id=>{
+    const q = Array.isArray(QUESTIONS) ? QUESTIONS.find(x=>String(x.id)===id) : null;
+    if(q && window.SOURCE_VALIDATION_OVERRIDES && window.SOURCE_VALIDATION_OVERRIDES[id]) q.source = window.SOURCE_VALIDATION_OVERRIDES[id];
+  });
+
+  // ---- D. 1-17: premise not source-defensible as written - quarantine rather than force a
+  //         rewrite that would materially replace the question (new numbers, new distractors).
+  //         Separate, narrow list; intentionally NOT added to the frozen SYSTEM_QUARANTINE_IDS.
+  const BATCHA_QA_QUARANTINE = Object.freeze({
+    '1-17':'Batch A QA: premise sums taxes+general conditions+overhead+profit+contingency as "total indirect cost". RP 10S-90 defines profit (earnings after direct+indirect costs are deducted) and contingency (an amount added to an estimate) as amounts distinct from indirect cost, not indirect-cost components; S&K6 Ch.1 (p.11) and Ch.2 Table 2.1 agree. No minimal edit preserves the existing $73,000 answer without asserting this. Quarantined pending a rewritten replacement; not restored this pass.'
+  });
+  window.BATCHA_QA_QUARANTINE = BATCHA_QA_QUARANTINE;
+  if(typeof isQuestionSuspended === 'function'){
+    const priorSuspended = isQuestionSuspended;
+    isQuestionSuspended = function(id){
+      return Object.prototype.hasOwnProperty.call(BATCHA_QA_QUARANTINE, String(id)) || priorSuspended(id);
+    };
+  }
+
+  // ---- E. 1-20: keep the $197,000 answer; correct wording/explanation only ----
+  const q120 = Array.isArray(QUESTIONS) ? QUESTIONS.find(x=>String(x.id)==='1-20') : null;
+  if(q120){
+    q120.q = 'A cost breakdown lists the following items: labor $60,000, material $95,000, general conditions $12,000, equipment $28,000, overhead $19,500, subcontract $14,000, and profit $16,500. Direct costs are those expended solely to complete this activity (labor, material, equipment, subcontract). General conditions and overhead are indirect costs. Profit is a separate amount added on top of cost and is neither a direct nor an indirect cost element. What is the total direct cost?';
+    q120.explain = 'Formula: Total Direct Cost = Labor + Material + Equipment + Subcontract. Calculation: $60,000+$95,000+$28,000+$14,000 = $197,000. General conditions ($12,000) and overhead ($19,500) are indirect costs and are excluded from the direct-cost total. Profit ($16,500) is excluded for a different reason: per RP 10S-90 and S&K6 Ch.1, profit is a separate amount added to cost to reach price - it is neither a direct nor an indirect cost element, so it is not part of either total.';
+  }
+
+  // ---- F. sg6_4 source-conflict flag (Study Guide erratum vs S&K6 Ch.6 hierarchy) ----
+  // Digitization fidelity: VERIFIED (the app reproduces the Study Guide's actual printed
+  // question/answer exactly). Technical status: SOURCE CONFLICT - the Study Guide's own
+  // question and answer state that Replacement Cost has three subcategories, "Reproduction
+  // Cost, Replacement Cost, and Fair Value," but S&K6 Ch.6 (p.55) defines Replacement Cost as
+  // a major category with only two subcategories (Reproduction Cost, Fair Value) - Replacement
+  // Cost cannot be its own subcategory. The official item and answer are preserved unedited for
+  // provenance; it is flagged and excluded from contributing to the auto-graded score below.
+  const SG_SOURCE_CONFLICT_IDS = Object.freeze(['sg6_4']);
+  window.SG_SOURCE_CONFLICT_IDS = SG_SOURCE_CONFLICT_IDS;
+  Object.values(EXAM_STUDY_GUIDE_BANK||{}).forEach(arr=>{
+    (arr||[]).forEach(q=>{
+      if (SG_SOURCE_CONFLICT_IDS.includes(q.id)){
+        q.sourceConflict = true;
+        const flag = 'SOURCE CONFLICT (Study Guide erratum suspected): this item and its printed answer state that Replacement Cost has three subcategories, "Reproduction Cost, Replacement Cost, and Fair Value." S&K6 Ch.6 (p.55), the higher-authority technical source, defines Replacement Cost as a major category with only two subcategories: Reproduction Cost and Fair Value - Replacement Cost cannot be its own subcategory. Digitization fidelity: VERIFIED (this app reproduces the Study Guide\'s actual printed question/answer exactly). Technical status: SOURCE CONFLICT - not used as an authoritative teaching item, and excluded from this Official Study Guide set\'s auto-graded score pending resolution.';
+        q.auditNote = q.auditNote ? (flag+'\n\n'+q.auditNote) : flag;
+      }
+    });
+  });
+
+  if(typeof finishOfficialStudyGuide === 'function'){
+    finishOfficialStudyGuide = function(){
+      if(!v56OfficialAllAnswered()){alert('Answer every official question before submitting the set. Answers and solutions stay hidden until then.');return;}
+      if(!confirm('Submit the complete Official Questions set? Solutions will become visible after submission.'))return;
+      const s=V56_OFFICIAL_SG;
+      const auto=s.items.filter(q=>!q.manual && !q.sourceConflict);
+      const right=auto.filter(q=>String(s.answers[q.id])===String(q.reviewedAnswer)).length;
+      const total=auto.length;
+      const pct=total?Math.round(100*right/total):100;
+      const conflictCount=s.items.filter(q=>q.sourceConflict).length;
+      const rec={id:'sg-evidence-'+Date.now()+'-'+Math.random().toString(36).slice(2,6),chapter:String(s.chapter),ts:Date.now(),right,total,manual:s.items.length-total-conflictCount,sourceConflictExcluded:conflictCount,questionCount:s.items.length,scorePct:pct,pass:pct>=V56_SG_PASS_TARGET,source:'Exam Coach Official Study Guide',origins:Array.from(new Set(s.items.map(q=>q.origin)))};
+      v56EnsureProgress();PROGRESS.studyGuideEvidence.push(rec);delete PROGRESS.studyGuideDrafts[String(s.chapter)];saveProgress();
+      s.submitted=true;s.result=rec;VIEW='officialSgResult';render();
+    };
+  }
+
+  // ---- G. Curated/mastery provenance lookup (Ch.5-6, 26 items) ----
+  // External resolver only - does not mutate V56_CURATED_BANK/V57_INTERNAL_MASTERY_BANK
+  // objects, so nothing changes in the normal learner UI. Lets the audit/provenance
+  // system resolve item ID -> source document/section -> audit status on demand.
+  const CURATED_MASTERY_PROVENANCE = Object.freeze({
+    cm5_1:{chapter:'5',source:'S&K6 Ch.5, Abstract/p.48 (Pure and Applied Research)',status:'VERIFIED'},
+    cm5_2:{chapter:'5',source:'S&K6 Ch.5, p.50 (Patents and Trade Secrets)',status:'VERIFIED'},
+    cm5_3:{chapter:'5',source:'S&K6 Ch.5, p.51 (Standardization)',status:'VERIFIED'},
+    cm5_4:{chapter:'5',source:'S&K6 Ch.5, p.51 (Process Selection - continuous production)',status:'VERIFIED'},
+    cm5_5:{chapter:'5',source:'S&K6 Ch.5, p.51 (Manufacturability)',status:'VERIFIED'},
+    cm5_6:{chapter:'5',source:'S&K6 Ch.5, p.52 (Constructability)',status:'VERIFIED'},
+    cm5_7:{chapter:'5',source:'S&K6 Ch.5, p.54 (Reengineering)',status:'VERIFIED'},
+    cm5_8:{chapter:'5',source:'S&K6 Ch.5, p.51 (Process Selection - continuous production economics)',status:'VERIFIED'},
+    hm5_1:{chapter:'5',source:'S&K6 Ch.5, Abstract/p.48 (Pure and Applied Research)',status:'VERIFIED'},
+    hm5_2:{chapter:'5',source:'S&K6 Ch.5, p.50 (Patents and Trade Secrets)',status:'VERIFIED'},
+    hm5_3:{chapter:'5',source:'S&K6 Ch.5, p.51 (Standardization)',status:'VERIFIED'},
+    hm5_4:{chapter:'5',source:'S&K6 Ch.5, p.51 (Process Selection - continuous production)',status:'VERIFIED'},
+    hm5_5:{chapter:'5',source:'S&K6 Ch.5, p.51 (Process Selection - discrete/job-shop production)',status:'VERIFIED'},
+    hm5_6:{chapter:'5',source:'S&K6 Ch.5, p.51 (Manufacturability)',status:'VERIFIED'},
+    hm5_7:{chapter:'5',source:'S&K6 Ch.5, p.52 (Constructability)',status:'VERIFIED'},
+    hm5_8:{chapter:'5',source:'S&K6 Ch.5, p.54 (Reengineering)',status:'VERIFIED'},
+    hm5_9:{chapter:'5',source:'S&K6 Ch.5, p.51 (Process Selection - continuous production economics)',status:'VERIFIED'},
+    hm5_10:{chapter:'5',source:'S&K6 Ch.5, p.51 (Standardization)',status:'VERIFIED'},
+    cm6_src_1:{chapter:'6',source:'S&K6 Ch.6, p.55 (Fair Market Value-in-Place)',status:'VERIFIED'},
+    cm6_src_2:{chapter:'6',source:'S&K6 Ch.6, p.55 (Forced Liquidation Value)',status:'VERIFIED'},
+    cm6_src_3:{chapter:'6',source:'S&K6 Ch.6, p.55 (Replacement Cost - Fair Value)',status:'VERIFIED'},
+    cm6_src_4:{chapter:'6',source:'S&K6 Ch.6, p.60 (High Obsolescence Curve)',status:'VERIFIED'},
+    cm6_src_5:{chapter:'6',source:'S&K6 Ch.6, p.59 (Disrupted Market Curve)',status:'VERIFIED'},
+    cm6_src_6:{chapter:'6',source:'S&K6 Ch.6, p.55-56 (Salvage/Part-Out vs Scrap Value)',status:'VERIFIED'},
+    cm6_src_7:{chapter:'6',source:'S&K6 Ch.6, p.60-62 (Variables That Affect Residual Value)',status:'VERIFIED'},
+    cm6_src_8:{chapter:'6',source:'S&K6 Ch.6, p.55 (Equipment Valuation Database)',status:'VERIFIED'},
+    hm6_src_1:{chapter:'6',source:'S&K6 Ch.6, p.55 (Fair Market Value-in-Place)',status:'VERIFIED'},
+    hm6_src_2:{chapter:'6',source:'S&K6 Ch.6, p.55 (Orderly vs Forced Liquidation Value)',status:'VERIFIED'},
+    hm6_src_3:{chapter:'6',source:'S&K6 Ch.6, p.55 (Reproduction Cost)',status:'VERIFIED'},
+    hm6_src_4:{chapter:'6',source:'S&K6 Ch.6, p.55-56 (Salvage/Part-Out Value)',status:'VERIFIED'},
+    hm6_src_5:{chapter:'6',source:'S&K6 Ch.6, p.55-56 (Scrap Value)',status:'VERIFIED'},
+    hm6_src_6:{chapter:'6',source:'S&K6 Ch.6, p.60 (High Obsolescence Curve)',status:'VERIFIED'},
+    hm6_src_7:{chapter:'6',source:'S&K6 Ch.6, p.59 (Disrupted Market Curve)',status:'VERIFIED'},
+    hm6_src_8:{chapter:'6',source:'S&K6 Ch.6, p.60-62 (Variables That Affect Residual Value)',status:'VERIFIED'},
+    hm6_src_9:{chapter:'6',source:'S&K6 Ch.6, p.55 (Equipment Valuation Database)',status:'VERIFIED'},
+    hm6_src_10:{chapter:'6',source:'S&K6 Ch.6, p.55 (Market Value vs Replacement Cost categories)',status:'VERIFIED'}
+  });
+  window.BATCHA_CURATED_MASTERY_PROVENANCE = CURATED_MASTERY_PROVENANCE;
+  window.batchAResolveProvenance = function(id){ return CURATED_MASTERY_PROVENANCE[String(id)] || null; };
+
+  // ---- Integrity checks for A-G ----
+  if(typeof integrityResults === 'function'){
+    const priorIntegrity = integrityResults;
+    integrityResults = function(){
+      const rs = priorIntegrity();
+
+      const citFixed = Object.keys(CITATION_FIXES).filter(id=>{
+        const q=QUESTIONS.find(x=>String(x.id)===id);
+        return q && q.source===CITATION_FIXES[id];
+      });
+      rs.push({name:'Batch A citation-only corrections applied',ok:citFixed.length===Object.keys(CITATION_FIXES).length,detail:`${citFixed.length}/${Object.keys(CITATION_FIXES).length} Batch A page-citation corrections are live on the native QUESTIONS objects.`});
+
+      const v522Fixed = V522_SCOPE_FIX_IDS.filter(id=>{
+        const q=QUESTIONS.find(x=>String(x.id)===id);
+        return q && /S&K6 Ch\.9 \(corrected during Batch A QA/.test(String(q.source||'')) && String(q.source||'').includes('Current CCP Candidate Handbook');
+      });
+      rs.push({name:'Batch A V522 citation-scope correction applied',ok:v522Fixed.length===3,detail:`${v522Fixed.length}/3 chapter-1 task 2.C reserve items now cite S&K6 Ch.9 only (dropped the unsupported Ch.1 reference) while keeping Handbook-vetting eligibility intact.`});
+
+      const liveWired = ['2-11','2-12','2-13'].filter(id=>{
+        const q=QUESTIONS.find(x=>String(x.id)===id);
+        return q && window.SOURCE_VALIDATION_OVERRIDES && q.source===window.SOURCE_VALIDATION_OVERRIDES[id];
+      });
+      rs.push({name:'2-11/2-12/2-13 source overrides live-wired',ok:liveWired.length===3,detail:`${liveWired.length}/3 items now display the previously-inert SOURCE_VALIDATION_OVERRIDES citation on the live question object.`});
+
+      const q117=QUESTIONS.find(x=>String(x.id)==='1-17');
+      const q117Quarantined = q117 && typeof isQuestionSuspended==='function' && isQuestionSuspended('1-17');
+      rs.push({name:'1-17 quarantined pending rewrite',ok:!!q117Quarantined,detail:'1-17 is excluded from quality-approved/scored pools via BATCHA_QA_QUARANTINE (separate from the frozen SYSTEM_QUARANTINE_IDS list, which remains at 9).'});
+
+      const q120=QUESTIONS.find(x=>String(x.id)==='1-20');
+      const q120Ok = q120 && !/classifying each item as direct or indirect/.test(String(q120.q||'')) && q120.correct===1 && String(q120.options[1])==='$197,000';
+      rs.push({name:'1-20 wording corrected, answer unchanged',ok:!!q120Ok,detail:'1-20 no longer asserts profit is an indirect cost or that every item must be classified as direct/indirect; the $197,000 direct-cost answer key is unchanged.'});
+
+      const sg64=Object.values(EXAM_STUDY_GUIDE_BANK||{}).flat().find(x=>x.id==='sg6_4');
+      rs.push({name:'sg6_4 source-conflict flag active',ok:!!(sg64&&sg64.sourceConflict===true&&/SOURCE CONFLICT/.test(String(sg64.auditNote||''))),detail:'sg6_4 keeps its official Study Guide question/answer for provenance, carries a source-conflict audit note, and is excluded from the auto-graded Official Study Guide score.'});
+
+      const provResolved = Object.keys(CURATED_MASTERY_PROVENANCE).filter(id=>!!window.batchAResolveProvenance(id));
+      rs.push({name:'Ch.5-6 curated/mastery provenance resolvable',ok:provResolved.length===36,detail:`${provResolved.length}/36 Ch.5-6 curated/mastery items (8 cm5 + 10 hm5 + 8 cm6_src + 10 hm6_src) resolve to a source citation via BATCHA_CURATED_MASTERY_PROVENANCE without any question-record or ID changes.`});
+
+      return rs;
+    };
+  }
+})();
+</script>
+
+
 <style id="studio-style">
 :root{--serif: 'Segoe UI',Arial,sans-serif;--navy:#153e46;--navy-2:#205762;--brass:#ae782f;--slate-bg:#f1f4f3;--line:#dce5e3;--steel:#49676c}
 body{background:radial-gradient(ellipse at top left,#dfede7,transparent 55%),#f3f5f4}
