@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>CCP Exam Coach Study Studio v1.1.2 FINAL</title>
+<title>CCP Exam Coach Study Studio v1.2.0 DEV</title>
 <style>
 :root{
   --navy:#0E2438;
@@ -11942,7 +11942,7 @@ runRecommendedStep = function(){
       const staticCount=(QUESTIONS||[]).length; const nativeCount=(QUESTIONS||[]).filter(q=>!q.v522TaskReserve&&!q.v524DirectTask).length;
       const sgCount=Object.values(EXAM_STUDY_GUIDE_BANK||{}).reduce((n,a)=>n+a.length,0);
       const ok=nativeCount===m.nativeQuestions&&staticCount===m.staticAssessmentInventory&&sgCount===m.officialStudyGuidePlacements&&(V521_BLUEPRINT_TASKS||[]).length===m.blueprintTasks&&(window.SYSTEM_QUARANTINE_IDS||[]).length===m.systemQuarantinedItems;
-      rs.push({name:'FINAL release manifest',ok,detail:`${m.release} · static ${staticCount} · Study Guide ${sgCount} · blueprint tasks ${(V521_BLUEPRINT_TASKS||[]).length} · system quarantine ${(window.SYSTEM_QUARANTINE_IDS||[]).length}.`});
+      rs.push({name:'Inherited v1.1.2 FINAL baseline manifest',ok,detail:`Baseline: ${m.release} · static ${staticCount} · Study Guide ${sgCount} · blueprint tasks ${(V521_BLUEPRINT_TASKS||[]).length} · system quarantine ${(window.SYSTEM_QUARANTINE_IDS||[]).length}. This is the frozen v1.1.2 inheritance check, not the current v1.2.0 DEV release identity.`});
       const qset=new Set((window.SYSTEM_QUARANTINE_IDS||[]).map(String));
       const leaked=(typeof trainingAnalyticsAttempts==='function'?trainingAnalyticsAttempts():[]).filter(a=>qset.has(String(a.qid)));
       const impact=typeof legacyQuarantineImpact==='function'?legacyQuarantineImpact():{attempts:0,mocks:0};
@@ -12077,7 +12077,7 @@ runRecommendedStep = function(){
     };
   }
 
-  // ---- G. Curated/mastery provenance lookup (Ch.5-6, 26 items) ----
+  // ---- G. Curated/mastery provenance lookup (Ch.5-6, 36 items: 8 cm5 + 10 hm5 + 8 cm6_src + 10 hm6_src) ----
   // External resolver only - does not mutate V56_CURATED_BANK/V57_INTERNAL_MASTERY_BANK
   // objects, so nothing changes in the normal learner UI. Lets the audit/provenance
   // system resolve item ID -> source document/section -> audit status on demand.
@@ -12180,7 +12180,7 @@ body{background:radial-gradient(ellipse at top left,#dfede7,transparent 55%),#f3
 <script id="studio-enhancement">
 (function(){
  'use strict';
- document.title='CCP Exam Coach — Study Studio FINAL';
+ document.title='CCP Exam Coach — Study Studio v1.2.0 DEV';
  if(!document.querySelector('meta[name=viewport]')){const m=document.createElement('meta');m.name='viewport';m.content='width=device-width, initial-scale=1';document.head.appendChild(m);}
  document.body.prepend(document.querySelector('.studio-bar'));
  const routes=[['Today','home','home start اليوم'],['Practice center','practiceCenter','questions تدريب'],['Review center','reviewCenter','mistakes مراجعة'],['Exam practice','examCenter','mock امتحان'],['Study plan','studyPlan','schedule خطة'],['Progress','progress','analytics تقدم'],['Formula lab','formulaLab','equations formulas معادلات'],['Calculation drills','calcDrill','math حساب'],['Session history','sessionHistory','records سجل'],['Export & tools','moreTools','backup import تصدير']];
@@ -12190,7 +12190,7 @@ body{background:radial-gradient(ellipse at top left,#dfede7,transparent 55%),#f3
  document.getElementById('studio-open').onclick=open;document.getElementById('studio-close').onclick=()=>dialog.close();search.oninput=draw;
  document.addEventListener('keydown',e=>{if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='k'){e.preventDefault();if(dialog.open)dialog.close();else open();}});
  for(const pair of [['studio-focus','studio-focus'],['studio-size','studio-large']]){const b=document.getElementById(pair[0]);try{if(localStorage.getItem(pair[0])==='true')document.body.classList.add(pair[1]);}catch(e){}b.setAttribute('aria-pressed',String(document.body.classList.contains(pair[1])));b.onclick=()=>{const on=document.body.classList.toggle(pair[1]);b.setAttribute('aria-pressed',String(on));try{localStorage.setItem(pair[0],String(on));}catch(e){}};}
- const prior=renderHome;renderHome=function(){prior();const stats=document.createElement('section');stats.className='studio-overview';stats.setAttribute('aria-label','Study inventory');const chapters=new Set(QUESTIONS.map(q=>String(q.chapter))).size;const sessions=Array.isArray(PROGRESS.sessionHistory)?PROGRESS.sessionHistory.length:0;stats.innerHTML='<div class="studio-stat"><strong>'+chapters+'</strong><span>Chapters in inventory</span></div><div class="studio-stat"><strong>'+sessions+'</strong><span>Recorded sessions</span></div><div class="studio-stat"><strong>01</strong><span>Next recommended action</span></div>';const card=app.querySelector('.recommend-card');if(card)card.before(stats);const paths=document.createElement('section');paths.className='studio-paths';for(const item of [['Practice','practiceCenter','Build your understanding'],['Review','reviewCenter','Return to weak areas'],['Exam','examCenter','Put your knowledge to work'],['Study plan','studyPlan','Organize your next steps']]){const b=document.createElement('button');b.textContent=item[0]+' →';const s=document.createElement('small');s.textContent=item[2];b.appendChild(s);b.onclick=()=>{VIEW=item[1];render();};paths.appendChild(b);}if(card)card.after(paths);const note=document.createElement('p');note.className='studio-note';note.textContent='Study Studio · v1.1.2 FINAL. Inventory counts are not a readiness score. To move existing progress, use Export / Import in More Tools.';app.appendChild(note);};
+ const prior=renderHome;renderHome=function(){prior();const stats=document.createElement('section');stats.className='studio-overview';stats.setAttribute('aria-label','Study inventory');const chapters=new Set(QUESTIONS.map(q=>String(q.chapter))).size;const sessions=Array.isArray(PROGRESS.sessionHistory)?PROGRESS.sessionHistory.length:0;stats.innerHTML='<div class="studio-stat"><strong>'+chapters+'</strong><span>Chapters in inventory</span></div><div class="studio-stat"><strong>'+sessions+'</strong><span>Recorded sessions</span></div><div class="studio-stat"><strong>01</strong><span>Next recommended action</span></div>';const card=app.querySelector('.recommend-card');if(card)card.before(stats);const paths=document.createElement('section');paths.className='studio-paths';for(const item of [['Practice','practiceCenter','Build your understanding'],['Review','reviewCenter','Return to weak areas'],['Exam','examCenter','Put your knowledge to work'],['Study plan','studyPlan','Organize your next steps']]){const b=document.createElement('button');b.textContent=item[0]+' →';const s=document.createElement('small');s.textContent=item[2];b.appendChild(s);b.onclick=()=>{VIEW=item[1];render();};paths.appendChild(b);}if(card)card.after(paths);const note=document.createElement('p');note.className='studio-note';note.textContent='Study Studio · v1.2.0 DEV (development build, not the production release). Inventory counts are not a readiness score. To move existing progress, use Export / Import in More Tools.';app.appendChild(note);};
  if(VIEW==='home')render();
 })();
 </script>
