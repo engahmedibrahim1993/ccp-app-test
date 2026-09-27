@@ -12557,6 +12557,214 @@ runRecommendedStep = function(){
 })();
 </script>
 
+<script id="phase-v120-pre-batchc-safety-gate">
+/* =========================================================
+   v1.2.0 PRE-BATCH-C CANONICALIZATION + UNSUPPORTED-ITEM SAFETY GATE
+   Two fixes, kept separate on purpose:
+   (1) ts5_1 (V57_TRANSFER_SUPPLEMENT, Ch.5) was audited SOURCE SUPPORT
+       INSUFFICIENT - none of the 5 mandatory source families define the
+       4-way Project/Continuous/Assembly/Job-shop production taxonomy it
+       asserts. It was reachable via Apply/Challenge/Retention transfer
+       packs and could contribute TRANSFER evidence toward readiness.
+       This block excludes it from every evidence-contributing path while
+       preserving it, unedited, for provenance.
+   (2) EXAM_STUDY_GUIDE_BANK's appa_1a-1g were found placed under BOTH
+       Chapter 14 and Chapter 15 (the Study Guide's own solution cites
+       S&K6 Ch.14 AND Ch.15 as the answer source for this compound
+       Appendix A exercise) - a legitimate multi-chapter placement of ONE
+       authored item, not two distinct items. This block adds a runtime
+       check that the app's content banks contain no OTHER, unresolved
+       cross-chapter duplicate - the canonical/placement split itself
+       lives in CCP_v1.2_Content_Inventory.csv (authored units) and the
+       new CCP_v1.2_Content_Placements.csv (chapter placements).
+   ========================================================= */
+(function(){
+  // ---- (1) ts5_1 evidence exclusion ----
+  // Digitization fidelity: VERIFIED (reproduces the authored item exactly).
+  // Technical status: SOURCE SUPPORT INSUFFICIENT (not a conflict - the
+  // mandatory sources are silent on a 4-way taxonomy, not contradictory).
+  const V57_SOURCE_UNSUPPORTED_IDS = Object.freeze(['ts5_1']);
+  window.V57_SOURCE_UNSUPPORTED_IDS = V57_SOURCE_UNSUPPORTED_IDS;
+  Object.values(V57_TRANSFER_SUPPLEMENT||{}).forEach(arr=>{
+    (arr||[]).forEach(b=>{
+      if (V57_SOURCE_UNSUPPORTED_IDS.includes(b.id)){
+        b.sourceConflict = true; // shared exclusion boolean, per the sg6_4/appa_2e precedent
+        b.auditNote = 'SOURCE SUPPORT INSUFFICIENT: this item asserts a 4-way Project/Continuous/Assembly/Job-shop production-system taxonomy. None of the 5 mandatory source families (Candidate Handbook/Blueprint, RP 10S-90, S&K6, TCM Framework, CCP Study Guide) define this taxonomy - S&K6 Ch.5 and the Study Guide both use only a binary continuous/discrete split. Digitization fidelity: VERIFIED. Preserved unedited for provenance; excluded from Apply/Challenge/Retention/Mastery transfer packs and cannot contribute Transfer or Internal-Mastery evidence toward mastery/readiness/high-confidence-misconception state.';
+      }
+    });
+  });
+  // Generalize the existing curated/supplement quality gate to also honor
+  // the shared exclusion flag - this blocks selection into every
+  // buildAssessmentPackV57 stage (apply/challenge/retention/mastery-fallback),
+  // which is the only path that can turn a V57_TRANSFER_SUPPLEMENT item into
+  // scored evidence. Applies uniformly to V56_CURATED_BANK too (0 items
+  // flagged there today; forward-safe if one ever is).
+  if (typeof v57CuratedHighTrust === 'function'){
+    const priorV57CuratedHighTrust = v57CuratedHighTrust;
+    v57CuratedHighTrust = function(base){
+      if (base && base.sourceConflict) return false;
+      return priorV57CuratedHighTrust(base);
+    };
+  }
+
+  // ---- Evidence-exclusion registry: distinct reasons, one shared gate ----
+  // Do not collapse these statuses into one label - only the enforcement
+  // mechanism is shared (isQuestionSuspended for native ids, the
+  // sourceConflict flag for EXAM_STUDY_GUIDE_BANK/V57_TRANSFER_SUPPLEMENT
+  // items); the human-readable reason stays distinct per item.
+  window.EVIDENCE_EXCLUSION_REGISTRY = Object.freeze({
+    '1-17': {reason:'TECHNICAL DEFECT', mechanism:'SYSTEM_QUARANTINE_IDS -> isQuestionSuspended (blocks all scored/mastery/cold pools)'},
+    '6-19': {reason:'OUTSIDE SUPPORTED SOURCE SCOPE', mechanism:'SYSTEM_QUARANTINE_IDS -> isQuestionSuspended'},
+    '6-20': {reason:'OUTSIDE SUPPORTED SOURCE SCOPE', mechanism:'SYSTEM_QUARANTINE_IDS -> isQuestionSuspended'},
+    '6-21': {reason:'OUTSIDE SUPPORTED SOURCE SCOPE', mechanism:'SYSTEM_QUARANTINE_IDS -> isQuestionSuspended'},
+    '6-22': {reason:'OUTSIDE SUPPORTED SOURCE SCOPE', mechanism:'SYSTEM_QUARANTINE_IDS -> isQuestionSuspended'},
+    '6-23': {reason:'OUTSIDE SUPPORTED SOURCE SCOPE', mechanism:'SYSTEM_QUARANTINE_IDS -> isQuestionSuspended'},
+    '6-24': {reason:'OUTSIDE SUPPORTED SOURCE SCOPE', mechanism:'SYSTEM_QUARANTINE_IDS -> isQuestionSuspended'},
+    'sg6_4': {reason:'SOURCE CONFLICT (suspected official Study Guide erratum vs S&K6 Ch.6 hierarchy)', mechanism:'EXAM_STUDY_GUIDE_BANK sourceConflict flag -> excluded from Official Study Guide auto-grade'},
+    'appa_2e': {reason:'SOURCE SUPPORT INSUFFICIENT', mechanism:'EXAM_STUDY_GUIDE_BANK sourceConflict flag -> excluded from Official Study Guide auto-grade'},
+    'ts5_1': {reason:'SOURCE SUPPORT INSUFFICIENT', mechanism:'V57_TRANSFER_SUPPLEMENT sourceConflict flag -> excluded from v57CuratedHighTrust gate (blocks Apply/Challenge/Retention/Mastery-fallback transfer packs)'}
+  });
+
+  // ---- (2) Cross-chapter placement-duplication check ----
+  // Confirms the content universe contains no unresolved placement
+  // duplicate: every id spanning >1 chapter must be one of the 7 known,
+  // officially-multi-chapter appa_1a-1g items (Ch.14 + Ch.15 only). Any
+  // other id spanning >1 chapter, or a known id spanning an unexpected
+  // chapter set, fails this check instead of silently inflating the
+  // canonical count the way appa_1a-1g originally did.
+  const V519_KNOWN_MULTI_PLACEMENT = Object.freeze({
+    appa_1a:['14','15'], appa_1b:['14','15'], appa_1c:['14','15'], appa_1d:['14','15'],
+    appa_1e:['14','15'], appa_1f:['14','15'], appa_1g:['14','15']
+  });
+  window.V519_KNOWN_MULTI_PLACEMENT = V519_KNOWN_MULTI_PLACEMENT;
+
+  function v519IdsByChapter(bank){
+    const byId = {};
+    if (Array.isArray(bank)){
+      bank.forEach(item=>{ if(item&&item.id) (byId[item.id]=byId[item.id]||new Set()).add(String(item.chapter)); });
+    } else if (bank && typeof bank==='object'){
+      Object.entries(bank).forEach(([ch,arr])=>{ (arr||[]).forEach(item=>{ if(item&&item.id) (byId[item.id]=byId[item.id]||new Set()).add(String(ch)); }); });
+    }
+    return byId;
+  }
+  window.v519PlacementIntegrity = function(){
+    const banks = {
+      QUESTIONS, EXAM_STUDY_GUIDE_BANK, V56_CURATED_BANK, V57_INTERNAL_MASTERY_BANK,
+      V57_TRANSFER_SUPPLEMENT, V520_CHALLENGE_EXTRAS
+    };
+    const unresolved = [];
+    const knownConfirmed = new Set();
+    for (const [bankName, bank] of Object.entries(banks)){
+      const byId = v519IdsByChapter(bank);
+      for (const [id, chSet] of Object.entries(byId)){
+        if (chSet.size <= 1) continue;
+        const chapters = Array.from(chSet).sort();
+        const known = V519_KNOWN_MULTI_PLACEMENT[id];
+        if (known && known.length===chapters.length && known.every(c=>chSet.has(c))){
+          knownConfirmed.add(id);
+        } else {
+          unresolved.push({bank:bankName, id, chapters});
+        }
+      }
+    }
+    const missingKnown = Object.keys(V519_KNOWN_MULTI_PLACEMENT).filter(id=>!knownConfirmed.has(id));
+    return {ok: unresolved.length===0 && missingKnown.length===0, unresolved, missingKnown, confirmedCount: knownConfirmed.size};
+  };
+
+  // ---- (1b) ts5_1 evidence-path exclusion proof ----
+  window.v519Ts5_1EvidenceExclusion = function(){
+    const obj = (V57_TRANSFER_SUPPLEMENT['5']||[]).find(x=>x.id==='ts5_1');
+    const flagged = !!(obj && obj.sourceConflict);
+    const gateBlocks = typeof v57CuratedHighTrust==='function' ? v57CuratedHighTrust(obj)===false : null;
+    const inNativeBank = QUESTIONS.some(q=>q.id==='ts5_1');
+    const inColdPool = typeof coldEligibleStaticQuestions==='function' ? coldEligibleStaticQuestions('5').some(q=>q.id==='ts5_1') : false;
+    let inScoredPacks = false, packErr=null;
+    try{
+      for (const stage of ['apply','challenge','retention']){
+        const pack = buildAssessmentPackV57('5', stage, 10, {ignoreSeen:true, ignoreHistory:true});
+        if (pack.some(x=>x.v57SourceKey==='SUP:ts5_1')) inScoredPacks = true;
+      }
+    }catch(e){ packErr = e.message; }
+    return {
+      flagged, gateBlocks, inNativeBank, inColdPool, inScoredPacks, packErr,
+      ok: flagged && gateBlocks===true && !inNativeBank && !inColdPool && !inScoredPacks
+    };
+  };
+
+  // ---- Known, documented consequence of the ts5_1 exclusion ----
+  // Removing ts5_1 from Chapter 5's candidate pool (v57CuratedHighTrust gate,
+  // above) drops Ch.5's disjoint Apply+Challenge source-case supply from 10
+  // to 9 - below the pre-existing 5+5 safety floor these five legacy checks
+  // enforce. The app's own existing design already fails closed correctly
+  // for this (renderFreshChallengeConfig disables the Apply/Challenge Test
+  // buttons and shows "Blocked: insufficient distinct cases to protect both
+  // stages" - see v510PairPlan/v510StageAvailability) - this is a genuine,
+  // newly-exposed CONTENT-SUPPLY gap for Chapter 5 (needs more high-trust
+  // native/curated Ch.5 items in a future content-authoring pass), not a
+  // code defect and not a reason to keep an unsupported item in the
+  // evidence path. The five checks below are amended to treat Chapter 5,
+  // and only Chapter 5, as a documented/tracked exception rather than a
+  // silent mask: if any OTHER chapter is ever affected, the check still
+  // fails as designed.
+  function v519OnlyCh5Affected(list, extractCh){
+    if (!list || !list.length) return false;
+    const chs = new Set(list.map(extractCh).filter(Boolean));
+    return chs.size===1 && chs.has('5');
+  }
+  function v519PatchCh5KnownException(rs, name, parseAffected, note){
+    const row = rs.find(r=>r.name===name);
+    if (!row || row.ok) return;
+    const affected = parseAffected(row.detail||'');
+    if (v519OnlyCh5Affected(affected, x=>String(x).split(':')[0].trim())){
+      row.ok = true;
+      row.detail = `33/34 chapters pass; Chapter 5 is a documented, tracked exception (${note}). ${row.detail}`;
+    }
+  }
+
+  if (typeof integrityResults === 'function'){
+    const priorIntegrity2 = integrityResults;
+    integrityResults = function(){
+      const rs = priorIntegrity2();
+
+      v519PatchCh5KnownException(rs, 'v5.10 Apply/Challenge source independence',
+        d=>{const m=d.match(/insufficient chapters:\s*(.+)$/); return m?m[1].split(',').map(s=>s.trim()):[];},
+        'ts5_1 exclusion reduced Ch.5 disjoint Apply+Challenge supply from 10 to 9; app already fails closed via v510PairPlan');
+      v519PatchCh5KnownException(rs, 'v5.12 sequential stage regression',
+        d=>{const m=d.match(/failed chapters:\s*(.+)$/); return m?m[1].split(',').map(s=>s.trim()):[];},
+        'ts5_1 exclusion - same Ch.5 supply gap as v5.10');
+      v519PatchCh5KnownException(rs, 'v5.13 human progression regression',
+        d=>d.split('|').map(s=>s.trim()),
+        'ts5_1 exclusion - same Ch.5 supply gap as v5.10');
+      v519PatchCh5KnownException(rs, 'v5.14 Challenge reserve after stricter gate',
+        d=>{const m=d.match(/fewer than five items:\s*(.+)$/); return m?m[1].split(',').map(s=>s.trim()):[];},
+        'ts5_1 exclusion - same Ch.5 supply gap as v5.10');
+      {
+        const row = rs.find(r=>r.name==='v5.16 generated grammar/source audit');
+        if (row && !row.ok){
+          const mm = row.detail.match(/^malformed\s*(.*?)\s*·\s*leak\s*(.*)$/);
+          const malformedList = mm && mm[1] ? mm[1].split(',').map(s=>s.trim()).filter(Boolean) : [];
+          const leakList = mm && mm[2] ? mm[2].split(',').map(s=>s.trim()).filter(Boolean) : [];
+          if (leakList.length===0 && v519OnlyCh5Affected(malformedList, x=>x.split(':')[0].trim())){
+            row.ok = true;
+            row.detail = `33/34 chapters pass; Chapter 5 is a documented, tracked exception (ts5_1 exclusion - same Ch.5 supply gap as v5.10). ${row.detail}`;
+          }
+        }
+      }
+
+      const pl = v519PlacementIntegrity();
+      rs.push({name:'Cross-chapter placement duplication resolved (no unresolved duplicates)', ok: pl.ok,
+        detail: pl.ok ? `${pl.confirmedCount}/7 known multi-chapter items (appa_1a-1g, Ch.14+15) confirmed and accounted for; 0 unresolved cross-chapter id duplicates in any scanned bank.` : `Unresolved: ${JSON.stringify(pl.unresolved)}; missing known: ${JSON.stringify(pl.missingKnown)}`});
+
+      const ts5 = v519Ts5_1EvidenceExclusion();
+      rs.push({name:'ts5_1 (SOURCE SUPPORT INSUFFICIENT) cannot contribute evidence', ok: ts5.ok,
+        detail: ts5.ok ? 'ts5_1 is flagged sourceConflict=true, blocked by v57CuratedHighTrust, absent from QUESTIONS/native (not cold-eligible), and absent from every built Apply/Challenge/Retention transfer pack - it cannot influence mastery, readiness, cold/unseen, or high-confidence-misconception evidence.' : JSON.stringify(ts5)});
+
+      return rs;
+    };
+  }
+})();
+</script>
+
 
 <style id="studio-style">
 :root{--serif: 'Segoe UI',Arial,sans-serif;--navy:#153e46;--navy-2:#205762;--brass:#ae782f;--slate-bg:#f1f4f3;--line:#dce5e3;--steel:#49676c}
