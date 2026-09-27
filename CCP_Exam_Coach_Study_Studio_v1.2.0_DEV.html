@@ -9391,15 +9391,32 @@ var V516_STATIC_OPTION_REWRITES={
  try{v58ClearDerived();}catch(e){}
 })();
 
+/* v1.2.0 QA fix: V516_CURATED_OPTION_REWRITES previously stored ONLY a bare options
+   array per id. v516ApplyCuratedRepairs() overwrote b.options but never touched
+   b.correct, so any entry whose rewrite reordered the correct answer's position
+   silently desynced the scoring key (found live-broken for cm12_5, cm12_7, cm17_8,
+   cm24_1 during the Batch-B QA global inventory census; cm8_5 escaped only because
+   its correct answer happened to stay at index 0). Structure changed to an atomic
+   {options, correct} record per id so options and the answer key can never drift
+   apart again - a future entry MUST supply both fields or v516ApplyCuratedRepairs
+   throws instead of silently applying a half-correct mutation. */
 var V516_CURATED_OPTION_REWRITES={
- "cm8_5":["Low-value or non-value-adding activities targeted for reduction","Necessary value-adding work because quality monitoring protects customer requirements","Costs that should be reassigned to customers rather than challenged","Unused-capacity costs rather than process activities"],
- "cm12_5":["A communications plan used in place of the execution strategy","When the work will be carried out","How the work will be executed","What work must be completed"],
- "cm12_7":["Shorter detailed-design duration because unresolved definition can be deferred","More delay, change, rework, and cost growth","Lower contingency because less early definition was prepared","Lower total design cost because feasibility-stage work was avoided"],
- "cm17_8":["Bonding capacity, insurance, and financial strength as the main evaluation factors","Technical, project management, commercial/pricing, project control, contractual, and construction","Company age, office location, and available workforce as the primary evaluation set","Price and schedule as the primary evaluation set"],
- "cm24_1":["Preparing project personnel for the next phase","Building the detailed control schedule before scope is sufficiently defined","Planning and developing project scope definition","Measuring daily field progress against the control baseline"]
+ "cm8_5":{options:["Low-value or non-value-adding activities targeted for reduction","Necessary value-adding work because quality monitoring protects customer requirements","Costs that should be reassigned to customers rather than challenged","Unused-capacity costs rather than process activities"],correct:0},
+ "cm12_5":{options:["A communications plan used in place of the execution strategy","When the work will be carried out","How the work will be executed","What work must be completed"],correct:0},
+ "cm12_7":{options:["Shorter detailed-design duration because unresolved definition can be deferred","More delay, change, rework, and cost growth","Lower contingency because less early definition was prepared","Lower total design cost because feasibility-stage work was avoided"],correct:1},
+ "cm17_8":{options:["Bonding capacity, insurance, and financial strength as the main evaluation factors","Technical, project management, commercial/pricing, project control, contractual, and construction","Company age, office location, and available workforce as the primary evaluation set","Price and schedule as the primary evaluation set"],correct:1},
+ "cm24_1":{options:["Preparing project personnel for the next phase","Building the detailed control schedule before scope is sufficiently defined","Planning and developing project scope definition","Measuring daily field progress against the control baseline"],correct:2}
 };
 (function v516ApplyCuratedRepairs(){
- for(const arr of Object.values(V56_CURATED_BANK||{}))for(const b of arr||[])if(V516_CURATED_OPTION_REWRITES[b.id])b.options=V516_CURATED_OPTION_REWRITES[b.id].slice();
+ for(const arr of Object.values(V56_CURATED_BANK||{}))for(const b of arr||[]){
+  const rw=V516_CURATED_OPTION_REWRITES[b.id];
+  if(!rw) continue;
+  if(!Array.isArray(rw.options)||typeof rw.correct!=='number'||rw.correct<0||rw.correct>=rw.options.length){
+   throw new Error('v516ApplyCuratedRepairs: malformed rewrite entry for '+b.id+' - options and a valid correct index are both required');
+  }
+  b.options=rw.options.slice();
+  b.correct=rw.correct;
+ }
  try{v58ClearDerived();}catch(e){}
 })();
 
@@ -12480,28 +12497,40 @@ runRecommendedStep = function(){
   }
   window.v518RepresentationIntegrity = v518RepresentationIntegrity;
 
-  // ---- V516 option-rewrite scoring-integrity check: flags any curated item whose
-  //      option array was rewritten in a way that no longer agrees with its correct
-  //      index (a genuine live scoring bug, not a source-audit question). ----
+  // ---- V516 option-rewrite scoring-integrity check ----
+  // Self-verifying against the LIVE object state (no hardcoded "known broken" id
+  // list): for every {options, correct} rewrite record, confirms the record itself
+  // is well-formed, the live V56_CURATED_BANK item was actually mutated to match it
+  // (options text position-for-position, and .correct equal to the record's
+  // correct), and there is exactly one keyed answer (correct index in range, options
+  // array non-empty, no duplicate option text that would make the key ambiguous).
+  // This catches ANY future rewrite entry that fails to keep options/correct
+  // atomically consistent - it does not depend on anyone remembering to update a
+  // list of known-bad ids.
   function v518CuratedRewriteIntegrity(){
-    const broken=[];
-    if(typeof V516_CURATED_OPTION_REWRITES!=='object') return {broken, checked:0};
-    let checked=0;
-    for(const [id, arr] of Object.entries(V516_CURATED_OPTION_REWRITES||{})){
+    const broken=[]; let checked=0;
+    for(const [id, rw] of Object.entries(V516_CURATED_OPTION_REWRITES||{})){
       checked++;
+      if(!rw || !Array.isArray(rw.options) || rw.options.length===0 || typeof rw.correct!=='number'){
+        broken.push(id+': malformed rewrite record (missing options[] or correct index)'); continue;
+      }
+      if(rw.correct<0 || rw.correct>=rw.options.length){
+        broken.push(id+': correct index '+rw.correct+' out of range for '+rw.options.length+' options'); continue;
+      }
+      const dupText = new Set(rw.options).size !== rw.options.length;
+      if(dupText){ broken.push(id+': duplicate option text makes the keyed answer ambiguous'); continue; }
       let item=null;
       for(const chArr of Object.values(V56_CURATED_BANK||{})){ const f=(chArr||[]).find(x=>x.id===id); if(f){item=f;break;} }
-      if(!item) continue;
-      // A rewrite is only verifiably safe here if option[correct] index still holds
-      // semantically-plausible "correct-shaped" text; we cannot re-derive semantics at
-      // runtime, so this check instead flags any id known (from manual audit) to have
-      // been shuffled. The authoritative list is maintained by the audit team.
-      if(V518_KNOWN_BROKEN_REWRITES.includes(id)) broken.push(id);
+      if(!item){ broken.push(id+': not found in V56_CURATED_BANK (rewrite target missing)'); continue; }
+      if(!Array.isArray(item.options) || item.options.length!==rw.options.length || rw.options.some((t,i)=>item.options[i]!==t)){
+        broken.push(id+': live options do not match the rewrite record (mutation did not apply cleanly)'); continue;
+      }
+      if(item.correct!==rw.correct){
+        broken.push(id+': live .correct ('+item.correct+') does not match the rewrite record\'s correct ('+rw.correct+') - scoring is wrong'); continue;
+      }
     }
     return {broken, checked};
   }
-  const V518_KNOWN_BROKEN_REWRITES = Object.freeze(['cm12_5','cm12_7']);
-  window.V518_KNOWN_BROKEN_REWRITES = V518_KNOWN_BROKEN_REWRITES;
   window.v518CuratedRewriteIntegrity = v518CuratedRewriteIntegrity;
 
   if(typeof integrityResults === 'function'){
@@ -12519,8 +12548,8 @@ runRecommendedStep = function(){
         detail: repInt.ok? `All ${(V522_TASK_RESERVE_ITEMS||[]).length+(V524_DIRECT_TASK_ITEMS||[]).length} spec items map 1:1 to exactly one built QUESTIONS object; no missing, no orphans.` : `Missing runtime builds: ${repInt.missingRuntime.length}; orphan runtime builds with no spec: ${repInt.orphanRuntime.length}.`});
 
       const rw = v518CuratedRewriteIntegrity();
-      rs.push({name:'V516 curated option-rewrite scoring integrity (KNOWN ISSUE - not fixed this pass)',ok:rw.broken.length===0,
-        detail: rw.broken.length? `CRITICAL, PRE-EXISTING BUG (not introduced by this audit): ${rw.broken.join(', ')} have a stale .correct index after V516_CURATED_OPTION_REWRITES reordered their options - live scoring is currently WRONG for these items. Flagged for urgent fix; intentionally NOT auto-corrected in this inventory-only pass.` : `${rw.checked}/${rw.checked} V516-rewritten curated items have a correct index consistent with their rewritten options.`});
+      rs.push({name:'V516 curated option-rewrite scoring integrity',ok:rw.broken.length===0,
+        detail: rw.broken.length? `${rw.broken.join('; ')}` : `${rw.checked}/${rw.checked} V516-rewritten curated items are atomically consistent: options position-match their rewrite record and .correct is keyed to the intended answer (cm8_5, cm12_5, cm12_7, cm17_8, cm24_1 all fixed during the Batch-B QA correction pass; cm17_8/cm24_1 received a targeted answer-key validation only, not a full Ch.17/24 source audit).`});
 
       return rs;
     };
