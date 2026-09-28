@@ -12830,6 +12830,57 @@ runRecommendedStep = function(){
 })();
 </script>
 
+<script id="phase-v120-pre-batchE-part0">
+/* =========================================================
+   v1.2.0 PRE-BATCH-E PART 0 CLOSEOUT
+   20-11 reopened per explicit instruction: S&K6 Ch.20 documents Maslow's
+   hierarchy as a SEVEN-level model (Physiological/Security-safety/
+   Belonging/Esteem/Cognitive/Aesthetic/Self-actualization). Native 20-11's
+   four options each list only 5 of those 7 levels and its stem/explain
+   text implicitly present that 5-item ordering as if it were the complete
+   hierarchy, with no acknowledgment of Cognitive/Aesthetic sitting between
+   Esteem and Self-actualization in the actual source model.
+   FINDING: classification B - SOURCE-FRAMING DEFECT. The tested order
+   among the five named levels (Physiological < Safety < Belonging <
+   Esteem < Self-actualization) is a factually correct subsequence of
+   S&K6's own 7-level order - it is not reversed, contradicted, or
+   internally inconsistent with the source. The defect is that the
+   citation/explanation do not disclose this is a partial ordering of a
+   larger model, which risks a candidate concluding S&K6 uses a generic
+   5-level Maslow model. Smallest defensible fix: correct .source and
+   .explain via direct field assignment (same live-data-overlay mechanism
+   as CITATION_FIXES/CITATION_FIXES_B) - no native array text rewritten,
+   correct-answer index and option wording UNCHANGED.
+   ========================================================= */
+(function(){
+  const OLD_SOURCE_20_11 = "CCP practice pool (verified) — Maslow's hierarchy order; S&K6 Ch.20 Leadership & Management of Project People";
+  const OLD_EXPLAIN_20_11 = "Maslow's hierarchy runs bottom-to-top: physiological needs, safety needs, social/belonging needs, esteem needs, and self-actualization at the top.";
+  const NEW_SOURCE_20_11 = "S&K6 Ch.20, p.277 (Hierarchy of Needs Theory) — S&K6 presents a SEVEN-level model (physiological, security/safety, belonging, esteem, cognitive, aesthetic, self-actualization); this item orders five of those seven levels only. Corrected during Batch E Part 0 (previously cited as \"CCP practice pool (verified)\", which under-disclosed the source's actual 7-level structure).";
+  const NEW_EXPLAIN_20_11 = "Among the five levels named in this item's options, S&K6 Ch.20's own hierarchy runs bottom-to-top: physiological, safety, social/belonging, esteem, then self-actualization - this order is a correct subsequence of S&K6's full seven-level model. S&K6 Ch.20 additionally places Cognitive and Aesthetic needs between Esteem and Self-actualization (levels 5 and 6 of 7); this item does not test those two levels and its ordering does not conflict with them.";
+  const q2011 = Array.isArray(QUESTIONS) ? QUESTIONS.find(x=>String(x.id)==='20-11') : null;
+  window.BATCHE_PART0_2011_FIX = {
+    id:'20-11', oldSource: OLD_SOURCE_20_11, newSource: NEW_SOURCE_20_11,
+    oldExplain: OLD_EXPLAIN_20_11, newExplain: NEW_EXPLAIN_20_11,
+    correctIndexUnchanged: true, optionsUnchanged: true
+  };
+  if (q2011 && q2011.source === OLD_SOURCE_20_11 && q2011.explain === OLD_EXPLAIN_20_11){
+    q2011.source = NEW_SOURCE_20_11;
+    q2011.explain = NEW_EXPLAIN_20_11;
+  }
+
+  if (typeof integrityResults === 'function'){
+    const priorIntegrityResultsE0 = integrityResults;
+    integrityResults = function(){
+      const rs = priorIntegrityResultsE0();
+      const q = Array.isArray(QUESTIONS) ? QUESTIONS.find(x=>String(x.id)==='20-11') : null;
+      const ok = !!q && q.source === NEW_SOURCE_20_11 && q.explain === NEW_EXPLAIN_20_11 && q.correct === 3 && Array.isArray(q.options) && q.options.length === 4;
+      rs.push({name:'Batch E Part 0: 20-11 Maslow citation/explanation corrected (7-level source, answer unchanged)', ok,
+        detail: ok ? '20-11 now cites S&K6 Ch.20 p.277 and discloses the source\'s 7-level hierarchy; correct-answer index (3) and all four option strings are unchanged.' : 'FIX NOT LIVE - see BATCHE_PART0_2011_FIX for expected values.'});
+      return rs;
+    };
+  }
+})();
+</script>
 
 <style id="studio-style">
 :root{--serif: 'Segoe UI',Arial,sans-serif;--navy:#153e46;--navy-2:#205762;--brass:#ae782f;--slate-bg:#f1f4f3;--line:#dce5e3;--steel:#49676c}
