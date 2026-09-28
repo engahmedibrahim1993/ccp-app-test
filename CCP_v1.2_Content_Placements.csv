@@ -245,7 +245,7 @@ PLC-00243,31-6,31,Chapter Practice (native bank),QUESTIONS,31-6,31-6,31-6,primar
 PLC-00244,14-8,14,Chapter Practice (native bank),QUESTIONS,14-8,14-8,14-8,primary placement,yes,yes,
 PLC-00245,14-9,14,Chapter Practice (native bank),QUESTIONS,14-9,14-9,14-9,primary placement,yes,yes,
 PLC-00246,23-9,23,Chapter Practice (native bank),QUESTIONS,23-9,23-9,23-9,primary placement,yes,yes,
-PLC-00247,14-10,14,Chapter Practice (native bank),QUESTIONS,14-10,14-10,14-10,primary placement,yes,yes,
+PLC-00247,14-10,14,Chapter Practice (native bank),QUESTIONS,14-10,14-10,14-10,primary placement,yes,"NO - EXCLUDED (SOURCE SUPPORT INSUFFICIENT, Batch C)",Batch C: unsupported CPI x SPI composite EAC formula; excluded from evidence.
 PLC-00248,32-7,32,Chapter Practice (native bank),QUESTIONS,32-7,32-7,32-7,primary placement,yes,yes,
 PLC-00249,16-6,16,Chapter Practice (native bank),QUESTIONS,16-6,16-6,16-6,primary placement,yes,yes,
 PLC-00250,13-13,13,Chapter Practice (native bank),QUESTIONS,13-13,13-13,13-13,primary placement,yes,yes,
@@ -1578,7 +1578,7 @@ PLC-01576,ts32_3,32,Transfer/Apply practice supplement,V57_TRANSFER_SUPPLEMENT,t
 PLC-01577,ts33_1,33,Transfer/Apply practice supplement,V57_TRANSFER_SUPPLEMENT,ts33_1,ts33_1,ts33_1,primary placement,yes,yes,Newly discovered this pass (global inventory census)
 PLC-01578,cx3_1,3,Challenge practice extra,V520_CHALLENGE_EXTRAS,cx3_1,cx3_1,cx3_1,primary placement,yes,yes,Audited during Pre-Batch-C blocker closeout pass. Newly discovered this pass (global inventory census)
 PLC-01579,cx14_1,14,Challenge practice extra,V520_CHALLENGE_EXTRAS,cx14_1,cx14_1,cx14_1,primary placement,yes,yes,Newly discovered this pass (global inventory census)
-PLC-01580,cx14_2,14,Challenge practice extra,V520_CHALLENGE_EXTRAS,cx14_2,cx14_2,cx14_2,primary placement,yes,yes,Newly discovered this pass (global inventory census)
+PLC-01580,cx14_2,14,Challenge practice extra,V520_CHALLENGE_EXTRAS,cx14_2,cx14_2,cx14_2,primary placement,yes,"NO - EXCLUDED (SOURCE SUPPORT INSUFFICIENT, Batch C)",Newly discovered this pass (global inventory census) Batch C: unsupported CPI x SPI composite EAC formula; excluded from evidence.
 PLC-01581,cx14_3,14,Challenge practice extra,V520_CHALLENGE_EXTRAS,cx14_3,cx14_3,cx14_3,primary placement,yes,yes,Newly discovered this pass (global inventory census)
 PLC-01582,cx14_4,14,Challenge practice extra,V520_CHALLENGE_EXTRAS,cx14_4,cx14_4,cx14_4,primary placement,yes,yes,Newly discovered this pass (global inventory census)
 PLC-01583,cx14_5,14,Challenge practice extra,V520_CHALLENGE_EXTRAS,cx14_5,cx14_5,cx14_5,primary placement,yes,yes,Newly discovered this pass (global inventory census)

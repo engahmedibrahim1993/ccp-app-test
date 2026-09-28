@@ -12721,10 +12721,75 @@ runRecommendedStep = function(){
     }
   }
 
+  // ---- Batch C finding: composite CPI×SPI EAC formula lacks primary-source support ----
+  // Confirmed by direct search of all 5 mandatory sources: RP 10S-90 defines CPI, SPI, CV,
+  // SV, ETC, and TCPI (both Budgeted-Base and EAC-Base variants) precisely, but no
+  // "AC+(BAC-EV)/(CPI x SPI)" composite formula. The CCP Study Guide's own Ch.19 material
+  // documents exactly three EAC approaches (remaining work at budget rate; performance-to-
+  // date continues, i.e. BAC/CPI; historical curves) - no CPI x SPI composite. Native 14-10
+  // and challenge extra cx14_2 both key their answer to this unsupported composite formula.
+  // Preserved unedited for provenance; excluded from evidence via the established mechanisms.
+  const BATCHC_QA_QUARANTINE = Object.freeze({
+    '14-10':'Batch C: EAC computed via AC+(BAC-EV)/(CPI x SPI), a composite cost+schedule-efficiency formula not found in RP 10S-90, S&K6 Ch.14/19, the TCM Framework, or the CCP Study Guide (which documents only budget-rate, BAC/CPI, and historical-curve EAC methods). Arithmetic is internally consistent; formula itself lacks primary AACE-hierarchy support. Quarantined pending confirmation in a mandatory source.'
+  });
+  window.BATCHC_QA_QUARANTINE = BATCHC_QA_QUARANTINE;
+  if (typeof isQuestionSuspended === 'function'){
+    const priorSuspendedC = isQuestionSuspended;
+    isQuestionSuspended = function(id){
+      return Object.prototype.hasOwnProperty.call(BATCHC_QA_QUARANTINE, String(id)) || priorSuspendedC(id);
+    };
+  }
+  (function(){
+    const cx = (V520_CHALLENGE_EXTRAS['14']||[]).find(x=>x.id==='cx14_2');
+    if (cx){
+      cx.sourceConflict = true;
+      cx.explanation = (cx.explanation||'') + ' SOURCE SUPPORT INSUFFICIENT: this item\'s EAC uses the same unsupported CPI x SPI composite formula as native 14-10 - see BATCHC_QA_QUARANTINE. Excluded from evidence-contributing Challenge packs.';
+    }
+  })();
+  if (typeof window.V57_SOURCE_UNSUPPORTED_IDS !== 'undefined'){
+    window.V57_SOURCE_UNSUPPORTED_IDS = Object.freeze([...window.V57_SOURCE_UNSUPPORTED_IDS, 'cx14_2']);
+  }
+  // Generic gate: filter every Apply/Challenge/Retention candidate pool (native, curated,
+  // supplement, dynamic, AND V520 challenge-extras) against the unsupported-id registry, by
+  // source key rather than by bank - catches cx14_2 (V520_CHALLENGE_EXTRAS bypasses the
+  // v57CuratedHighTrust gate entirely) and remains a safety net for ts5_1.
+  if (typeof v510CandidateItems === 'function'){
+    const priorCandidateItemsC = v510CandidateItems;
+    v510CandidateItems = function(ch, stage){
+      const arr = priorCandidateItemsC(ch, stage);
+      const unsupported = window.V57_SOURCE_UNSUPPORTED_IDS || [];
+      if (!unsupported.length) return arr;
+      return arr.filter(x=>{
+        const key = (x && x.key) || '';
+        const srcId = key.includes(':') ? key.split(':').slice(1).join(':') : key;
+        return !unsupported.includes(srcId);
+      });
+    };
+  }
+  window.v519BatchCEvidenceExclusion = function(){
+    const q1410 = QUESTIONS.find(q=>q.id==='14-10');
+    const cx142 = (V520_CHALLENGE_EXTRAS['14']||[]).find(x=>x.id==='cx14_2');
+    const q1410Suspended = typeof isQuestionSuspended==='function' ? isQuestionSuspended('14-10') : false;
+    const cx142Flagged = !!(cx142 && cx142.sourceConflict);
+    let cx142InChallengePool = false, err=null;
+    try {
+      const pool = v510CandidateItems('14','challenge');
+      cx142InChallengePool = pool.some(x=>(x.key||'').endsWith(':cx14_2'));
+    } catch(e){ err = e.message; }
+    return {
+      q1410Suspended, cx142Flagged, cx142InChallengePool, err,
+      ok: !!q1410 && q1410Suspended && cx142Flagged && !cx142InChallengePool
+    };
+  };
+
   if (typeof integrityResults === 'function'){
     const priorIntegrity2 = integrityResults;
     integrityResults = function(){
       const rs = priorIntegrity2();
+
+      const bc = v519BatchCEvidenceExclusion();
+      rs.push({name:'Batch C: 14-10/cx14_2 (unsupported CPI x SPI EAC formula) excluded from evidence', ok: bc.ok,
+        detail: bc.ok ? '14-10 is quarantined (isQuestionSuspended), cx14_2 is flagged sourceConflict=true and absent from the built Ch.14 Challenge pool - neither can contribute scored/mastery/readiness evidence.' : JSON.stringify(bc)});
 
       v519PatchCh5KnownException(rs, 'v5.10 Apply/Challenge source independence',
         d=>{const m=d.match(/insufficient chapters:\s*(.+)$/); return m?m[1].split(',').map(s=>s.trim()):[];},

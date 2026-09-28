@@ -4,11 +4,11 @@ canonical_content_id,chapter,chapters_all,placement_count,placement_ids,source_b
 9-3,9,9,1,PLC-00003,QUESTIONS,9-3,9-3,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
 9-4,9,9,1,PLC-00004,QUESTIONS,9-4,9-4,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
 9-5,9,9,1,PLC-00005,QUESTIONS,9-5,9-5,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
-14-1,14,14,1,PLC-00006,QUESTIONS,14-1,14-1,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
-14-2,14,14,1,PLC-00007,QUESTIONS,14-2,14-2,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
-14-3,14,14,1,PLC-00008,QUESTIONS,14-3,14-3,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
-14-4,14,14,1,PLC-00009,QUESTIONS,14-4,14-4,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
-14-5,14,14,1,PLC-00010,QUESTIONS,14-5,14-5,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
+14-1,14,14,1,PLC-00006,QUESTIONS,14-1,14-1,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
+14-2,14,14,1,PLC-00007,QUESTIONS,14-2,14-2,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
+14-3,14,14,1,PLC-00008,QUESTIONS,14-3,14-3,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
+14-4,14,14,1,PLC-00009,QUESTIONS,14-4,14-4,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
+14-5,14,14,1,PLC-00010,QUESTIONS,14-5,14-5,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
 19-1,19,19,1,PLC-00011,QUESTIONS,19-1,19-1,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
 19-2,19,19,1,PLC-00012,QUESTIONS,19-2,19-2,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
 19-3,19,19,1,PLC-00013,QUESTIONS,19-3,19-3,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
@@ -34,7 +34,7 @@ canonical_content_id,chapter,chapters_all,placement_count,placement_ids,source_b
 22-1,22,22,1,PLC-00033,QUESTIONS,22-1,22-1,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
 22-2,22,22,1,PLC-00034,QUESTIONS,22-2,22-2,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
 33-1,33,33,1,PLC-00035,QUESTIONS,33-1,33-1,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
-18-1,18,18,1,PLC-00036,QUESTIONS,18-1,18-1,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
+18-1,18,18,1,PLC-00036,QUESTIONS,18-1,18-1,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
 26-1,26,26,1,PLC-00037,QUESTIONS,26-1,26-1,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
 25-1,25,25,1,PLC-00038,QUESTIONS,25-1,25-1,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
 30-1,30,30,1,PLC-00039,QUESTIONS,30-1,30-1,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
@@ -140,32 +140,32 @@ canonical_content_id,chapter,chapters_all,placement_count,placement_ids,source_b
 12-4,12,12,1,PLC-00139,QUESTIONS,12-4,12-4,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
 12-5,12,12,1,PLC-00140,QUESTIONS,12-5,12-5,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
 12-6,12,12,1,PLC-00141,QUESTIONS,12-6,12-6,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
-13-1,13,13,1,PLC-00142,QUESTIONS,13-1,13-1,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
-13-2,13,13,1,PLC-00143,QUESTIONS,13-2,13-2,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
-13-3,13,13,1,PLC-00144,QUESTIONS,13-3,13-3,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
-13-4,13,13,1,PLC-00145,QUESTIONS,13-4,13-4,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
-13-5,13,13,1,PLC-00146,QUESTIONS,13-5,13-5,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
-13-6,13,13,1,PLC-00147,QUESTIONS,13-6,13-6,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
-13-7,13,13,1,PLC-00148,QUESTIONS,13-7,13-7,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
-13-8,13,13,1,PLC-00149,QUESTIONS,13-8,13-8,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
-13-9,13,13,1,PLC-00150,QUESTIONS,13-9,13-9,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
-13-10,13,13,1,PLC-00151,QUESTIONS,13-10,13-10,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
-15-1,15,15,1,PLC-00152,QUESTIONS,15-1,15-1,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
-15-2,15,15,1,PLC-00153,QUESTIONS,15-2,15-2,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
-15-3,15,15,1,PLC-00154,QUESTIONS,15-3,15-3,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
-15-4,15,15,1,PLC-00155,QUESTIONS,15-4,15-4,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
-15-5,15,15,1,PLC-00156,QUESTIONS,15-5,15-5,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
-15-6,15,15,1,PLC-00157,QUESTIONS,15-6,15-6,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
-16-1,16,16,1,PLC-00158,QUESTIONS,16-1,16-1,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
-16-2,16,16,1,PLC-00159,QUESTIONS,16-2,16-2,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
-16-3,16,16,1,PLC-00160,QUESTIONS,16-3,16-3,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
-16-4,16,16,1,PLC-00161,QUESTIONS,16-4,16-4,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
-16-5,16,16,1,PLC-00162,QUESTIONS,16-5,16-5,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
-17-1,17,17,1,PLC-00163,QUESTIONS,17-1,17-1,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
-17-2,17,17,1,PLC-00164,QUESTIONS,17-2,17-2,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
-17-3,17,17,1,PLC-00165,QUESTIONS,17-3,17-3,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
-17-4,17,17,1,PLC-00166,QUESTIONS,17-4,17-4,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
-17-5,17,17,1,PLC-00167,QUESTIONS,17-5,17-5,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
+13-1,13,13,1,PLC-00142,QUESTIONS,13-1,13-1,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
+13-2,13,13,1,PLC-00143,QUESTIONS,13-2,13-2,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
+13-3,13,13,1,PLC-00144,QUESTIONS,13-3,13-3,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
+13-4,13,13,1,PLC-00145,QUESTIONS,13-4,13-4,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
+13-5,13,13,1,PLC-00146,QUESTIONS,13-5,13-5,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
+13-6,13,13,1,PLC-00147,QUESTIONS,13-6,13-6,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
+13-7,13,13,1,PLC-00148,QUESTIONS,13-7,13-7,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
+13-8,13,13,1,PLC-00149,QUESTIONS,13-8,13-8,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
+13-9,13,13,1,PLC-00150,QUESTIONS,13-9,13-9,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
+13-10,13,13,1,PLC-00151,QUESTIONS,13-10,13-10,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
+15-1,15,15,1,PLC-00152,QUESTIONS,15-1,15-1,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
+15-2,15,15,1,PLC-00153,QUESTIONS,15-2,15-2,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
+15-3,15,15,1,PLC-00154,QUESTIONS,15-3,15-3,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
+15-4,15,15,1,PLC-00155,QUESTIONS,15-4,15-4,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
+15-5,15,15,1,PLC-00156,QUESTIONS,15-5,15-5,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
+15-6,15,15,1,PLC-00157,QUESTIONS,15-6,15-6,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
+16-1,16,16,1,PLC-00158,QUESTIONS,16-1,16-1,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
+16-2,16,16,1,PLC-00159,QUESTIONS,16-2,16-2,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
+16-3,16,16,1,PLC-00160,QUESTIONS,16-3,16-3,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
+16-4,16,16,1,PLC-00161,QUESTIONS,16-4,16-4,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
+16-5,16,16,1,PLC-00162,QUESTIONS,16-5,16-5,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
+17-1,17,17,1,PLC-00163,QUESTIONS,17-1,17-1,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
+17-2,17,17,1,PLC-00164,QUESTIONS,17-2,17-2,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
+17-3,17,17,1,PLC-00165,QUESTIONS,17-3,17-3,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
+17-4,17,17,1,PLC-00166,QUESTIONS,17-4,17-4,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
+17-5,17,17,1,PLC-00167,QUESTIONS,17-5,17-5,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
 20-1,20,20,1,PLC-00168,QUESTIONS,20-1,20-1,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
 20-2,20,20,1,PLC-00169,QUESTIONS,20-2,20-2,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
 20-3,20,20,1,PLC-00170,QUESTIONS,20-3,20-3,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
@@ -213,7 +213,7 @@ canonical_content_id,chapter,chapters_all,placement_count,placement_ids,source_b
 23-7,23,23,1,PLC-00212,QUESTIONS,23-7,23-7,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
 10-9,10,10,1,PLC-00213,QUESTIONS,10-9,10-9,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
 28-8,28,28,1,PLC-00214,QUESTIONS,28-8,28-8,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
-18-2,18,18,1,PLC-00215,QUESTIONS,18-2,18-2,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
+18-2,18,18,1,PLC-00215,QUESTIONS,18-2,18-2,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
 31-5,31,31,1,PLC-00216,QUESTIONS,31-5,31-5,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
 22-3,22,22,1,PLC-00217,QUESTIONS,22-3,22-3,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
 25-2,25,25,1,PLC-00218,QUESTIONS,25-2,25-2,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
@@ -233,101 +233,101 @@ canonical_content_id,chapter,chapters_all,placement_count,placement_ids,source_b
 26-2,26,26,1,PLC-00232,QUESTIONS,26-2,26-2,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
 32-6,32,32,1,PLC-00233,QUESTIONS,32-6,32-6,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
 29-10,29,29,1,PLC-00234,QUESTIONS,29-10,29-10,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
-13-11,13,13,1,PLC-00235,QUESTIONS,13-11,13-11,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
-14-6,14,14,1,PLC-00236,QUESTIONS,14-6,14-6,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
-15-7,15,15,1,PLC-00237,QUESTIONS,15-7,15-7,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
+13-11,13,13,1,PLC-00235,QUESTIONS,13-11,13-11,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
+14-6,14,14,1,PLC-00236,QUESTIONS,14-6,14-6,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
+15-7,15,15,1,PLC-00237,QUESTIONS,15-7,15-7,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
 9-12,9,9,1,PLC-00238,QUESTIONS,9-12,9-12,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
-14-7,14,14,1,PLC-00239,QUESTIONS,14-7,14-7,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
+14-7,14,14,1,PLC-00239,QUESTIONS,14-7,14-7,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
 9-13,9,9,1,PLC-00240,QUESTIONS,9-13,9-13,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
-13-12,13,13,1,PLC-00241,QUESTIONS,13-12,13-12,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
+13-12,13,13,1,PLC-00241,QUESTIONS,13-12,13-12,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
 27-6,27,27,1,PLC-00242,QUESTIONS,27-6,27-6,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
 31-6,31,31,1,PLC-00243,QUESTIONS,31-6,31-6,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
-14-8,14,14,1,PLC-00244,QUESTIONS,14-8,14-8,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
-14-9,14,14,1,PLC-00245,QUESTIONS,14-9,14-9,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
+14-8,14,14,1,PLC-00244,QUESTIONS,14-8,14-8,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
+14-9,14,14,1,PLC-00245,QUESTIONS,14-9,14-9,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
 23-9,23,23,1,PLC-00246,QUESTIONS,23-9,23-9,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
-14-10,14,14,1,PLC-00247,QUESTIONS,14-10,14-10,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
+14-10,14,14,1,PLC-00247,QUESTIONS,14-10,14-10,MCQ_native,yes,NO - EXCLUDED (BATCHC_QA_QUARANTINE; isQuestionSuspended),no,no,no,no,no,no,,yes,SOURCE SUPPORT INSUFFICIENT,yes,Batch C: EAC via unsupported CPI x SPI composite formula; quarantined from evidence.
 32-7,32,32,1,PLC-00248,QUESTIONS,32-7,32-7,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
-16-6,16,16,1,PLC-00249,QUESTIONS,16-6,16-6,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
-13-13,13,13,1,PLC-00250,QUESTIONS,13-13,13-13,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
-18-3,18,18,1,PLC-00251,QUESTIONS,18-3,18-3,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
-14-11,14,14,1,PLC-00252,QUESTIONS,14-11,14-11,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
-14-12,14,14,1,PLC-00253,QUESTIONS,14-12,14-12,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
+16-6,16,16,1,PLC-00249,QUESTIONS,16-6,16-6,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
+13-13,13,13,1,PLC-00250,QUESTIONS,13-13,13-13,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
+18-3,18,18,1,PLC-00251,QUESTIONS,18-3,18-3,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
+14-11,14,14,1,PLC-00252,QUESTIONS,14-11,14-11,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
+14-12,14,14,1,PLC-00253,QUESTIONS,14-12,14-12,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
 2-11,2,2,1,PLC-00254,QUESTIONS,2-11,2-11,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED (source override live-wired),yes,
-18-4,18,18,1,PLC-00255,QUESTIONS,18-4,18-4,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
-14-13,14,14,1,PLC-00256,QUESTIONS,14-13,14-13,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
-14-14,14,14,1,PLC-00257,QUESTIONS,14-14,14-14,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
+18-4,18,18,1,PLC-00255,QUESTIONS,18-4,18-4,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
+14-13,14,14,1,PLC-00256,QUESTIONS,14-13,14-13,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
+14-14,14,14,1,PLC-00257,QUESTIONS,14-14,14-14,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
 31-7,31,31,1,PLC-00258,QUESTIONS,31-7,31-7,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
 7-11,7,7,1,PLC-00259,QUESTIONS,7-11,7-11,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
-14-15,14,14,1,PLC-00260,QUESTIONS,14-15,14-15,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
-13-14,13,13,1,PLC-00261,QUESTIONS,13-14,13-14,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
-13-15,13,13,1,PLC-00262,QUESTIONS,13-15,13-15,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
-18-5,18,18,1,PLC-00263,QUESTIONS,18-5,18-5,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
+14-15,14,14,1,PLC-00260,QUESTIONS,14-15,14-15,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
+13-14,13,13,1,PLC-00261,QUESTIONS,13-14,13-14,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
+13-15,13,13,1,PLC-00262,QUESTIONS,13-15,13-15,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
+18-5,18,18,1,PLC-00263,QUESTIONS,18-5,18-5,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
 29-11,29,29,1,PLC-00264,QUESTIONS,29-11,29-11,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
 31-8,31,31,1,PLC-00265,QUESTIONS,31-8,31-8,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
-14-16,14,14,1,PLC-00266,QUESTIONS,14-16,14-16,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
-18-6,18,18,1,PLC-00267,QUESTIONS,18-6,18-6,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
+14-16,14,14,1,PLC-00266,QUESTIONS,14-16,14-16,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
+18-6,18,18,1,PLC-00267,QUESTIONS,18-6,18-6,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
 25-3,25,25,1,PLC-00268,QUESTIONS,25-3,25-3,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
 9-14,9,9,1,PLC-00269,QUESTIONS,9-14,9-14,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
 12-9,12,12,1,PLC-00270,QUESTIONS,12-9,12-9,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
-14-17,14,14,1,PLC-00271,QUESTIONS,14-17,14-17,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
+14-17,14,14,1,PLC-00271,QUESTIONS,14-17,14-17,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
 32-8,32,32,1,PLC-00272,QUESTIONS,32-8,32-8,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
 27-7,27,27,1,PLC-00273,QUESTIONS,27-7,27-7,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
 9-15,9,9,1,PLC-00274,QUESTIONS,9-15,9-15,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
 19-11,19,19,1,PLC-00275,QUESTIONS,19-11,19-11,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
 20-11,20,20,1,PLC-00276,QUESTIONS,20-11,20-11,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
-18-7,18,18,1,PLC-00277,QUESTIONS,18-7,18-7,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
+18-7,18,18,1,PLC-00277,QUESTIONS,18-7,18-7,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
 27-8,27,27,1,PLC-00278,QUESTIONS,27-8,27-8,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
-15-8,15,15,1,PLC-00279,QUESTIONS,15-8,15-8,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
+15-8,15,15,1,PLC-00279,QUESTIONS,15-8,15-8,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
 9-16,9,9,1,PLC-00280,QUESTIONS,9-16,9-16,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
-18-8,18,18,1,PLC-00281,QUESTIONS,18-8,18-8,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
+18-8,18,18,1,PLC-00281,QUESTIONS,18-8,18-8,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
 9-17,9,9,1,PLC-00282,QUESTIONS,9-17,9-17,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
-14-18,14,14,1,PLC-00283,QUESTIONS,14-18,14-18,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
-14-19,14,14,1,PLC-00284,QUESTIONS,14-19,14-19,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
-14-20,14,14,1,PLC-00285,QUESTIONS,14-20,14-20,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
+14-18,14,14,1,PLC-00283,QUESTIONS,14-18,14-18,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
+14-19,14,14,1,PLC-00284,QUESTIONS,14-19,14-19,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
+14-20,14,14,1,PLC-00285,QUESTIONS,14-20,14-20,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
 32-9,32,32,1,PLC-00286,QUESTIONS,32-9,32-9,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
 23-10,23,23,1,PLC-00287,QUESTIONS,23-10,23-10,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
-14-21,14,14,1,PLC-00288,QUESTIONS,14-21,14-21,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
-17-6,17,17,1,PLC-00289,QUESTIONS,17-6,17-6,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
+14-21,14,14,1,PLC-00288,QUESTIONS,14-21,14-21,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
+17-6,17,17,1,PLC-00289,QUESTIONS,17-6,17-6,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
 7-12,7,7,1,PLC-00290,QUESTIONS,7-12,7-12,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
 31-9,31,31,1,PLC-00291,QUESTIONS,31-9,31-9,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
 27-9,27,27,1,PLC-00292,QUESTIONS,27-9,27-9,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
 20-12,20,20,1,PLC-00293,QUESTIONS,20-12,20-12,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
-14-22,14,14,1,PLC-00294,QUESTIONS,14-22,14-22,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
-18-9,18,18,1,PLC-00295,QUESTIONS,18-9,18-9,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
-14-23,14,14,1,PLC-00296,QUESTIONS,14-23,14-23,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
+14-22,14,14,1,PLC-00294,QUESTIONS,14-22,14-22,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
+18-9,18,18,1,PLC-00295,QUESTIONS,18-9,18-9,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
+14-23,14,14,1,PLC-00296,QUESTIONS,14-23,14-23,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
 27-10,27,27,1,PLC-00297,QUESTIONS,27-10,27-10,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
-13-16,13,13,1,PLC-00298,QUESTIONS,13-16,13-16,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
-14-24,14,14,1,PLC-00299,QUESTIONS,14-24,14-24,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
+13-16,13,13,1,PLC-00298,QUESTIONS,13-16,13-16,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
+14-24,14,14,1,PLC-00299,QUESTIONS,14-24,14-24,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
 31-10,31,31,1,PLC-00300,QUESTIONS,31-10,31-10,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
-18-10,18,18,1,PLC-00301,QUESTIONS,18-10,18-10,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
+18-10,18,18,1,PLC-00301,QUESTIONS,18-10,18-10,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
 33-2,33,33,1,PLC-00302,QUESTIONS,33-2,33-2,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
 31-11,31,31,1,PLC-00303,QUESTIONS,31-11,31-11,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
-13-17,13,13,1,PLC-00304,QUESTIONS,13-17,13-17,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
-14-25,14,14,1,PLC-00305,QUESTIONS,14-25,14-25,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
-14-26,14,14,1,PLC-00306,QUESTIONS,14-26,14-26,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
+13-17,13,13,1,PLC-00304,QUESTIONS,13-17,13-17,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
+14-25,14,14,1,PLC-00305,QUESTIONS,14-25,14-25,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
+14-26,14,14,1,PLC-00306,QUESTIONS,14-26,14-26,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
 29-12,29,29,1,PLC-00307,QUESTIONS,29-12,29-12,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
-14-27,14,14,1,PLC-00308,QUESTIONS,14-27,14-27,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
+14-27,14,14,1,PLC-00308,QUESTIONS,14-27,14-27,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
 28-10,28,28,1,PLC-00309,QUESTIONS,28-10,28-10,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
 32-10,32,32,1,PLC-00310,QUESTIONS,32-10,32-10,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
-13-18,13,13,1,PLC-00311,QUESTIONS,13-18,13-18,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
+13-18,13,13,1,PLC-00311,QUESTIONS,13-18,13-18,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
 20-13,20,20,1,PLC-00312,QUESTIONS,20-13,20-13,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
-14-28,14,14,1,PLC-00313,QUESTIONS,14-28,14-28,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
+14-28,14,14,1,PLC-00313,QUESTIONS,14-28,14-28,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
 28-11,28,28,1,PLC-00314,QUESTIONS,28-11,28-11,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
-14-29,14,14,1,PLC-00315,QUESTIONS,14-29,14-29,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
+14-29,14,14,1,PLC-00315,QUESTIONS,14-29,14-29,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
 20-14,20,20,1,PLC-00316,QUESTIONS,20-14,20-14,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
 28-12,28,28,1,PLC-00317,QUESTIONS,28-12,28-12,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
-13-19,13,13,1,PLC-00318,QUESTIONS,13-19,13-19,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
+13-19,13,13,1,PLC-00318,QUESTIONS,13-19,13-19,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
 9-18,9,9,1,PLC-00319,QUESTIONS,9-18,9-18,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
-14-30,14,14,1,PLC-00320,QUESTIONS,14-30,14-30,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
-14-31,14,14,1,PLC-00321,QUESTIONS,14-31,14-31,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
+14-30,14,14,1,PLC-00320,QUESTIONS,14-30,14-30,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
+14-31,14,14,1,PLC-00321,QUESTIONS,14-31,14-31,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
 9-19,9,9,1,PLC-00322,QUESTIONS,9-19,9-19,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
-14-32,14,14,1,PLC-00323,QUESTIONS,14-32,14-32,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
-14-33,14,14,1,PLC-00324,QUESTIONS,14-33,14-33,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
-14-34,14,14,1,PLC-00325,QUESTIONS,14-34,14-34,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
+14-32,14,14,1,PLC-00323,QUESTIONS,14-32,14-32,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
+14-33,14,14,1,PLC-00324,QUESTIONS,14-33,14-33,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
+14-34,14,14,1,PLC-00325,QUESTIONS,14-34,14-34,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
 29-13,29,29,1,PLC-00326,QUESTIONS,29-13,29-13,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
-14-35,14,14,1,PLC-00327,QUESTIONS,14-35,14-35,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
+14-35,14,14,1,PLC-00327,QUESTIONS,14-35,14-35,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
 32-11,32,32,1,PLC-00328,QUESTIONS,32-11,32-11,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
-14-36,14,14,1,PLC-00329,QUESTIONS,14-36,14-36,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
+14-36,14,14,1,PLC-00329,QUESTIONS,14-36,14-36,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
 20-15,20,20,1,PLC-00330,QUESTIONS,20-15,20-15,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
 1-11,1,1,1,PLC-00331,QUESTIONS,1-11,1-11,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
 1-12,1,1,1,PLC-00332,QUESTIONS,1-12,1-12,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
@@ -382,36 +382,36 @@ canonical_content_id,chapter,chapters_all,placement_count,placement_ids,source_b
 12-12,12,12,1,PLC-00381,QUESTIONS,12-12,12-12,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
 12-13,12,12,1,PLC-00382,QUESTIONS,12-13,12-13,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
 12-14,12,12,1,PLC-00383,QUESTIONS,12-14,12-14,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
-13-20,13,13,1,PLC-00384,QUESTIONS,13-20,13-20,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
-13-21,13,13,1,PLC-00385,QUESTIONS,13-21,13-21,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
-13-22,13,13,1,PLC-00386,QUESTIONS,13-22,13-22,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
-13-23,13,13,1,PLC-00387,QUESTIONS,13-23,13-23,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
-13-24,13,13,1,PLC-00388,QUESTIONS,13-24,13-24,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
-14-37,14,14,1,PLC-00389,QUESTIONS,14-37,14-37,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
-14-38,14,14,1,PLC-00390,QUESTIONS,14-38,14-38,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
-14-39,14,14,1,PLC-00391,QUESTIONS,14-39,14-39,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
-14-40,14,14,1,PLC-00392,QUESTIONS,14-40,14-40,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
-14-41,14,14,1,PLC-00393,QUESTIONS,14-41,14-41,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
-15-9,15,15,1,PLC-00394,QUESTIONS,15-9,15-9,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
-15-10,15,15,1,PLC-00395,QUESTIONS,15-10,15-10,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
-15-11,15,15,1,PLC-00396,QUESTIONS,15-11,15-11,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
-15-12,15,15,1,PLC-00397,QUESTIONS,15-12,15-12,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
-15-13,15,15,1,PLC-00398,QUESTIONS,15-13,15-13,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
-16-7,16,16,1,PLC-00399,QUESTIONS,16-7,16-7,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
-16-8,16,16,1,PLC-00400,QUESTIONS,16-8,16-8,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
-16-9,16,16,1,PLC-00401,QUESTIONS,16-9,16-9,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
-16-10,16,16,1,PLC-00402,QUESTIONS,16-10,16-10,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
-16-11,16,16,1,PLC-00403,QUESTIONS,16-11,16-11,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
-17-7,17,17,1,PLC-00404,QUESTIONS,17-7,17-7,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
-17-8,17,17,1,PLC-00405,QUESTIONS,17-8,17-8,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
-17-9,17,17,1,PLC-00406,QUESTIONS,17-9,17-9,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
-17-10,17,17,1,PLC-00407,QUESTIONS,17-10,17-10,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
-17-11,17,17,1,PLC-00408,QUESTIONS,17-11,17-11,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
-18-11,18,18,1,PLC-00409,QUESTIONS,18-11,18-11,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
-18-12,18,18,1,PLC-00410,QUESTIONS,18-12,18-12,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
-18-13,18,18,1,PLC-00411,QUESTIONS,18-13,18-13,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
-18-14,18,18,1,PLC-00412,QUESTIONS,18-14,18-14,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
-18-15,18,18,1,PLC-00413,QUESTIONS,18-15,18-15,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
+13-20,13,13,1,PLC-00384,QUESTIONS,13-20,13-20,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
+13-21,13,13,1,PLC-00385,QUESTIONS,13-21,13-21,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
+13-22,13,13,1,PLC-00386,QUESTIONS,13-22,13-22,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
+13-23,13,13,1,PLC-00387,QUESTIONS,13-23,13-23,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
+13-24,13,13,1,PLC-00388,QUESTIONS,13-24,13-24,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
+14-37,14,14,1,PLC-00389,QUESTIONS,14-37,14-37,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
+14-38,14,14,1,PLC-00390,QUESTIONS,14-38,14-38,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
+14-39,14,14,1,PLC-00391,QUESTIONS,14-39,14-39,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
+14-40,14,14,1,PLC-00392,QUESTIONS,14-40,14-40,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
+14-41,14,14,1,PLC-00393,QUESTIONS,14-41,14-41,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
+15-9,15,15,1,PLC-00394,QUESTIONS,15-9,15-9,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
+15-10,15,15,1,PLC-00395,QUESTIONS,15-10,15-10,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
+15-11,15,15,1,PLC-00396,QUESTIONS,15-11,15-11,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
+15-12,15,15,1,PLC-00397,QUESTIONS,15-12,15-12,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
+15-13,15,15,1,PLC-00398,QUESTIONS,15-13,15-13,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
+16-7,16,16,1,PLC-00399,QUESTIONS,16-7,16-7,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
+16-8,16,16,1,PLC-00400,QUESTIONS,16-8,16-8,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
+16-9,16,16,1,PLC-00401,QUESTIONS,16-9,16-9,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
+16-10,16,16,1,PLC-00402,QUESTIONS,16-10,16-10,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
+16-11,16,16,1,PLC-00403,QUESTIONS,16-11,16-11,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
+17-7,17,17,1,PLC-00404,QUESTIONS,17-7,17-7,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
+17-8,17,17,1,PLC-00405,QUESTIONS,17-8,17-8,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
+17-9,17,17,1,PLC-00406,QUESTIONS,17-9,17-9,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
+17-10,17,17,1,PLC-00407,QUESTIONS,17-10,17-10,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
+17-11,17,17,1,PLC-00408,QUESTIONS,17-11,17-11,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
+18-11,18,18,1,PLC-00409,QUESTIONS,18-11,18-11,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
+18-12,18,18,1,PLC-00410,QUESTIONS,18-12,18-12,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
+18-13,18,18,1,PLC-00411,QUESTIONS,18-13,18-13,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
+18-14,18,18,1,PLC-00412,QUESTIONS,18-14,18-14,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
+18-15,18,18,1,PLC-00413,QUESTIONS,18-15,18-15,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
 19-12,19,19,1,PLC-00414,QUESTIONS,19-12,19-12,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
 19-13,19,19,1,PLC-00415,QUESTIONS,19-13,19-13,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
 19-14,19,19,1,PLC-00416,QUESTIONS,19-14,19-14,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
@@ -595,28 +595,28 @@ canonical_content_id,chapter,chapters_all,placement_count,placement_ids,source_b
 11-27,11,11,1,PLC-00594,QUESTIONS,11-27,11-27,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
 11-28,11,11,1,PLC-00595,QUESTIONS,11-28,11-28,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
 11-29,11,11,1,PLC-00596,QUESTIONS,11-29,11-29,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
-13-25,13,13,1,PLC-00597,QUESTIONS,13-25,13-25,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
-13-26,13,13,1,PLC-00598,QUESTIONS,13-26,13-26,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
-13-27,13,13,1,PLC-00599,QUESTIONS,13-27,13-27,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
-13-28,13,13,1,PLC-00600,QUESTIONS,13-28,13-28,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
-13-29,13,13,1,PLC-00601,QUESTIONS,13-29,13-29,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
-13-30,13,13,1,PLC-00602,QUESTIONS,13-30,13-30,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
-13-31,13,13,1,PLC-00603,QUESTIONS,13-31,13-31,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
-13-32,13,13,1,PLC-00604,QUESTIONS,13-32,13-32,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
-13-33,13,13,1,PLC-00605,QUESTIONS,13-33,13-33,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
-13-34,13,13,1,PLC-00606,QUESTIONS,13-34,13-34,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
-13-35,13,13,1,PLC-00607,QUESTIONS,13-35,13-35,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
-13-36,13,13,1,PLC-00608,QUESTIONS,13-36,13-36,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
-14-42,14,14,1,PLC-00609,QUESTIONS,14-42,14-42,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
-14-43,14,14,1,PLC-00610,QUESTIONS,14-43,14-43,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
-14-44,14,14,1,PLC-00611,QUESTIONS,14-44,14-44,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
-14-45,14,14,1,PLC-00612,QUESTIONS,14-45,14-45,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
-15-14,15,15,1,PLC-00613,QUESTIONS,15-14,15-14,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
-15-15,15,15,1,PLC-00614,QUESTIONS,15-15,15-15,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
-15-16,15,15,1,PLC-00615,QUESTIONS,15-16,15-16,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
-15-17,15,15,1,PLC-00616,QUESTIONS,15-17,15-17,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
-15-18,15,15,1,PLC-00617,QUESTIONS,15-18,15-18,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
-17-12,17,17,1,PLC-00618,QUESTIONS,17-12,17-12,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
+13-25,13,13,1,PLC-00597,QUESTIONS,13-25,13-25,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
+13-26,13,13,1,PLC-00598,QUESTIONS,13-26,13-26,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
+13-27,13,13,1,PLC-00599,QUESTIONS,13-27,13-27,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
+13-28,13,13,1,PLC-00600,QUESTIONS,13-28,13-28,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
+13-29,13,13,1,PLC-00601,QUESTIONS,13-29,13-29,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
+13-30,13,13,1,PLC-00602,QUESTIONS,13-30,13-30,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
+13-31,13,13,1,PLC-00603,QUESTIONS,13-31,13-31,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
+13-32,13,13,1,PLC-00604,QUESTIONS,13-32,13-32,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
+13-33,13,13,1,PLC-00605,QUESTIONS,13-33,13-33,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
+13-34,13,13,1,PLC-00606,QUESTIONS,13-34,13-34,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
+13-35,13,13,1,PLC-00607,QUESTIONS,13-35,13-35,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
+13-36,13,13,1,PLC-00608,QUESTIONS,13-36,13-36,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
+14-42,14,14,1,PLC-00609,QUESTIONS,14-42,14-42,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
+14-43,14,14,1,PLC-00610,QUESTIONS,14-43,14-43,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
+14-44,14,14,1,PLC-00611,QUESTIONS,14-44,14-44,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
+14-45,14,14,1,PLC-00612,QUESTIONS,14-45,14-45,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
+15-14,15,15,1,PLC-00613,QUESTIONS,15-14,15-14,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
+15-15,15,15,1,PLC-00614,QUESTIONS,15-15,15-15,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
+15-16,15,15,1,PLC-00615,QUESTIONS,15-16,15-16,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
+15-17,15,15,1,PLC-00616,QUESTIONS,15-17,15-17,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
+15-18,15,15,1,PLC-00617,QUESTIONS,15-18,15-18,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
+17-12,17,17,1,PLC-00618,QUESTIONS,17-12,17-12,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
 19-17,19,19,1,PLC-00619,QUESTIONS,19-17,19-17,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
 19-18,19,19,1,PLC-00620,QUESTIONS,19-18,19-18,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
 19-19,19,19,1,PLC-00621,QUESTIONS,19-19,19-19,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
@@ -704,91 +704,91 @@ canonical_content_id,chapter,chapters_all,placement_count,placement_ids,source_b
 2.A-f1,33,33,1,PLC-00703,V522_TASK_RESERVE_ITEMS,2.A-f1,2.A-f1;BP522-2_A-1,MCQ_native_task_reserve,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP522-2_A-1),yes,UNAUDITED,no,"Spec+runtime are 1 content unit, 2 representations - see representation map"
 2.A-f2,33,33,1,PLC-00704,V522_TASK_RESERVE_ITEMS,2.A-f2,2.A-f2;BP522-2_A-2,MCQ_native_task_reserve,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP522-2_A-2),yes,UNAUDITED,no,"Spec+runtime are 1 content unit, 2 representations - see representation map"
 2.A-f3,33,33,1,PLC-00705,V522_TASK_RESERVE_ITEMS,2.A-f3,2.A-f3;BP522-2_A-3,MCQ_native_task_reserve,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP522-2_A-3),yes,UNAUDITED,no,"Spec+runtime are 1 content unit, 2 representations - see representation map"
-2.B-f1,18,18,1,PLC-00706,V522_TASK_RESERVE_ITEMS,2.B-f1,2.B-f1;BP522-2_B-1,MCQ_native_task_reserve,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP522-2_B-1),yes,UNAUDITED,no,"Spec+runtime are 1 content unit, 2 representations - see representation map"
-2.B-f2,18,18,1,PLC-00707,V522_TASK_RESERVE_ITEMS,2.B-f2,2.B-f2;BP522-2_B-2,MCQ_native_task_reserve,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP522-2_B-2),yes,UNAUDITED,no,"Spec+runtime are 1 content unit, 2 representations - see representation map"
-2.B-f3,18,18,1,PLC-00708,V522_TASK_RESERVE_ITEMS,2.B-f3,2.B-f3;BP522-2_B-3,MCQ_native_task_reserve,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP522-2_B-3),yes,UNAUDITED,no,"Spec+runtime are 1 content unit, 2 representations - see representation map"
+2.B-f1,18,18,1,PLC-00706,V522_TASK_RESERVE_ITEMS,2.B-f1,2.B-f1;BP522-2_B-1,MCQ_native_task_reserve,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP522-2_B-1),yes,VERIFIED,yes,"Spec+runtime are 1 content unit, 2 representations - see representation map"
+2.B-f2,18,18,1,PLC-00707,V522_TASK_RESERVE_ITEMS,2.B-f2,2.B-f2;BP522-2_B-2,MCQ_native_task_reserve,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP522-2_B-2),yes,VERIFIED,yes,"Spec+runtime are 1 content unit, 2 representations - see representation map"
+2.B-f3,18,18,1,PLC-00708,V522_TASK_RESERVE_ITEMS,2.B-f3,2.B-f3;BP522-2_B-3,MCQ_native_task_reserve,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP522-2_B-3),yes,VERIFIED,yes,"Spec+runtime are 1 content unit, 2 representations - see representation map"
 2.C-f1,1,1,1,PLC-00709,V522_TASK_RESERVE_ITEMS,2.C-f1,2.C-f1;BP522-2_C-1,MCQ_native_task_reserve,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP522-2_C-1),yes,VERIFIED (citation-scope corrected),yes,"Spec+runtime are 1 content unit, 2 representations - see representation map"
 2.C-f2,1,1,1,PLC-00710,V522_TASK_RESERVE_ITEMS,2.C-f2,2.C-f2;BP522-2_C-2,MCQ_native_task_reserve,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP522-2_C-2),yes,VERIFIED (citation-scope corrected),yes,"Spec+runtime are 1 content unit, 2 representations - see representation map"
 2.C-f3,1,1,1,PLC-00711,V522_TASK_RESERVE_ITEMS,2.C-f3,2.C-f3;BP522-2_C-3,MCQ_native_task_reserve,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP522-2_C-3),yes,VERIFIED (citation-scope corrected),yes,"Spec+runtime are 1 content unit, 2 representations - see representation map"
 2.D-f1,23,23,1,PLC-00712,V522_TASK_RESERVE_ITEMS,2.D-f1,2.D-f1;BP522-2_D-1,MCQ_native_task_reserve,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP522-2_D-1),yes,UNAUDITED,no,"Spec+runtime are 1 content unit, 2 representations - see representation map"
 2.D-f2,23,23,1,PLC-00713,V522_TASK_RESERVE_ITEMS,2.D-f2,2.D-f2;BP522-2_D-2,MCQ_native_task_reserve,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP522-2_D-2),yes,UNAUDITED,no,"Spec+runtime are 1 content unit, 2 representations - see representation map"
 2.D-f3,23,23,1,PLC-00714,V522_TASK_RESERVE_ITEMS,2.D-f3,2.D-f3;BP522-2_D-3,MCQ_native_task_reserve,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP522-2_D-3),yes,UNAUDITED,no,"Spec+runtime are 1 content unit, 2 representations - see representation map"
-2.E-f1,18,18,1,PLC-00715,V522_TASK_RESERVE_ITEMS,2.E-f1,2.E-f1;BP522-2_E-1,MCQ_native_task_reserve,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP522-2_E-1),yes,UNAUDITED,no,"Spec+runtime are 1 content unit, 2 representations - see representation map"
-2.E-f2,18,18,1,PLC-00716,V522_TASK_RESERVE_ITEMS,2.E-f2,2.E-f2;BP522-2_E-2,MCQ_native_task_reserve,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP522-2_E-2),yes,UNAUDITED,no,"Spec+runtime are 1 content unit, 2 representations - see representation map"
-2.E-f3,18,18,1,PLC-00717,V522_TASK_RESERVE_ITEMS,2.E-f3,2.E-f3;BP522-2_E-3,MCQ_native_task_reserve,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP522-2_E-3),yes,UNAUDITED,no,"Spec+runtime are 1 content unit, 2 representations - see representation map"
-2.F-f1,18,18,1,PLC-00718,V522_TASK_RESERVE_ITEMS,2.F-f1,2.F-f1;BP522-2_F-1,MCQ_native_task_reserve,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP522-2_F-1),yes,UNAUDITED,no,"Spec+runtime are 1 content unit, 2 representations - see representation map"
-2.F-f2,18,18,1,PLC-00719,V522_TASK_RESERVE_ITEMS,2.F-f2,2.F-f2;BP522-2_F-2,MCQ_native_task_reserve,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP522-2_F-2),yes,UNAUDITED,no,"Spec+runtime are 1 content unit, 2 representations - see representation map"
-2.F-f3,18,18,1,PLC-00720,V522_TASK_RESERVE_ITEMS,2.F-f3,2.F-f3;BP522-2_F-3,MCQ_native_task_reserve,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP522-2_F-3),yes,UNAUDITED,no,"Spec+runtime are 1 content unit, 2 representations - see representation map"
-2.G-f1,14,14,1,PLC-00721,V522_TASK_RESERVE_ITEMS,2.G-f1,2.G-f1;BP522-2_G-1,MCQ_native_task_reserve,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP522-2_G-1),yes,UNAUDITED,no,"Spec+runtime are 1 content unit, 2 representations - see representation map"
-2.G-f2,14,14,1,PLC-00722,V522_TASK_RESERVE_ITEMS,2.G-f2,2.G-f2;BP522-2_G-2,MCQ_native_task_reserve,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP522-2_G-2),yes,UNAUDITED,no,"Spec+runtime are 1 content unit, 2 representations - see representation map"
-2.G-f3,14,14,1,PLC-00723,V522_TASK_RESERVE_ITEMS,2.G-f3,2.G-f3;BP522-2_G-3,MCQ_native_task_reserve,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP522-2_G-3),yes,UNAUDITED,no,"Spec+runtime are 1 content unit, 2 representations - see representation map"
+2.E-f1,18,18,1,PLC-00715,V522_TASK_RESERVE_ITEMS,2.E-f1,2.E-f1;BP522-2_E-1,MCQ_native_task_reserve,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP522-2_E-1),yes,VERIFIED,yes,"Spec+runtime are 1 content unit, 2 representations - see representation map"
+2.E-f2,18,18,1,PLC-00716,V522_TASK_RESERVE_ITEMS,2.E-f2,2.E-f2;BP522-2_E-2,MCQ_native_task_reserve,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP522-2_E-2),yes,VERIFIED,yes,"Spec+runtime are 1 content unit, 2 representations - see representation map"
+2.E-f3,18,18,1,PLC-00717,V522_TASK_RESERVE_ITEMS,2.E-f3,2.E-f3;BP522-2_E-3,MCQ_native_task_reserve,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP522-2_E-3),yes,VERIFIED,yes,"Spec+runtime are 1 content unit, 2 representations - see representation map"
+2.F-f1,18,18,1,PLC-00718,V522_TASK_RESERVE_ITEMS,2.F-f1,2.F-f1;BP522-2_F-1,MCQ_native_task_reserve,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP522-2_F-1),yes,VERIFIED,yes,"Spec+runtime are 1 content unit, 2 representations - see representation map"
+2.F-f2,18,18,1,PLC-00719,V522_TASK_RESERVE_ITEMS,2.F-f2,2.F-f2;BP522-2_F-2,MCQ_native_task_reserve,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP522-2_F-2),yes,VERIFIED,yes,"Spec+runtime are 1 content unit, 2 representations - see representation map"
+2.F-f3,18,18,1,PLC-00720,V522_TASK_RESERVE_ITEMS,2.F-f3,2.F-f3;BP522-2_F-3,MCQ_native_task_reserve,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP522-2_F-3),yes,VERIFIED,yes,"Spec+runtime are 1 content unit, 2 representations - see representation map"
+2.G-f1,14,14,1,PLC-00721,V522_TASK_RESERVE_ITEMS,2.G-f1,2.G-f1;BP522-2_G-1,MCQ_native_task_reserve,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP522-2_G-1),yes,VERIFIED,yes,"Spec+runtime are 1 content unit, 2 representations - see representation map"
+2.G-f2,14,14,1,PLC-00722,V522_TASK_RESERVE_ITEMS,2.G-f2,2.G-f2;BP522-2_G-2,MCQ_native_task_reserve,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP522-2_G-2),yes,VERIFIED,yes,"Spec+runtime are 1 content unit, 2 representations - see representation map"
+2.G-f3,14,14,1,PLC-00723,V522_TASK_RESERVE_ITEMS,2.G-f3,2.G-f3;BP522-2_G-3,MCQ_native_task_reserve,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP522-2_G-3),yes,VERIFIED,yes,"Spec+runtime are 1 content unit, 2 representations - see representation map"
 2.H-f1,23,23,1,PLC-00724,V522_TASK_RESERVE_ITEMS,2.H-f1,2.H-f1;BP522-2_H-1,MCQ_native_task_reserve,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP522-2_H-1),yes,UNAUDITED,no,"Spec+runtime are 1 content unit, 2 representations - see representation map"
 2.H-f2,23,23,1,PLC-00725,V522_TASK_RESERVE_ITEMS,2.H-f2,2.H-f2;BP522-2_H-2,MCQ_native_task_reserve,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP522-2_H-2),yes,UNAUDITED,no,"Spec+runtime are 1 content unit, 2 representations - see representation map"
 2.H-f3,23,23,1,PLC-00726,V522_TASK_RESERVE_ITEMS,2.H-f3,2.H-f3;BP522-2_H-3,MCQ_native_task_reserve,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP522-2_H-3),yes,UNAUDITED,no,"Spec+runtime are 1 content unit, 2 representations - see representation map"
 2.I-f1,12,12,1,PLC-00727,V522_TASK_RESERVE_ITEMS,2.I-f1,2.I-f1;BP522-2_I-1,MCQ_native_task_reserve,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP522-2_I-1),yes,VERIFIED,yes,"Spec+runtime are 1 content unit, 2 representations - see representation map"
 2.I-f2,12,12,1,PLC-00728,V522_TASK_RESERVE_ITEMS,2.I-f2,2.I-f2;BP522-2_I-2,MCQ_native_task_reserve,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP522-2_I-2),yes,VERIFIED,yes,"Spec+runtime are 1 content unit, 2 representations - see representation map"
 2.I-f3,12,12,1,PLC-00729,V522_TASK_RESERVE_ITEMS,2.I-f3,2.I-f3;BP522-2_I-3,MCQ_native_task_reserve,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP522-2_I-3),yes,VERIFIED,yes,"Spec+runtime are 1 content unit, 2 representations - see representation map"
-2.J-f1,13,13,1,PLC-00730,V522_TASK_RESERVE_ITEMS,2.J-f1,2.J-f1;BP522-2_J-1,MCQ_native_task_reserve,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP522-2_J-1),yes,UNAUDITED,no,"Spec+runtime are 1 content unit, 2 representations - see representation map"
-2.J-f2,13,13,1,PLC-00731,V522_TASK_RESERVE_ITEMS,2.J-f2,2.J-f2;BP522-2_J-2,MCQ_native_task_reserve,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP522-2_J-2),yes,UNAUDITED,no,"Spec+runtime are 1 content unit, 2 representations - see representation map"
-2.J-f3,13,13,1,PLC-00732,V522_TASK_RESERVE_ITEMS,2.J-f3,2.J-f3;BP522-2_J-3,MCQ_native_task_reserve,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP522-2_J-3),yes,UNAUDITED,no,"Spec+runtime are 1 content unit, 2 representations - see representation map"
-2.K-f1,16,16,1,PLC-00733,V522_TASK_RESERVE_ITEMS,2.K-f1,2.K-f1;BP522-2_K-1,MCQ_native_task_reserve,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP522-2_K-1),yes,UNAUDITED,no,"Spec+runtime are 1 content unit, 2 representations - see representation map"
-2.K-f2,16,16,1,PLC-00734,V522_TASK_RESERVE_ITEMS,2.K-f2,2.K-f2;BP522-2_K-2,MCQ_native_task_reserve,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP522-2_K-2),yes,UNAUDITED,no,"Spec+runtime are 1 content unit, 2 representations - see representation map"
-2.K-f3,16,16,1,PLC-00735,V522_TASK_RESERVE_ITEMS,2.K-f3,2.K-f3;BP522-2_K-3,MCQ_native_task_reserve,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP522-2_K-3),yes,UNAUDITED,no,"Spec+runtime are 1 content unit, 2 representations - see representation map"
+2.J-f1,13,13,1,PLC-00730,V522_TASK_RESERVE_ITEMS,2.J-f1,2.J-f1;BP522-2_J-1,MCQ_native_task_reserve,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP522-2_J-1),yes,VERIFIED,yes,"Spec+runtime are 1 content unit, 2 representations - see representation map"
+2.J-f2,13,13,1,PLC-00731,V522_TASK_RESERVE_ITEMS,2.J-f2,2.J-f2;BP522-2_J-2,MCQ_native_task_reserve,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP522-2_J-2),yes,VERIFIED,yes,"Spec+runtime are 1 content unit, 2 representations - see representation map"
+2.J-f3,13,13,1,PLC-00732,V522_TASK_RESERVE_ITEMS,2.J-f3,2.J-f3;BP522-2_J-3,MCQ_native_task_reserve,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP522-2_J-3),yes,VERIFIED,yes,"Spec+runtime are 1 content unit, 2 representations - see representation map"
+2.K-f1,16,16,1,PLC-00733,V522_TASK_RESERVE_ITEMS,2.K-f1,2.K-f1;BP522-2_K-1,MCQ_native_task_reserve,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP522-2_K-1),yes,VERIFIED,yes,"Spec+runtime are 1 content unit, 2 representations - see representation map"
+2.K-f2,16,16,1,PLC-00734,V522_TASK_RESERVE_ITEMS,2.K-f2,2.K-f2;BP522-2_K-2,MCQ_native_task_reserve,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP522-2_K-2),yes,VERIFIED,yes,"Spec+runtime are 1 content unit, 2 representations - see representation map"
+2.K-f3,16,16,1,PLC-00735,V522_TASK_RESERVE_ITEMS,2.K-f3,2.K-f3;BP522-2_K-3,MCQ_native_task_reserve,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP522-2_K-3),yes,VERIFIED,yes,"Spec+runtime are 1 content unit, 2 representations - see representation map"
 2.L-f1,25,25,1,PLC-00736,V522_TASK_RESERVE_ITEMS,2.L-f1,2.L-f1;BP522-2_L-1,MCQ_native_task_reserve,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP522-2_L-1),yes,UNAUDITED,no,"Spec+runtime are 1 content unit, 2 representations - see representation map"
 2.L-f2,25,25,1,PLC-00737,V522_TASK_RESERVE_ITEMS,2.L-f2,2.L-f2;BP522-2_L-2,MCQ_native_task_reserve,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP522-2_L-2),yes,UNAUDITED,no,"Spec+runtime are 1 content unit, 2 representations - see representation map"
 2.L-f3,25,25,1,PLC-00738,V522_TASK_RESERVE_ITEMS,2.L-f3,2.L-f3;BP522-2_L-3,MCQ_native_task_reserve,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP522-2_L-3),yes,UNAUDITED,no,"Spec+runtime are 1 content unit, 2 representations - see representation map"
 2.M-f1,26,26,1,PLC-00739,V522_TASK_RESERVE_ITEMS,2.M-f1,2.M-f1;BP522-2_M-1,MCQ_native_task_reserve,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP522-2_M-1),yes,UNAUDITED,no,"Spec+runtime are 1 content unit, 2 representations - see representation map"
 2.M-f2,26,26,1,PLC-00740,V522_TASK_RESERVE_ITEMS,2.M-f2,2.M-f2;BP522-2_M-2,MCQ_native_task_reserve,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP522-2_M-2),yes,UNAUDITED,no,"Spec+runtime are 1 content unit, 2 representations - see representation map"
 2.M-f3,26,26,1,PLC-00741,V522_TASK_RESERVE_ITEMS,2.M-f3,2.M-f3;BP522-2_M-3,MCQ_native_task_reserve,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP522-2_M-3),yes,UNAUDITED,no,"Spec+runtime are 1 content unit, 2 representations - see representation map"
-2.N-f1,13,13,1,PLC-00742,V522_TASK_RESERVE_ITEMS,2.N-f1,2.N-f1;BP522-2_N-1,MCQ_native_task_reserve,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP522-2_N-1),yes,UNAUDITED,no,"Spec+runtime are 1 content unit, 2 representations - see representation map"
-2.N-f2,13,13,1,PLC-00743,V522_TASK_RESERVE_ITEMS,2.N-f2,2.N-f2;BP522-2_N-2,MCQ_native_task_reserve,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP522-2_N-2),yes,UNAUDITED,no,"Spec+runtime are 1 content unit, 2 representations - see representation map"
-2.N-f3,13,13,1,PLC-00744,V522_TASK_RESERVE_ITEMS,2.N-f3,2.N-f3;BP522-2_N-3,MCQ_native_task_reserve,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP522-2_N-3),yes,UNAUDITED,no,"Spec+runtime are 1 content unit, 2 representations - see representation map"
+2.N-f1,13,13,1,PLC-00742,V522_TASK_RESERVE_ITEMS,2.N-f1,2.N-f1;BP522-2_N-1,MCQ_native_task_reserve,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP522-2_N-1),yes,VERIFIED,yes,"Spec+runtime are 1 content unit, 2 representations - see representation map"
+2.N-f2,13,13,1,PLC-00743,V522_TASK_RESERVE_ITEMS,2.N-f2,2.N-f2;BP522-2_N-2,MCQ_native_task_reserve,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP522-2_N-2),yes,VERIFIED,yes,"Spec+runtime are 1 content unit, 2 representations - see representation map"
+2.N-f3,13,13,1,PLC-00744,V522_TASK_RESERVE_ITEMS,2.N-f3,2.N-f3;BP522-2_N-3,MCQ_native_task_reserve,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP522-2_N-3),yes,VERIFIED,yes,"Spec+runtime are 1 content unit, 2 representations - see representation map"
 2.O-f1,23,23,1,PLC-00745,V522_TASK_RESERVE_ITEMS,2.O-f1,2.O-f1;BP522-2_O-1,MCQ_native_task_reserve,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP522-2_O-1),yes,UNAUDITED,no,"Spec+runtime are 1 content unit, 2 representations - see representation map"
 2.O-f2,23,23,1,PLC-00746,V522_TASK_RESERVE_ITEMS,2.O-f2,2.O-f2;BP522-2_O-2,MCQ_native_task_reserve,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP522-2_O-2),yes,UNAUDITED,no,"Spec+runtime are 1 content unit, 2 representations - see representation map"
 2.O-f3,23,23,1,PLC-00747,V522_TASK_RESERVE_ITEMS,2.O-f3,2.O-f3;BP522-2_O-3,MCQ_native_task_reserve,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP522-2_O-3),yes,UNAUDITED,no,"Spec+runtime are 1 content unit, 2 representations - see representation map"
 2.P-f1,12,12,1,PLC-00748,V522_TASK_RESERVE_ITEMS,2.P-f1,2.P-f1;BP522-2_P-1,MCQ_native_task_reserve,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP522-2_P-1),yes,VERIFIED,yes,"Spec+runtime are 1 content unit, 2 representations - see representation map"
 2.P-f2,12,12,1,PLC-00749,V522_TASK_RESERVE_ITEMS,2.P-f2,2.P-f2;BP522-2_P-2,MCQ_native_task_reserve,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP522-2_P-2),yes,VERIFIED,yes,"Spec+runtime are 1 content unit, 2 representations - see representation map"
 2.P-f3,12,12,1,PLC-00750,V522_TASK_RESERVE_ITEMS,2.P-f3,2.P-f3;BP522-2_P-3,MCQ_native_task_reserve,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP522-2_P-3),yes,VERIFIED,yes,"Spec+runtime are 1 content unit, 2 representations - see representation map"
-2.Q-f1,15,15,1,PLC-00751,V522_TASK_RESERVE_ITEMS,2.Q-f1,2.Q-f1;BP522-2_Q-1,MCQ_native_task_reserve,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP522-2_Q-1),yes,UNAUDITED,no,"Spec+runtime are 1 content unit, 2 representations - see representation map"
-2.Q-f2,15,15,1,PLC-00752,V522_TASK_RESERVE_ITEMS,2.Q-f2,2.Q-f2;BP522-2_Q-2,MCQ_native_task_reserve,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP522-2_Q-2),yes,UNAUDITED,no,"Spec+runtime are 1 content unit, 2 representations - see representation map"
-2.Q-f3,15,15,1,PLC-00753,V522_TASK_RESERVE_ITEMS,2.Q-f3,2.Q-f3;BP522-2_Q-3,MCQ_native_task_reserve,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP522-2_Q-3),yes,UNAUDITED,no,"Spec+runtime are 1 content unit, 2 representations - see representation map"
-2.R-f1,18,18,1,PLC-00754,V522_TASK_RESERVE_ITEMS,2.R-f1,2.R-f1;BP522-2_R-1,MCQ_native_task_reserve,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP522-2_R-1),yes,UNAUDITED,no,"Spec+runtime are 1 content unit, 2 representations - see representation map"
-2.R-f2,18,18,1,PLC-00755,V522_TASK_RESERVE_ITEMS,2.R-f2,2.R-f2;BP522-2_R-2,MCQ_native_task_reserve,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP522-2_R-2),yes,UNAUDITED,no,"Spec+runtime are 1 content unit, 2 representations - see representation map"
-2.R-f3,18,18,1,PLC-00756,V522_TASK_RESERVE_ITEMS,2.R-f3,2.R-f3;BP522-2_R-3,MCQ_native_task_reserve,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP522-2_R-3),yes,UNAUDITED,no,"Spec+runtime are 1 content unit, 2 representations - see representation map"
-3.A-f1,18,18,1,PLC-00757,V522_TASK_RESERVE_ITEMS,3.A-f1,3.A-f1;BP522-3_A-1,MCQ_native_task_reserve,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP522-3_A-1),yes,UNAUDITED,no,"Spec+runtime are 1 content unit, 2 representations - see representation map"
-3.A-f2,18,18,1,PLC-00758,V522_TASK_RESERVE_ITEMS,3.A-f2,3.A-f2;BP522-3_A-2,MCQ_native_task_reserve,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP522-3_A-2),yes,UNAUDITED,no,"Spec+runtime are 1 content unit, 2 representations - see representation map"
-3.A-f3,18,18,1,PLC-00759,V522_TASK_RESERVE_ITEMS,3.A-f3,3.A-f3;BP522-3_A-3,MCQ_native_task_reserve,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP522-3_A-3),yes,UNAUDITED,no,"Spec+runtime are 1 content unit, 2 representations - see representation map"
-3.B-f1,18,18,1,PLC-00760,V522_TASK_RESERVE_ITEMS,3.B-f1,3.B-f1;BP522-3_B-1,MCQ_native_task_reserve,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP522-3_B-1),yes,UNAUDITED,no,"Spec+runtime are 1 content unit, 2 representations - see representation map"
-3.B-f2,18,18,1,PLC-00761,V522_TASK_RESERVE_ITEMS,3.B-f2,3.B-f2;BP522-3_B-2,MCQ_native_task_reserve,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP522-3_B-2),yes,UNAUDITED,no,"Spec+runtime are 1 content unit, 2 representations - see representation map"
-3.B-f3,18,18,1,PLC-00762,V522_TASK_RESERVE_ITEMS,3.B-f3,3.B-f3;BP522-3_B-3,MCQ_native_task_reserve,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP522-3_B-3),yes,UNAUDITED,no,"Spec+runtime are 1 content unit, 2 representations - see representation map"
-3.C-f1,14,14,1,PLC-00763,V522_TASK_RESERVE_ITEMS,3.C-f1,3.C-f1;BP522-3_C-1,MCQ_native_task_reserve,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP522-3_C-1),yes,UNAUDITED,no,"Spec+runtime are 1 content unit, 2 representations - see representation map"
-3.C-f2,14,14,1,PLC-00764,V522_TASK_RESERVE_ITEMS,3.C-f2,3.C-f2;BP522-3_C-2,MCQ_native_task_reserve,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP522-3_C-2),yes,UNAUDITED,no,"Spec+runtime are 1 content unit, 2 representations - see representation map"
-3.C-f3,14,14,1,PLC-00765,V522_TASK_RESERVE_ITEMS,3.C-f3,3.C-f3;BP522-3_C-3,MCQ_native_task_reserve,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP522-3_C-3),yes,UNAUDITED,no,"Spec+runtime are 1 content unit, 2 representations - see representation map"
-3.D-f1,14,14,1,PLC-00766,V522_TASK_RESERVE_ITEMS,3.D-f1,3.D-f1;BP522-3_D-1,MCQ_native_task_reserve,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP522-3_D-1),yes,UNAUDITED,no,"Spec+runtime are 1 content unit, 2 representations - see representation map"
-3.D-f2,14,14,1,PLC-00767,V522_TASK_RESERVE_ITEMS,3.D-f2,3.D-f2;BP522-3_D-2,MCQ_native_task_reserve,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP522-3_D-2),yes,UNAUDITED,no,"Spec+runtime are 1 content unit, 2 representations - see representation map"
-3.D-f3,14,14,1,PLC-00768,V522_TASK_RESERVE_ITEMS,3.D-f3,3.D-f3;BP522-3_D-3,MCQ_native_task_reserve,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP522-3_D-3),yes,UNAUDITED,no,"Spec+runtime are 1 content unit, 2 representations - see representation map"
-3.E-f1,13,13,1,PLC-00769,V522_TASK_RESERVE_ITEMS,3.E-f1,3.E-f1;BP522-3_E-1,MCQ_native_task_reserve,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP522-3_E-1),yes,UNAUDITED,no,"Spec+runtime are 1 content unit, 2 representations - see representation map"
-3.E-f2,13,13,1,PLC-00770,V522_TASK_RESERVE_ITEMS,3.E-f2,3.E-f2;BP522-3_E-2,MCQ_native_task_reserve,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP522-3_E-2),yes,UNAUDITED,no,"Spec+runtime are 1 content unit, 2 representations - see representation map"
-3.E-f3,13,13,1,PLC-00771,V522_TASK_RESERVE_ITEMS,3.E-f3,3.E-f3;BP522-3_E-3,MCQ_native_task_reserve,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP522-3_E-3),yes,UNAUDITED,no,"Spec+runtime are 1 content unit, 2 representations - see representation map"
+2.Q-f1,15,15,1,PLC-00751,V522_TASK_RESERVE_ITEMS,2.Q-f1,2.Q-f1;BP522-2_Q-1,MCQ_native_task_reserve,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP522-2_Q-1),yes,VERIFIED,yes,"Spec+runtime are 1 content unit, 2 representations - see representation map"
+2.Q-f2,15,15,1,PLC-00752,V522_TASK_RESERVE_ITEMS,2.Q-f2,2.Q-f2;BP522-2_Q-2,MCQ_native_task_reserve,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP522-2_Q-2),yes,VERIFIED,yes,"Spec+runtime are 1 content unit, 2 representations - see representation map"
+2.Q-f3,15,15,1,PLC-00753,V522_TASK_RESERVE_ITEMS,2.Q-f3,2.Q-f3;BP522-2_Q-3,MCQ_native_task_reserve,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP522-2_Q-3),yes,VERIFIED,yes,"Spec+runtime are 1 content unit, 2 representations - see representation map"
+2.R-f1,18,18,1,PLC-00754,V522_TASK_RESERVE_ITEMS,2.R-f1,2.R-f1;BP522-2_R-1,MCQ_native_task_reserve,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP522-2_R-1),yes,VERIFIED,yes,"Spec+runtime are 1 content unit, 2 representations - see representation map"
+2.R-f2,18,18,1,PLC-00755,V522_TASK_RESERVE_ITEMS,2.R-f2,2.R-f2;BP522-2_R-2,MCQ_native_task_reserve,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP522-2_R-2),yes,VERIFIED,yes,"Spec+runtime are 1 content unit, 2 representations - see representation map"
+2.R-f3,18,18,1,PLC-00756,V522_TASK_RESERVE_ITEMS,2.R-f3,2.R-f3;BP522-2_R-3,MCQ_native_task_reserve,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP522-2_R-3),yes,VERIFIED,yes,"Spec+runtime are 1 content unit, 2 representations - see representation map"
+3.A-f1,18,18,1,PLC-00757,V522_TASK_RESERVE_ITEMS,3.A-f1,3.A-f1;BP522-3_A-1,MCQ_native_task_reserve,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP522-3_A-1),yes,VERIFIED,yes,"Spec+runtime are 1 content unit, 2 representations - see representation map"
+3.A-f2,18,18,1,PLC-00758,V522_TASK_RESERVE_ITEMS,3.A-f2,3.A-f2;BP522-3_A-2,MCQ_native_task_reserve,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP522-3_A-2),yes,VERIFIED,yes,"Spec+runtime are 1 content unit, 2 representations - see representation map"
+3.A-f3,18,18,1,PLC-00759,V522_TASK_RESERVE_ITEMS,3.A-f3,3.A-f3;BP522-3_A-3,MCQ_native_task_reserve,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP522-3_A-3),yes,VERIFIED,yes,"Spec+runtime are 1 content unit, 2 representations - see representation map"
+3.B-f1,18,18,1,PLC-00760,V522_TASK_RESERVE_ITEMS,3.B-f1,3.B-f1;BP522-3_B-1,MCQ_native_task_reserve,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP522-3_B-1),yes,VERIFIED,yes,"Spec+runtime are 1 content unit, 2 representations - see representation map"
+3.B-f2,18,18,1,PLC-00761,V522_TASK_RESERVE_ITEMS,3.B-f2,3.B-f2;BP522-3_B-2,MCQ_native_task_reserve,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP522-3_B-2),yes,VERIFIED,yes,"Spec+runtime are 1 content unit, 2 representations - see representation map"
+3.B-f3,18,18,1,PLC-00762,V522_TASK_RESERVE_ITEMS,3.B-f3,3.B-f3;BP522-3_B-3,MCQ_native_task_reserve,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP522-3_B-3),yes,VERIFIED,yes,"Spec+runtime are 1 content unit, 2 representations - see representation map"
+3.C-f1,14,14,1,PLC-00763,V522_TASK_RESERVE_ITEMS,3.C-f1,3.C-f1;BP522-3_C-1,MCQ_native_task_reserve,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP522-3_C-1),yes,VERIFIED,yes,"Spec+runtime are 1 content unit, 2 representations - see representation map"
+3.C-f2,14,14,1,PLC-00764,V522_TASK_RESERVE_ITEMS,3.C-f2,3.C-f2;BP522-3_C-2,MCQ_native_task_reserve,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP522-3_C-2),yes,VERIFIED,yes,"Spec+runtime are 1 content unit, 2 representations - see representation map"
+3.C-f3,14,14,1,PLC-00765,V522_TASK_RESERVE_ITEMS,3.C-f3,3.C-f3;BP522-3_C-3,MCQ_native_task_reserve,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP522-3_C-3),yes,VERIFIED,yes,"Spec+runtime are 1 content unit, 2 representations - see representation map"
+3.D-f1,14,14,1,PLC-00766,V522_TASK_RESERVE_ITEMS,3.D-f1,3.D-f1;BP522-3_D-1,MCQ_native_task_reserve,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP522-3_D-1),yes,VERIFIED,yes,"Spec+runtime are 1 content unit, 2 representations - see representation map"
+3.D-f2,14,14,1,PLC-00767,V522_TASK_RESERVE_ITEMS,3.D-f2,3.D-f2;BP522-3_D-2,MCQ_native_task_reserve,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP522-3_D-2),yes,VERIFIED,yes,"Spec+runtime are 1 content unit, 2 representations - see representation map"
+3.D-f3,14,14,1,PLC-00768,V522_TASK_RESERVE_ITEMS,3.D-f3,3.D-f3;BP522-3_D-3,MCQ_native_task_reserve,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP522-3_D-3),yes,VERIFIED,yes,"Spec+runtime are 1 content unit, 2 representations - see representation map"
+3.E-f1,13,13,1,PLC-00769,V522_TASK_RESERVE_ITEMS,3.E-f1,3.E-f1;BP522-3_E-1,MCQ_native_task_reserve,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP522-3_E-1),yes,VERIFIED,yes,"Spec+runtime are 1 content unit, 2 representations - see representation map"
+3.E-f2,13,13,1,PLC-00770,V522_TASK_RESERVE_ITEMS,3.E-f2,3.E-f2;BP522-3_E-2,MCQ_native_task_reserve,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP522-3_E-2),yes,VERIFIED,yes,"Spec+runtime are 1 content unit, 2 representations - see representation map"
+3.E-f3,13,13,1,PLC-00771,V522_TASK_RESERVE_ITEMS,3.E-f3,3.E-f3;BP522-3_E-3,MCQ_native_task_reserve,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP522-3_E-3),yes,VERIFIED,yes,"Spec+runtime are 1 content unit, 2 representations - see representation map"
 3.F-f1,19,19,1,PLC-00772,V522_TASK_RESERVE_ITEMS,3.F-f1,3.F-f1;BP522-3_F-1,MCQ_native_task_reserve,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP522-3_F-1),yes,UNAUDITED,no,"Spec+runtime are 1 content unit, 2 representations - see representation map"
 3.F-f2,19,19,1,PLC-00773,V522_TASK_RESERVE_ITEMS,3.F-f2,3.F-f2;BP522-3_F-2,MCQ_native_task_reserve,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP522-3_F-2),yes,UNAUDITED,no,"Spec+runtime are 1 content unit, 2 representations - see representation map"
 3.F-f3,19,19,1,PLC-00774,V522_TASK_RESERVE_ITEMS,3.F-f3,3.F-f3;BP522-3_F-3,MCQ_native_task_reserve,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP522-3_F-3),yes,UNAUDITED,no,"Spec+runtime are 1 content unit, 2 representations - see representation map"
 3.G-f1,27,27,1,PLC-00775,V522_TASK_RESERVE_ITEMS,3.G-f1,3.G-f1;BP522-3_G-1,MCQ_native_task_reserve,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP522-3_G-1),yes,UNAUDITED,no,"Spec+runtime are 1 content unit, 2 representations - see representation map"
 3.G-f2,27,27,1,PLC-00776,V522_TASK_RESERVE_ITEMS,3.G-f2,3.G-f2;BP522-3_G-2,MCQ_native_task_reserve,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP522-3_G-2),yes,UNAUDITED,no,"Spec+runtime are 1 content unit, 2 representations - see representation map"
 3.G-f3,27,27,1,PLC-00777,V522_TASK_RESERVE_ITEMS,3.G-f3,3.G-f3;BP522-3_G-3,MCQ_native_task_reserve,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP522-3_G-3),yes,UNAUDITED,no,"Spec+runtime are 1 content unit, 2 representations - see representation map"
-3.H-f1,18,18,1,PLC-00778,V522_TASK_RESERVE_ITEMS,3.H-f1,3.H-f1;BP522-3_H-1,MCQ_native_task_reserve,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP522-3_H-1),yes,UNAUDITED,no,"Spec+runtime are 1 content unit, 2 representations - see representation map"
-3.H-f2,18,18,1,PLC-00779,V522_TASK_RESERVE_ITEMS,3.H-f2,3.H-f2;BP522-3_H-2,MCQ_native_task_reserve,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP522-3_H-2),yes,UNAUDITED,no,"Spec+runtime are 1 content unit, 2 representations - see representation map"
-3.H-f3,18,18,1,PLC-00780,V522_TASK_RESERVE_ITEMS,3.H-f3,3.H-f3;BP522-3_H-3,MCQ_native_task_reserve,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP522-3_H-3),yes,UNAUDITED,no,"Spec+runtime are 1 content unit, 2 representations - see representation map"
-1.H-f1,14,14,1,PLC-00781,V522_TASK_RESERVE_ITEMS,1.H-f1,1.H-f1;BP522-1_H-1,MCQ_native_task_reserve,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP522-1_H-1),yes,UNAUDITED,no,"Spec+runtime are 1 content unit, 2 representations - see representation map"
-1.I-f1,14,14,1,PLC-00782,V522_TASK_RESERVE_ITEMS,1.I-f1,1.I-f1;BP522-1_I-1,MCQ_native_task_reserve,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP522-1_I-1),yes,UNAUDITED,no,"Spec+runtime are 1 content unit, 2 representations - see representation map"
+3.H-f1,18,18,1,PLC-00778,V522_TASK_RESERVE_ITEMS,3.H-f1,3.H-f1;BP522-3_H-1,MCQ_native_task_reserve,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP522-3_H-1),yes,VERIFIED,yes,"Spec+runtime are 1 content unit, 2 representations - see representation map"
+3.H-f2,18,18,1,PLC-00779,V522_TASK_RESERVE_ITEMS,3.H-f2,3.H-f2;BP522-3_H-2,MCQ_native_task_reserve,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP522-3_H-2),yes,VERIFIED,yes,"Spec+runtime are 1 content unit, 2 representations - see representation map"
+3.H-f3,18,18,1,PLC-00780,V522_TASK_RESERVE_ITEMS,3.H-f3,3.H-f3;BP522-3_H-3,MCQ_native_task_reserve,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP522-3_H-3),yes,VERIFIED,yes,"Spec+runtime are 1 content unit, 2 representations - see representation map"
+1.H-f1,14,14,1,PLC-00781,V522_TASK_RESERVE_ITEMS,1.H-f1,1.H-f1;BP522-1_H-1,MCQ_native_task_reserve,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP522-1_H-1),yes,VERIFIED,yes,"Spec+runtime are 1 content unit, 2 representations - see representation map"
+1.I-f1,14,14,1,PLC-00782,V522_TASK_RESERVE_ITEMS,1.I-f1,1.I-f1;BP522-1_I-1,MCQ_native_task_reserve,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP522-1_I-1),yes,VERIFIED,yes,"Spec+runtime are 1 content unit, 2 representations - see representation map"
 1.J-f1,25,25,1,PLC-00783,V522_TASK_RESERVE_ITEMS,1.J-f1,1.J-f1;BP522-1_J-1,MCQ_native_task_reserve,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP522-1_J-1),yes,UNAUDITED,no,"Spec+runtime are 1 content unit, 2 representations - see representation map"
-1.R-f1,14,14,1,PLC-00784,V522_TASK_RESERVE_ITEMS,1.R-f1,1.R-f1;BP522-1_R-1,MCQ_native_task_reserve,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP522-1_R-1),yes,UNAUDITED,no,"Spec+runtime are 1 content unit, 2 representations - see representation map"
-1.U-f1,14,14,1,PLC-00785,V522_TASK_RESERVE_ITEMS,1.U-f1,1.U-f1;BP522-1_U-1,MCQ_native_task_reserve,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP522-1_U-1),yes,UNAUDITED,no,"Spec+runtime are 1 content unit, 2 representations - see representation map"
+1.R-f1,14,14,1,PLC-00784,V522_TASK_RESERVE_ITEMS,1.R-f1,1.R-f1;BP522-1_R-1,MCQ_native_task_reserve,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP522-1_R-1),yes,VERIFIED,yes,"Spec+runtime are 1 content unit, 2 representations - see representation map"
+1.U-f1,14,14,1,PLC-00785,V522_TASK_RESERVE_ITEMS,1.U-f1,1.U-f1;BP522-1_U-1,MCQ_native_task_reserve,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP522-1_U-1),yes,VERIFIED,yes,"Spec+runtime are 1 content unit, 2 representations - see representation map"
 1.W-f1,25,25,1,PLC-00786,V522_TASK_RESERVE_ITEMS,1.W-f1,1.W-f1;BP522-1_W-1,MCQ_native_task_reserve,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP522-1_W-1),yes,UNAUDITED,no,"Spec+runtime are 1 content unit, 2 representations - see representation map"
 4.K-f1,19,19,1,PLC-00787,V522_TASK_RESERVE_ITEMS,4.K-f1,4.K-f1;BP522-4_K-1,MCQ_native_task_reserve,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP522-4_K-1),yes,UNAUDITED,no,"Spec+runtime are 1 content unit, 2 representations - see representation map"
 4.L-f1,28,28,1,PLC-00788,V522_TASK_RESERVE_ITEMS,4.L-f1,4.L-f1;BP522-4_L-1,MCQ_native_task_reserve,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP522-4_L-1),yes,UNAUDITED,no,"Spec+runtime are 1 content unit, 2 representations - see representation map"
-5.A-f1,13,13,1,PLC-00789,V522_TASK_RESERVE_ITEMS,5.A-f1,5.A-f1;BP522-5_A-1,MCQ_native_task_reserve,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP522-5_A-1),yes,UNAUDITED,no,"Spec+runtime are 1 content unit, 2 representations - see representation map"
-5.C-f1,13,13,1,PLC-00790,V522_TASK_RESERVE_ITEMS,5.C-f1,5.C-f1;BP522-5_C-1,MCQ_native_task_reserve,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP522-5_C-1),yes,UNAUDITED,no,"Spec+runtime are 1 content unit, 2 representations - see representation map"
+5.A-f1,13,13,1,PLC-00789,V522_TASK_RESERVE_ITEMS,5.A-f1,5.A-f1;BP522-5_A-1,MCQ_native_task_reserve,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP522-5_A-1),yes,VERIFIED,yes,"Spec+runtime are 1 content unit, 2 representations - see representation map"
+5.C-f1,13,13,1,PLC-00790,V522_TASK_RESERVE_ITEMS,5.C-f1,5.C-f1;BP522-5_C-1,MCQ_native_task_reserve,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP522-5_C-1),yes,VERIFIED,yes,"Spec+runtime are 1 content unit, 2 representations - see representation map"
 6.A-f1,31,31,1,PLC-00791,V522_TASK_RESERVE_ITEMS,6.A-f1,6.A-f1;BP522-6_A-1,MCQ_native_task_reserve,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP522-6_A-1),yes,UNAUDITED,no,"Spec+runtime are 1 content unit, 2 representations - see representation map"
 1.A,9,9,1,PLC-00792,V524_DIRECT_TASK_ITEMS,1.A,1.A;BP524-1_A-1,MCQ_native_direct_task,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP524-1_A-1),yes,VERIFIED,yes,"Spec+runtime are 1 content unit, 2 representations - see representation map"
 1.B,9,9,1,PLC-00793,V524_DIRECT_TASK_ITEMS,1.B,1.B;BP524-1_B-1,MCQ_native_direct_task,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP524-1_B-1),yes,VERIFIED,yes,"Spec+runtime are 1 content unit, 2 representations - see representation map"
@@ -797,7 +797,7 @@ canonical_content_id,chapter,chapters_all,placement_count,placement_ids,source_b
 1.E,9,9,1,PLC-00796,V524_DIRECT_TASK_ITEMS,1.E,1.E;BP524-1_E-1,MCQ_native_direct_task,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP524-1_E-1),yes,VERIFIED,yes,"Spec+runtime are 1 content unit, 2 representations - see representation map"
 1.F,9,9,1,PLC-00797,V524_DIRECT_TASK_ITEMS,1.F,1.F;BP524-1_F-1,MCQ_native_direct_task,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP524-1_F-1),yes,VERIFIED,yes,"Spec+runtime are 1 content unit, 2 representations - see representation map"
 1.G,9,9,1,PLC-00798,V524_DIRECT_TASK_ITEMS,1.G,1.G;BP524-1_G-1,MCQ_native_direct_task,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP524-1_G-1),yes,VERIFIED,yes,"Spec+runtime are 1 content unit, 2 representations - see representation map"
-1.K,14,14,1,PLC-00799,V524_DIRECT_TASK_ITEMS,1.K,1.K;BP524-1_K-1,MCQ_native_direct_task,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP524-1_K-1),yes,UNAUDITED,no,"Spec+runtime are 1 content unit, 2 representations - see representation map"
+1.K,14,14,1,PLC-00799,V524_DIRECT_TASK_ITEMS,1.K,1.K;BP524-1_K-1,MCQ_native_direct_task,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP524-1_K-1),yes,VERIFIED,yes,"Spec+runtime are 1 content unit, 2 representations - see representation map"
 1.L,27,27,1,PLC-00800,V524_DIRECT_TASK_ITEMS,1.L,1.L;BP524-1_L-1,MCQ_native_direct_task,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP524-1_L-1),yes,UNAUDITED,no,"Spec+runtime are 1 content unit, 2 representations - see representation map"
 1.M,24,24,1,PLC-00801,V524_DIRECT_TASK_ITEMS,1.M,1.M;BP524-1_M-1,MCQ_native_direct_task,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP524-1_M-1),yes,UNAUDITED,no,"Spec+runtime are 1 content unit, 2 representations - see representation map"
 1.N,12,12,1,PLC-00802,V524_DIRECT_TASK_ITEMS,1.N,1.N;BP524-1_N-1,MCQ_native_direct_task,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP524-1_N-1),yes,VERIFIED,yes,"Spec+runtime are 1 content unit, 2 representations - see representation map"
@@ -807,23 +807,23 @@ canonical_content_id,chapter,chapters_all,placement_count,placement_ids,source_b
 1.S,23,23,1,PLC-00806,V524_DIRECT_TASK_ITEMS,1.S,1.S;BP524-1_S-1,MCQ_native_direct_task,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP524-1_S-1),yes,UNAUDITED,no,"Spec+runtime are 1 content unit, 2 representations - see representation map"
 1.T,23,23,1,PLC-00807,V524_DIRECT_TASK_ITEMS,1.T,1.T;BP524-1_T-1,MCQ_native_direct_task,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP524-1_T-1),yes,UNAUDITED,no,"Spec+runtime are 1 content unit, 2 representations - see representation map"
 1.V,9,9,1,PLC-00808,V524_DIRECT_TASK_ITEMS,1.V,1.V;BP524-1_V-1,MCQ_native_direct_task,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP524-1_V-1),yes,VERIFIED,yes,"Spec+runtime are 1 content unit, 2 representations - see representation map"
-1.X,15,15,1,PLC-00809,V524_DIRECT_TASK_ITEMS,1.X,1.X;BP524-1_X-1,MCQ_native_direct_task,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP524-1_X-1),yes,UNAUDITED,no,"Spec+runtime are 1 content unit, 2 representations - see representation map"
-1.Y,14,14,1,PLC-00810,V524_DIRECT_TASK_ITEMS,1.Y,1.Y;BP524-1_Y-1,MCQ_native_direct_task,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP524-1_Y-1),yes,UNAUDITED,no,"Spec+runtime are 1 content unit, 2 representations - see representation map"
-1.Z,14,14,1,PLC-00811,V524_DIRECT_TASK_ITEMS,1.Z,1.Z;BP524-1_Z-1,MCQ_native_direct_task,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP524-1_Z-1),yes,UNAUDITED,no,"Spec+runtime are 1 content unit, 2 representations - see representation map"
+1.X,15,15,1,PLC-00809,V524_DIRECT_TASK_ITEMS,1.X,1.X;BP524-1_X-1,MCQ_native_direct_task,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP524-1_X-1),yes,VERIFIED,yes,"Spec+runtime are 1 content unit, 2 representations - see representation map"
+1.Y,14,14,1,PLC-00810,V524_DIRECT_TASK_ITEMS,1.Y,1.Y;BP524-1_Y-1,MCQ_native_direct_task,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP524-1_Y-1),yes,VERIFIED,yes,"Spec+runtime are 1 content unit, 2 representations - see representation map"
+1.Z,14,14,1,PLC-00811,V524_DIRECT_TASK_ITEMS,1.Z,1.Z;BP524-1_Z-1,MCQ_native_direct_task,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP524-1_Z-1),yes,VERIFIED,yes,"Spec+runtime are 1 content unit, 2 representations - see representation map"
 1.AA,9,9,1,PLC-00812,V524_DIRECT_TASK_ITEMS,1.AA,1.AA;BP524-1_AA-1,MCQ_native_direct_task,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP524-1_AA-1),yes,VERIFIED,yes,"Spec+runtime are 1 content unit, 2 representations - see representation map"
-4.A,14,14,1,PLC-00813,V524_DIRECT_TASK_ITEMS,4.A,4.A;BP524-4_A-1,MCQ_native_direct_task,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP524-4_A-1),yes,UNAUDITED,no,"Spec+runtime are 1 content unit, 2 representations - see representation map"
-4.B,14,14,1,PLC-00814,V524_DIRECT_TASK_ITEMS,4.B,4.B;BP524-4_B-1,MCQ_native_direct_task,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP524-4_B-1),yes,UNAUDITED,no,"Spec+runtime are 1 content unit, 2 representations - see representation map"
-4.C,14,14,1,PLC-00815,V524_DIRECT_TASK_ITEMS,4.C,4.C;BP524-4_C-1,MCQ_native_direct_task,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP524-4_C-1),yes,UNAUDITED,no,"Spec+runtime are 1 content unit, 2 representations - see representation map"
-4.D,14,14,1,PLC-00816,V524_DIRECT_TASK_ITEMS,4.D,4.D;BP524-4_D-1,MCQ_native_direct_task,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP524-4_D-1),yes,UNAUDITED,no,"Spec+runtime are 1 content unit, 2 representations - see representation map"
-4.E,15,15,1,PLC-00817,V524_DIRECT_TASK_ITEMS,4.E,4.E;BP524-4_E-1,MCQ_native_direct_task,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP524-4_E-1),yes,UNAUDITED,no,"Spec+runtime are 1 content unit, 2 representations - see representation map"
-4.F,14,14,1,PLC-00818,V524_DIRECT_TASK_ITEMS,4.F,4.F;BP524-4_F-1,MCQ_native_direct_task,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP524-4_F-1),yes,UNAUDITED,no,"Spec+runtime are 1 content unit, 2 representations - see representation map"
-4.G,14,14,1,PLC-00819,V524_DIRECT_TASK_ITEMS,4.G,4.G;BP524-4_G-1,MCQ_native_direct_task,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP524-4_G-1),yes,UNAUDITED,no,"Spec+runtime are 1 content unit, 2 representations - see representation map"
-4.H,14,14,1,PLC-00820,V524_DIRECT_TASK_ITEMS,4.H,4.H;BP524-4_H-1,MCQ_native_direct_task,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP524-4_H-1),yes,UNAUDITED,no,"Spec+runtime are 1 content unit, 2 representations - see representation map"
-4.I,14,14,1,PLC-00821,V524_DIRECT_TASK_ITEMS,4.I,4.I;BP524-4_I-1,MCQ_native_direct_task,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP524-4_I-1),yes,UNAUDITED,no,"Spec+runtime are 1 content unit, 2 representations - see representation map"
-4.J,14,14,1,PLC-00822,V524_DIRECT_TASK_ITEMS,4.J,4.J;BP524-4_J-1,MCQ_native_direct_task,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP524-4_J-1),yes,UNAUDITED,no,"Spec+runtime are 1 content unit, 2 representations - see representation map"
-4.M,15,15,1,PLC-00823,V524_DIRECT_TASK_ITEMS,4.M,4.M;BP524-4_M-1,MCQ_native_direct_task,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP524-4_M-1),yes,UNAUDITED,no,"Spec+runtime are 1 content unit, 2 representations - see representation map"
-5.B,13,13,1,PLC-00824,V524_DIRECT_TASK_ITEMS,5.B,5.B;BP524-5_B-1,MCQ_native_direct_task,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP524-5_B-1),yes,UNAUDITED,no,"Spec+runtime are 1 content unit, 2 representations - see representation map"
-5.D,13,13,1,PLC-00825,V524_DIRECT_TASK_ITEMS,5.D,5.D;BP524-5_D-1,MCQ_native_direct_task,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP524-5_D-1),yes,UNAUDITED,no,"Spec+runtime are 1 content unit, 2 representations - see representation map"
+4.A,14,14,1,PLC-00813,V524_DIRECT_TASK_ITEMS,4.A,4.A;BP524-4_A-1,MCQ_native_direct_task,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP524-4_A-1),yes,VERIFIED,yes,"Spec+runtime are 1 content unit, 2 representations - see representation map"
+4.B,14,14,1,PLC-00814,V524_DIRECT_TASK_ITEMS,4.B,4.B;BP524-4_B-1,MCQ_native_direct_task,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP524-4_B-1),yes,VERIFIED,yes,"Spec+runtime are 1 content unit, 2 representations - see representation map"
+4.C,14,14,1,PLC-00815,V524_DIRECT_TASK_ITEMS,4.C,4.C;BP524-4_C-1,MCQ_native_direct_task,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP524-4_C-1),yes,VERIFIED,yes,"Spec+runtime are 1 content unit, 2 representations - see representation map"
+4.D,14,14,1,PLC-00816,V524_DIRECT_TASK_ITEMS,4.D,4.D;BP524-4_D-1,MCQ_native_direct_task,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP524-4_D-1),yes,VERIFIED,yes,"Spec+runtime are 1 content unit, 2 representations - see representation map"
+4.E,15,15,1,PLC-00817,V524_DIRECT_TASK_ITEMS,4.E,4.E;BP524-4_E-1,MCQ_native_direct_task,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP524-4_E-1),yes,VERIFIED,yes,"Spec+runtime are 1 content unit, 2 representations - see representation map"
+4.F,14,14,1,PLC-00818,V524_DIRECT_TASK_ITEMS,4.F,4.F;BP524-4_F-1,MCQ_native_direct_task,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP524-4_F-1),yes,VERIFIED,yes,"Spec+runtime are 1 content unit, 2 representations - see representation map"
+4.G,14,14,1,PLC-00819,V524_DIRECT_TASK_ITEMS,4.G,4.G;BP524-4_G-1,MCQ_native_direct_task,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP524-4_G-1),yes,VERIFIED,yes,"Spec+runtime are 1 content unit, 2 representations - see representation map"
+4.H,14,14,1,PLC-00820,V524_DIRECT_TASK_ITEMS,4.H,4.H;BP524-4_H-1,MCQ_native_direct_task,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP524-4_H-1),yes,VERIFIED,yes,"Spec+runtime are 1 content unit, 2 representations - see representation map"
+4.I,14,14,1,PLC-00821,V524_DIRECT_TASK_ITEMS,4.I,4.I;BP524-4_I-1,MCQ_native_direct_task,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP524-4_I-1),yes,VERIFIED,yes,"Spec+runtime are 1 content unit, 2 representations - see representation map"
+4.J,14,14,1,PLC-00822,V524_DIRECT_TASK_ITEMS,4.J,4.J;BP524-4_J-1,MCQ_native_direct_task,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP524-4_J-1),yes,VERIFIED,yes,"Spec+runtime are 1 content unit, 2 representations - see representation map"
+4.M,15,15,1,PLC-00823,V524_DIRECT_TASK_ITEMS,4.M,4.M;BP524-4_M-1,MCQ_native_direct_task,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP524-4_M-1),yes,VERIFIED,yes,"Spec+runtime are 1 content unit, 2 representations - see representation map"
+5.B,13,13,1,PLC-00824,V524_DIRECT_TASK_ITEMS,5.B,5.B;BP524-5_B-1,MCQ_native_direct_task,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP524-5_B-1),yes,VERIFIED,yes,"Spec+runtime are 1 content unit, 2 representations - see representation map"
+5.D,13,13,1,PLC-00825,V524_DIRECT_TASK_ITEMS,5.D,5.D;BP524-5_D-1,MCQ_native_direct_task,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP524-5_D-1),yes,VERIFIED,yes,"Spec+runtime are 1 content unit, 2 representations - see representation map"
 6.B,31,31,1,PLC-00826,V524_DIRECT_TASK_ITEMS,6.B,6.B;BP524-6_B-1,MCQ_native_direct_task,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP524-6_B-1),yes,UNAUDITED,no,"Spec+runtime are 1 content unit, 2 representations - see representation map"
 6.C,31,31,1,PLC-00827,V524_DIRECT_TASK_ITEMS,6.C,6.C;BP524-6_C-1,MCQ_native_direct_task,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP524-6_C-1),yes,UNAUDITED,no,"Spec+runtime are 1 content unit, 2 representations - see representation map"
 6.D,32,32,1,PLC-00828,V524_DIRECT_TASK_ITEMS,6.D,6.D;BP524-6_D-1,MCQ_native_direct_task,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP524-6_D-1),yes,UNAUDITED,no,"Spec+runtime are 1 content unit, 2 representations - see representation map"
@@ -975,74 +975,74 @@ sg12_8,12,12,1,PLC-00973,EXAM_STUDY_GUIDE_BANK,sg12_8,sg12_8,MCQ_official_study_
 sg12_9,12,12,1,PLC-00974,EXAM_STUDY_GUIDE_BANK,sg12_9,sg12_9,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,VERIFIED,yes,
 sg12_10,12,12,1,PLC-00975,EXAM_STUDY_GUIDE_BANK,sg12_10,sg12_10,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,VERIFIED,yes,
 appb_11,12,12,1,PLC-00976,EXAM_STUDY_GUIDE_BANK,appb_11,appb_11,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,VERIFIED,yes,
-sg13_1,13,13,1,PLC-00977,EXAM_STUDY_GUIDE_BANK,sg13_1,sg13_1,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,UNAUDITED,no,
-sg13_2,13,13,1,PLC-00978,EXAM_STUDY_GUIDE_BANK,sg13_2,sg13_2,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,UNAUDITED,no,
-sg13_3,13,13,1,PLC-00979,EXAM_STUDY_GUIDE_BANK,sg13_3,sg13_3,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,UNAUDITED,no,
-sg13_4,13,13,1,PLC-00980,EXAM_STUDY_GUIDE_BANK,sg13_4,sg13_4,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,UNAUDITED,no,
-sg13_5,13,13,1,PLC-00981,EXAM_STUDY_GUIDE_BANK,sg13_5,sg13_5,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,UNAUDITED,no,
-sg13_6,13,13,1,PLC-00982,EXAM_STUDY_GUIDE_BANK,sg13_6,sg13_6,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,UNAUDITED,no,
-sg13_7,13,13,1,PLC-00983,EXAM_STUDY_GUIDE_BANK,sg13_7,sg13_7,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,UNAUDITED,no,
-sg13_8,13,13,1,PLC-00984,EXAM_STUDY_GUIDE_BANK,sg13_8,sg13_8,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,UNAUDITED,no,
-sg13_9,13,13,1,PLC-00985,EXAM_STUDY_GUIDE_BANK,sg13_9,sg13_9,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,UNAUDITED,no,
-sg13_10,13,13,1,PLC-00986,EXAM_STUDY_GUIDE_BANK,sg13_10,sg13_10,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,UNAUDITED,no,
-appb_12,13,13,1,PLC-00987,EXAM_STUDY_GUIDE_BANK,appb_12,appb_12,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,UNAUDITED,no,
-appb_19,13,13,1,PLC-00988,EXAM_STUDY_GUIDE_BANK,appb_19,appb_19,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,UNAUDITED,no,
-sg14_1,14,14,1,PLC-00989,EXAM_STUDY_GUIDE_BANK,sg14_1,sg14_1,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,UNAUDITED,no,
-sg14_2,14,14,1,PLC-00990,EXAM_STUDY_GUIDE_BANK,sg14_2,sg14_2,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,UNAUDITED,no,
-sg14_3,14,14,1,PLC-00991,EXAM_STUDY_GUIDE_BANK,sg14_3,sg14_3,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,UNAUDITED,no,
-sg14_4,14,14,1,PLC-00992,EXAM_STUDY_GUIDE_BANK,sg14_4,sg14_4,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,UNAUDITED,no,
-sg14_5,14,14,1,PLC-00993,EXAM_STUDY_GUIDE_BANK,sg14_5,sg14_5,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,UNAUDITED,no,
-sg14_6,14,14,1,PLC-00994,EXAM_STUDY_GUIDE_BANK,sg14_6,sg14_6,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,UNAUDITED,no,
-sg14_7,14,14,1,PLC-00995,EXAM_STUDY_GUIDE_BANK,sg14_7,sg14_7,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,UNAUDITED,no,
-sg14_8,14,14,1,PLC-00996,EXAM_STUDY_GUIDE_BANK,sg14_8,sg14_8,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,UNAUDITED,no,
-appa_1a,14;15,14;15,2,PLC-00997;PLC-01015,EXAM_STUDY_GUIDE_BANK,appa_1a,appa_1a,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,UNAUDITED,no,"MULTI-CHAPTER OFFICIAL ITEM: Study Guide solution cites S&K6 Chapters 14 and 15 as the answer source for this Appendix A compound exercise sub-item; ONE canonical content unit with placements in both chapters (see CCP_v1.2_Content_Placements.csv), not two distinct authored items."
-appa_1b,14;15,14;15,2,PLC-00998;PLC-01016,EXAM_STUDY_GUIDE_BANK,appa_1b,appa_1b,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,UNAUDITED,no,"MULTI-CHAPTER OFFICIAL ITEM: Study Guide solution cites S&K6 Chapters 14 and 15 as the answer source for this Appendix A compound exercise sub-item; ONE canonical content unit with placements in both chapters (see CCP_v1.2_Content_Placements.csv), not two distinct authored items."
-appa_1c,14;15,14;15,2,PLC-00999;PLC-01017,EXAM_STUDY_GUIDE_BANK,appa_1c,appa_1c,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,UNAUDITED,no,"MULTI-CHAPTER OFFICIAL ITEM: Study Guide solution cites S&K6 Chapters 14 and 15 as the answer source for this Appendix A compound exercise sub-item; ONE canonical content unit with placements in both chapters (see CCP_v1.2_Content_Placements.csv), not two distinct authored items."
-appa_1d,14;15,14;15,2,PLC-01000;PLC-01018,EXAM_STUDY_GUIDE_BANK,appa_1d,appa_1d,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,UNAUDITED,no,"MULTI-CHAPTER OFFICIAL ITEM: Study Guide solution cites S&K6 Chapters 14 and 15 as the answer source for this Appendix A compound exercise sub-item; ONE canonical content unit with placements in both chapters (see CCP_v1.2_Content_Placements.csv), not two distinct authored items."
-appa_1e,14;15,14;15,2,PLC-01001;PLC-01019,EXAM_STUDY_GUIDE_BANK,appa_1e,appa_1e,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,UNAUDITED,no,"MULTI-CHAPTER OFFICIAL ITEM: Study Guide solution cites S&K6 Chapters 14 and 15 as the answer source for this Appendix A compound exercise sub-item; ONE canonical content unit with placements in both chapters (see CCP_v1.2_Content_Placements.csv), not two distinct authored items."
-appa_1f,14;15,14;15,2,PLC-01002;PLC-01020,EXAM_STUDY_GUIDE_BANK,appa_1f,appa_1f,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,UNAUDITED,no,"MULTI-CHAPTER OFFICIAL ITEM: Study Guide solution cites S&K6 Chapters 14 and 15 as the answer source for this Appendix A compound exercise sub-item; ONE canonical content unit with placements in both chapters (see CCP_v1.2_Content_Placements.csv), not two distinct authored items."
-appa_1g,14;15,14;15,2,PLC-01003;PLC-01021,EXAM_STUDY_GUIDE_BANK,appa_1g,appa_1g,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,UNAUDITED,no,"MULTI-CHAPTER OFFICIAL ITEM: Study Guide solution cites S&K6 Chapters 14 and 15 as the answer source for this Appendix A compound exercise sub-item; ONE canonical content unit with placements in both chapters (see CCP_v1.2_Content_Placements.csv), not two distinct authored items."
-appb_6,14,14,1,PLC-01004,EXAM_STUDY_GUIDE_BANK,appb_6,appb_6,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,UNAUDITED,no,
-appb_7,14,14,1,PLC-01005,EXAM_STUDY_GUIDE_BANK,appb_7,appb_7,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,UNAUDITED,no,
-sg15_1,15,15,1,PLC-01006,EXAM_STUDY_GUIDE_BANK,sg15_1,sg15_1,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,UNAUDITED,no,
-sg15_2,15,15,1,PLC-01007,EXAM_STUDY_GUIDE_BANK,sg15_2,sg15_2,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,UNAUDITED,no,
-sg15_3a,15,15,1,PLC-01008,EXAM_STUDY_GUIDE_BANK,sg15_3a,sg15_3a,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,UNAUDITED,no,
-sg15_3b,15,15,1,PLC-01009,EXAM_STUDY_GUIDE_BANK,sg15_3b,sg15_3b,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,UNAUDITED,no,
-sg15_3c,15,15,1,PLC-01010,EXAM_STUDY_GUIDE_BANK,sg15_3c,sg15_3c,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,UNAUDITED,no,
-sg15_4,15,15,1,PLC-01011,EXAM_STUDY_GUIDE_BANK,sg15_4,sg15_4,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,UNAUDITED,no,
-sg15_5,15,15,1,PLC-01012,EXAM_STUDY_GUIDE_BANK,sg15_5,sg15_5,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,UNAUDITED,no,
-sg15_6,15,15,1,PLC-01013,EXAM_STUDY_GUIDE_BANK,sg15_6,sg15_6,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,UNAUDITED,no,
-sg15_7,15,15,1,PLC-01014,EXAM_STUDY_GUIDE_BANK,sg15_7,sg15_7,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,UNAUDITED,no,
-sg16_1,16,16,1,PLC-01022,EXAM_STUDY_GUIDE_BANK,sg16_1,sg16_1,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,UNAUDITED,no,
-sg16_2,16,16,1,PLC-01023,EXAM_STUDY_GUIDE_BANK,sg16_2,sg16_2,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,UNAUDITED,no,
-sg16_3,16,16,1,PLC-01024,EXAM_STUDY_GUIDE_BANK,sg16_3,sg16_3,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,UNAUDITED,no,
-sg16_4,16,16,1,PLC-01025,EXAM_STUDY_GUIDE_BANK,sg16_4,sg16_4,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,UNAUDITED,no,
-sg16_5,16,16,1,PLC-01026,EXAM_STUDY_GUIDE_BANK,sg16_5,sg16_5,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,UNAUDITED,no,
-sg16_6,16,16,1,PLC-01027,EXAM_STUDY_GUIDE_BANK,sg16_6,sg16_6,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,UNAUDITED,no,
-sg16_7,16,16,1,PLC-01028,EXAM_STUDY_GUIDE_BANK,sg16_7,sg16_7,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,UNAUDITED,no,
-sg16_8,16,16,1,PLC-01029,EXAM_STUDY_GUIDE_BANK,sg16_8,sg16_8,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,UNAUDITED,no,
-sg16_9,16,16,1,PLC-01030,EXAM_STUDY_GUIDE_BANK,sg16_9,sg16_9,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,UNAUDITED,no,
-sg17_1,17,17,1,PLC-01031,EXAM_STUDY_GUIDE_BANK,sg17_1,sg17_1,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,UNAUDITED,no,
-sg17_2,17,17,1,PLC-01032,EXAM_STUDY_GUIDE_BANK,sg17_2,sg17_2,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,UNAUDITED,no,
-sg17_3,17,17,1,PLC-01033,EXAM_STUDY_GUIDE_BANK,sg17_3,sg17_3,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,UNAUDITED,no,
-sg17_4,17,17,1,PLC-01034,EXAM_STUDY_GUIDE_BANK,sg17_4,sg17_4,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,UNAUDITED,no,
-sg17_5,17,17,1,PLC-01035,EXAM_STUDY_GUIDE_BANK,sg17_5,sg17_5,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,UNAUDITED,no,
-sg17_6,17,17,1,PLC-01036,EXAM_STUDY_GUIDE_BANK,sg17_6,sg17_6,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,UNAUDITED,no,
-sg17_7,17,17,1,PLC-01037,EXAM_STUDY_GUIDE_BANK,sg17_7,sg17_7,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,UNAUDITED,no,
-sg17_8,17,17,1,PLC-01038,EXAM_STUDY_GUIDE_BANK,sg17_8,sg17_8,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,UNAUDITED,no,
-sg17_9,17,17,1,PLC-01039,EXAM_STUDY_GUIDE_BANK,sg17_9,sg17_9,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,UNAUDITED,no,
-sg17_10,17,17,1,PLC-01040,EXAM_STUDY_GUIDE_BANK,sg17_10,sg17_10,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,UNAUDITED,no,
-appb_13,17,17,1,PLC-01041,EXAM_STUDY_GUIDE_BANK,appb_13,appb_13,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,UNAUDITED,no,
-sg18_1,18,18,1,PLC-01042,EXAM_STUDY_GUIDE_BANK,sg18_1,sg18_1,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,UNAUDITED,no,
-sg18_2,18,18,1,PLC-01043,EXAM_STUDY_GUIDE_BANK,sg18_2,sg18_2,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,UNAUDITED,no,
-sg18_3,18,18,1,PLC-01044,EXAM_STUDY_GUIDE_BANK,sg18_3,sg18_3,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,UNAUDITED,no,
-sg18_4,18,18,1,PLC-01045,EXAM_STUDY_GUIDE_BANK,sg18_4,sg18_4,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,UNAUDITED,no,
-sg18_5,18,18,1,PLC-01046,EXAM_STUDY_GUIDE_BANK,sg18_5,sg18_5,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,UNAUDITED,no,
-sg18_6,18,18,1,PLC-01047,EXAM_STUDY_GUIDE_BANK,sg18_6,sg18_6,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,UNAUDITED,no,
-sg18_7,18,18,1,PLC-01048,EXAM_STUDY_GUIDE_BANK,sg18_7,sg18_7,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,UNAUDITED,no,
-sg18_8,18,18,1,PLC-01049,EXAM_STUDY_GUIDE_BANK,sg18_8,sg18_8,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,UNAUDITED,no,
-sg18_9,18,18,1,PLC-01050,EXAM_STUDY_GUIDE_BANK,sg18_9,sg18_9,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,UNAUDITED,no,
-sg18_10,18,18,1,PLC-01051,EXAM_STUDY_GUIDE_BANK,sg18_10,sg18_10,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,UNAUDITED,no,
+sg13_1,13,13,1,PLC-00977,EXAM_STUDY_GUIDE_BANK,sg13_1,sg13_1,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,VERIFIED,yes,
+sg13_2,13,13,1,PLC-00978,EXAM_STUDY_GUIDE_BANK,sg13_2,sg13_2,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,VERIFIED,yes,
+sg13_3,13,13,1,PLC-00979,EXAM_STUDY_GUIDE_BANK,sg13_3,sg13_3,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,VERIFIED,yes,
+sg13_4,13,13,1,PLC-00980,EXAM_STUDY_GUIDE_BANK,sg13_4,sg13_4,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,VERIFIED,yes,
+sg13_5,13,13,1,PLC-00981,EXAM_STUDY_GUIDE_BANK,sg13_5,sg13_5,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,VERIFIED,yes,
+sg13_6,13,13,1,PLC-00982,EXAM_STUDY_GUIDE_BANK,sg13_6,sg13_6,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,VERIFIED,yes,
+sg13_7,13,13,1,PLC-00983,EXAM_STUDY_GUIDE_BANK,sg13_7,sg13_7,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,VERIFIED,yes,
+sg13_8,13,13,1,PLC-00984,EXAM_STUDY_GUIDE_BANK,sg13_8,sg13_8,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,VERIFIED,yes,
+sg13_9,13,13,1,PLC-00985,EXAM_STUDY_GUIDE_BANK,sg13_9,sg13_9,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,VERIFIED,yes,
+sg13_10,13,13,1,PLC-00986,EXAM_STUDY_GUIDE_BANK,sg13_10,sg13_10,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,VERIFIED,yes,
+appb_12,13,13,1,PLC-00987,EXAM_STUDY_GUIDE_BANK,appb_12,appb_12,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,VERIFIED,yes,
+appb_19,13,13,1,PLC-00988,EXAM_STUDY_GUIDE_BANK,appb_19,appb_19,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,VERIFIED,yes,
+sg14_1,14,14,1,PLC-00989,EXAM_STUDY_GUIDE_BANK,sg14_1,sg14_1,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,VERIFIED,yes,
+sg14_2,14,14,1,PLC-00990,EXAM_STUDY_GUIDE_BANK,sg14_2,sg14_2,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,VERIFIED,yes,
+sg14_3,14,14,1,PLC-00991,EXAM_STUDY_GUIDE_BANK,sg14_3,sg14_3,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,VERIFIED,yes,
+sg14_4,14,14,1,PLC-00992,EXAM_STUDY_GUIDE_BANK,sg14_4,sg14_4,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,VERIFIED,yes,
+sg14_5,14,14,1,PLC-00993,EXAM_STUDY_GUIDE_BANK,sg14_5,sg14_5,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,VERIFIED,yes,
+sg14_6,14,14,1,PLC-00994,EXAM_STUDY_GUIDE_BANK,sg14_6,sg14_6,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,VERIFIED,yes,
+sg14_7,14,14,1,PLC-00995,EXAM_STUDY_GUIDE_BANK,sg14_7,sg14_7,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,VERIFIED,yes,
+sg14_8,14,14,1,PLC-00996,EXAM_STUDY_GUIDE_BANK,sg14_8,sg14_8,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,VERIFIED,yes,
+appa_1a,14;15,14;15,2,PLC-00997;PLC-01015,EXAM_STUDY_GUIDE_BANK,appa_1a,appa_1a,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,VERIFIED,yes,"MULTI-CHAPTER OFFICIAL ITEM: Study Guide solution cites S&K6 Chapters 14 and 15 as the answer source for this Appendix A compound exercise sub-item; ONE canonical content unit with placements in both chapters (see CCP_v1.2_Content_Placements.csv), not two distinct authored items."
+appa_1b,14;15,14;15,2,PLC-00998;PLC-01016,EXAM_STUDY_GUIDE_BANK,appa_1b,appa_1b,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,VERIFIED,yes,"MULTI-CHAPTER OFFICIAL ITEM: Study Guide solution cites S&K6 Chapters 14 and 15 as the answer source for this Appendix A compound exercise sub-item; ONE canonical content unit with placements in both chapters (see CCP_v1.2_Content_Placements.csv), not two distinct authored items."
+appa_1c,14;15,14;15,2,PLC-00999;PLC-01017,EXAM_STUDY_GUIDE_BANK,appa_1c,appa_1c,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,VERIFIED,yes,"MULTI-CHAPTER OFFICIAL ITEM: Study Guide solution cites S&K6 Chapters 14 and 15 as the answer source for this Appendix A compound exercise sub-item; ONE canonical content unit with placements in both chapters (see CCP_v1.2_Content_Placements.csv), not two distinct authored items."
+appa_1d,14;15,14;15,2,PLC-01000;PLC-01018,EXAM_STUDY_GUIDE_BANK,appa_1d,appa_1d,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,VERIFIED,yes,"MULTI-CHAPTER OFFICIAL ITEM: Study Guide solution cites S&K6 Chapters 14 and 15 as the answer source for this Appendix A compound exercise sub-item; ONE canonical content unit with placements in both chapters (see CCP_v1.2_Content_Placements.csv), not two distinct authored items."
+appa_1e,14;15,14;15,2,PLC-01001;PLC-01019,EXAM_STUDY_GUIDE_BANK,appa_1e,appa_1e,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,VERIFIED,yes,"MULTI-CHAPTER OFFICIAL ITEM: Study Guide solution cites S&K6 Chapters 14 and 15 as the answer source for this Appendix A compound exercise sub-item; ONE canonical content unit with placements in both chapters (see CCP_v1.2_Content_Placements.csv), not two distinct authored items."
+appa_1f,14;15,14;15,2,PLC-01002;PLC-01020,EXAM_STUDY_GUIDE_BANK,appa_1f,appa_1f,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,VERIFIED,yes,"MULTI-CHAPTER OFFICIAL ITEM: Study Guide solution cites S&K6 Chapters 14 and 15 as the answer source for this Appendix A compound exercise sub-item; ONE canonical content unit with placements in both chapters (see CCP_v1.2_Content_Placements.csv), not two distinct authored items."
+appa_1g,14;15,14;15,2,PLC-01003;PLC-01021,EXAM_STUDY_GUIDE_BANK,appa_1g,appa_1g,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,VERIFIED,yes,"MULTI-CHAPTER OFFICIAL ITEM: Study Guide solution cites S&K6 Chapters 14 and 15 as the answer source for this Appendix A compound exercise sub-item; ONE canonical content unit with placements in both chapters (see CCP_v1.2_Content_Placements.csv), not two distinct authored items."
+appb_6,14,14,1,PLC-01004,EXAM_STUDY_GUIDE_BANK,appb_6,appb_6,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,VERIFIED,yes,
+appb_7,14,14,1,PLC-01005,EXAM_STUDY_GUIDE_BANK,appb_7,appb_7,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,VERIFIED,yes,
+sg15_1,15,15,1,PLC-01006,EXAM_STUDY_GUIDE_BANK,sg15_1,sg15_1,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,VERIFIED,yes,
+sg15_2,15,15,1,PLC-01007,EXAM_STUDY_GUIDE_BANK,sg15_2,sg15_2,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,VERIFIED,yes,
+sg15_3a,15,15,1,PLC-01008,EXAM_STUDY_GUIDE_BANK,sg15_3a,sg15_3a,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,VERIFIED,yes,
+sg15_3b,15,15,1,PLC-01009,EXAM_STUDY_GUIDE_BANK,sg15_3b,sg15_3b,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,VERIFIED,yes,
+sg15_3c,15,15,1,PLC-01010,EXAM_STUDY_GUIDE_BANK,sg15_3c,sg15_3c,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,VERIFIED,yes,
+sg15_4,15,15,1,PLC-01011,EXAM_STUDY_GUIDE_BANK,sg15_4,sg15_4,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,VERIFIED,yes,
+sg15_5,15,15,1,PLC-01012,EXAM_STUDY_GUIDE_BANK,sg15_5,sg15_5,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,VERIFIED,yes,
+sg15_6,15,15,1,PLC-01013,EXAM_STUDY_GUIDE_BANK,sg15_6,sg15_6,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,VERIFIED,yes,
+sg15_7,15,15,1,PLC-01014,EXAM_STUDY_GUIDE_BANK,sg15_7,sg15_7,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,VERIFIED,yes,
+sg16_1,16,16,1,PLC-01022,EXAM_STUDY_GUIDE_BANK,sg16_1,sg16_1,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,VERIFIED,yes,
+sg16_2,16,16,1,PLC-01023,EXAM_STUDY_GUIDE_BANK,sg16_2,sg16_2,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,VERIFIED,yes,
+sg16_3,16,16,1,PLC-01024,EXAM_STUDY_GUIDE_BANK,sg16_3,sg16_3,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,VERIFIED,yes,
+sg16_4,16,16,1,PLC-01025,EXAM_STUDY_GUIDE_BANK,sg16_4,sg16_4,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,VERIFIED,yes,
+sg16_5,16,16,1,PLC-01026,EXAM_STUDY_GUIDE_BANK,sg16_5,sg16_5,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,VERIFIED,yes,
+sg16_6,16,16,1,PLC-01027,EXAM_STUDY_GUIDE_BANK,sg16_6,sg16_6,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,VERIFIED,yes,
+sg16_7,16,16,1,PLC-01028,EXAM_STUDY_GUIDE_BANK,sg16_7,sg16_7,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,VERIFIED,yes,
+sg16_8,16,16,1,PLC-01029,EXAM_STUDY_GUIDE_BANK,sg16_8,sg16_8,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,VERIFIED,yes,
+sg16_9,16,16,1,PLC-01030,EXAM_STUDY_GUIDE_BANK,sg16_9,sg16_9,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,VERIFIED,yes,
+sg17_1,17,17,1,PLC-01031,EXAM_STUDY_GUIDE_BANK,sg17_1,sg17_1,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,VERIFIED,yes,
+sg17_2,17,17,1,PLC-01032,EXAM_STUDY_GUIDE_BANK,sg17_2,sg17_2,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,VERIFIED,yes,
+sg17_3,17,17,1,PLC-01033,EXAM_STUDY_GUIDE_BANK,sg17_3,sg17_3,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,VERIFIED,yes,
+sg17_4,17,17,1,PLC-01034,EXAM_STUDY_GUIDE_BANK,sg17_4,sg17_4,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,VERIFIED,yes,
+sg17_5,17,17,1,PLC-01035,EXAM_STUDY_GUIDE_BANK,sg17_5,sg17_5,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,VERIFIED,yes,
+sg17_6,17,17,1,PLC-01036,EXAM_STUDY_GUIDE_BANK,sg17_6,sg17_6,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,VERIFIED,yes,
+sg17_7,17,17,1,PLC-01037,EXAM_STUDY_GUIDE_BANK,sg17_7,sg17_7,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,VERIFIED,yes,
+sg17_8,17,17,1,PLC-01038,EXAM_STUDY_GUIDE_BANK,sg17_8,sg17_8,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,VERIFIED,yes,
+sg17_9,17,17,1,PLC-01039,EXAM_STUDY_GUIDE_BANK,sg17_9,sg17_9,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,VERIFIED,yes,
+sg17_10,17,17,1,PLC-01040,EXAM_STUDY_GUIDE_BANK,sg17_10,sg17_10,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,VERIFIED,yes,
+appb_13,17,17,1,PLC-01041,EXAM_STUDY_GUIDE_BANK,appb_13,appb_13,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,VERIFIED,yes,
+sg18_1,18,18,1,PLC-01042,EXAM_STUDY_GUIDE_BANK,sg18_1,sg18_1,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,VERIFIED,yes,
+sg18_2,18,18,1,PLC-01043,EXAM_STUDY_GUIDE_BANK,sg18_2,sg18_2,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,VERIFIED,yes,
+sg18_3,18,18,1,PLC-01044,EXAM_STUDY_GUIDE_BANK,sg18_3,sg18_3,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,VERIFIED,yes,
+sg18_4,18,18,1,PLC-01045,EXAM_STUDY_GUIDE_BANK,sg18_4,sg18_4,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,VERIFIED,yes,
+sg18_5,18,18,1,PLC-01046,EXAM_STUDY_GUIDE_BANK,sg18_5,sg18_5,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,VERIFIED,yes,
+sg18_6,18,18,1,PLC-01047,EXAM_STUDY_GUIDE_BANK,sg18_6,sg18_6,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,VERIFIED,yes,
+sg18_7,18,18,1,PLC-01048,EXAM_STUDY_GUIDE_BANK,sg18_7,sg18_7,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,VERIFIED,yes,
+sg18_8,18,18,1,PLC-01049,EXAM_STUDY_GUIDE_BANK,sg18_8,sg18_8,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,VERIFIED,yes,
+sg18_9,18,18,1,PLC-01050,EXAM_STUDY_GUIDE_BANK,sg18_9,sg18_9,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,VERIFIED,yes,
+sg18_10,18,18,1,PLC-01051,EXAM_STUDY_GUIDE_BANK,sg18_10,sg18_10,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,VERIFIED,yes,
 sg19_1,19,19,1,PLC-01052,EXAM_STUDY_GUIDE_BANK,sg19_1,sg19_1,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,UNAUDITED,no,
 sg19_2,19,19,1,PLC-01053,EXAM_STUDY_GUIDE_BANK,sg19_2,sg19_2,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,UNAUDITED,no,
 sg19_3,19,19,1,PLC-01054,EXAM_STUDY_GUIDE_BANK,sg19_3,sg19_3,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,UNAUDITED,no,
@@ -1268,30 +1268,30 @@ cm12_5,12,12,1,PLC-01273,V56_CURATED_BANK,cm12_5,cm12_5,MCQ_curated,yes,yes,no,y
 cm12_6,12,12,1,PLC-01274,V56_CURATED_BANK,cm12_6,cm12_6,MCQ_curated,yes,yes,no,yes,no,no,no,no,,yes,VERIFIED,yes,
 cm12_7,12,12,1,PLC-01275,V56_CURATED_BANK,cm12_7,cm12_7,MCQ_curated,yes,yes,no,yes,no,no,no,no,,yes,VERIFIED,yes,SCORING DEFECT FIXED this pass (V516 atomic-rewrite conversion). CRITICAL BUG: V516_CURATED_OPTION_REWRITES reordered options without updating correct index - live scoring is WRONG for this item scoring_reachable corrected to yes post-fix (was NO - BROKEN pre-fix).
 cm12_8,12,12,1,PLC-01276,V56_CURATED_BANK,cm12_8,cm12_8,MCQ_curated,yes,yes,no,yes,no,no,no,no,,yes,VERIFIED,yes,
-cm16_1,16,16,1,PLC-01277,V56_CURATED_BANK,cm16_1,cm16_1,MCQ_curated,yes,yes,no,yes,no,no,no,no,,yes,UNAUDITED,no,
-cm16_2,16,16,1,PLC-01278,V56_CURATED_BANK,cm16_2,cm16_2,MCQ_curated,yes,yes,no,yes,no,no,no,no,,yes,UNAUDITED,no,
-cm16_3,16,16,1,PLC-01279,V56_CURATED_BANK,cm16_3,cm16_3,MCQ_curated,yes,yes,no,yes,no,no,no,no,,yes,UNAUDITED,no,
-cm16_4,16,16,1,PLC-01280,V56_CURATED_BANK,cm16_4,cm16_4,MCQ_curated,yes,yes,no,yes,no,no,no,no,,yes,UNAUDITED,no,
-cm16_5,16,16,1,PLC-01281,V56_CURATED_BANK,cm16_5,cm16_5,MCQ_curated,yes,yes,no,yes,no,no,no,no,,yes,UNAUDITED,no,
-cm16_6,16,16,1,PLC-01282,V56_CURATED_BANK,cm16_6,cm16_6,MCQ_curated,yes,yes,no,yes,no,no,no,no,,yes,UNAUDITED,no,
-cm16_7,16,16,1,PLC-01283,V56_CURATED_BANK,cm16_7,cm16_7,MCQ_curated,yes,yes,no,yes,no,no,no,no,,yes,UNAUDITED,no,
-cm16_8,16,16,1,PLC-01284,V56_CURATED_BANK,cm16_8,cm16_8,MCQ_curated,yes,yes,no,yes,no,no,no,no,,yes,UNAUDITED,no,
-cm17_1,17,17,1,PLC-01285,V56_CURATED_BANK,cm17_1,cm17_1,MCQ_curated,yes,yes,no,yes,no,no,no,no,,yes,UNAUDITED,no,
-cm17_2,17,17,1,PLC-01286,V56_CURATED_BANK,cm17_2,cm17_2,MCQ_curated,yes,yes,no,yes,no,no,no,no,,yes,UNAUDITED,no,
-cm17_3,17,17,1,PLC-01287,V56_CURATED_BANK,cm17_3,cm17_3,MCQ_curated,yes,yes,no,yes,no,no,no,no,,yes,UNAUDITED,no,
-cm17_4,17,17,1,PLC-01288,V56_CURATED_BANK,cm17_4,cm17_4,MCQ_curated,yes,yes,no,yes,no,no,no,no,,yes,UNAUDITED,no,
-cm17_5,17,17,1,PLC-01289,V56_CURATED_BANK,cm17_5,cm17_5,MCQ_curated,yes,yes,no,yes,no,no,no,no,,yes,UNAUDITED,no,
-cm17_6,17,17,1,PLC-01290,V56_CURATED_BANK,cm17_6,cm17_6,MCQ_curated,yes,yes,no,yes,no,no,no,no,,yes,UNAUDITED,no,
-cm17_7,17,17,1,PLC-01291,V56_CURATED_BANK,cm17_7,cm17_7,MCQ_curated,yes,yes,no,yes,no,no,no,no,,yes,UNAUDITED,no,
-cm17_8,17,17,1,PLC-01292,V56_CURATED_BANK,cm17_8,cm17_8,MCQ_curated,yes,yes,no,yes,no,no,no,no,,yes,TARGETED DEFECT VALIDATION COMPLETE - FULL CHAPTER SOURCE AUDIT PENDING,no,"V516 scoring-index bug fixed (targeted answer-key validation only, per explicit scope - NOT a full Chapter 17 source audit). Remains part of the future Chapter 17 batch population; do not double-count when that chapter is audited. "
-cm18_1,18,18,1,PLC-01293,V56_CURATED_BANK,cm18_1,cm18_1,MCQ_curated,yes,yes,no,yes,no,no,no,no,,yes,UNAUDITED,no,
-cm18_2,18,18,1,PLC-01294,V56_CURATED_BANK,cm18_2,cm18_2,MCQ_curated,yes,yes,no,yes,no,no,no,no,,yes,UNAUDITED,no,
-cm18_3,18,18,1,PLC-01295,V56_CURATED_BANK,cm18_3,cm18_3,MCQ_curated,yes,yes,no,yes,no,no,no,no,,yes,UNAUDITED,no,
-cm18_4,18,18,1,PLC-01296,V56_CURATED_BANK,cm18_4,cm18_4,MCQ_curated,yes,yes,no,yes,no,no,no,no,,yes,UNAUDITED,no,
-cm18_5,18,18,1,PLC-01297,V56_CURATED_BANK,cm18_5,cm18_5,MCQ_curated,yes,yes,no,yes,no,no,no,no,,yes,UNAUDITED,no,
-cm18_6,18,18,1,PLC-01298,V56_CURATED_BANK,cm18_6,cm18_6,MCQ_curated,yes,yes,no,yes,no,no,no,no,,yes,UNAUDITED,no,
-cm18_7,18,18,1,PLC-01299,V56_CURATED_BANK,cm18_7,cm18_7,MCQ_curated,yes,yes,no,yes,no,no,no,no,,yes,UNAUDITED,no,
-cm18_8,18,18,1,PLC-01300,V56_CURATED_BANK,cm18_8,cm18_8,MCQ_curated,yes,yes,no,yes,no,no,no,no,,yes,UNAUDITED,no,
+cm16_1,16,16,1,PLC-01277,V56_CURATED_BANK,cm16_1,cm16_1,MCQ_curated,yes,yes,no,yes,no,no,no,no,,yes,VERIFIED,yes,
+cm16_2,16,16,1,PLC-01278,V56_CURATED_BANK,cm16_2,cm16_2,MCQ_curated,yes,yes,no,yes,no,no,no,no,,yes,VERIFIED,yes,
+cm16_3,16,16,1,PLC-01279,V56_CURATED_BANK,cm16_3,cm16_3,MCQ_curated,yes,yes,no,yes,no,no,no,no,,yes,VERIFIED,yes,
+cm16_4,16,16,1,PLC-01280,V56_CURATED_BANK,cm16_4,cm16_4,MCQ_curated,yes,yes,no,yes,no,no,no,no,,yes,VERIFIED,yes,
+cm16_5,16,16,1,PLC-01281,V56_CURATED_BANK,cm16_5,cm16_5,MCQ_curated,yes,yes,no,yes,no,no,no,no,,yes,VERIFIED,yes,
+cm16_6,16,16,1,PLC-01282,V56_CURATED_BANK,cm16_6,cm16_6,MCQ_curated,yes,yes,no,yes,no,no,no,no,,yes,VERIFIED,yes,
+cm16_7,16,16,1,PLC-01283,V56_CURATED_BANK,cm16_7,cm16_7,MCQ_curated,yes,yes,no,yes,no,no,no,no,,yes,VERIFIED,yes,
+cm16_8,16,16,1,PLC-01284,V56_CURATED_BANK,cm16_8,cm16_8,MCQ_curated,yes,yes,no,yes,no,no,no,no,,yes,VERIFIED,yes,
+cm17_1,17,17,1,PLC-01285,V56_CURATED_BANK,cm17_1,cm17_1,MCQ_curated,yes,yes,no,yes,no,no,no,no,,yes,VERIFIED,yes,
+cm17_2,17,17,1,PLC-01286,V56_CURATED_BANK,cm17_2,cm17_2,MCQ_curated,yes,yes,no,yes,no,no,no,no,,yes,VERIFIED,yes,
+cm17_3,17,17,1,PLC-01287,V56_CURATED_BANK,cm17_3,cm17_3,MCQ_curated,yes,yes,no,yes,no,no,no,no,,yes,VERIFIED,yes,
+cm17_4,17,17,1,PLC-01288,V56_CURATED_BANK,cm17_4,cm17_4,MCQ_curated,yes,yes,no,yes,no,no,no,no,,yes,VERIFIED,yes,
+cm17_5,17,17,1,PLC-01289,V56_CURATED_BANK,cm17_5,cm17_5,MCQ_curated,yes,yes,no,yes,no,no,no,no,,yes,VERIFIED,yes,
+cm17_6,17,17,1,PLC-01290,V56_CURATED_BANK,cm17_6,cm17_6,MCQ_curated,yes,yes,no,yes,no,no,no,no,,yes,VERIFIED,yes,
+cm17_7,17,17,1,PLC-01291,V56_CURATED_BANK,cm17_7,cm17_7,MCQ_curated,yes,yes,no,yes,no,no,no,no,,yes,VERIFIED,yes,
+cm17_8,17,17,1,PLC-01292,V56_CURATED_BANK,cm17_8,cm17_8,MCQ_curated,yes,yes,no,yes,no,no,no,no,,yes,VERIFIED,yes,"V516 scoring-index bug fixed (targeted answer-key validation only, per explicit scope - NOT a full Chapter 17 source audit). Remains part of the future Chapter 17 batch population; do not double-count when that chapter is audited.  Batch C: FULL chapter audit completed - status upgraded from TARGETED DEFECT VALIDATION COMPLETE to VERIFIED."
+cm18_1,18,18,1,PLC-01293,V56_CURATED_BANK,cm18_1,cm18_1,MCQ_curated,yes,yes,no,yes,no,no,no,no,,yes,VERIFIED,yes,
+cm18_2,18,18,1,PLC-01294,V56_CURATED_BANK,cm18_2,cm18_2,MCQ_curated,yes,yes,no,yes,no,no,no,no,,yes,VERIFIED,yes,
+cm18_3,18,18,1,PLC-01295,V56_CURATED_BANK,cm18_3,cm18_3,MCQ_curated,yes,yes,no,yes,no,no,no,no,,yes,VERIFIED,yes,
+cm18_4,18,18,1,PLC-01296,V56_CURATED_BANK,cm18_4,cm18_4,MCQ_curated,yes,yes,no,yes,no,no,no,no,,yes,VERIFIED,yes,
+cm18_5,18,18,1,PLC-01297,V56_CURATED_BANK,cm18_5,cm18_5,MCQ_curated,yes,yes,no,yes,no,no,no,no,,yes,VERIFIED,yes,
+cm18_6,18,18,1,PLC-01298,V56_CURATED_BANK,cm18_6,cm18_6,MCQ_curated,yes,yes,no,yes,no,no,no,no,,yes,VERIFIED,yes,
+cm18_7,18,18,1,PLC-01299,V56_CURATED_BANK,cm18_7,cm18_7,MCQ_curated,yes,yes,no,yes,no,no,no,no,,yes,VERIFIED,yes,
+cm18_8,18,18,1,PLC-01300,V56_CURATED_BANK,cm18_8,cm18_8,MCQ_curated,yes,yes,no,yes,no,no,no,no,,yes,VERIFIED,yes,
 cm21_1,21,21,1,PLC-01301,V56_CURATED_BANK,cm21_1,cm21_1,MCQ_curated,yes,yes,no,yes,no,no,no,no,,yes,UNAUDITED,no,
 cm21_2,21,21,1,PLC-01302,V56_CURATED_BANK,cm21_2,cm21_2,MCQ_curated,yes,yes,no,yes,no,no,no,no,,yes,UNAUDITED,no,
 cm21_3,21,21,1,PLC-01303,V56_CURATED_BANK,cm21_3,cm21_3,MCQ_curated,yes,yes,no,yes,no,no,no,no,,yes,UNAUDITED,no,
@@ -1398,46 +1398,46 @@ hm12_7,12,12,1,PLC-01403,V57_INTERNAL_MASTERY_BANK,hm12_7,hm12_7,MCQ_mastery,yes
 hm12_8,12,12,1,PLC-01404,V57_INTERNAL_MASTERY_BANK,hm12_8,hm12_8,MCQ_mastery,yes,yes,no,no,yes,no,no,no,,yes,VERIFIED,yes,
 hm12_9,12,12,1,PLC-01405,V57_INTERNAL_MASTERY_BANK,hm12_9,hm12_9,MCQ_mastery,yes,yes,no,no,yes,no,no,no,,yes,VERIFIED,yes,
 hm12_10,12,12,1,PLC-01406,V57_INTERNAL_MASTERY_BANK,hm12_10,hm12_10,MCQ_mastery,yes,yes,no,no,yes,no,no,no,,yes,VERIFIED,yes,
-hm15_1,15,15,1,PLC-01407,V57_INTERNAL_MASTERY_BANK,hm15_1,hm15_1,MCQ_mastery,yes,yes,no,no,yes,no,no,no,,yes,UNAUDITED,no,
-hm15_2,15,15,1,PLC-01408,V57_INTERNAL_MASTERY_BANK,hm15_2,hm15_2,MCQ_mastery,yes,yes,no,no,yes,no,no,no,,yes,UNAUDITED,no,
-hm15_3,15,15,1,PLC-01409,V57_INTERNAL_MASTERY_BANK,hm15_3,hm15_3,MCQ_mastery,yes,yes,no,no,yes,no,no,no,,yes,UNAUDITED,no,
-hm15_4,15,15,1,PLC-01410,V57_INTERNAL_MASTERY_BANK,hm15_4,hm15_4,MCQ_mastery,yes,yes,no,no,yes,no,no,no,,yes,UNAUDITED,no,
-hm15_5,15,15,1,PLC-01411,V57_INTERNAL_MASTERY_BANK,hm15_5,hm15_5,MCQ_mastery,yes,yes,no,no,yes,no,no,no,,yes,UNAUDITED,no,
-hm15_6,15,15,1,PLC-01412,V57_INTERNAL_MASTERY_BANK,hm15_6,hm15_6,MCQ_mastery,yes,yes,no,no,yes,no,no,no,,yes,UNAUDITED,no,
-hm15_7,15,15,1,PLC-01413,V57_INTERNAL_MASTERY_BANK,hm15_7,hm15_7,MCQ_mastery,yes,yes,no,no,yes,no,no,no,,yes,UNAUDITED,no,
-hm15_8,15,15,1,PLC-01414,V57_INTERNAL_MASTERY_BANK,hm15_8,hm15_8,MCQ_mastery,yes,yes,no,no,yes,no,no,no,,yes,UNAUDITED,no,
-hm15_9,15,15,1,PLC-01415,V57_INTERNAL_MASTERY_BANK,hm15_9,hm15_9,MCQ_mastery,yes,yes,no,no,yes,no,no,no,,yes,UNAUDITED,no,
-hm15_10,15,15,1,PLC-01416,V57_INTERNAL_MASTERY_BANK,hm15_10,hm15_10,MCQ_mastery,yes,yes,no,no,yes,no,no,no,,yes,UNAUDITED,no,
-hm16_1,16,16,1,PLC-01417,V57_INTERNAL_MASTERY_BANK,hm16_1,hm16_1,MCQ_mastery,yes,yes,no,no,yes,no,no,no,,yes,UNAUDITED,no,
-hm16_2,16,16,1,PLC-01418,V57_INTERNAL_MASTERY_BANK,hm16_2,hm16_2,MCQ_mastery,yes,yes,no,no,yes,no,no,no,,yes,UNAUDITED,no,
-hm16_3,16,16,1,PLC-01419,V57_INTERNAL_MASTERY_BANK,hm16_3,hm16_3,MCQ_mastery,yes,yes,no,no,yes,no,no,no,,yes,UNAUDITED,no,
-hm16_4,16,16,1,PLC-01420,V57_INTERNAL_MASTERY_BANK,hm16_4,hm16_4,MCQ_mastery,yes,yes,no,no,yes,no,no,no,,yes,UNAUDITED,no,
-hm16_5,16,16,1,PLC-01421,V57_INTERNAL_MASTERY_BANK,hm16_5,hm16_5,MCQ_mastery,yes,yes,no,no,yes,no,no,no,,yes,UNAUDITED,no,
-hm16_6,16,16,1,PLC-01422,V57_INTERNAL_MASTERY_BANK,hm16_6,hm16_6,MCQ_mastery,yes,yes,no,no,yes,no,no,no,,yes,UNAUDITED,no,
-hm16_7,16,16,1,PLC-01423,V57_INTERNAL_MASTERY_BANK,hm16_7,hm16_7,MCQ_mastery,yes,yes,no,no,yes,no,no,no,,yes,UNAUDITED,no,
-hm16_8,16,16,1,PLC-01424,V57_INTERNAL_MASTERY_BANK,hm16_8,hm16_8,MCQ_mastery,yes,yes,no,no,yes,no,no,no,,yes,UNAUDITED,no,
-hm16_9,16,16,1,PLC-01425,V57_INTERNAL_MASTERY_BANK,hm16_9,hm16_9,MCQ_mastery,yes,yes,no,no,yes,no,no,no,,yes,UNAUDITED,no,
-hm16_10,16,16,1,PLC-01426,V57_INTERNAL_MASTERY_BANK,hm16_10,hm16_10,MCQ_mastery,yes,yes,no,no,yes,no,no,no,,yes,UNAUDITED,no,
-hm17_1,17,17,1,PLC-01427,V57_INTERNAL_MASTERY_BANK,hm17_1,hm17_1,MCQ_mastery,yes,yes,no,no,yes,no,no,no,,yes,UNAUDITED,no,
-hm17_2,17,17,1,PLC-01428,V57_INTERNAL_MASTERY_BANK,hm17_2,hm17_2,MCQ_mastery,yes,yes,no,no,yes,no,no,no,,yes,UNAUDITED,no,
-hm17_3,17,17,1,PLC-01429,V57_INTERNAL_MASTERY_BANK,hm17_3,hm17_3,MCQ_mastery,yes,yes,no,no,yes,no,no,no,,yes,UNAUDITED,no,
-hm17_4,17,17,1,PLC-01430,V57_INTERNAL_MASTERY_BANK,hm17_4,hm17_4,MCQ_mastery,yes,yes,no,no,yes,no,no,no,,yes,UNAUDITED,no,
-hm17_5,17,17,1,PLC-01431,V57_INTERNAL_MASTERY_BANK,hm17_5,hm17_5,MCQ_mastery,yes,yes,no,no,yes,no,no,no,,yes,UNAUDITED,no,
-hm17_6,17,17,1,PLC-01432,V57_INTERNAL_MASTERY_BANK,hm17_6,hm17_6,MCQ_mastery,yes,yes,no,no,yes,no,no,no,,yes,UNAUDITED,no,
-hm17_7,17,17,1,PLC-01433,V57_INTERNAL_MASTERY_BANK,hm17_7,hm17_7,MCQ_mastery,yes,yes,no,no,yes,no,no,no,,yes,UNAUDITED,no,
-hm17_8,17,17,1,PLC-01434,V57_INTERNAL_MASTERY_BANK,hm17_8,hm17_8,MCQ_mastery,yes,yes,no,no,yes,no,no,no,,yes,UNAUDITED,no,
-hm17_9,17,17,1,PLC-01435,V57_INTERNAL_MASTERY_BANK,hm17_9,hm17_9,MCQ_mastery,yes,yes,no,no,yes,no,no,no,,yes,UNAUDITED,no,
-hm17_10,17,17,1,PLC-01436,V57_INTERNAL_MASTERY_BANK,hm17_10,hm17_10,MCQ_mastery,yes,yes,no,no,yes,no,no,no,,yes,UNAUDITED,no,
-hm18_1,18,18,1,PLC-01437,V57_INTERNAL_MASTERY_BANK,hm18_1,hm18_1,MCQ_mastery,yes,yes,no,no,yes,no,no,no,,yes,UNAUDITED,no,
-hm18_2,18,18,1,PLC-01438,V57_INTERNAL_MASTERY_BANK,hm18_2,hm18_2,MCQ_mastery,yes,yes,no,no,yes,no,no,no,,yes,UNAUDITED,no,
-hm18_3,18,18,1,PLC-01439,V57_INTERNAL_MASTERY_BANK,hm18_3,hm18_3,MCQ_mastery,yes,yes,no,no,yes,no,no,no,,yes,UNAUDITED,no,
-hm18_4,18,18,1,PLC-01440,V57_INTERNAL_MASTERY_BANK,hm18_4,hm18_4,MCQ_mastery,yes,yes,no,no,yes,no,no,no,,yes,UNAUDITED,no,
-hm18_5,18,18,1,PLC-01441,V57_INTERNAL_MASTERY_BANK,hm18_5,hm18_5,MCQ_mastery,yes,yes,no,no,yes,no,no,no,,yes,UNAUDITED,no,
-hm18_6,18,18,1,PLC-01442,V57_INTERNAL_MASTERY_BANK,hm18_6,hm18_6,MCQ_mastery,yes,yes,no,no,yes,no,no,no,,yes,UNAUDITED,no,
-hm18_7,18,18,1,PLC-01443,V57_INTERNAL_MASTERY_BANK,hm18_7,hm18_7,MCQ_mastery,yes,yes,no,no,yes,no,no,no,,yes,UNAUDITED,no,
-hm18_8,18,18,1,PLC-01444,V57_INTERNAL_MASTERY_BANK,hm18_8,hm18_8,MCQ_mastery,yes,yes,no,no,yes,no,no,no,,yes,UNAUDITED,no,
-hm18_9,18,18,1,PLC-01445,V57_INTERNAL_MASTERY_BANK,hm18_9,hm18_9,MCQ_mastery,yes,yes,no,no,yes,no,no,no,,yes,UNAUDITED,no,
-hm18_10,18,18,1,PLC-01446,V57_INTERNAL_MASTERY_BANK,hm18_10,hm18_10,MCQ_mastery,yes,yes,no,no,yes,no,no,no,,yes,UNAUDITED,no,
+hm15_1,15,15,1,PLC-01407,V57_INTERNAL_MASTERY_BANK,hm15_1,hm15_1,MCQ_mastery,yes,yes,no,no,yes,no,no,no,,yes,VERIFIED,yes,
+hm15_2,15,15,1,PLC-01408,V57_INTERNAL_MASTERY_BANK,hm15_2,hm15_2,MCQ_mastery,yes,yes,no,no,yes,no,no,no,,yes,VERIFIED,yes,
+hm15_3,15,15,1,PLC-01409,V57_INTERNAL_MASTERY_BANK,hm15_3,hm15_3,MCQ_mastery,yes,yes,no,no,yes,no,no,no,,yes,VERIFIED,yes,
+hm15_4,15,15,1,PLC-01410,V57_INTERNAL_MASTERY_BANK,hm15_4,hm15_4,MCQ_mastery,yes,yes,no,no,yes,no,no,no,,yes,VERIFIED,yes,
+hm15_5,15,15,1,PLC-01411,V57_INTERNAL_MASTERY_BANK,hm15_5,hm15_5,MCQ_mastery,yes,yes,no,no,yes,no,no,no,,yes,VERIFIED,yes,
+hm15_6,15,15,1,PLC-01412,V57_INTERNAL_MASTERY_BANK,hm15_6,hm15_6,MCQ_mastery,yes,yes,no,no,yes,no,no,no,,yes,VERIFIED,yes,
+hm15_7,15,15,1,PLC-01413,V57_INTERNAL_MASTERY_BANK,hm15_7,hm15_7,MCQ_mastery,yes,yes,no,no,yes,no,no,no,,yes,VERIFIED,yes,
+hm15_8,15,15,1,PLC-01414,V57_INTERNAL_MASTERY_BANK,hm15_8,hm15_8,MCQ_mastery,yes,yes,no,no,yes,no,no,no,,yes,VERIFIED,yes,
+hm15_9,15,15,1,PLC-01415,V57_INTERNAL_MASTERY_BANK,hm15_9,hm15_9,MCQ_mastery,yes,yes,no,no,yes,no,no,no,,yes,VERIFIED,yes,
+hm15_10,15,15,1,PLC-01416,V57_INTERNAL_MASTERY_BANK,hm15_10,hm15_10,MCQ_mastery,yes,yes,no,no,yes,no,no,no,,yes,VERIFIED,yes,
+hm16_1,16,16,1,PLC-01417,V57_INTERNAL_MASTERY_BANK,hm16_1,hm16_1,MCQ_mastery,yes,yes,no,no,yes,no,no,no,,yes,VERIFIED,yes,
+hm16_2,16,16,1,PLC-01418,V57_INTERNAL_MASTERY_BANK,hm16_2,hm16_2,MCQ_mastery,yes,yes,no,no,yes,no,no,no,,yes,VERIFIED,yes,
+hm16_3,16,16,1,PLC-01419,V57_INTERNAL_MASTERY_BANK,hm16_3,hm16_3,MCQ_mastery,yes,yes,no,no,yes,no,no,no,,yes,VERIFIED,yes,
+hm16_4,16,16,1,PLC-01420,V57_INTERNAL_MASTERY_BANK,hm16_4,hm16_4,MCQ_mastery,yes,yes,no,no,yes,no,no,no,,yes,VERIFIED,yes,
+hm16_5,16,16,1,PLC-01421,V57_INTERNAL_MASTERY_BANK,hm16_5,hm16_5,MCQ_mastery,yes,yes,no,no,yes,no,no,no,,yes,VERIFIED,yes,
+hm16_6,16,16,1,PLC-01422,V57_INTERNAL_MASTERY_BANK,hm16_6,hm16_6,MCQ_mastery,yes,yes,no,no,yes,no,no,no,,yes,VERIFIED,yes,
+hm16_7,16,16,1,PLC-01423,V57_INTERNAL_MASTERY_BANK,hm16_7,hm16_7,MCQ_mastery,yes,yes,no,no,yes,no,no,no,,yes,VERIFIED,yes,
+hm16_8,16,16,1,PLC-01424,V57_INTERNAL_MASTERY_BANK,hm16_8,hm16_8,MCQ_mastery,yes,yes,no,no,yes,no,no,no,,yes,VERIFIED,yes,
+hm16_9,16,16,1,PLC-01425,V57_INTERNAL_MASTERY_BANK,hm16_9,hm16_9,MCQ_mastery,yes,yes,no,no,yes,no,no,no,,yes,VERIFIED,yes,
+hm16_10,16,16,1,PLC-01426,V57_INTERNAL_MASTERY_BANK,hm16_10,hm16_10,MCQ_mastery,yes,yes,no,no,yes,no,no,no,,yes,VERIFIED,yes,
+hm17_1,17,17,1,PLC-01427,V57_INTERNAL_MASTERY_BANK,hm17_1,hm17_1,MCQ_mastery,yes,yes,no,no,yes,no,no,no,,yes,VERIFIED,yes,
+hm17_2,17,17,1,PLC-01428,V57_INTERNAL_MASTERY_BANK,hm17_2,hm17_2,MCQ_mastery,yes,yes,no,no,yes,no,no,no,,yes,VERIFIED,yes,
+hm17_3,17,17,1,PLC-01429,V57_INTERNAL_MASTERY_BANK,hm17_3,hm17_3,MCQ_mastery,yes,yes,no,no,yes,no,no,no,,yes,VERIFIED,yes,
+hm17_4,17,17,1,PLC-01430,V57_INTERNAL_MASTERY_BANK,hm17_4,hm17_4,MCQ_mastery,yes,yes,no,no,yes,no,no,no,,yes,VERIFIED,yes,
+hm17_5,17,17,1,PLC-01431,V57_INTERNAL_MASTERY_BANK,hm17_5,hm17_5,MCQ_mastery,yes,yes,no,no,yes,no,no,no,,yes,VERIFIED,yes,
+hm17_6,17,17,1,PLC-01432,V57_INTERNAL_MASTERY_BANK,hm17_6,hm17_6,MCQ_mastery,yes,yes,no,no,yes,no,no,no,,yes,VERIFIED,yes,
+hm17_7,17,17,1,PLC-01433,V57_INTERNAL_MASTERY_BANK,hm17_7,hm17_7,MCQ_mastery,yes,yes,no,no,yes,no,no,no,,yes,VERIFIED,yes,
+hm17_8,17,17,1,PLC-01434,V57_INTERNAL_MASTERY_BANK,hm17_8,hm17_8,MCQ_mastery,yes,yes,no,no,yes,no,no,no,,yes,VERIFIED,yes,
+hm17_9,17,17,1,PLC-01435,V57_INTERNAL_MASTERY_BANK,hm17_9,hm17_9,MCQ_mastery,yes,yes,no,no,yes,no,no,no,,yes,VERIFIED,yes,
+hm17_10,17,17,1,PLC-01436,V57_INTERNAL_MASTERY_BANK,hm17_10,hm17_10,MCQ_mastery,yes,yes,no,no,yes,no,no,no,,yes,VERIFIED,yes,
+hm18_1,18,18,1,PLC-01437,V57_INTERNAL_MASTERY_BANK,hm18_1,hm18_1,MCQ_mastery,yes,yes,no,no,yes,no,no,no,,yes,VERIFIED,yes,
+hm18_2,18,18,1,PLC-01438,V57_INTERNAL_MASTERY_BANK,hm18_2,hm18_2,MCQ_mastery,yes,yes,no,no,yes,no,no,no,,yes,VERIFIED,yes,
+hm18_3,18,18,1,PLC-01439,V57_INTERNAL_MASTERY_BANK,hm18_3,hm18_3,MCQ_mastery,yes,yes,no,no,yes,no,no,no,,yes,VERIFIED,yes,
+hm18_4,18,18,1,PLC-01440,V57_INTERNAL_MASTERY_BANK,hm18_4,hm18_4,MCQ_mastery,yes,yes,no,no,yes,no,no,no,,yes,VERIFIED,yes,
+hm18_5,18,18,1,PLC-01441,V57_INTERNAL_MASTERY_BANK,hm18_5,hm18_5,MCQ_mastery,yes,yes,no,no,yes,no,no,no,,yes,VERIFIED,yes,
+hm18_6,18,18,1,PLC-01442,V57_INTERNAL_MASTERY_BANK,hm18_6,hm18_6,MCQ_mastery,yes,yes,no,no,yes,no,no,no,,yes,VERIFIED,yes,
+hm18_7,18,18,1,PLC-01443,V57_INTERNAL_MASTERY_BANK,hm18_7,hm18_7,MCQ_mastery,yes,yes,no,no,yes,no,no,no,,yes,VERIFIED,yes,
+hm18_8,18,18,1,PLC-01444,V57_INTERNAL_MASTERY_BANK,hm18_8,hm18_8,MCQ_mastery,yes,yes,no,no,yes,no,no,no,,yes,VERIFIED,yes,
+hm18_9,18,18,1,PLC-01445,V57_INTERNAL_MASTERY_BANK,hm18_9,hm18_9,MCQ_mastery,yes,yes,no,no,yes,no,no,no,,yes,VERIFIED,yes,
+hm18_10,18,18,1,PLC-01446,V57_INTERNAL_MASTERY_BANK,hm18_10,hm18_10,MCQ_mastery,yes,yes,no,no,yes,no,no,no,,yes,VERIFIED,yes,
 hm21_1,21,21,1,PLC-01447,V57_INTERNAL_MASTERY_BANK,hm21_1,hm21_1,MCQ_mastery,yes,yes,no,no,yes,no,no,no,,yes,UNAUDITED,no,
 hm21_2,21,21,1,PLC-01448,V57_INTERNAL_MASTERY_BANK,hm21_2,hm21_2,MCQ_mastery,yes,yes,no,no,yes,no,no,no,,yes,UNAUDITED,no,
 hm21_3,21,21,1,PLC-01449,V57_INTERNAL_MASTERY_BANK,hm21_3,hm21_3,MCQ_mastery,yes,yes,no,no,yes,no,no,no,,yes,UNAUDITED,no,
@@ -1551,13 +1551,13 @@ hm33_10,33,33,1,PLC-01556,V57_INTERNAL_MASTERY_BANK,hm33_10,hm33_10,MCQ_mastery,
 ts5_1,5,5,1,PLC-01557,V57_TRANSFER_SUPPLEMENT,ts5_1,ts5_1,MCQ_blueprint_transfer,yes,NO - EXCLUDED (sourceConflict flag; evidence-safety gate),no,no,no,yes,no,no,,yes,SOURCE SUPPORT INSUFFICIENT,yes,"Audited during Pre-Batch-C blocker closeout pass. Newly discovered this pass (global inventory census) PRE-BATCH-C SAFETY GATE: excluded from all Apply/Challenge/Retention/Mastery-fallback evidence paths via sourceConflict flag + v57CuratedHighTrust gate. Preserved unedited for provenance. Side effect: Ch.5 Apply/Challenge Test source-case supply now 9 (below 5+5 floor) - tracked as a Ch.5 content-authoring gap, see ledger note."
 ts12_1,12,12,1,PLC-01558,V57_TRANSFER_SUPPLEMENT,ts12_1,ts12_1,MCQ_blueprint_transfer,yes,yes,no,no,no,yes,no,no,,yes,VERIFIED,yes,Audited during Pre-Batch-C blocker closeout pass. Newly discovered this pass (global inventory census)
 ts12_2,12,12,1,PLC-01559,V57_TRANSFER_SUPPLEMENT,ts12_2,ts12_2,MCQ_blueprint_transfer,yes,yes,no,no,no,yes,no,no,,yes,VERIFIED,yes,Audited during Pre-Batch-C blocker closeout pass. Newly discovered this pass (global inventory census)
-ts15_1,15,15,1,PLC-01560,V57_TRANSFER_SUPPLEMENT,ts15_1,ts15_1,MCQ_blueprint_transfer,yes,yes,no,no,no,yes,no,no,,yes,UNAUDITED,no,Newly discovered this pass (global inventory census)
-ts15_2,15,15,1,PLC-01561,V57_TRANSFER_SUPPLEMENT,ts15_2,ts15_2,MCQ_blueprint_transfer,yes,yes,no,no,no,yes,no,no,,yes,UNAUDITED,no,Newly discovered this pass (global inventory census)
-ts16_1,16,16,1,PLC-01562,V57_TRANSFER_SUPPLEMENT,ts16_1,ts16_1,MCQ_blueprint_transfer,yes,yes,no,no,no,yes,no,no,,yes,UNAUDITED,no,Newly discovered this pass (global inventory census)
-ts16_2,16,16,1,PLC-01563,V57_TRANSFER_SUPPLEMENT,ts16_2,ts16_2,MCQ_blueprint_transfer,yes,yes,no,no,no,yes,no,no,,yes,UNAUDITED,no,Newly discovered this pass (global inventory census)
-ts16_3,16,16,1,PLC-01564,V57_TRANSFER_SUPPLEMENT,ts16_3,ts16_3,MCQ_blueprint_transfer,yes,yes,no,no,no,yes,no,no,,yes,UNAUDITED,no,Newly discovered this pass (global inventory census)
-ts16_4,16,16,1,PLC-01565,V57_TRANSFER_SUPPLEMENT,ts16_4,ts16_4,MCQ_blueprint_transfer,yes,yes,no,no,no,yes,no,no,,yes,UNAUDITED,no,Newly discovered this pass (global inventory census)
-ts16_5,16,16,1,PLC-01566,V57_TRANSFER_SUPPLEMENT,ts16_5,ts16_5,MCQ_blueprint_transfer,yes,yes,no,no,no,yes,no,no,,yes,UNAUDITED,no,Newly discovered this pass (global inventory census)
+ts15_1,15,15,1,PLC-01560,V57_TRANSFER_SUPPLEMENT,ts15_1,ts15_1,MCQ_blueprint_transfer,yes,yes,no,no,no,yes,no,no,,yes,VERIFIED,yes,Newly discovered this pass (global inventory census)
+ts15_2,15,15,1,PLC-01561,V57_TRANSFER_SUPPLEMENT,ts15_2,ts15_2,MCQ_blueprint_transfer,yes,yes,no,no,no,yes,no,no,,yes,VERIFIED,yes,Newly discovered this pass (global inventory census)
+ts16_1,16,16,1,PLC-01562,V57_TRANSFER_SUPPLEMENT,ts16_1,ts16_1,MCQ_blueprint_transfer,yes,yes,no,no,no,yes,no,no,,yes,VERIFIED,yes,Newly discovered this pass (global inventory census)
+ts16_2,16,16,1,PLC-01563,V57_TRANSFER_SUPPLEMENT,ts16_2,ts16_2,MCQ_blueprint_transfer,yes,yes,no,no,no,yes,no,no,,yes,VERIFIED,yes,Newly discovered this pass (global inventory census)
+ts16_3,16,16,1,PLC-01564,V57_TRANSFER_SUPPLEMENT,ts16_3,ts16_3,MCQ_blueprint_transfer,yes,yes,no,no,no,yes,no,no,,yes,VERIFIED,yes,Newly discovered this pass (global inventory census)
+ts16_4,16,16,1,PLC-01565,V57_TRANSFER_SUPPLEMENT,ts16_4,ts16_4,MCQ_blueprint_transfer,yes,yes,no,no,no,yes,no,no,,yes,VERIFIED,yes,Newly discovered this pass (global inventory census)
+ts16_5,16,16,1,PLC-01566,V57_TRANSFER_SUPPLEMENT,ts16_5,ts16_5,MCQ_blueprint_transfer,yes,yes,no,no,no,yes,no,no,,yes,VERIFIED,yes,Newly discovered this pass (global inventory census)
 ts20_1,20,20,1,PLC-01567,V57_TRANSFER_SUPPLEMENT,ts20_1,ts20_1,MCQ_blueprint_transfer,yes,yes,no,no,no,yes,no,no,,yes,UNAUDITED,no,Newly discovered this pass (global inventory census)
 ts20_2,20,20,1,PLC-01568,V57_TRANSFER_SUPPLEMENT,ts20_2,ts20_2,MCQ_blueprint_transfer,yes,yes,no,no,no,yes,no,no,,yes,UNAUDITED,no,Newly discovered this pass (global inventory census)
 ts20_3,20,20,1,PLC-01569,V57_TRANSFER_SUPPLEMENT,ts20_3,ts20_3,MCQ_blueprint_transfer,yes,yes,no,no,no,yes,no,no,,yes,UNAUDITED,no,Newly discovered this pass (global inventory census)
@@ -1570,11 +1570,11 @@ ts32_2,32,32,1,PLC-01575,V57_TRANSFER_SUPPLEMENT,ts32_2,ts32_2,MCQ_blueprint_tra
 ts32_3,32,32,1,PLC-01576,V57_TRANSFER_SUPPLEMENT,ts32_3,ts32_3,MCQ_blueprint_transfer,yes,yes,no,no,no,yes,no,no,,yes,UNAUDITED,no,Newly discovered this pass (global inventory census)
 ts33_1,33,33,1,PLC-01577,V57_TRANSFER_SUPPLEMENT,ts33_1,ts33_1,MCQ_blueprint_transfer,yes,yes,no,no,no,yes,no,no,,yes,UNAUDITED,no,Newly discovered this pass (global inventory census)
 cx3_1,3,3,1,PLC-01578,V520_CHALLENGE_EXTRAS,cx3_1,cx3_1,MCQ_challenge_extra,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,Audited during Pre-Batch-C blocker closeout pass. Newly discovered this pass (global inventory census)
-cx14_1,14,14,1,PLC-01579,V520_CHALLENGE_EXTRAS,cx14_1,cx14_1,MCQ_challenge_extra,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,Newly discovered this pass (global inventory census)
-cx14_2,14,14,1,PLC-01580,V520_CHALLENGE_EXTRAS,cx14_2,cx14_2,MCQ_challenge_extra,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,Newly discovered this pass (global inventory census)
-cx14_3,14,14,1,PLC-01581,V520_CHALLENGE_EXTRAS,cx14_3,cx14_3,MCQ_challenge_extra,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,Newly discovered this pass (global inventory census)
-cx14_4,14,14,1,PLC-01582,V520_CHALLENGE_EXTRAS,cx14_4,cx14_4,MCQ_challenge_extra,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,Newly discovered this pass (global inventory census)
-cx14_5,14,14,1,PLC-01583,V520_CHALLENGE_EXTRAS,cx14_5,cx14_5,MCQ_challenge_extra,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,Newly discovered this pass (global inventory census)
+cx14_1,14,14,1,PLC-01579,V520_CHALLENGE_EXTRAS,cx14_1,cx14_1,MCQ_challenge_extra,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,Newly discovered this pass (global inventory census)
+cx14_2,14,14,1,PLC-01580,V520_CHALLENGE_EXTRAS,cx14_2,cx14_2,MCQ_challenge_extra,yes,NO - EXCLUDED (sourceConflict flag; filtered from Challenge pool),no,no,no,no,no,no,,yes,SOURCE SUPPORT INSUFFICIENT,yes,Newly discovered this pass (global inventory census) Batch C: same unsupported CPI x SPI composite EAC formula as 14-10; excluded from evidence.
+cx14_3,14,14,1,PLC-01581,V520_CHALLENGE_EXTRAS,cx14_3,cx14_3,MCQ_challenge_extra,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,Newly discovered this pass (global inventory census)
+cx14_4,14,14,1,PLC-01582,V520_CHALLENGE_EXTRAS,cx14_4,cx14_4,MCQ_challenge_extra,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,Newly discovered this pass (global inventory census)
+cx14_5,14,14,1,PLC-01583,V520_CHALLENGE_EXTRAS,cx14_5,cx14_5,MCQ_challenge_extra,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,Newly discovered this pass (global inventory census)
 cx20_1,20,20,1,PLC-01584,V520_CHALLENGE_EXTRAS,cx20_1,cx20_1,MCQ_challenge_extra,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,Newly discovered this pass (global inventory census)
 cx28_1,28,28,1,PLC-01585,V520_CHALLENGE_EXTRAS,cx28_1,cx28_1,MCQ_challenge_extra,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,Newly discovered this pass (global inventory census)
 cx28_2,28,28,1,PLC-01586,V520_CHALLENGE_EXTRAS,cx28_2,cx28_2,MCQ_challenge_extra,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,Newly discovered this pass (global inventory census)
