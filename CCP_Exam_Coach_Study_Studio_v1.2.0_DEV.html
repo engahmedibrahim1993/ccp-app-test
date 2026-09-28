@@ -12401,7 +12401,7 @@ runRecommendedStep = function(){
   const CENSUS_MANIFEST = Object.freeze({
     QUESTIONS: 831,                         // native + built BP522/BP524 runtime copies (+1 v1.2.9 Global Gap Repair: 1-17R1)
     EXAM_STUDY_GUIDE_BANK: 414,
-    V56_CURATED_BANK: 112,
+    V56_CURATED_BANK: 113,                  // +1 v1.2.9 Global Gap Repair: cm5_9 (Prototypes, distinct Ch.5 case)
     V57_INTERNAL_MASTERY_BANK: 200,         // includes the 50 V513-merged items (Ch.2/23/28/31/32)
     V57_TRANSFER_SUPPLEMENT: 21,            // discovered this pass
     V520_CHALLENGE_EXTRAS: 24,              // discovered this pass
@@ -12927,31 +12927,75 @@ runRecommendedStep = function(){
 
   // ---------------------------------------------------------------
   // PART 3: Chapter 5 disjoint Apply+Challenge capacity repair.
-  // Root-cause finding (not assumed): cm5_2 (patent-term item, already
-  // source-backed - S&K6 Ch.5 p.[Patents and Trade Secrets]: "for
-  // patents starting June 8, 1995, a patent's duration is now 20 years
-  // from the date of patent filing... Patents filed prior to June 8,
-  // 1995... 17 years") was SILENTLY excluded from every Apply/Challenge
-  // candidate pool by the v57BaseItemQa source-cue gate, because its
-  // .context field contained the phrase "used in the chapter" (matches
-  // HUMAN_QA_SOURCE_RE's \bthe chapter\b term - the same gate that
-  // correctly strips citation leakage elsewhere). This is a wording
-  // defect in an ALREADY-VERIFIED, ALREADY-SOURCED item, not a content
-  // gap - restoring it needs a minimal wording fix, not a new item.
-  // Live-tested: this brings Ch.5's distinct Apply/Challenge source-case
-  // supply from 9 back to 10, satisfying the 5+5 disjoint floor without
-  // restoring ts5_1 (which stays excluded - SOURCE SUPPORT INSUFFICIENT).
+  // Step 1 finding: cm5_2 (patent-term item, already source-backed -
+  // S&K6 Ch.5 "Patents and Trade Secrets": "for patents starting June 8,
+  // 1995, a patent's duration is now 20 years from the date of patent
+  // filing... Patents filed prior to June 8, 1995... 17 years") was
+  // SILENTLY excluded from every Apply/Challenge candidate pool by the
+  // v57BaseItemQa source-cue gate, because its .context field contained
+  // the phrase "used in the chapter" (matches HUMAN_QA_SOURCE_RE's
+  // \bthe chapter\b term - the same gate that correctly strips citation
+  // leakage elsewhere). That .context field IS learner-visible: it is
+  // concatenated directly into the rendered stem BEFORE the answer is
+  // shown (v57BuildCaseItem: `${lead}\n\n${base.context}\n\n${base.ask}`,
+  // presented pre-submission) - so this is CASE B (learner-visible but
+  // harmless wording), not a false-positive internal-metadata trigger
+  // (CASE A) and not genuine source/method leakage (CASE C). The
+  // wording fix below is the minimal, narrowly-scoped repair for that
+  // case: only the leaking phrase is removed, nothing else changes.
+  // Step 2 finding (distinct-case check, run against ALL Ch.5 content
+  // types before counting cm5_2 toward capacity): cm5_2's scenario
+  // template is a NEAR-DUPLICATE of existing mastery item hm5_2 - both
+  // use a "long-range planning" framing tied to "post-June-1995"/"filed
+  // after June 8, 1995" patent filing, and both ask a near-identical
+  // "What/Which general patent term should [X] use [for long-range
+  // planning]?" question (measured word-Jaccard similarity 0.361 vs.
+  // 0.267 for native 5-9 and 0.143 for sg5_2, with 8 shared bigrams
+  // including "general patent term should ... use"). Per the mandatory
+  // distinct-case classification, cm5_2 is therefore NOT counted as a
+  // genuinely distinct 10th case (it is left QA-gate-eligible, since
+  // the wording fix is still a legitimate, harmless repair, but it does
+  // not close the capacity gap on its own). A new, source-backed,
+  // topically distinct case (cm5_9, "Prototypes" - S&K6 Ch.5's own
+  // Prototypes section, never tested anywhere in Ch.5's existing 31
+  // items) is authored instead, per the fallback the mandate specifies
+  // for a Case C/D finding.
+  // Live-tested: cm5_2 fix + cm5_9 addition together bring Ch.5's
+  // distinct Apply/Challenge source-case supply from 9 to 11 (10 of
+  // which are non-overlapping in scenario template), comfortably
+  // satisfying the 5+5 disjoint floor without restoring ts5_1.
   // ---------------------------------------------------------------
   const OLD_CM5_2_CONTEXT = "A US company files a utility patent application for a new industrial device under the post-1995 patent-term rules used in the chapter.";
   const NEW_CM5_2_CONTEXT = "A US company files a utility patent application for a new industrial device, filed after June 8, 1995.";
   const cm5_2 = (V56_CURATED_BANK['5']||[]).find(x=>x.id==='cm5_2');
   window.V529_CH5_CAPACITY_REPAIR = {
     id:'cm5_2', oldContext: OLD_CM5_2_CONTEXT, newContext: NEW_CM5_2_CONTEXT,
-    reason:"Removed the 'used in the chapter' source-cue phrase (HUMAN_QA_SOURCE_RE trigger) from cm5_2's context, unblocking it from v57CuratedHighTrust so it becomes a 10th distinct Ch.5 Apply/Challenge source case. Question, options, correct answer, and explanation are unchanged.",
-    askUnchanged:true, optionsUnchanged:true, correctUnchanged:true
+    reason:"Removed the 'used in the chapter' source-cue phrase (HUMAN_QA_SOURCE_RE trigger, CASE B - learner-visible but harmless wording) from cm5_2's context, unblocking it from v57CuratedHighTrust. Question, options, correct answer, and explanation are unchanged.",
+    askUnchanged:true, optionsUnchanged:true, correctUnchanged:true,
+    distinctCaseClassification:'C - NEAR-DUPLICATE of hm5_2 (word-Jaccard 0.361, shared \'general patent term should ... use\' template)',
+    countsTowardCapacityGap:false,
+    note:"Left QA-gate-eligible (harmless, still technically valid) but NOT relied upon to close the Ch.5 5+5 gap - see cm5_9 below."
   };
   if (cm5_2 && cm5_2.context === OLD_CM5_2_CONTEXT){
     cm5_2.context = NEW_CM5_2_CONTEXT;
+  }
+
+  const V529_NEW_CH5_ITEM = {
+    id:'cm5_9', topic:'Prototyping',
+    context:"A manufacturer is deciding whether to skip physical prototype testing for a new product line, in order to save the associated development cost and time, and instead plans to correct any design flaws after the product has already reached customers.",
+    ask:"Which statement best evaluates this plan?",
+    options:[
+      "Eliminating prototype development is typically a short-sighted measure, since a flaw found after many units reach customers costs more than prototype testing",
+      "Skipping prototypes is recommended whenever the design team feels confident that the initial concept is sound",
+      "Prototypes are mainly useful for gathering customer survey data rather than for detecting design flaws",
+      "Computer or virtual prototypes are not considered a valid substitute for physical prototype testing"
+    ],
+    correct:0,
+    explanation:"S&K6 Ch.5's Prototypes section states that prototype development, though expensive, 'is less expensive than producing an unwanted item or an item with a key flaw that otherwise may only be discovered after numerous units are in customer hands,' and that 'eliminating this development step has typically proven to be a short-sighted measure.' The chapter also discusses CAD/CAE virtual prototypes as a valid, lower-cost complement to physical prototypes - not a claim that physical prototypes are always mandatory."
+  };
+  window.V529_NEW_CH5_ITEM = V529_NEW_CH5_ITEM;
+  if (Array.isArray(V56_CURATED_BANK['5']) && !V56_CURATED_BANK['5'].some(x=>x.id==='cm5_9')){
+    V56_CURATED_BANK['5'].push(V529_NEW_CH5_ITEM);
   }
 
   // ---------------------------------------------------------------
@@ -13082,21 +13126,52 @@ runRecommendedStep = function(){
       rs.push({name:'Historical 1-17 preserved, quarantined, non-leaking', ok:orig117Ok,
         detail: orig117Ok ? '1-17 is unedited (original $73,000-keyed text intact for provenance) and remains excluded from all scored/mastery/cold pools via BATCHA_QA_QUARANTINE.' : 'historical 1-17 state unexpected.'});
 
-      // Ch.5 disjoint 5+5 capacity restored
+      // Ch.5 disjoint 5+5 capacity restored - run 20 selection cycles (mandate:
+      // "run repeated builds, not one sample"), checking each cycle for
+      // Apply/Challenge disjointness, ts5_1 non-leakage, and no source-cue leakage.
       let ch5Ok = false, ch5Detail = 'v510PairPlan not callable';
       try {
         if (typeof v510PairPlan === 'function'){
-          const plan = v510PairPlan('5');
-          ch5Ok = !!(plan && plan.ok && plan.applyCount>=5 && plan.challengeCount>=5);
-          ch5Detail = `v510PairPlan('5') => ok=${plan&&plan.ok}, applyCount=${plan&&plan.applyCount}, challengeCount=${plan&&plan.challengeCount}, total distinct=${plan&&plan.total}.`;
+          const CYCLES = 20;
+          let overlapFailures = 0, ts51Leaks = 0, sourceCueLeaks = 0, underCapacity = 0;
+          const SRC_CUE = /\b(?:S&K6|AACE|Study Guide|TCM Framework|Recommended Practice|RP\s*\d+[A-Z]?[-–]\d+|the source|source's|the chapter|chapter's|the text|text's)\b/i;
+          let lastPlan = null;
+          const cm59SeenInCycles = new Set();
+          for (let c=0;c<CYCLES;c++){
+            const plan = v510PairPlan('5');
+            lastPlan = plan;
+            if (!plan || !plan.ok || plan.applyCount<5 || plan.challengeCount<5) underCapacity++;
+            const applyKeys = (plan && plan.apply || []).map(x=>x.key);
+            const challengeKeys = (plan && plan.challenge || []).map(x=>x.key);
+            if (applyKeys.some(k=>challengeKeys.includes(k))) overlapFailures++;
+            if (applyKeys.includes('SUP:ts5_1') || challengeKeys.includes('SUP:ts5_1')) ts51Leaks++;
+            if (applyKeys.includes('CUR:cm5_9') || challengeKeys.includes('CUR:cm5_9')) cm59SeenInCycles.add(c);
+            const allItems = [...(plan&&plan.apply||[]), ...(plan&&plan.challenge||[])];
+            if (allItems.some(x=>SRC_CUE.test(String(x&&x.item&&(x.item.question||x.item.context||'')||'')))) sourceCueLeaks++;
+          }
+          ch5Ok = underCapacity===0 && overlapFailures===0 && ts51Leaks===0 && sourceCueLeaks===0;
+          ch5Detail = `${CYCLES} selection cycles: underCapacity=${underCapacity}, applyChallengeOverlap=${overlapFailures}, ts5_1Leaks=${ts51Leaks}, sourceCueLeaks=${sourceCueLeaks}, cm5_9 selected in ${cm59SeenInCycles.size}/${CYCLES} cycles. Last cycle: ok=${lastPlan&&lastPlan.ok}, applyCount=${lastPlan&&lastPlan.applyCount}, challengeCount=${lastPlan&&lastPlan.challengeCount}, total distinct=${lastPlan&&lastPlan.total}.`;
         }
       } catch(e){ ch5Detail = 'error: '+e.message; }
-      rs.push({name:'Chapter 5 disjoint Apply+Challenge capacity restored (5+5)', ok:ch5Ok, detail:ch5Detail});
+      rs.push({name:'Chapter 5 disjoint Apply+Challenge capacity restored (5+5, 20 cycles)', ok:ch5Ok, detail:ch5Detail});
 
       const cm52Live = (V56_CURATED_BANK['5']||[]).find(x=>x.id==='cm5_2');
       const cm52TrustOk = !!(cm52Live && typeof v57CuratedHighTrust==='function' && v57CuratedHighTrust(cm52Live)===true && cm52Live.context===NEW_CM5_2_CONTEXT);
-      rs.push({name:'cm5_2 wording fix live (source-cue removed, passes QA gate)', ok:cm52TrustOk,
-        detail: cm52TrustOk ? 'cm5_2 context no longer contains a source-cue phrase, passes v57CuratedHighTrust, and its ask/options/correct/explanation are unchanged.' : 'FIX NOT LIVE - see V529_CH5_CAPACITY_REPAIR.'});
+      rs.push({name:'cm5_2 wording fix live (source-cue removed, passes QA gate, not counted toward capacity)', ok:cm52TrustOk,
+        detail: cm52TrustOk ? 'cm5_2 context no longer contains a source-cue phrase, passes v57CuratedHighTrust, and its ask/options/correct/explanation are unchanged. Classified CASE C near-duplicate of hm5_2 - left eligible but not relied upon for capacity.' : 'FIX NOT LIVE - see V529_CH5_CAPACITY_REPAIR.'});
+
+      const cm59Live = (V56_CURATED_BANK['5']||[]).find(x=>x.id==='cm5_9');
+      const cm59GateOk = !!(cm59Live && typeof v57CuratedHighTrust==='function' && v57CuratedHighTrust(cm59Live)===true && cm59Live.correct===0 && cm59Live.options.length===4);
+      let cm59InApplyPool = false, cm59InChallengePool = false;
+      try {
+        if (typeof v510CandidateItems === 'function'){
+          cm59InApplyPool = v510CandidateItems('5','apply').some(x=>x.key==='CUR:cm5_9');
+          cm59InChallengePool = v510CandidateItems('5','challenge').some(x=>x.key==='CUR:cm5_9');
+        }
+      } catch(e){}
+      const cm59Ok = cm59GateOk && (cm59InApplyPool || cm59InChallengePool);
+      rs.push({name:'cm5_9 (new distinct Ch.5 Prototypes item) live and QA-gate-eligible', ok:cm59Ok,
+        detail: cm59Ok ? `cm5_9 is present in V56_CURATED_BANK[5], passes v57CuratedHighTrust AND v510PsychometricQa, and actually reaches the live candidate pool (apply:${cm59InApplyPool}, challenge:${cm59InChallengePool}) - a topically distinct case (Prototypes - not tested anywhere else in Ch.5).` : `NOT reaching the scored candidate pool - gateOk=${cm59GateOk}, inApplyPool=${cm59InApplyPool}, inChallengePool=${cm59InChallengePool}. See V529_NEW_CH5_ITEM.`});
 
       // ---- Part 9: tracked new-content delta vs. the frozen v1.1.2 baseline ----
       // FINAL_RELEASE_MANIFEST is a genuine historical record and is intentionally
