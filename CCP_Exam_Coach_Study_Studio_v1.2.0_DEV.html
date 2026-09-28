@@ -13010,7 +13010,7 @@ runRecommendedStep = function(){
   // it does not replace them.
   // ---------------------------------------------------------------
   const CANONICAL_REPAIR_REGISTRY = Object.freeze({
-    '1-17': {reason:'TECHNICAL DEFECT', mechanism:'BATCHA_QA_QUARANTINE -> isQuestionSuspended (blocks all scored/mastery/cold pools)', repairState:'OPEN_CONTENT_REPAIR', replacementId:'1-17R1'},
+    '1-17': {reason:'TECHNICAL DEFECT', mechanism:'BATCHA_QA_QUARANTINE -> isQuestionSuspended (blocks all scored/mastery/cold pools)', repairState:'RESOLVED_REPLACED', replacementId:'1-17R1'},
     '6-19': {reason:'OUTSIDE SUPPORTED SOURCE SCOPE', mechanism:'SYSTEM_QUARANTINE_IDS + SUPPLEMENTAL_TRAINING_ONLY -> isQuestionSuspended', repairState:'ACTIVE_EXCLUDED_NO_REPAIR_REQUIRED', replacementId:null},
     '6-20': {reason:'OUTSIDE SUPPORTED SOURCE SCOPE', mechanism:'SYSTEM_QUARANTINE_IDS + SUPPLEMENTAL_TRAINING_ONLY -> isQuestionSuspended', repairState:'ACTIVE_EXCLUDED_NO_REPAIR_REQUIRED', replacementId:null},
     '6-21': {reason:'OUTSIDE SUPPORTED SOURCE SCOPE', mechanism:'SYSTEM_QUARANTINE_IDS + SUPPLEMENTAL_TRAINING_ONLY -> isQuestionSuspended', repairState:'ACTIVE_EXCLUDED_NO_REPAIR_REQUIRED', replacementId:null},
@@ -13027,6 +13027,102 @@ runRecommendedStep = function(){
     '29-28': {reason:'OUTSIDE SUPPORTED SOURCE SCOPE (conditional probability formula)', mechanism:'SYSTEM_QUARANTINE_IDS + SOURCE_AUTHORITY_QUARANTINE -> isQuestionSuspended', repairState:'ACTIVE_EXCLUDED_NO_REPAIR_REQUIRED', replacementId:null}
   });
   window.CANONICAL_REPAIR_REGISTRY = CANONICAL_REPAIR_REGISTRY;
+
+  // ---------------------------------------------------------------
+  // Evidence-equivalence groups: durable near-duplicate control.
+  // cm5_2 (Apply/Challenge/Retention, sourceKey CUR:cm5_2) and hm5_2
+  // (Internal Mastery Test, sourceKey HMB:hm5_2) were found to share a
+  // near-identical scenario template (see the Ch.5 capacity-repair
+  // commit) and must not be treated as two independent demonstrations
+  // of the same underlying competency. Both remain learner-visible and
+  // technically VERIFIED - this is a narrow, evidence-COUNTING control,
+  // not a content ban.
+  //
+  // Architectural constraint (documented, not silently worked around):
+  // v57MasteryCasePack requires ALL 10 items in a chapter's fixed
+  // Internal Mastery Bank (no substitution mechanism exists - Ch.5's
+  // bank is exactly 10 items, hm5_1..hm5_10). hm5_2 therefore CANNOT be
+  // excluded from a Mastery pack without breaking Mastery Test
+  // availability for Ch.5 entirely. Protection is accordingly
+  // asymmetric and is documented as such:
+  //   Direction 1 (Mastery already taken -> Apply/Challenge/Retention):
+  //     FULLY enforced. Once hm5_2 has appeared in a completed Mastery
+  //     pack, cm5_2 is excluded from every subsequent Apply/Challenge/
+  //     Retention build for that chapter (v510PriorSourceKeys patch
+  //     below). Ch.5 retains 10 other genuinely distinct Apply/
+  //     Challenge cases, so this costs no capacity.
+  //   Direction 2 (Apply/Challenge/Retention already used cm5_2 ->
+  //     Mastery): CANNOT be hard-blocked (fixed 10-of-10 bank
+  //     contract). The built hm5_2 mastery item is tagged
+  //     `evidenceEquivalenceGroup` / `evidenceEquivalenceRedundant:true`
+  //     so the redundancy is auditable and testable rather than
+  //     silently allowed - see the regression check below.
+  // ---------------------------------------------------------------
+  const EVIDENCE_EQUIVALENCE_GROUPS = Object.freeze({
+    CH5_PATENT_TERM_POST1995: Object.freeze(['CUR:cm5_2', 'HMB:hm5_2'])
+  });
+  window.EVIDENCE_EQUIVALENCE_GROUPS = EVIDENCE_EQUIVALENCE_GROUPS;
+
+  const V529_KEY_TO_GROUP = {};
+  Object.entries(EVIDENCE_EQUIVALENCE_GROUPS).forEach(([gid, keys])=>{
+    keys.forEach(k=>{ V529_KEY_TO_GROUP[k] = gid; });
+  });
+  window.V529_KEY_TO_GROUP = V529_KEY_TO_GROUP;
+
+  function v529ExpandEquivalentKeys(keys){
+    const out = new Set(keys);
+    keys.forEach(k=>{
+      const gid = V529_KEY_TO_GROUP[k];
+      if (gid) EVIDENCE_EQUIVALENCE_GROUPS[gid].forEach(sib=>out.add(sib));
+    });
+    return out;
+  }
+  window.v529ExpandEquivalentKeys = v529ExpandEquivalentKeys;
+
+  // Direction 1: fold equivalence-linked Mastery-stage sourceKeys into the
+  // Apply/Challenge/Retention exclusion set. v510PriorSourceKeys' base
+  // behavior deliberately excludes mastery-stage history from general reuse
+  // prevention (the v5.10 bugfix, preserved above) - this addition only lets
+  // a sourceKey "leak through" from mastery history if it is a member of a
+  // defined equivalence group, so no other chapter/item is affected.
+  if (typeof v510PriorSourceKeys === 'function'){
+    const priorV510PriorSourceKeysForEquiv = v510PriorSourceKeys;
+    v510PriorSourceKeys = function(ch){
+      const base = priorV510PriorSourceKeysForEquiv(ch);
+      v57EnsureProgress();
+      const masteryKeys = new Set();
+      (PROGRESS.v57PackHistory||[]).filter(h=>String(h.chapter)===String(ch)&&h.stage==='mastery')
+        .forEach(h=>(h.sourceKeys||[]).forEach(k=>masteryKeys.add(k)));
+      masteryKeys.forEach(k=>{
+        const gid = V529_KEY_TO_GROUP[k];
+        if (gid) EVIDENCE_EQUIVALENCE_GROUPS[gid].forEach(sib=>base.add(sib));
+      });
+      return base;
+    };
+  }
+
+  // Direction 2 (documented limitation): tag built Mastery items that belong
+  // to an equivalence group whose sibling was already used outside Mastery.
+  if (typeof v57MasteryCasePack === 'function'){
+    const priorV57MasteryCasePackForEquiv = v57MasteryCasePack;
+    v57MasteryCasePack = function(ch, count, opts){
+      const pack = priorV57MasteryCasePackForEquiv(ch, count, opts);
+      if (!pack) return pack;
+      v57EnsureProgress();
+      const nonMasteryKeys = new Set();
+      (PROGRESS.v57PackHistory||[]).filter(h=>String(h.chapter)===String(ch)&&h.stage!=='mastery')
+        .forEach(h=>(h.sourceKeys||[]).forEach(k=>nonMasteryKeys.add(k)));
+      pack.forEach(item=>{
+        const gid = V529_KEY_TO_GROUP[item.v57SourceKey];
+        if (gid){
+          const siblings = EVIDENCE_EQUIVALENCE_GROUPS[gid].filter(k=>k!==item.v57SourceKey);
+          item.evidenceEquivalenceGroup = gid;
+          item.evidenceEquivalenceRedundant = siblings.some(s=>nonMasteryKeys.has(s));
+        }
+      });
+      return pack;
+    };
+  }
 
   function v529FindBankItem(id){
     const banks = [window.EXAM_STUDY_GUIDE_BANK, window.V56_CURATED_BANK, window.V57_INTERNAL_MASTERY_BANK, window.V57_TRANSFER_SUPPLEMENT, window.V520_CHALLENGE_EXTRAS].filter(Boolean);
@@ -13102,14 +13198,59 @@ runRecommendedStep = function(){
         if (id==='1-17'){
           if (status.scoringEligible !== false) parityFailures.push('1-17: resolver reports scoringEligible=true but is quarantined');
           if (status.replacementId !== '1-17R1') parityFailures.push('1-17: replacementId not wired to 1-17R1');
+          if (status.repairState !== 'RESOLVED_REPLACED') parityFailures.push('1-17: repairState should be RESOLVED_REPLACED (historical/defective, resolved via replacement), got '+status.repairState);
+          if (status.technicalStatus !== 'TECHNICAL DEFECT') parityFailures.push('1-17: technicalStatus must stay TECHNICAL DEFECT, not be relabeled VERIFIED - got '+status.technicalStatus);
         } else if (['6-19','6-20','6-21','6-22','6-23','6-24','14-10','29-26','29-27','29-28'].includes(id)){
           if (status.scoringEligible !== false) parityFailures.push(id+': resolver reports scoringEligible=true but isQuestionSuspended is expected true');
+          if (status.repairState !== 'ACTIVE_EXCLUDED_NO_REPAIR_REQUIRED') parityFailures.push(id+': repairState should be ACTIVE_EXCLUDED_NO_REPAIR_REQUIRED, got '+status.repairState);
         } else if (['sg6_4','appa_2e','ts5_1','cx14_2'].includes(id)){
           if (status.scoringEligible !== false) parityFailures.push(id+': resolver reports scoringEligible=true but sourceConflict is expected true');
         }
       });
       rs.push({name:'Canonical evidence-status resolver parity (15 known-excluded units)', ok: parityFailures.length===0,
         detail: parityFailures.length===0 ? `getCanonicalEvidenceStatus() agrees with live isQuestionSuspended/sourceConflict state for all ${allIds.length} known-excluded canonical units; none report mastery/readiness eligibility.` : `Mismatches: ${parityFailures.join(' | ')}`});
+
+      // Exclusion-count reconciliation: recompute live from the resolver, not hardcoded.
+      const histBucket = allIds.filter(id => getCanonicalEvidenceStatus(id).repairState === 'RESOLVED_REPLACED');
+      const activeBucket = allIds.filter(id => getCanonicalEvidenceStatus(id).repairState === 'ACTIVE_EXCLUDED_NO_REPAIR_REQUIRED' || String(getCanonicalEvidenceStatus(id).repairState||'').startsWith('ACTIVE_EXCLUDED'));
+      const otherBucket = allIds.filter(id => !histBucket.includes(id) && !activeBucket.includes(id));
+      rs.push({name:'Exclusion-bucket reconciliation (recomputed live from resolver)', ok: histBucket.length===1 && histBucket[0]==='1-17' && activeBucket.length===14 && otherBucket.length===0,
+        detail: `Historical-defective-resolved-via-replacement: ${JSON.stringify(histBucket)}. ACTIVE_EXCLUDED_NO_REPAIR_REQUIRED (${activeBucket.length}): ${JSON.stringify(activeBucket)}. Unclassified: ${JSON.stringify(otherBucket)}.`});
+
+      // Evidence-equivalence group integrity: cm5_2/hm5_2 must not count as independent evidence.
+      let equivOk = false, equivDetail = 'not testable';
+      try {
+        const grp = EVIDENCE_EQUIVALENCE_GROUPS.CH5_PATENT_TERM_POST1995;
+        const expandedFromCm52 = Array.from(v529ExpandEquivalentKeys(new Set(['CUR:cm5_2'])));
+        const expandedFromHm52 = Array.from(v529ExpandEquivalentKeys(new Set(['HMB:hm5_2'])));
+        const groupDefinedOk = Array.isArray(grp) && grp.includes('CUR:cm5_2') && grp.includes('HMB:hm5_2');
+        const expansionOk = expandedFromCm52.includes('HMB:hm5_2') && expandedFromHm52.includes('CUR:cm5_2');
+        // Simulate: a completed Mastery pack for Ch.5 (covering hm5_2) must exclude cm5_2
+        // from a subsequent Apply/Challenge build's candidate pool.
+        v57EnsureProgress();
+        const savedHistory = PROGRESS.v57PackHistory;
+        PROGRESS.v57PackHistory = [{chapter:'5', stage:'mastery', sourceKeys:['HMB:hm5_1','HMB:hm5_2','HMB:hm5_3','HMB:hm5_4','HMB:hm5_5','HMB:hm5_6','HMB:hm5_7','HMB:hm5_8','HMB:hm5_9','HMB:hm5_10']}];
+        const priorKeysAfterMastery = v510PriorSourceKeys('5');
+        const cm52ExcludedAfterMastery = priorKeysAfterMastery.has('CUR:cm5_2');
+        PROGRESS.v57PackHistory = savedHistory;
+        equivOk = groupDefinedOk && expansionOk && cm52ExcludedAfterMastery;
+        equivDetail = `groupDefined=${groupDefinedOk}, bidirectionalExpansion=${expansionOk}, cm5_2 excluded from Apply/Challenge after a Ch.5 Mastery attempt covering hm5_2=${cm52ExcludedAfterMastery} (Direction 1, fully enforced). Direction 2 (Apply/Challenge already used cm5_2 -> Mastery still includes hm5_2, architecturally required by the fixed 10-item bank) is tagged via evidenceEquivalenceRedundant, not blocked - see next check.`;
+      } catch(e){ equivDetail = 'error: '+e.message; }
+      rs.push({name:'Evidence-equivalence group (cm5_2/hm5_2) prevents double-credit, Direction 1', ok: equivOk, detail: equivDetail});
+
+      // Direction 2 diagnostic tag verification.
+      let redundantFlagOk = false, redundantFlagDetail = 'not testable';
+      try {
+        v57EnsureProgress();
+        const savedHistory2 = PROGRESS.v57PackHistory;
+        PROGRESS.v57PackHistory = [{chapter:'5', stage:'apply', sourceKeys:['CUR:cm5_2']}];
+        const mPack = v57MasteryCasePack('5', 10, {ignoreSeen:true});
+        const hm52Built = mPack && mPack.find(x=>x.v57SourceKey==='HMB:hm5_2');
+        redundantFlagOk = !!hm52Built && hm52Built.evidenceEquivalenceGroup==='CH5_PATENT_TERM_POST1995' && hm52Built.evidenceEquivalenceRedundant===true;
+        PROGRESS.v57PackHistory = savedHistory2;
+        redundantFlagDetail = hm52Built ? `hm5_2 built with evidenceEquivalenceGroup=${hm52Built.evidenceEquivalenceGroup}, evidenceEquivalenceRedundant=${hm52Built.evidenceEquivalenceRedundant} after a prior cm5_2 Apply attempt (honestly disclosed, not silently double-credited).` : 'hm5_2 not found in built mastery pack.';
+      } catch(e){ redundantFlagDetail = 'error: '+e.message; }
+      rs.push({name:'Evidence-equivalence redundancy flag (Direction 2 diagnostic)', ok: redundantFlagOk, detail: redundantFlagDetail});
 
       // 1-17 replacement reachability/scoring
       const r117 = QUESTIONS.find(q=>q.id==='1-17R1');

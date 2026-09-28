@@ -493,7 +493,7 @@ canonical_content_id,chapter,chapters_all,placement_count,placement_ids,source_b
 34-9,34,34,1,PLC-00492,QUESTIONS,34-9,34-9,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
 34-10,34,34,1,PLC-00493,QUESTIONS,34-10,34-10,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
 1-16,1,1,1,PLC-00494,QUESTIONS,1-16,1-16,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
-1-17,1,1,1,PLC-00495,QUESTIONS,1-17,1-17,MCQ_native,yes,no,no,no,no,no,no,yes,,yes,CORRECTION REQUIRED (premise not source-defensible),yes,v1.2.9 Global Gap Repair: retired/quarantined; replaced by canonical unit 1-17R1 (new source-backed indirect-cost item). This historical row is preserved unedited for provenance and remains excluded from all evidence paths.
+1-17,1,1,1,PLC-00495,QUESTIONS,1-17,1-17,MCQ_native,yes,no,no,no,no,no,no,yes,,yes,CORRECTION REQUIRED (premise not source-defensible),yes,"v1.2.9 Global Gap Repair: retired/quarantined; replaced by canonical unit 1-17R1 (new source-backed indirect-cost item). This historical row is preserved unedited for provenance and remains excluded from all evidence paths. Closeout: technical_status remains CORRECTION REQUIRED / TECHNICAL DEFECT (never relabeled VERIFIED); repair_state (distinct field, tracked in the live canonical evidence-status resolver) is RESOLVED_REPLACED since 1-17R1 is active and source-audited."
 1-18,1,1,1,PLC-00496,QUESTIONS,1-18,1-18,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
 1-19,1,1,1,PLC-00497,QUESTIONS,1-19,1-19,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
 1-20,1,1,1,PLC-00498,QUESTIONS,1-20,1-20,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,"VERIFIED (wording corrected, answer unchanged)",yes,
