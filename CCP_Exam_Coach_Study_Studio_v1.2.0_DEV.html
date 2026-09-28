@@ -13101,26 +13101,156 @@ runRecommendedStep = function(){
     };
   }
 
+  // ---------------------------------------------------------------
+  // TRUE FINAL CLOSEOUT PATCH: genuine evidence-credit layer.
+  // A diagnostic flag alone does not prevent double-credit (accepted
+  // correction). This adds a real, generic distinction between:
+  //   QUESTION SCORE - every answered item, always counted, always
+  //     shown as normal immediate feedback. Never altered by this
+  //     patch (the post-test review screen reads FRESHCHALLENGE.results
+  //     directly, untouched).
+  //   INDEPENDENT MASTERY EVIDENCE - only one item per evidence FAMILY
+  //     counts toward mastery/readiness/remediation credit. An item
+  //     with no equivalence group is its own family (no-op for every
+  //     chapter/item except the one confirmed near-duplicate pair).
+  // evidenceFamilyFor/isIndependentEvidence are the generic resolvers:
+  // reusable by any future equivalence group and by the remediation/
+  // retention logic below, not special-cased to cm5_2/hm5_2.
+  // ---------------------------------------------------------------
+  function evidenceFamilyFor(sourceKey){
+    if (!sourceKey) return sourceKey;
+    const gid = V529_KEY_TO_GROUP[sourceKey];
+    return gid || sourceKey;
+  }
+  window.evidenceFamilyFor = evidenceFamilyFor;
+
+  function isIndependentEvidence(sourceKey, priorFamiliesClaimed){
+    const fam = evidenceFamilyFor(sourceKey);
+    return !(priorFamiliesClaimed && priorFamiliesClaimed.has(fam));
+  }
+  window.isIndependentEvidence = isIndependentEvidence;
+
+  function v529PriorNonMasteryFamilies(ch){
+    v57EnsureProgress();
+    const fams = new Set();
+    (PROGRESS.v57PackHistory||[]).filter(h=>String(h.chapter)===String(ch)&&h.stage!=='mastery')
+      .forEach(h=>(h.sourceKeys||[]).forEach(k=>fams.add(evidenceFamilyFor(k))));
+    return fams;
+  }
+  window.v529PriorNonMasteryFamilies = v529PriorNonMasteryFamilies;
+
   // Direction 2 (documented limitation): tag built Mastery items that belong
   // to an equivalence group whose sibling was already used outside Mastery.
+  // independentEvidenceEligible is the credit-layer flag consumed by the
+  // scoring patch below (and inspectable directly on a built pack item, as
+  // required for acceptance testing); evidenceEquivalenceRedundant is kept
+  // as its mirror for backward compatibility with the prior closeout's
+  // regression check.
   if (typeof v57MasteryCasePack === 'function'){
     const priorV57MasteryCasePackForEquiv = v57MasteryCasePack;
     v57MasteryCasePack = function(ch, count, opts){
       const pack = priorV57MasteryCasePackForEquiv(ch, count, opts);
       if (!pack) return pack;
-      v57EnsureProgress();
-      const nonMasteryKeys = new Set();
-      (PROGRESS.v57PackHistory||[]).filter(h=>String(h.chapter)===String(ch)&&h.stage!=='mastery')
-        .forEach(h=>(h.sourceKeys||[]).forEach(k=>nonMasteryKeys.add(k)));
+      const priorFamilies = v529PriorNonMasteryFamilies(ch);
+      const claimedThisPack = new Set();
       pack.forEach(item=>{
         const gid = V529_KEY_TO_GROUP[item.v57SourceKey];
-        if (gid){
-          const siblings = EVIDENCE_EQUIVALENCE_GROUPS[gid].filter(k=>k!==item.v57SourceKey);
-          item.evidenceEquivalenceGroup = gid;
-          item.evidenceEquivalenceRedundant = siblings.some(s=>nonMasteryKeys.has(s));
-        }
+        if (gid) item.evidenceEquivalenceGroup = gid;
+        const fam = evidenceFamilyFor(item.v57SourceKey);
+        const independent = isIndependentEvidence(item.v57SourceKey, priorFamilies) && !claimedThisPack.has(fam);
+        item.independentEvidenceEligible = independent;
+        item.evidenceEquivalenceRedundant = !!gid && !independent;
+        claimedThisPack.add(fam);
       });
       return pack;
+    };
+  }
+
+  // Mastery-gate scoring fix: the redundant item must not inflate the
+  // independent mastery numerator, and must not fabricate a padded-back
+  // denominator either. Fix point: at evidence-record CREATION (the
+  // single choke point every gate consumer already reads through), not
+  // duplicated into the two already-multiply-wrapped gate functions.
+  //
+  // On the persisted PROGRESS.externalEvidence record (sealedStrong/
+  // Internal Mastery only), ADD (never overwrite) independentEvidence*
+  // fields alongside the untouched raw scorePct/questionCount:
+  //   independentEvidenceQuestionCount/independentEvidenceScorePct -
+  //     computed by excluding every item this specific attempt found
+  //     redundant from BOTH the numerator and the denominator (a
+  //     standard "drop the invalid/duplicate measurement" average, not
+  //     a lowered percentage target and not a fabricated 10th slot).
+  // The mastery/readiness PASS gate is then fixed at its single read
+  // choke point: latestInternalMasteryEvidence() is wrapped to return a
+  // corrected VIEW where .scorePct is the independent (de-duplicated)
+  // score used by both existing gate functions unmodified, while
+  // .questionCount is left exactly as raw (the completion-count check
+  // still legitimately sees "all 10 required items were completed" -
+  // nothing here shrinks how many questions had to be answered, only
+  // what fraction of them counts as independent evidence for the 85%
+  // bar). .rawScorePct/.rawQuestionCount preserve the original values.
+  // A record with no independentEvidence* fields (every chapter/item
+  // with no equivalence group, every legacy/imported record) passes
+  // through completely unchanged - this is a documented no-op there.
+  // Pure, side-effect-free credit computation - deliberately factored out so
+  // the regression suite below can verify this exact math directly (with a
+  // simulated results array) WITHOUT invoking recordAutoFreshEvidence/
+  // saveProgress. integrityResults() runs inside the live app's own
+  // "Build Integrity / Self-check" page (renderIntegrity(), a real menu
+  // item), so any check that ran the real persistence path against a real
+  // user's live PROGRESS/localStorage would risk corrupting their saved
+  // history. Keeping this function pure lets the regression suite exercise
+  // the production math with zero persistence risk; the real end-to-end
+  // persisted-record + saveProgress() + import/export path is proven
+  // separately by the dedicated Playwright acceptance tests (forward/
+  // reverse equivalence-persistence round trips), never by integrityResults().
+  function v529MasteryEvidenceCredit(resultsArr){
+    const arr = resultsArr||[];
+    const n = arr.length, correct = arr.filter(r=>r.correct).length;
+    const redundant = arr.filter(r=>r.item && r.item.evidenceEquivalenceRedundant);
+    const independentResults = arr.filter(r=>!(r.item && r.item.evidenceEquivalenceRedundant));
+    const indepN = independentResults.length, indepCorrect = independentResults.filter(r=>r.correct).length;
+    const rawScorePct = n ? Math.round(100*correct/n) : 0;
+    const independentEvidenceScorePct = indepN ? Math.round(100*indepCorrect/indepN) : rawScorePct;
+    return {
+      rawScorePct, rawQuestionCount: n,
+      independentEvidenceQuestionCount: indepN,
+      independentEvidenceScorePct,
+      evidenceEquivalenceRedundant: redundant.length>0,
+      evidenceEquivalenceRedundantKeys: redundant.map(r=>r.item.v57SourceKey)
+    };
+  }
+  window.v529MasteryEvidenceCredit = v529MasteryEvidenceCredit;
+
+  if (typeof recordAutoFreshEvidence === 'function'){
+    const priorRecordAutoFreshEvidenceForEquiv = recordAutoFreshEvidence;
+    recordAutoFreshEvidence = function(){
+      const wasSealedStrong = !!FRESHCHALLENGE.sealedStrong;
+      const resultsSnapshot = wasSealedStrong ? (FRESHCHALLENGE.results||[]).slice() : null;
+      priorRecordAutoFreshEvidenceForEquiv();
+      if (!wasSealedStrong || !resultsSnapshot || !resultsSnapshot.length) return;
+      const id = FRESHCHALLENGE.evidenceRecordId; if (!id) return;
+      const e = (PROGRESS.externalEvidence||[]).find(x=>x.id===id); if (!e) return;
+      const credit = v529MasteryEvidenceCredit(resultsSnapshot);
+      Object.assign(e, credit);
+      e.evidenceCreditNote = credit.evidenceEquivalenceRedundant
+        ? `De-duplicated evidence-credit layer: item(s) ${credit.evidenceEquivalenceRedundantKeys.join(', ')} belong to an evidence family already independently demonstrated elsewhere in this chapter's history and are excluded from BOTH the independent numerator and denominator (not a lowered target, not a padded denominator). Independent mastery evidence score: ${credit.independentEvidenceScorePct}% over ${credit.independentEvidenceQuestionCount} distinct evidence families (target unchanged at 85%, base honestly reduced from ${credit.rawQuestionCount}). Raw question score (all ${credit.rawQuestionCount} answered, unaffected - this is what the finish screen shows) remains ${credit.rawScorePct}%.`
+        : `No redundant evidence-family items in this attempt; independent mastery evidence score equals the raw question score (${credit.rawScorePct}%).`;
+      saveProgress();
+    };
+  }
+
+  if (typeof latestInternalMasteryEvidence === 'function'){
+    const priorLatestInternalMasteryEvidenceForEquiv = latestInternalMasteryEvidence;
+    latestInternalMasteryEvidence = function(ch){
+      const rec = priorLatestInternalMasteryEvidenceForEquiv(ch);
+      if (!rec || rec.independentEvidenceQuestionCount===undefined || rec.independentEvidenceQuestionCount===null) return rec;
+      return Object.assign({}, rec, {
+        rawScorePct: rec.rawScorePct!==undefined ? rec.rawScorePct : rec.scorePct,
+        rawQuestionCount: rec.rawQuestionCount!==undefined ? rec.rawQuestionCount : rec.questionCount,
+        scorePct: rec.independentEvidenceScorePct,
+        questionCount: rec.questionCount // completion-count check is untouched by design; only the % bar is de-duplicated
+      });
     };
   }
 
@@ -13313,6 +13443,112 @@ runRecommendedStep = function(){
       const cm59Ok = cm59GateOk && (cm59InApplyPool || cm59InChallengePool);
       rs.push({name:'cm5_9 (new distinct Ch.5 Prototypes item) live and QA-gate-eligible', ok:cm59Ok,
         detail: cm59Ok ? `cm5_9 is present in V56_CURATED_BANK[5], passes v57CuratedHighTrust AND v510PsychometricQa, and actually reaches the live candidate pool (apply:${cm59InApplyPool}, challenge:${cm59InChallengePool}) - a topically distinct case (Prototypes - not tested anywhere else in Ch.5).` : `NOT reaching the scored candidate pool - gateOk=${cm59GateOk}, inApplyPool=${cm59InApplyPool}, inChallengePool=${cm59InChallengePool}. See V529_NEW_CH5_ITEM.`});
+
+      // ---- TRUE FINAL CLOSEOUT PATCH: evidence-credit-layer regression ----
+      // All checks below are deliberately pure (no recordAutoFreshEvidence/
+      // saveProgress calls) - see the comment above v529MasteryEvidenceCredit
+      // for why: integrityResults() runs inside a real user's live session via
+      // the Build Integrity / Self-check page, so it must never risk writing
+      // simulated data into a real learner's saved progress.
+
+      // Generic resolver / remediation semantics: same evidence-equivalence
+      // group must NOT count as a different independent question; an
+      // unrelated family must remain fully independent (no global ban).
+      let creditResolverOk = false, creditResolverDetail = 'not testable';
+      try {
+        const priorFamilies = new Set([evidenceFamilyFor('HMB:hm5_2')]);
+        const sameGroupIndependent = isIndependentEvidence('CUR:cm5_2', priorFamilies);
+        const diffGroupIndependent1 = isIndependentEvidence('CUR:cm5_1', priorFamilies);
+        const diffGroupIndependent2 = isIndependentEvidence('NAT:1-1', priorFamilies);
+        creditResolverOk = sameGroupIndependent===false && diffGroupIndependent1===true && diffGroupIndependent2===true;
+        creditResolverDetail = `isIndependentEvidence('CUR:cm5_2', {hm5_2's family already claimed}) = ${sameGroupIndependent} (must be false - same evidence-equivalence group is the same underlying evidence case, not a different independent question, regardless of the two items having different ids). isIndependentEvidence('CUR:cm5_1', ...) = ${diffGroupIndependent1}, isIndependentEvidence('NAT:1-1', ...) = ${diffGroupIndependent2} (both true - unrelated families remain fully independent; this is not a global same-topic ban).`;
+      } catch(e){ creditResolverDetail = 'error: '+e.message; }
+      rs.push({name:'Generic evidence-credit resolver: same-group NOT independent, different-group IS independent', ok:creditResolverOk, detail:creditResolverDetail});
+
+      // Evidence-credit math on a real built Mastery pack: the redundant item
+      // must be excluded from BOTH the independent numerator and denominator
+      // (not merely flagged), and dropping it must never fabricate a padded
+      // count back up to 10.
+      let creditMathOk = false, creditMathDetail = 'not testable';
+      try {
+        v57EnsureProgress();
+        const savedHistory = PROGRESS.v57PackHistory;
+        PROGRESS.v57PackHistory = [{chapter:'5', stage:'apply', sourceKeys:['CUR:cm5_2']}];
+        const mPack = v57MasteryCasePack('5', 10, {ignoreSeen:true});
+        PROGRESS.v57PackHistory = savedHistory;
+        const hm52 = mPack && mPack.find(x=>x.v57SourceKey==='HMB:hm5_2');
+        const eligibleOk = !!hm52 && hm52.independentEvidenceEligible===false && hm52.evidenceEquivalenceRedundant===true;
+        const otherItemsEligibleOk = (mPack||[]).filter(x=>x.v57SourceKey!=='HMB:hm5_2').every(x=>x.independentEvidenceEligible===true);
+        const allCorrect = (mPack||[]).map(it=>({item:it, correct:true}));
+        const credit = v529MasteryEvidenceCredit(allCorrect);
+        const mathOk = credit.rawScorePct===100 && credit.rawQuestionCount===10 && credit.independentEvidenceQuestionCount===9
+          && credit.independentEvidenceScorePct===100 && credit.evidenceEquivalenceRedundant===true
+          && credit.evidenceEquivalenceRedundantKeys.length===1 && credit.evidenceEquivalenceRedundantKeys[0]==='HMB:hm5_2';
+        // hm5_2 answered wrong: dropping an excluded measurement from both num
+        // and denom is the standard treatment, not score inflation/gaming.
+        const hm52Wrong = (mPack||[]).map(it=>({item:it, correct: it.v57SourceKey!=='HMB:hm5_2'}));
+        const credit2 = v529MasteryEvidenceCredit(hm52Wrong);
+        const mathOk2 = credit2.rawScorePct===90 && credit2.rawQuestionCount===10 && credit2.independentEvidenceQuestionCount===9 && credit2.independentEvidenceScorePct===100;
+        creditMathOk = eligibleOk && otherItemsEligibleOk && mathOk && mathOk2;
+        creditMathDetail = `After a prior cm5_2 Apply attempt: hm5_2 built with independentEvidenceEligible=${hm52&&hm52.independentEvidenceEligible} (other 9 mastery items all independentEvidenceEligible=true - no global ban). All-correct attempt: raw=${credit.rawScorePct}%/${credit.rawQuestionCount}q, independent=${credit.independentEvidenceScorePct}%/${credit.independentEvidenceQuestionCount}q (hm5_2 excluded from both numerator and denominator, no padded-back-to-10 count). hm5_2-wrong attempt: raw=${credit2.rawScorePct}%/${credit2.rawQuestionCount}q, independent=${credit2.independentEvidenceScorePct}%/${credit2.independentEvidenceQuestionCount}q.`;
+      } catch(e){ creditMathDetail = 'error: '+e.message; }
+      rs.push({name:'Evidence-credit math excludes redundant item from BOTH numerator and denominator (v529MasteryEvidenceCredit)', ok:creditMathOk, detail:creditMathDetail});
+
+      // Mastery-gate read path: latestInternalMasteryEvidence() must expose the
+      // DE-DUPLICATED score (not the raw score) to the 85% pass check, while
+      // leaving questionCount (completion count) untouched, and must be an
+      // exact passthrough for any record without independentEvidence* fields
+      // (every legacy/imported record, every chapter with no equivalence group).
+      let gateViewOk = false, gateViewDetail = 'not testable';
+      try {
+        v57EnsureProgress();
+        const savedEvidence = PROGRESS.externalEvidence;
+        PROGRESS.externalEvidence = [{
+          id:'v529-test-redundant', chapter:'5', ts:Date.now(), provenance:'INTERNAL_MASTERY_V4_HUMAN_CURATED',
+          evidenceClass:'INTERNAL_MASTERY', sealedStrong:true, closedBookAttested:true, closedBook:true, attestedAt:Date.now(),
+          scorePct:100, questionCount:10, rawScorePct:100, rawQuestionCount:10,
+          independentEvidenceScorePct:89, independentEvidenceQuestionCount:9, evidenceEquivalenceRedundant:true
+        }];
+        const redundantView = latestInternalMasteryEvidence('5');
+        const redundantOk = !!redundantView && redundantView.scorePct===89 && redundantView.questionCount===10 && redundantView.rawScorePct===100 && redundantView.rawQuestionCount===10;
+        PROGRESS.externalEvidence = [{
+          id:'v529-test-legacy', chapter:'6', ts:Date.now(), provenance:'INTERNAL_MASTERY_V4_HUMAN_CURATED',
+          evidenceClass:'INTERNAL_MASTERY', sealedStrong:true, closedBookAttested:true, closedBook:true, attestedAt:Date.now(),
+          scorePct:92, questionCount:10
+        }];
+        const legacyView = latestInternalMasteryEvidence('6');
+        const legacyOk = !!legacyView && legacyView.scorePct===92 && legacyView.questionCount===10 && legacyView.rawScorePct===undefined;
+        PROGRESS.externalEvidence = savedEvidence;
+        gateViewOk = redundantOk && legacyOk;
+        gateViewDetail = `Simulated redundant record (raw 100%/10q, independent 89%/9q): gate view scorePct=${redundantView&&redundantView.scorePct} (must be the de-duplicated 89, not raw 100 - this is what feeds the masteryTest.scorePct>=85 check), questionCount=${redundantView&&redundantView.questionCount} (must stay 10, unaffected). Legacy/no-group record: gate view scorePct=${legacyView&&legacyView.scorePct}, questionCount=${legacyView&&legacyView.questionCount}, rawScorePct=${legacyView&&legacyView.rawScorePct} (undefined - exact passthrough, confirming the patch is a no-op everywhere except a confirmed redundant attempt).`;
+      } catch(e){ gateViewDetail = 'error: '+e.message; }
+      rs.push({name:'Mastery gate reads de-duplicated independent score (not raw) when redundant; exact passthrough otherwise', ok:gateViewOk, detail:gateViewDetail});
+
+      // Retention: a resurfaced equivalence sibling may appear for instructional
+      // review, but only ever honestly marked as previously-seen, never as a
+      // fresh/unseen distinct retention demonstration. v510BuildStagePack's
+      // 'retention' branch (unmodified by this patch) already tags every item
+      // with v510RetentionSourcePreviouslySeen from the same equivalence-
+      // expanded v510PriorSourceKeys() this patch already feeds (Direction 1) -
+      // verify that holds end-to-end for cm5_2 specifically after a Ch.5 Mastery
+      // attempt, rather than assuming it.
+      let retentionOk = false, retentionDetail = 'not testable';
+      try {
+        v57EnsureProgress();
+        const savedHistory = PROGRESS.v57PackHistory;
+        PROGRESS.v57PackHistory = [{chapter:'5', stage:'mastery', sourceKeys:['HMB:hm5_1','HMB:hm5_2','HMB:hm5_3','HMB:hm5_4','HMB:hm5_5','HMB:hm5_6','HMB:hm5_7','HMB:hm5_8','HMB:hm5_9','HMB:hm5_10']}];
+        let retentionPack = null, retentionErr = null;
+        try { retentionPack = v510BuildStagePack('5','retention'); } catch(e){ retentionErr = e.message; }
+        const cm52InRetention = (retentionPack||[]).find(x=>x.v57SourceKey==='CUR:cm5_2');
+        PROGRESS.v57PackHistory = savedHistory;
+        // Either cm5_2 is absent (fully excluded, at least as strict as required),
+        // or present but explicitly marked previously-seen (never claimed fresh).
+        retentionOk = !cm52InRetention || cm52InRetention.v510RetentionSourcePreviouslySeen===true;
+        retentionDetail = cm52InRetention
+          ? `cm5_2 appears in the post-Mastery Retention pack marked v510RetentionSourcePreviouslySeen=${cm52InRetention.v510RetentionSourcePreviouslySeen} - shown for instructional review only, never counted as a fresh/distinct retention demonstration (by the app's existing, unmodified retention design).`
+          : `cm5_2 does not appear in the post-Mastery Retention pack at all (fully excluded via the equivalence-expanded v510PriorSourceKeys). retentionErr=${retentionErr||'none'}.`;
+      } catch(e){ retentionDetail = 'error: '+e.message; }
+      rs.push({name:'Retention: resurfaced equivalence sibling never counts as a fresh/distinct demonstration', ok:retentionOk, detail:retentionDetail});
 
       // ---- Part 9: tracked new-content delta vs. the frozen v1.1.2 baseline ----
       // FINAL_RELEASE_MANIFEST is a genuine historical record and is intentionally
