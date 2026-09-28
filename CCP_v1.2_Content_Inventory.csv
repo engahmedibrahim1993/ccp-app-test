@@ -304,7 +304,7 @@ canonical_content_id,chapter,chapters_all,placement_count,placement_ids,source_b
 31-11,31,31,1,PLC-00303,QUESTIONS,31-11,31-11,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
 13-17,13,13,1,PLC-00304,QUESTIONS,13-17,13-17,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
 14-25,14,14,1,PLC-00305,QUESTIONS,14-25,14-25,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
-14-26,14,14,1,PLC-00306,QUESTIONS,14-26,14-26,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
+14-26,14,14,1,PLC-00306,QUESTIONS,14-26,14-26,MCQ_native,yes,"NO - EXCLUDED (PHASE2A_SOURCE_CONFLICT_QUARANTINE; isQuestionSuspended)",no,no,no,no,no,no,,yes,SOURCE CONFLICT (LOE EV=PV/SV=0 convention not uniformly established across the accepted AACE source set: S&K6 Ch.14 states EV=AC; TCM Framework allows a cost-spent LOE percent-complete basis; RP 10S-90 silent on the exact formula) (validated-evidence status: EXCLUDED),yes,"Phase 2A TRUE COMPLETION GATE: reopened after Ch14 diagnostic-cleanup found the digitization-fidelity-VERIFIED item's scored answer depends on a source-hierarchy question, not merely diagnostic wording; quarantined from evidence pending SME/instructor resolution. Native question/options/scored answer unchanged."
 29-12,29,29,1,PLC-00307,QUESTIONS,29-12,29-12,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED (MANDATORY REVALIDATION COMPLETE - prior overlay independently reconfirmed correct),yes,
 14-27,14,14,1,PLC-00308,QUESTIONS,14-27,14-27,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
 28-10,28,28,1,PLC-00309,QUESTIONS,28-10,28-10,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
