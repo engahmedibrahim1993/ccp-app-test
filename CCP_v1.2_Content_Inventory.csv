@@ -23,17 +23,17 @@ canonical_content_id,chapter,chapters_all,placement_count,placement_ids,source_b
 23-3,23,23,1,PLC-00022,QUESTIONS,23-3,23-3,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
 23-4,23,23,1,PLC-00023,QUESTIONS,23-4,23-4,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
 23-5,23,23,1,PLC-00024,QUESTIONS,23-5,23-5,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
-31-1,31,31,1,PLC-00025,QUESTIONS,31-1,31-1,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
-31-2,31,31,1,PLC-00026,QUESTIONS,31-2,31-2,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
-31-3,31,31,1,PLC-00027,QUESTIONS,31-3,31-3,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
-31-4,31,31,1,PLC-00028,QUESTIONS,31-4,31-4,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
+31-1,31,31,1,PLC-00025,QUESTIONS,31-1,31-1,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
+31-2,31,31,1,PLC-00026,QUESTIONS,31-2,31-2,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
+31-3,31,31,1,PLC-00027,QUESTIONS,31-3,31-3,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
+31-4,31,31,1,PLC-00028,QUESTIONS,31-4,31-4,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
 27-1,27,27,1,PLC-00029,QUESTIONS,27-1,27-1,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
 27-2,27,27,1,PLC-00030,QUESTIONS,27-2,27-2,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
 27-3,27,27,1,PLC-00031,QUESTIONS,27-3,27-3,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
 21-1,21,21,1,PLC-00032,QUESTIONS,21-1,21-1,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
 22-1,22,22,1,PLC-00033,QUESTIONS,22-1,22-1,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
 22-2,22,22,1,PLC-00034,QUESTIONS,22-2,22-2,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
-33-1,33,33,1,PLC-00035,QUESTIONS,33-1,33-1,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
+33-1,33,33,1,PLC-00035,QUESTIONS,33-1,33-1,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
 18-1,18,18,1,PLC-00036,QUESTIONS,18-1,18-1,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
 26-1,26,26,1,PLC-00037,QUESTIONS,26-1,26-1,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
 25-1,25,25,1,PLC-00038,QUESTIONS,25-1,25-1,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
@@ -197,16 +197,16 @@ canonical_content_id,chapter,chapters_all,placement_count,placement_ids,source_b
 29-7,29,29,1,PLC-00196,QUESTIONS,29-7,29-7,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
 29-8,29,29,1,PLC-00197,QUESTIONS,29-8,29-8,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
 29-9,29,29,1,PLC-00198,QUESTIONS,29-9,29-9,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
-32-1,32,32,1,PLC-00199,QUESTIONS,32-1,32-1,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
-32-2,32,32,1,PLC-00200,QUESTIONS,32-2,32-2,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
-32-3,32,32,1,PLC-00201,QUESTIONS,32-3,32-3,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
-32-4,32,32,1,PLC-00202,QUESTIONS,32-4,32-4,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
-32-5,32,32,1,PLC-00203,QUESTIONS,32-5,32-5,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
-34-1,34,34,1,PLC-00204,QUESTIONS,34-1,34-1,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
-34-2,34,34,1,PLC-00205,QUESTIONS,34-2,34-2,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
-34-3,34,34,1,PLC-00206,QUESTIONS,34-3,34-3,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
-34-4,34,34,1,PLC-00207,QUESTIONS,34-4,34-4,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
-34-5,34,34,1,PLC-00208,QUESTIONS,34-5,34-5,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
+32-1,32,32,1,PLC-00199,QUESTIONS,32-1,32-1,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
+32-2,32,32,1,PLC-00200,QUESTIONS,32-2,32-2,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
+32-3,32,32,1,PLC-00201,QUESTIONS,32-3,32-3,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
+32-4,32,32,1,PLC-00202,QUESTIONS,32-4,32-4,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
+32-5,32,32,1,PLC-00203,QUESTIONS,32-5,32-5,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
+34-1,34,34,1,PLC-00204,QUESTIONS,34-1,34-1,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
+34-2,34,34,1,PLC-00205,QUESTIONS,34-2,34-2,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
+34-3,34,34,1,PLC-00206,QUESTIONS,34-3,34-3,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
+34-4,34,34,1,PLC-00207,QUESTIONS,34-4,34-4,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
+34-5,34,34,1,PLC-00208,QUESTIONS,34-5,34-5,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
 23-6,23,23,1,PLC-00209,QUESTIONS,23-6,23-6,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
 19-10,19,19,1,PLC-00210,QUESTIONS,19-10,19-10,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
 3-13,3,3,1,PLC-00211,QUESTIONS,3-13,3-13,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
@@ -214,7 +214,7 @@ canonical_content_id,chapter,chapters_all,placement_count,placement_ids,source_b
 10-9,10,10,1,PLC-00213,QUESTIONS,10-9,10-9,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
 28-8,28,28,1,PLC-00214,QUESTIONS,28-8,28-8,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
 18-2,18,18,1,PLC-00215,QUESTIONS,18-2,18-2,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
-31-5,31,31,1,PLC-00216,QUESTIONS,31-5,31-5,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
+31-5,31,31,1,PLC-00216,QUESTIONS,31-5,31-5,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
 22-3,22,22,1,PLC-00217,QUESTIONS,22-3,22-3,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
 25-2,25,25,1,PLC-00218,QUESTIONS,25-2,25-2,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
 27-4,27,27,1,PLC-00219,QUESTIONS,27-4,27-4,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
@@ -231,7 +231,7 @@ canonical_content_id,chapter,chapters_all,placement_count,placement_ids,source_b
 28-9,28,28,1,PLC-00230,QUESTIONS,28-9,28-9,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
 9-11,9,9,1,PLC-00231,QUESTIONS,9-11,9-11,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
 26-2,26,26,1,PLC-00232,QUESTIONS,26-2,26-2,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
-32-6,32,32,1,PLC-00233,QUESTIONS,32-6,32-6,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
+32-6,32,32,1,PLC-00233,QUESTIONS,32-6,32-6,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
 29-10,29,29,1,PLC-00234,QUESTIONS,29-10,29-10,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
 13-11,13,13,1,PLC-00235,QUESTIONS,13-11,13-11,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
 14-6,14,14,1,PLC-00236,QUESTIONS,14-6,14-6,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
@@ -241,12 +241,12 @@ canonical_content_id,chapter,chapters_all,placement_count,placement_ids,source_b
 9-13,9,9,1,PLC-00240,QUESTIONS,9-13,9-13,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
 13-12,13,13,1,PLC-00241,QUESTIONS,13-12,13-12,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
 27-6,27,27,1,PLC-00242,QUESTIONS,27-6,27-6,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
-31-6,31,31,1,PLC-00243,QUESTIONS,31-6,31-6,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
+31-6,31,31,1,PLC-00243,QUESTIONS,31-6,31-6,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
 14-8,14,14,1,PLC-00244,QUESTIONS,14-8,14-8,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
 14-9,14,14,1,PLC-00245,QUESTIONS,14-9,14-9,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
 23-9,23,23,1,PLC-00246,QUESTIONS,23-9,23-9,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
 14-10,14,14,1,PLC-00247,QUESTIONS,14-10,14-10,MCQ_native,yes,NO - EXCLUDED (BATCHC_QA_QUARANTINE; isQuestionSuspended),no,no,no,no,no,no,,yes,SECONDARY-COURSE-SUPPORTED / HIGHER-PRIORITY SOURCE SUPPORT INSUFFICIENT (validated-evidence status: EXCLUDED),yes,"Batch C: EAC via unsupported CPI x SPI composite formula; quarantined from evidence. Part-0 status refinement: secondary-course-supported, higher-priority-source-insufficient (not technically incorrect); evidence exclusion unchanged."
-32-7,32,32,1,PLC-00248,QUESTIONS,32-7,32-7,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
+32-7,32,32,1,PLC-00248,QUESTIONS,32-7,32-7,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
 16-6,16,16,1,PLC-00249,QUESTIONS,16-6,16-6,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
 13-13,13,13,1,PLC-00250,QUESTIONS,13-13,13-13,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
 18-3,18,18,1,PLC-00251,QUESTIONS,18-3,18-3,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
@@ -256,21 +256,21 @@ canonical_content_id,chapter,chapters_all,placement_count,placement_ids,source_b
 18-4,18,18,1,PLC-00255,QUESTIONS,18-4,18-4,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
 14-13,14,14,1,PLC-00256,QUESTIONS,14-13,14-13,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
 14-14,14,14,1,PLC-00257,QUESTIONS,14-14,14-14,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
-31-7,31,31,1,PLC-00258,QUESTIONS,31-7,31-7,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
+31-7,31,31,1,PLC-00258,QUESTIONS,31-7,31-7,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
 7-11,7,7,1,PLC-00259,QUESTIONS,7-11,7-11,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
 14-15,14,14,1,PLC-00260,QUESTIONS,14-15,14-15,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
 13-14,13,13,1,PLC-00261,QUESTIONS,13-14,13-14,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
 13-15,13,13,1,PLC-00262,QUESTIONS,13-15,13-15,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
 18-5,18,18,1,PLC-00263,QUESTIONS,18-5,18-5,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
 29-11,29,29,1,PLC-00264,QUESTIONS,29-11,29-11,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
-31-8,31,31,1,PLC-00265,QUESTIONS,31-8,31-8,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
+31-8,31,31,1,PLC-00265,QUESTIONS,31-8,31-8,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
 14-16,14,14,1,PLC-00266,QUESTIONS,14-16,14-16,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
 18-6,18,18,1,PLC-00267,QUESTIONS,18-6,18-6,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
 25-3,25,25,1,PLC-00268,QUESTIONS,25-3,25-3,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
 9-14,9,9,1,PLC-00269,QUESTIONS,9-14,9-14,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
 12-9,12,12,1,PLC-00270,QUESTIONS,12-9,12-9,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
 14-17,14,14,1,PLC-00271,QUESTIONS,14-17,14-17,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
-32-8,32,32,1,PLC-00272,QUESTIONS,32-8,32-8,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
+32-8,32,32,1,PLC-00272,QUESTIONS,32-8,32-8,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
 27-7,27,27,1,PLC-00273,QUESTIONS,27-7,27-7,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
 9-15,9,9,1,PLC-00274,QUESTIONS,9-15,9-15,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
 19-11,19,19,1,PLC-00275,QUESTIONS,19-11,19-11,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
@@ -284,12 +284,12 @@ canonical_content_id,chapter,chapters_all,placement_count,placement_ids,source_b
 14-18,14,14,1,PLC-00283,QUESTIONS,14-18,14-18,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
 14-19,14,14,1,PLC-00284,QUESTIONS,14-19,14-19,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
 14-20,14,14,1,PLC-00285,QUESTIONS,14-20,14-20,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
-32-9,32,32,1,PLC-00286,QUESTIONS,32-9,32-9,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
+32-9,32,32,1,PLC-00286,QUESTIONS,32-9,32-9,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
 23-10,23,23,1,PLC-00287,QUESTIONS,23-10,23-10,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
 14-21,14,14,1,PLC-00288,QUESTIONS,14-21,14-21,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
 17-6,17,17,1,PLC-00289,QUESTIONS,17-6,17-6,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
 7-12,7,7,1,PLC-00290,QUESTIONS,7-12,7-12,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
-31-9,31,31,1,PLC-00291,QUESTIONS,31-9,31-9,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
+31-9,31,31,1,PLC-00291,QUESTIONS,31-9,31-9,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
 27-9,27,27,1,PLC-00292,QUESTIONS,27-9,27-9,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
 20-12,20,20,1,PLC-00293,QUESTIONS,20-12,20-12,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
 14-22,14,14,1,PLC-00294,QUESTIONS,14-22,14-22,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
@@ -298,17 +298,17 @@ canonical_content_id,chapter,chapters_all,placement_count,placement_ids,source_b
 27-10,27,27,1,PLC-00297,QUESTIONS,27-10,27-10,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED (MANDATORY REVALIDATION COMPLETE - prior overlay independently reconfirmed correct),yes,
 13-16,13,13,1,PLC-00298,QUESTIONS,13-16,13-16,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
 14-24,14,14,1,PLC-00299,QUESTIONS,14-24,14-24,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
-31-10,31,31,1,PLC-00300,QUESTIONS,31-10,31-10,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
+31-10,31,31,1,PLC-00300,QUESTIONS,31-10,31-10,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
 18-10,18,18,1,PLC-00301,QUESTIONS,18-10,18-10,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
-33-2,33,33,1,PLC-00302,QUESTIONS,33-2,33-2,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
-31-11,31,31,1,PLC-00303,QUESTIONS,31-11,31-11,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
+33-2,33,33,1,PLC-00302,QUESTIONS,33-2,33-2,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
+31-11,31,31,1,PLC-00303,QUESTIONS,31-11,31-11,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
 13-17,13,13,1,PLC-00304,QUESTIONS,13-17,13-17,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
 14-25,14,14,1,PLC-00305,QUESTIONS,14-25,14-25,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
 14-26,14,14,1,PLC-00306,QUESTIONS,14-26,14-26,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
 29-12,29,29,1,PLC-00307,QUESTIONS,29-12,29-12,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED (MANDATORY REVALIDATION COMPLETE - prior overlay independently reconfirmed correct),yes,
 14-27,14,14,1,PLC-00308,QUESTIONS,14-27,14-27,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
 28-10,28,28,1,PLC-00309,QUESTIONS,28-10,28-10,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
-32-10,32,32,1,PLC-00310,QUESTIONS,32-10,32-10,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
+32-10,32,32,1,PLC-00310,QUESTIONS,32-10,32-10,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
 13-18,13,13,1,PLC-00311,QUESTIONS,13-18,13-18,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
 20-13,20,20,1,PLC-00312,QUESTIONS,20-13,20-13,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
 14-28,14,14,1,PLC-00313,QUESTIONS,14-28,14-28,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
@@ -326,7 +326,7 @@ canonical_content_id,chapter,chapters_all,placement_count,placement_ids,source_b
 14-34,14,14,1,PLC-00325,QUESTIONS,14-34,14-34,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
 29-13,29,29,1,PLC-00326,QUESTIONS,29-13,29-13,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
 14-35,14,14,1,PLC-00327,QUESTIONS,14-35,14-35,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
-32-11,32,32,1,PLC-00328,QUESTIONS,32-11,32-11,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
+32-11,32,32,1,PLC-00328,QUESTIONS,32-11,32-11,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
 14-36,14,14,1,PLC-00329,QUESTIONS,14-36,14-36,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
 20-15,20,20,1,PLC-00330,QUESTIONS,20-15,20-15,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
 1-11,1,1,1,PLC-00331,QUESTIONS,1-11,1-11,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
@@ -472,26 +472,26 @@ canonical_content_id,chapter,chapters_all,placement_count,placement_ids,source_b
 30-5,30,30,1,PLC-00471,QUESTIONS,30-5,30-5,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
 30-6,30,30,1,PLC-00472,QUESTIONS,30-6,30-6,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
 30-7,30,30,1,PLC-00473,QUESTIONS,30-7,30-7,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
-31-12,31,31,1,PLC-00474,QUESTIONS,31-12,31-12,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
-31-13,31,31,1,PLC-00475,QUESTIONS,31-13,31-13,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
-31-14,31,31,1,PLC-00476,QUESTIONS,31-14,31-14,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
-31-15,31,31,1,PLC-00477,QUESTIONS,31-15,31-15,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
-31-16,31,31,1,PLC-00478,QUESTIONS,31-16,31-16,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
-32-12,32,32,1,PLC-00479,QUESTIONS,32-12,32-12,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
-32-13,32,32,1,PLC-00480,QUESTIONS,32-13,32-13,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
-32-14,32,32,1,PLC-00481,QUESTIONS,32-14,32-14,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
-32-15,32,32,1,PLC-00482,QUESTIONS,32-15,32-15,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
-32-16,32,32,1,PLC-00483,QUESTIONS,32-16,32-16,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
-33-3,33,33,1,PLC-00484,QUESTIONS,33-3,33-3,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
-33-4,33,33,1,PLC-00485,QUESTIONS,33-4,33-4,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
-33-5,33,33,1,PLC-00486,QUESTIONS,33-5,33-5,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
-33-6,33,33,1,PLC-00487,QUESTIONS,33-6,33-6,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
-33-7,33,33,1,PLC-00488,QUESTIONS,33-7,33-7,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
-34-6,34,34,1,PLC-00489,QUESTIONS,34-6,34-6,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
-34-7,34,34,1,PLC-00490,QUESTIONS,34-7,34-7,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
-34-8,34,34,1,PLC-00491,QUESTIONS,34-8,34-8,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
-34-9,34,34,1,PLC-00492,QUESTIONS,34-9,34-9,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
-34-10,34,34,1,PLC-00493,QUESTIONS,34-10,34-10,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
+31-12,31,31,1,PLC-00474,QUESTIONS,31-12,31-12,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
+31-13,31,31,1,PLC-00475,QUESTIONS,31-13,31-13,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
+31-14,31,31,1,PLC-00476,QUESTIONS,31-14,31-14,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
+31-15,31,31,1,PLC-00477,QUESTIONS,31-15,31-15,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
+31-16,31,31,1,PLC-00478,QUESTIONS,31-16,31-16,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
+32-12,32,32,1,PLC-00479,QUESTIONS,32-12,32-12,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
+32-13,32,32,1,PLC-00480,QUESTIONS,32-13,32-13,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
+32-14,32,32,1,PLC-00481,QUESTIONS,32-14,32-14,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
+32-15,32,32,1,PLC-00482,QUESTIONS,32-15,32-15,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
+32-16,32,32,1,PLC-00483,QUESTIONS,32-16,32-16,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
+33-3,33,33,1,PLC-00484,QUESTIONS,33-3,33-3,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
+33-4,33,33,1,PLC-00485,QUESTIONS,33-4,33-4,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
+33-5,33,33,1,PLC-00486,QUESTIONS,33-5,33-5,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
+33-6,33,33,1,PLC-00487,QUESTIONS,33-6,33-6,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
+33-7,33,33,1,PLC-00488,QUESTIONS,33-7,33-7,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
+34-6,34,34,1,PLC-00489,QUESTIONS,34-6,34-6,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
+34-7,34,34,1,PLC-00490,QUESTIONS,34-7,34-7,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
+34-8,34,34,1,PLC-00491,QUESTIONS,34-8,34-8,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
+34-9,34,34,1,PLC-00492,QUESTIONS,34-9,34-9,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
+34-10,34,34,1,PLC-00493,QUESTIONS,34-10,34-10,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
 1-16,1,1,1,PLC-00494,QUESTIONS,1-16,1-16,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
 1-17,1,1,1,PLC-00495,QUESTIONS,1-17,1-17,MCQ_native,yes,no,no,no,no,no,no,yes,,yes,CORRECTION REQUIRED (premise not source-defensible),yes,
 1-18,1,1,1,PLC-00496,QUESTIONS,1-18,1-18,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
@@ -679,31 +679,31 @@ canonical_content_id,chapter,chapters_all,placement_count,placement_ids,source_b
 30-12,30,30,1,PLC-00678,QUESTIONS,30-12,30-12,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
 30-13,30,30,1,PLC-00679,QUESTIONS,30-13,30-13,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
 30-14,30,30,1,PLC-00680,QUESTIONS,30-14,30-14,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
-31-17,31,31,1,PLC-00681,QUESTIONS,31-17,31-17,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
-31-18,31,31,1,PLC-00682,QUESTIONS,31-18,31-18,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
-31-19,31,31,1,PLC-00683,QUESTIONS,31-19,31-19,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
-32-17,32,32,1,PLC-00684,QUESTIONS,32-17,32-17,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
-32-18,32,32,1,PLC-00685,QUESTIONS,32-18,32-18,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
-32-19,32,32,1,PLC-00686,QUESTIONS,32-19,32-19,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
-34-12,34,34,1,PLC-00687,QUESTIONS,34-12,34-12,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
-34-13,34,34,1,PLC-00688,QUESTIONS,34-13,34-13,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
-34-14,34,34,1,PLC-00689,QUESTIONS,34-14,34-14,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
-34-15,34,34,1,PLC-00690,QUESTIONS,34-15,34-15,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
-34-16,34,34,1,PLC-00691,QUESTIONS,34-16,34-16,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
-34-17,34,34,1,PLC-00692,QUESTIONS,34-17,34-17,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
-34-18,34,34,1,PLC-00693,QUESTIONS,34-18,34-18,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
-34-19,34,34,1,PLC-00694,QUESTIONS,34-19,34-19,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
-34-20,34,34,1,PLC-00695,QUESTIONS,34-20,34-20,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
-34-21,34,34,1,PLC-00696,QUESTIONS,34-21,34-21,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,
+31-17,31,31,1,PLC-00681,QUESTIONS,31-17,31-17,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
+31-18,31,31,1,PLC-00682,QUESTIONS,31-18,31-18,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
+31-19,31,31,1,PLC-00683,QUESTIONS,31-19,31-19,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
+32-17,32,32,1,PLC-00684,QUESTIONS,32-17,32-17,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
+32-18,32,32,1,PLC-00685,QUESTIONS,32-18,32-18,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
+32-19,32,32,1,PLC-00686,QUESTIONS,32-19,32-19,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
+34-12,34,34,1,PLC-00687,QUESTIONS,34-12,34-12,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
+34-13,34,34,1,PLC-00688,QUESTIONS,34-13,34-13,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
+34-14,34,34,1,PLC-00689,QUESTIONS,34-14,34-14,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
+34-15,34,34,1,PLC-00690,QUESTIONS,34-15,34-15,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
+34-16,34,34,1,PLC-00691,QUESTIONS,34-16,34-16,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
+34-17,34,34,1,PLC-00692,QUESTIONS,34-17,34-17,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
+34-18,34,34,1,PLC-00693,QUESTIONS,34-18,34-18,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
+34-19,34,34,1,PLC-00694,QUESTIONS,34-19,34-19,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
+34-20,34,34,1,PLC-00695,QUESTIONS,34-20,34-20,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
+34-21,34,34,1,PLC-00696,QUESTIONS,34-21,34-21,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
 29-33,29,29,1,PLC-00697,QUESTIONS,29-33,29-33,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
 29-34,29,29,1,PLC-00698,QUESTIONS,29-34,29-34,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
 29-35,29,29,1,PLC-00699,QUESTIONS,29-35,29-35,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
 29-36,29,29,1,PLC-00700,QUESTIONS,29-36,29-36,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
 29-37,29,29,1,PLC-00701,QUESTIONS,29-37,29-37,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
 29-38,29,29,1,PLC-00702,QUESTIONS,29-38,29-38,MCQ_native,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,
-2.A-f1,33,33,1,PLC-00703,V522_TASK_RESERVE_ITEMS,2.A-f1,2.A-f1;BP522-2_A-1,MCQ_native_task_reserve,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP522-2_A-1),yes,UNAUDITED,no,"Spec+runtime are 1 content unit, 2 representations - see representation map"
-2.A-f2,33,33,1,PLC-00704,V522_TASK_RESERVE_ITEMS,2.A-f2,2.A-f2;BP522-2_A-2,MCQ_native_task_reserve,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP522-2_A-2),yes,UNAUDITED,no,"Spec+runtime are 1 content unit, 2 representations - see representation map"
-2.A-f3,33,33,1,PLC-00705,V522_TASK_RESERVE_ITEMS,2.A-f3,2.A-f3;BP522-2_A-3,MCQ_native_task_reserve,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP522-2_A-3),yes,UNAUDITED,no,"Spec+runtime are 1 content unit, 2 representations - see representation map"
+2.A-f1,33,33,1,PLC-00703,V522_TASK_RESERVE_ITEMS,2.A-f1,2.A-f1;BP522-2_A-1,MCQ_native_task_reserve,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP522-2_A-1),yes,VERIFIED,yes,"Spec+runtime are 1 content unit, 2 representations - see representation map"
+2.A-f2,33,33,1,PLC-00704,V522_TASK_RESERVE_ITEMS,2.A-f2,2.A-f2;BP522-2_A-2,MCQ_native_task_reserve,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP522-2_A-2),yes,VERIFIED,yes,"Spec+runtime are 1 content unit, 2 representations - see representation map"
+2.A-f3,33,33,1,PLC-00705,V522_TASK_RESERVE_ITEMS,2.A-f3,2.A-f3;BP522-2_A-3,MCQ_native_task_reserve,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP522-2_A-3),yes,VERIFIED,yes,"Spec+runtime are 1 content unit, 2 representations - see representation map"
 2.B-f1,18,18,1,PLC-00706,V522_TASK_RESERVE_ITEMS,2.B-f1,2.B-f1;BP522-2_B-1,MCQ_native_task_reserve,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP522-2_B-1),yes,VERIFIED,yes,"Spec+runtime are 1 content unit, 2 representations - see representation map"
 2.B-f2,18,18,1,PLC-00707,V522_TASK_RESERVE_ITEMS,2.B-f2,2.B-f2;BP522-2_B-2,MCQ_native_task_reserve,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP522-2_B-2),yes,VERIFIED,yes,"Spec+runtime are 1 content unit, 2 representations - see representation map"
 2.B-f3,18,18,1,PLC-00708,V522_TASK_RESERVE_ITEMS,2.B-f3,2.B-f3;BP522-2_B-3,MCQ_native_task_reserve,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP522-2_B-3),yes,VERIFIED,yes,"Spec+runtime are 1 content unit, 2 representations - see representation map"
@@ -789,7 +789,7 @@ canonical_content_id,chapter,chapters_all,placement_count,placement_ids,source_b
 4.L-f1,28,28,1,PLC-00788,V522_TASK_RESERVE_ITEMS,4.L-f1,4.L-f1;BP522-4_L-1,MCQ_native_task_reserve,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP522-4_L-1),yes,VERIFIED,yes,"Spec+runtime are 1 content unit, 2 representations - see representation map"
 5.A-f1,13,13,1,PLC-00789,V522_TASK_RESERVE_ITEMS,5.A-f1,5.A-f1;BP522-5_A-1,MCQ_native_task_reserve,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP522-5_A-1),yes,VERIFIED,yes,"Spec+runtime are 1 content unit, 2 representations - see representation map"
 5.C-f1,13,13,1,PLC-00790,V522_TASK_RESERVE_ITEMS,5.C-f1,5.C-f1;BP522-5_C-1,MCQ_native_task_reserve,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP522-5_C-1),yes,VERIFIED,yes,"Spec+runtime are 1 content unit, 2 representations - see representation map"
-6.A-f1,31,31,1,PLC-00791,V522_TASK_RESERVE_ITEMS,6.A-f1,6.A-f1;BP522-6_A-1,MCQ_native_task_reserve,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP522-6_A-1),yes,UNAUDITED,no,"Spec+runtime are 1 content unit, 2 representations - see representation map"
+6.A-f1,31,31,1,PLC-00791,V522_TASK_RESERVE_ITEMS,6.A-f1,6.A-f1;BP522-6_A-1,MCQ_native_task_reserve,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP522-6_A-1),yes,VERIFIED,yes,"Spec+runtime are 1 content unit, 2 representations - see representation map"
 1.A,9,9,1,PLC-00792,V524_DIRECT_TASK_ITEMS,1.A,1.A;BP524-1_A-1,MCQ_native_direct_task,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP524-1_A-1),yes,VERIFIED,yes,"Spec+runtime are 1 content unit, 2 representations - see representation map"
 1.B,9,9,1,PLC-00793,V524_DIRECT_TASK_ITEMS,1.B,1.B;BP524-1_B-1,MCQ_native_direct_task,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP524-1_B-1),yes,VERIFIED,yes,"Spec+runtime are 1 content unit, 2 representations - see representation map"
 1.C,9,9,1,PLC-00794,V524_DIRECT_TASK_ITEMS,1.C,1.C;BP524-1_C-1,MCQ_native_direct_task,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP524-1_C-1),yes,VERIFIED,yes,"Spec+runtime are 1 content unit, 2 representations - see representation map"
@@ -802,7 +802,7 @@ canonical_content_id,chapter,chapters_all,placement_count,placement_ids,source_b
 1.M,24,24,1,PLC-00801,V524_DIRECT_TASK_ITEMS,1.M,1.M;BP524-1_M-1,MCQ_native_direct_task,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP524-1_M-1),yes,VERIFIED,yes,"Spec+runtime are 1 content unit, 2 representations - see representation map"
 1.N,12,12,1,PLC-00802,V524_DIRECT_TASK_ITEMS,1.N,1.N;BP524-1_N-1,MCQ_native_direct_task,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP524-1_N-1),yes,VERIFIED,yes,"Spec+runtime are 1 content unit, 2 representations - see representation map"
 1.O,12,12,1,PLC-00803,V524_DIRECT_TASK_ITEMS,1.O,1.O;BP524-1_O-1,MCQ_native_direct_task,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP524-1_O-1),yes,VERIFIED,yes,"Spec+runtime are 1 content unit, 2 representations - see representation map"
-1.P,33,33,1,PLC-00804,V524_DIRECT_TASK_ITEMS,1.P,1.P;BP524-1_P-1,MCQ_native_direct_task,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP524-1_P-1),yes,UNAUDITED,no,"Spec+runtime are 1 content unit, 2 representations - see representation map"
+1.P,33,33,1,PLC-00804,V524_DIRECT_TASK_ITEMS,1.P,1.P;BP524-1_P-1,MCQ_native_direct_task,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP524-1_P-1),yes,VERIFIED,yes,"Spec+runtime are 1 content unit, 2 representations - see representation map"
 1.Q,1,1,1,PLC-00805,V524_DIRECT_TASK_ITEMS,1.Q,1.Q;BP524-1_Q-1,MCQ_native_direct_task,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP524-1_Q-1),yes,VERIFIED,yes,"Spec+runtime are 1 content unit, 2 representations - see representation map"
 1.S,23,23,1,PLC-00806,V524_DIRECT_TASK_ITEMS,1.S,1.S;BP524-1_S-1,MCQ_native_direct_task,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP524-1_S-1),yes,VERIFIED,yes,"Spec+runtime are 1 content unit, 2 representations - see representation map"
 1.T,23,23,1,PLC-00807,V524_DIRECT_TASK_ITEMS,1.T,1.T;BP524-1_T-1,MCQ_native_direct_task,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP524-1_T-1),yes,VERIFIED,yes,"Spec+runtime are 1 content unit, 2 representations - see representation map"
@@ -824,11 +824,11 @@ canonical_content_id,chapter,chapters_all,placement_count,placement_ids,source_b
 4.M,15,15,1,PLC-00823,V524_DIRECT_TASK_ITEMS,4.M,4.M;BP524-4_M-1,MCQ_native_direct_task,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP524-4_M-1),yes,VERIFIED,yes,"Spec+runtime are 1 content unit, 2 representations - see representation map"
 5.B,13,13,1,PLC-00824,V524_DIRECT_TASK_ITEMS,5.B,5.B;BP524-5_B-1,MCQ_native_direct_task,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP524-5_B-1),yes,VERIFIED,yes,"Spec+runtime are 1 content unit, 2 representations - see representation map"
 5.D,13,13,1,PLC-00825,V524_DIRECT_TASK_ITEMS,5.D,5.D;BP524-5_D-1,MCQ_native_direct_task,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP524-5_D-1),yes,VERIFIED,yes,"Spec+runtime are 1 content unit, 2 representations - see representation map"
-6.B,31,31,1,PLC-00826,V524_DIRECT_TASK_ITEMS,6.B,6.B;BP524-6_B-1,MCQ_native_direct_task,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP524-6_B-1),yes,UNAUDITED,no,"Spec+runtime are 1 content unit, 2 representations - see representation map"
-6.C,31,31,1,PLC-00827,V524_DIRECT_TASK_ITEMS,6.C,6.C;BP524-6_C-1,MCQ_native_direct_task,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP524-6_C-1),yes,UNAUDITED,no,"Spec+runtime are 1 content unit, 2 representations - see representation map"
-6.D,32,32,1,PLC-00828,V524_DIRECT_TASK_ITEMS,6.D,6.D;BP524-6_D-1,MCQ_native_direct_task,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP524-6_D-1),yes,UNAUDITED,no,"Spec+runtime are 1 content unit, 2 representations - see representation map"
-6.E,32,32,1,PLC-00829,V524_DIRECT_TASK_ITEMS,6.E,6.E;BP524-6_E-1,MCQ_native_direct_task,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP524-6_E-1),yes,UNAUDITED,no,"Spec+runtime are 1 content unit, 2 representations - see representation map"
-6.F,32,32,1,PLC-00830,V524_DIRECT_TASK_ITEMS,6.F,6.F;BP524-6_F-1,MCQ_native_direct_task,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP524-6_F-1),yes,UNAUDITED,no,"Spec+runtime are 1 content unit, 2 representations - see representation map"
+6.B,31,31,1,PLC-00826,V524_DIRECT_TASK_ITEMS,6.B,6.B;BP524-6_B-1,MCQ_native_direct_task,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP524-6_B-1),yes,VERIFIED,yes,"Spec+runtime are 1 content unit, 2 representations - see representation map"
+6.C,31,31,1,PLC-00827,V524_DIRECT_TASK_ITEMS,6.C,6.C;BP524-6_C-1,MCQ_native_direct_task,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP524-6_C-1),yes,VERIFIED,yes,"Spec+runtime are 1 content unit, 2 representations - see representation map"
+6.D,32,32,1,PLC-00828,V524_DIRECT_TASK_ITEMS,6.D,6.D;BP524-6_D-1,MCQ_native_direct_task,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP524-6_D-1),yes,VERIFIED,yes,"Spec+runtime are 1 content unit, 2 representations - see representation map"
+6.E,32,32,1,PLC-00829,V524_DIRECT_TASK_ITEMS,6.E,6.E;BP524-6_E-1,MCQ_native_direct_task,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP524-6_E-1),yes,VERIFIED,yes,"Spec+runtime are 1 content unit, 2 representations - see representation map"
+6.F,32,32,1,PLC-00830,V524_DIRECT_TASK_ITEMS,6.F,6.F;BP524-6_F-1,MCQ_native_direct_task,yes,yes,no,no,no,no,no,no,builds 1 runtime QUESTIONS object (BP524-6_F-1),yes,VERIFIED,yes,"Spec+runtime are 1 content unit, 2 representations - see representation map"
 sg1_1,1,1,1,PLC-00831,EXAM_STUDY_GUIDE_BANK,sg1_1,sg1_1,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,VERIFIED,yes,
 sg1_2,1,1,1,PLC-00832,EXAM_STUDY_GUIDE_BANK,sg1_2,sg1_2,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,VERIFIED,yes,
 sg1_3,1,1,1,PLC-00833,EXAM_STUDY_GUIDE_BANK,sg1_3,sg1_3,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,VERIFIED,yes,
@@ -1190,52 +1190,52 @@ sg30_5a,30,30,1,PLC-01195,EXAM_STUDY_GUIDE_BANK,sg30_5a,sg30_5a,MCQ_official_stu
 sg30_5b,30,30,1,PLC-01196,EXAM_STUDY_GUIDE_BANK,sg30_5b,sg30_5b,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,VERIFIED,yes,
 sg30_6a,30,30,1,PLC-01197,EXAM_STUDY_GUIDE_BANK,sg30_6a,sg30_6a,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,VERIFIED,yes,
 sg30_6b,30,30,1,PLC-01198,EXAM_STUDY_GUIDE_BANK,sg30_6b,sg30_6b,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,VERIFIED,yes,
-sg31_1,31,31,1,PLC-01199,EXAM_STUDY_GUIDE_BANK,sg31_1,sg31_1,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,UNAUDITED,no,
-sg31_2,31,31,1,PLC-01200,EXAM_STUDY_GUIDE_BANK,sg31_2,sg31_2,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,UNAUDITED,no,
-sg31_3,31,31,1,PLC-01201,EXAM_STUDY_GUIDE_BANK,sg31_3,sg31_3,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,UNAUDITED,no,
-sg31_4,31,31,1,PLC-01202,EXAM_STUDY_GUIDE_BANK,sg31_4,sg31_4,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,UNAUDITED,no,
-sg31_5,31,31,1,PLC-01203,EXAM_STUDY_GUIDE_BANK,sg31_5,sg31_5,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,UNAUDITED,no,
-sg31_6,31,31,1,PLC-01204,EXAM_STUDY_GUIDE_BANK,sg31_6,sg31_6,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,UNAUDITED,no,
-sg31_7,31,31,1,PLC-01205,EXAM_STUDY_GUIDE_BANK,sg31_7,sg31_7,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,UNAUDITED,no,
-sg31_8,31,31,1,PLC-01206,EXAM_STUDY_GUIDE_BANK,sg31_8,sg31_8,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,UNAUDITED,no,
-sg31_9,31,31,1,PLC-01207,EXAM_STUDY_GUIDE_BANK,sg31_9,sg31_9,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,UNAUDITED,no,
-sg31_10,31,31,1,PLC-01208,EXAM_STUDY_GUIDE_BANK,sg31_10,sg31_10,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,UNAUDITED,no,
-sg31_11,31,31,1,PLC-01209,EXAM_STUDY_GUIDE_BANK,sg31_11,sg31_11,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,UNAUDITED,no,
-sg31_12,31,31,1,PLC-01210,EXAM_STUDY_GUIDE_BANK,sg31_12,sg31_12,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,UNAUDITED,no,
-sg31_13,31,31,1,PLC-01211,EXAM_STUDY_GUIDE_BANK,sg31_13,sg31_13,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,UNAUDITED,no,
-sg31_14,31,31,1,PLC-01212,EXAM_STUDY_GUIDE_BANK,sg31_14,sg31_14,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,UNAUDITED,no,
-sg31_15,31,31,1,PLC-01213,EXAM_STUDY_GUIDE_BANK,sg31_15,sg31_15,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,UNAUDITED,no,
-sg32_1,32,32,1,PLC-01214,EXAM_STUDY_GUIDE_BANK,sg32_1,sg32_1,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,UNAUDITED,no,
-sg32_2,32,32,1,PLC-01215,EXAM_STUDY_GUIDE_BANK,sg32_2,sg32_2,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,UNAUDITED,no,
-sg32_3,32,32,1,PLC-01216,EXAM_STUDY_GUIDE_BANK,sg32_3,sg32_3,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,UNAUDITED,no,
-sg32_4,32,32,1,PLC-01217,EXAM_STUDY_GUIDE_BANK,sg32_4,sg32_4,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,UNAUDITED,no,
-sg32_5,32,32,1,PLC-01218,EXAM_STUDY_GUIDE_BANK,sg32_5,sg32_5,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,UNAUDITED,no,
-sg32_6,32,32,1,PLC-01219,EXAM_STUDY_GUIDE_BANK,sg32_6,sg32_6,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,UNAUDITED,no,
-sg32_7,32,32,1,PLC-01220,EXAM_STUDY_GUIDE_BANK,sg32_7,sg32_7,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,UNAUDITED,no,
-sg32_8,32,32,1,PLC-01221,EXAM_STUDY_GUIDE_BANK,sg32_8,sg32_8,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,UNAUDITED,no,
-sg32_9,32,32,1,PLC-01222,EXAM_STUDY_GUIDE_BANK,sg32_9,sg32_9,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,UNAUDITED,no,
-sg33_1,33,33,1,PLC-01223,EXAM_STUDY_GUIDE_BANK,sg33_1,sg33_1,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,UNAUDITED,no,
-sg33_2,33,33,1,PLC-01224,EXAM_STUDY_GUIDE_BANK,sg33_2,sg33_2,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,UNAUDITED,no,
-sg33_3,33,33,1,PLC-01225,EXAM_STUDY_GUIDE_BANK,sg33_3,sg33_3,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,UNAUDITED,no,
-sg33_4,33,33,1,PLC-01226,EXAM_STUDY_GUIDE_BANK,sg33_4,sg33_4,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,UNAUDITED,no,
-sg33_5,33,33,1,PLC-01227,EXAM_STUDY_GUIDE_BANK,sg33_5,sg33_5,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,UNAUDITED,no,
-sg33_6,33,33,1,PLC-01228,EXAM_STUDY_GUIDE_BANK,sg33_6,sg33_6,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,UNAUDITED,no,
-sg33_7,33,33,1,PLC-01229,EXAM_STUDY_GUIDE_BANK,sg33_7,sg33_7,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,UNAUDITED,no,
-sg33_8,33,33,1,PLC-01230,EXAM_STUDY_GUIDE_BANK,sg33_8,sg33_8,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,UNAUDITED,no,
-sg33_9,33,33,1,PLC-01231,EXAM_STUDY_GUIDE_BANK,sg33_9,sg33_9,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,UNAUDITED,no,
-sg33_10,33,33,1,PLC-01232,EXAM_STUDY_GUIDE_BANK,sg33_10,sg33_10,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,UNAUDITED,no,
-sg34_1,34,34,1,PLC-01233,EXAM_STUDY_GUIDE_BANK,sg34_1,sg34_1,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,UNAUDITED,no,
-sg34_2,34,34,1,PLC-01234,EXAM_STUDY_GUIDE_BANK,sg34_2,sg34_2,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,UNAUDITED,no,
-sg34_3,34,34,1,PLC-01235,EXAM_STUDY_GUIDE_BANK,sg34_3,sg34_3,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,UNAUDITED,no,
-sg34_4,34,34,1,PLC-01236,EXAM_STUDY_GUIDE_BANK,sg34_4,sg34_4,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,UNAUDITED,no,
-sg34_5,34,34,1,PLC-01237,EXAM_STUDY_GUIDE_BANK,sg34_5,sg34_5,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,UNAUDITED,no,
-sg34_6,34,34,1,PLC-01238,EXAM_STUDY_GUIDE_BANK,sg34_6,sg34_6,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,UNAUDITED,no,
-sg34_7,34,34,1,PLC-01239,EXAM_STUDY_GUIDE_BANK,sg34_7,sg34_7,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,UNAUDITED,no,
-sg34_8,34,34,1,PLC-01240,EXAM_STUDY_GUIDE_BANK,sg34_8,sg34_8,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,UNAUDITED,no,
-sg34_9,34,34,1,PLC-01241,EXAM_STUDY_GUIDE_BANK,sg34_9,sg34_9,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,UNAUDITED,no,
-sg34_10,34,34,1,PLC-01242,EXAM_STUDY_GUIDE_BANK,sg34_10,sg34_10,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,UNAUDITED,no,
-appb_1,34,34,1,PLC-01243,EXAM_STUDY_GUIDE_BANK,appb_1,appb_1,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,UNAUDITED,no,
-appb_14,34,34,1,PLC-01244,EXAM_STUDY_GUIDE_BANK,appb_14,appb_14,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,UNAUDITED,no,
+sg31_1,31,31,1,PLC-01199,EXAM_STUDY_GUIDE_BANK,sg31_1,sg31_1,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,VERIFIED,yes,
+sg31_2,31,31,1,PLC-01200,EXAM_STUDY_GUIDE_BANK,sg31_2,sg31_2,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,VERIFIED,yes,
+sg31_3,31,31,1,PLC-01201,EXAM_STUDY_GUIDE_BANK,sg31_3,sg31_3,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,VERIFIED,yes,
+sg31_4,31,31,1,PLC-01202,EXAM_STUDY_GUIDE_BANK,sg31_4,sg31_4,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,VERIFIED,yes,
+sg31_5,31,31,1,PLC-01203,EXAM_STUDY_GUIDE_BANK,sg31_5,sg31_5,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,VERIFIED,yes,
+sg31_6,31,31,1,PLC-01204,EXAM_STUDY_GUIDE_BANK,sg31_6,sg31_6,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,VERIFIED,yes,
+sg31_7,31,31,1,PLC-01205,EXAM_STUDY_GUIDE_BANK,sg31_7,sg31_7,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,VERIFIED,yes,
+sg31_8,31,31,1,PLC-01206,EXAM_STUDY_GUIDE_BANK,sg31_8,sg31_8,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,VERIFIED,yes,
+sg31_9,31,31,1,PLC-01207,EXAM_STUDY_GUIDE_BANK,sg31_9,sg31_9,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,VERIFIED,yes,
+sg31_10,31,31,1,PLC-01208,EXAM_STUDY_GUIDE_BANK,sg31_10,sg31_10,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,VERIFIED,yes,
+sg31_11,31,31,1,PLC-01209,EXAM_STUDY_GUIDE_BANK,sg31_11,sg31_11,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,VERIFIED,yes,
+sg31_12,31,31,1,PLC-01210,EXAM_STUDY_GUIDE_BANK,sg31_12,sg31_12,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,VERIFIED,yes,
+sg31_13,31,31,1,PLC-01211,EXAM_STUDY_GUIDE_BANK,sg31_13,sg31_13,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,VERIFIED,yes,
+sg31_14,31,31,1,PLC-01212,EXAM_STUDY_GUIDE_BANK,sg31_14,sg31_14,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,VERIFIED,yes,
+sg31_15,31,31,1,PLC-01213,EXAM_STUDY_GUIDE_BANK,sg31_15,sg31_15,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,VERIFIED,yes,
+sg32_1,32,32,1,PLC-01214,EXAM_STUDY_GUIDE_BANK,sg32_1,sg32_1,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,VERIFIED,yes,
+sg32_2,32,32,1,PLC-01215,EXAM_STUDY_GUIDE_BANK,sg32_2,sg32_2,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,VERIFIED,yes,
+sg32_3,32,32,1,PLC-01216,EXAM_STUDY_GUIDE_BANK,sg32_3,sg32_3,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,VERIFIED,yes,
+sg32_4,32,32,1,PLC-01217,EXAM_STUDY_GUIDE_BANK,sg32_4,sg32_4,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,VERIFIED,yes,
+sg32_5,32,32,1,PLC-01218,EXAM_STUDY_GUIDE_BANK,sg32_5,sg32_5,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,VERIFIED,yes,
+sg32_6,32,32,1,PLC-01219,EXAM_STUDY_GUIDE_BANK,sg32_6,sg32_6,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,VERIFIED,yes,
+sg32_7,32,32,1,PLC-01220,EXAM_STUDY_GUIDE_BANK,sg32_7,sg32_7,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,VERIFIED,yes,
+sg32_8,32,32,1,PLC-01221,EXAM_STUDY_GUIDE_BANK,sg32_8,sg32_8,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,VERIFIED,yes,
+sg32_9,32,32,1,PLC-01222,EXAM_STUDY_GUIDE_BANK,sg32_9,sg32_9,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,VERIFIED,yes,
+sg33_1,33,33,1,PLC-01223,EXAM_STUDY_GUIDE_BANK,sg33_1,sg33_1,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,VERIFIED,yes,
+sg33_2,33,33,1,PLC-01224,EXAM_STUDY_GUIDE_BANK,sg33_2,sg33_2,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,VERIFIED,yes,
+sg33_3,33,33,1,PLC-01225,EXAM_STUDY_GUIDE_BANK,sg33_3,sg33_3,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,VERIFIED,yes,
+sg33_4,33,33,1,PLC-01226,EXAM_STUDY_GUIDE_BANK,sg33_4,sg33_4,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,VERIFIED,yes,
+sg33_5,33,33,1,PLC-01227,EXAM_STUDY_GUIDE_BANK,sg33_5,sg33_5,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,VERIFIED,yes,
+sg33_6,33,33,1,PLC-01228,EXAM_STUDY_GUIDE_BANK,sg33_6,sg33_6,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,VERIFIED,yes,
+sg33_7,33,33,1,PLC-01229,EXAM_STUDY_GUIDE_BANK,sg33_7,sg33_7,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,VERIFIED,yes,
+sg33_8,33,33,1,PLC-01230,EXAM_STUDY_GUIDE_BANK,sg33_8,sg33_8,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,VERIFIED,yes,
+sg33_9,33,33,1,PLC-01231,EXAM_STUDY_GUIDE_BANK,sg33_9,sg33_9,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,VERIFIED,yes,
+sg33_10,33,33,1,PLC-01232,EXAM_STUDY_GUIDE_BANK,sg33_10,sg33_10,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,VERIFIED,yes,
+sg34_1,34,34,1,PLC-01233,EXAM_STUDY_GUIDE_BANK,sg34_1,sg34_1,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,VERIFIED,yes,
+sg34_2,34,34,1,PLC-01234,EXAM_STUDY_GUIDE_BANK,sg34_2,sg34_2,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,VERIFIED,yes,
+sg34_3,34,34,1,PLC-01235,EXAM_STUDY_GUIDE_BANK,sg34_3,sg34_3,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,VERIFIED,yes,
+sg34_4,34,34,1,PLC-01236,EXAM_STUDY_GUIDE_BANK,sg34_4,sg34_4,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,VERIFIED,yes,
+sg34_5,34,34,1,PLC-01237,EXAM_STUDY_GUIDE_BANK,sg34_5,sg34_5,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,VERIFIED,yes,
+sg34_6,34,34,1,PLC-01238,EXAM_STUDY_GUIDE_BANK,sg34_6,sg34_6,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,VERIFIED,yes,
+sg34_7,34,34,1,PLC-01239,EXAM_STUDY_GUIDE_BANK,sg34_7,sg34_7,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,VERIFIED,yes,
+sg34_8,34,34,1,PLC-01240,EXAM_STUDY_GUIDE_BANK,sg34_8,sg34_8,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,VERIFIED,yes,
+sg34_9,34,34,1,PLC-01241,EXAM_STUDY_GUIDE_BANK,sg34_9,sg34_9,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,VERIFIED,yes,
+sg34_10,34,34,1,PLC-01242,EXAM_STUDY_GUIDE_BANK,sg34_10,sg34_10,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,VERIFIED,yes,
+appb_1,34,34,1,PLC-01243,EXAM_STUDY_GUIDE_BANK,appb_1,appb_1,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,VERIFIED,yes,
+appb_14,34,34,1,PLC-01244,EXAM_STUDY_GUIDE_BANK,appb_14,appb_14,MCQ_official_study_guide,yes,yes,yes,no,no,no,no,no,,yes,VERIFIED,yes,
 cm5_1,5,5,1,PLC-01245,V56_CURATED_BANK,cm5_1,cm5_1,MCQ_curated,yes,yes,no,yes,no,no,no,no,,yes,VERIFIED,yes,
 cm5_2,5,5,1,PLC-01246,V56_CURATED_BANK,cm5_2,cm5_2,MCQ_curated,yes,yes,no,yes,no,no,no,no,,yes,VERIFIED,yes,
 cm5_3,5,5,1,PLC-01247,V56_CURATED_BANK,cm5_3,cm5_3,MCQ_curated,yes,yes,no,yes,no,no,no,no,,yes,VERIFIED,yes,
@@ -1340,14 +1340,14 @@ cm30_5,30,30,1,PLC-01345,V56_CURATED_BANK,cm30_5,cm30_5,MCQ_curated,yes,yes,no,y
 cm30_6,30,30,1,PLC-01346,V56_CURATED_BANK,cm30_6,cm30_6,MCQ_curated,yes,yes,no,yes,no,no,no,no,,yes,VERIFIED,yes,
 cm30_7,30,30,1,PLC-01347,V56_CURATED_BANK,cm30_7,cm30_7,MCQ_curated,yes,yes,no,yes,no,no,no,no,,yes,VERIFIED,yes,
 cm30_8,30,30,1,PLC-01348,V56_CURATED_BANK,cm30_8,cm30_8,MCQ_curated,yes,yes,no,yes,no,no,no,no,,yes,VERIFIED,yes,
-cm33_1,33,33,1,PLC-01349,V56_CURATED_BANK,cm33_1,cm33_1,MCQ_curated,yes,yes,no,yes,no,no,no,no,,yes,UNAUDITED,no,
-cm33_2,33,33,1,PLC-01350,V56_CURATED_BANK,cm33_2,cm33_2,MCQ_curated,yes,yes,no,yes,no,no,no,no,,yes,UNAUDITED,no,
-cm33_3,33,33,1,PLC-01351,V56_CURATED_BANK,cm33_3,cm33_3,MCQ_curated,yes,yes,no,yes,no,no,no,no,,yes,UNAUDITED,no,
-cm33_4,33,33,1,PLC-01352,V56_CURATED_BANK,cm33_4,cm33_4,MCQ_curated,yes,yes,no,yes,no,no,no,no,,yes,UNAUDITED,no,
-cm33_5,33,33,1,PLC-01353,V56_CURATED_BANK,cm33_5,cm33_5,MCQ_curated,yes,yes,no,yes,no,no,no,no,,yes,UNAUDITED,no,
-cm33_6,33,33,1,PLC-01354,V56_CURATED_BANK,cm33_6,cm33_6,MCQ_curated,yes,yes,no,yes,no,no,no,no,,yes,UNAUDITED,no,
-cm33_7,33,33,1,PLC-01355,V56_CURATED_BANK,cm33_7,cm33_7,MCQ_curated,yes,yes,no,yes,no,no,no,no,,yes,UNAUDITED,no,
-cm33_8,33,33,1,PLC-01356,V56_CURATED_BANK,cm33_8,cm33_8,MCQ_curated,yes,yes,no,yes,no,no,no,no,,yes,UNAUDITED,no,
+cm33_1,33,33,1,PLC-01349,V56_CURATED_BANK,cm33_1,cm33_1,MCQ_curated,yes,yes,no,yes,no,no,no,no,,yes,VERIFIED,yes,
+cm33_2,33,33,1,PLC-01350,V56_CURATED_BANK,cm33_2,cm33_2,MCQ_curated,yes,yes,no,yes,no,no,no,no,,yes,VERIFIED,yes,
+cm33_3,33,33,1,PLC-01351,V56_CURATED_BANK,cm33_3,cm33_3,MCQ_curated,yes,yes,no,yes,no,no,no,no,,yes,VERIFIED,yes,
+cm33_4,33,33,1,PLC-01352,V56_CURATED_BANK,cm33_4,cm33_4,MCQ_curated,yes,yes,no,yes,no,no,no,no,,yes,VERIFIED,yes,
+cm33_5,33,33,1,PLC-01353,V56_CURATED_BANK,cm33_5,cm33_5,MCQ_curated,yes,yes,no,yes,no,no,no,no,,yes,VERIFIED,yes,
+cm33_6,33,33,1,PLC-01354,V56_CURATED_BANK,cm33_6,cm33_6,MCQ_curated,yes,yes,no,yes,no,no,no,no,,yes,VERIFIED,yes,
+cm33_7,33,33,1,PLC-01355,V56_CURATED_BANK,cm33_7,cm33_7,MCQ_curated,yes,yes,no,yes,no,no,no,no,,yes,VERIFIED,yes,
+cm33_8,33,33,1,PLC-01356,V56_CURATED_BANK,cm33_8,cm33_8,MCQ_curated,yes,yes,no,yes,no,no,no,no,,yes,VERIFIED,yes,
 hm2_1,2,2,1,PLC-01357,V513_EXTRA_INTERNAL_MASTERY_BANK,hm2_1,hm2_1,MCQ_mastery,yes,yes,no,no,yes,no,no,no,V513_EXTRA_INTERNAL_MASTERY_BANK (merged into V57 at load),yes,VERIFIED,yes,Merged from V513 at load; see V513 trace
 hm2_2,2,2,1,PLC-01358,V513_EXTRA_INTERNAL_MASTERY_BANK,hm2_2,hm2_2,MCQ_mastery,yes,yes,no,no,yes,no,no,no,V513_EXTRA_INTERNAL_MASTERY_BANK (merged into V57 at load),yes,VERIFIED,yes,Merged from V513 at load; see V513 trace
 hm2_3,2,2,1,PLC-01359,V513_EXTRA_INTERNAL_MASTERY_BANK,hm2_3,hm2_3,MCQ_mastery,yes,yes,no,no,yes,no,no,no,V513_EXTRA_INTERNAL_MASTERY_BANK (merged into V57 at load),yes,VERIFIED,yes,Merged from V513 at load; see V513 trace
@@ -1518,36 +1518,36 @@ hm30_7,30,30,1,PLC-01523,V57_INTERNAL_MASTERY_BANK,hm30_7,hm30_7,MCQ_mastery,yes
 hm30_8,30,30,1,PLC-01524,V57_INTERNAL_MASTERY_BANK,hm30_8,hm30_8,MCQ_mastery,yes,yes,no,no,yes,no,no,no,,yes,VERIFIED,yes,
 hm30_9,30,30,1,PLC-01525,V57_INTERNAL_MASTERY_BANK,hm30_9,hm30_9,MCQ_mastery,yes,yes,no,no,yes,no,no,no,,yes,VERIFIED,yes,
 hm30_10,30,30,1,PLC-01526,V57_INTERNAL_MASTERY_BANK,hm30_10,hm30_10,MCQ_mastery,yes,yes,no,no,yes,no,no,no,,yes,VERIFIED,yes,
-hm31_1,31,31,1,PLC-01527,V513_EXTRA_INTERNAL_MASTERY_BANK,hm31_1,hm31_1,MCQ_mastery,yes,yes,no,no,yes,no,no,no,V513_EXTRA_INTERNAL_MASTERY_BANK (merged into V57 at load),yes,UNAUDITED,no,Merged from V513 at load; see V513 trace
-hm31_2,31,31,1,PLC-01528,V513_EXTRA_INTERNAL_MASTERY_BANK,hm31_2,hm31_2,MCQ_mastery,yes,yes,no,no,yes,no,no,no,V513_EXTRA_INTERNAL_MASTERY_BANK (merged into V57 at load),yes,UNAUDITED,no,Merged from V513 at load; see V513 trace
-hm31_3,31,31,1,PLC-01529,V513_EXTRA_INTERNAL_MASTERY_BANK,hm31_3,hm31_3,MCQ_mastery,yes,yes,no,no,yes,no,no,no,V513_EXTRA_INTERNAL_MASTERY_BANK (merged into V57 at load),yes,UNAUDITED,no,Merged from V513 at load; see V513 trace
-hm31_4,31,31,1,PLC-01530,V513_EXTRA_INTERNAL_MASTERY_BANK,hm31_4,hm31_4,MCQ_mastery,yes,yes,no,no,yes,no,no,no,V513_EXTRA_INTERNAL_MASTERY_BANK (merged into V57 at load),yes,UNAUDITED,no,Merged from V513 at load; see V513 trace
-hm31_5,31,31,1,PLC-01531,V513_EXTRA_INTERNAL_MASTERY_BANK,hm31_5,hm31_5,MCQ_mastery,yes,yes,no,no,yes,no,no,no,V513_EXTRA_INTERNAL_MASTERY_BANK (merged into V57 at load),yes,UNAUDITED,no,Merged from V513 at load; see V513 trace
-hm31_6,31,31,1,PLC-01532,V513_EXTRA_INTERNAL_MASTERY_BANK,hm31_6,hm31_6,MCQ_mastery,yes,yes,no,no,yes,no,no,no,V513_EXTRA_INTERNAL_MASTERY_BANK (merged into V57 at load),yes,UNAUDITED,no,Merged from V513 at load; see V513 trace
-hm31_7,31,31,1,PLC-01533,V513_EXTRA_INTERNAL_MASTERY_BANK,hm31_7,hm31_7,MCQ_mastery,yes,yes,no,no,yes,no,no,no,V513_EXTRA_INTERNAL_MASTERY_BANK (merged into V57 at load),yes,UNAUDITED,no,Merged from V513 at load; see V513 trace
-hm31_8,31,31,1,PLC-01534,V513_EXTRA_INTERNAL_MASTERY_BANK,hm31_8,hm31_8,MCQ_mastery,yes,yes,no,no,yes,no,no,no,V513_EXTRA_INTERNAL_MASTERY_BANK (merged into V57 at load),yes,UNAUDITED,no,Merged from V513 at load; see V513 trace
-hm31_9,31,31,1,PLC-01535,V513_EXTRA_INTERNAL_MASTERY_BANK,hm31_9,hm31_9,MCQ_mastery,yes,yes,no,no,yes,no,no,no,V513_EXTRA_INTERNAL_MASTERY_BANK (merged into V57 at load),yes,UNAUDITED,no,Merged from V513 at load; see V513 trace
-hm31_10,31,31,1,PLC-01536,V513_EXTRA_INTERNAL_MASTERY_BANK,hm31_10,hm31_10,MCQ_mastery,yes,yes,no,no,yes,no,no,no,V513_EXTRA_INTERNAL_MASTERY_BANK (merged into V57 at load),yes,UNAUDITED,no,Merged from V513 at load; see V513 trace
-hm32_1,32,32,1,PLC-01537,V513_EXTRA_INTERNAL_MASTERY_BANK,hm32_1,hm32_1,MCQ_mastery,yes,yes,no,no,yes,no,no,no,V513_EXTRA_INTERNAL_MASTERY_BANK (merged into V57 at load),yes,UNAUDITED,no,Merged from V513 at load; see V513 trace
-hm32_2,32,32,1,PLC-01538,V513_EXTRA_INTERNAL_MASTERY_BANK,hm32_2,hm32_2,MCQ_mastery,yes,yes,no,no,yes,no,no,no,V513_EXTRA_INTERNAL_MASTERY_BANK (merged into V57 at load),yes,UNAUDITED,no,Merged from V513 at load; see V513 trace
-hm32_3,32,32,1,PLC-01539,V513_EXTRA_INTERNAL_MASTERY_BANK,hm32_3,hm32_3,MCQ_mastery,yes,yes,no,no,yes,no,no,no,V513_EXTRA_INTERNAL_MASTERY_BANK (merged into V57 at load),yes,UNAUDITED,no,Merged from V513 at load; see V513 trace
-hm32_4,32,32,1,PLC-01540,V513_EXTRA_INTERNAL_MASTERY_BANK,hm32_4,hm32_4,MCQ_mastery,yes,yes,no,no,yes,no,no,no,V513_EXTRA_INTERNAL_MASTERY_BANK (merged into V57 at load),yes,UNAUDITED,no,Merged from V513 at load; see V513 trace
-hm32_5,32,32,1,PLC-01541,V513_EXTRA_INTERNAL_MASTERY_BANK,hm32_5,hm32_5,MCQ_mastery,yes,yes,no,no,yes,no,no,no,V513_EXTRA_INTERNAL_MASTERY_BANK (merged into V57 at load),yes,UNAUDITED,no,Merged from V513 at load; see V513 trace
-hm32_6,32,32,1,PLC-01542,V513_EXTRA_INTERNAL_MASTERY_BANK,hm32_6,hm32_6,MCQ_mastery,yes,yes,no,no,yes,no,no,no,V513_EXTRA_INTERNAL_MASTERY_BANK (merged into V57 at load),yes,UNAUDITED,no,Merged from V513 at load; see V513 trace
-hm32_7,32,32,1,PLC-01543,V513_EXTRA_INTERNAL_MASTERY_BANK,hm32_7,hm32_7,MCQ_mastery,yes,yes,no,no,yes,no,no,no,V513_EXTRA_INTERNAL_MASTERY_BANK (merged into V57 at load),yes,UNAUDITED,no,Merged from V513 at load; see V513 trace
-hm32_8,32,32,1,PLC-01544,V513_EXTRA_INTERNAL_MASTERY_BANK,hm32_8,hm32_8,MCQ_mastery,yes,yes,no,no,yes,no,no,no,V513_EXTRA_INTERNAL_MASTERY_BANK (merged into V57 at load),yes,UNAUDITED,no,Merged from V513 at load; see V513 trace
-hm32_9,32,32,1,PLC-01545,V513_EXTRA_INTERNAL_MASTERY_BANK,hm32_9,hm32_9,MCQ_mastery,yes,yes,no,no,yes,no,no,no,V513_EXTRA_INTERNAL_MASTERY_BANK (merged into V57 at load),yes,UNAUDITED,no,Merged from V513 at load; see V513 trace
-hm32_10,32,32,1,PLC-01546,V513_EXTRA_INTERNAL_MASTERY_BANK,hm32_10,hm32_10,MCQ_mastery,yes,yes,no,no,yes,no,no,no,V513_EXTRA_INTERNAL_MASTERY_BANK (merged into V57 at load),yes,UNAUDITED,no,Merged from V513 at load; see V513 trace
-hm33_1,33,33,1,PLC-01547,V57_INTERNAL_MASTERY_BANK,hm33_1,hm33_1,MCQ_mastery,yes,yes,no,no,yes,no,no,no,,yes,UNAUDITED,no,
-hm33_2,33,33,1,PLC-01548,V57_INTERNAL_MASTERY_BANK,hm33_2,hm33_2,MCQ_mastery,yes,yes,no,no,yes,no,no,no,,yes,UNAUDITED,no,
-hm33_3,33,33,1,PLC-01549,V57_INTERNAL_MASTERY_BANK,hm33_3,hm33_3,MCQ_mastery,yes,yes,no,no,yes,no,no,no,,yes,UNAUDITED,no,
-hm33_4,33,33,1,PLC-01550,V57_INTERNAL_MASTERY_BANK,hm33_4,hm33_4,MCQ_mastery,yes,yes,no,no,yes,no,no,no,,yes,UNAUDITED,no,
-hm33_5,33,33,1,PLC-01551,V57_INTERNAL_MASTERY_BANK,hm33_5,hm33_5,MCQ_mastery,yes,yes,no,no,yes,no,no,no,,yes,UNAUDITED,no,
-hm33_6,33,33,1,PLC-01552,V57_INTERNAL_MASTERY_BANK,hm33_6,hm33_6,MCQ_mastery,yes,yes,no,no,yes,no,no,no,,yes,UNAUDITED,no,
-hm33_7,33,33,1,PLC-01553,V57_INTERNAL_MASTERY_BANK,hm33_7,hm33_7,MCQ_mastery,yes,yes,no,no,yes,no,no,no,,yes,UNAUDITED,no,
-hm33_8,33,33,1,PLC-01554,V57_INTERNAL_MASTERY_BANK,hm33_8,hm33_8,MCQ_mastery,yes,yes,no,no,yes,no,no,no,,yes,UNAUDITED,no,
-hm33_9,33,33,1,PLC-01555,V57_INTERNAL_MASTERY_BANK,hm33_9,hm33_9,MCQ_mastery,yes,yes,no,no,yes,no,no,no,,yes,UNAUDITED,no,
-hm33_10,33,33,1,PLC-01556,V57_INTERNAL_MASTERY_BANK,hm33_10,hm33_10,MCQ_mastery,yes,yes,no,no,yes,no,no,no,,yes,UNAUDITED,no,
+hm31_1,31,31,1,PLC-01527,V513_EXTRA_INTERNAL_MASTERY_BANK,hm31_1,hm31_1,MCQ_mastery,yes,yes,no,no,yes,no,no,no,V513_EXTRA_INTERNAL_MASTERY_BANK (merged into V57 at load),yes,VERIFIED,yes,Merged from V513 at load; see V513 trace
+hm31_2,31,31,1,PLC-01528,V513_EXTRA_INTERNAL_MASTERY_BANK,hm31_2,hm31_2,MCQ_mastery,yes,yes,no,no,yes,no,no,no,V513_EXTRA_INTERNAL_MASTERY_BANK (merged into V57 at load),yes,VERIFIED,yes,Merged from V513 at load; see V513 trace
+hm31_3,31,31,1,PLC-01529,V513_EXTRA_INTERNAL_MASTERY_BANK,hm31_3,hm31_3,MCQ_mastery,yes,yes,no,no,yes,no,no,no,V513_EXTRA_INTERNAL_MASTERY_BANK (merged into V57 at load),yes,VERIFIED,yes,Merged from V513 at load; see V513 trace
+hm31_4,31,31,1,PLC-01530,V513_EXTRA_INTERNAL_MASTERY_BANK,hm31_4,hm31_4,MCQ_mastery,yes,yes,no,no,yes,no,no,no,V513_EXTRA_INTERNAL_MASTERY_BANK (merged into V57 at load),yes,VERIFIED,yes,Merged from V513 at load; see V513 trace
+hm31_5,31,31,1,PLC-01531,V513_EXTRA_INTERNAL_MASTERY_BANK,hm31_5,hm31_5,MCQ_mastery,yes,yes,no,no,yes,no,no,no,V513_EXTRA_INTERNAL_MASTERY_BANK (merged into V57 at load),yes,VERIFIED,yes,Merged from V513 at load; see V513 trace
+hm31_6,31,31,1,PLC-01532,V513_EXTRA_INTERNAL_MASTERY_BANK,hm31_6,hm31_6,MCQ_mastery,yes,yes,no,no,yes,no,no,no,V513_EXTRA_INTERNAL_MASTERY_BANK (merged into V57 at load),yes,VERIFIED,yes,Merged from V513 at load; see V513 trace
+hm31_7,31,31,1,PLC-01533,V513_EXTRA_INTERNAL_MASTERY_BANK,hm31_7,hm31_7,MCQ_mastery,yes,yes,no,no,yes,no,no,no,V513_EXTRA_INTERNAL_MASTERY_BANK (merged into V57 at load),yes,VERIFIED,yes,Merged from V513 at load; see V513 trace
+hm31_8,31,31,1,PLC-01534,V513_EXTRA_INTERNAL_MASTERY_BANK,hm31_8,hm31_8,MCQ_mastery,yes,yes,no,no,yes,no,no,no,V513_EXTRA_INTERNAL_MASTERY_BANK (merged into V57 at load),yes,VERIFIED,yes,Merged from V513 at load; see V513 trace
+hm31_9,31,31,1,PLC-01535,V513_EXTRA_INTERNAL_MASTERY_BANK,hm31_9,hm31_9,MCQ_mastery,yes,yes,no,no,yes,no,no,no,V513_EXTRA_INTERNAL_MASTERY_BANK (merged into V57 at load),yes,VERIFIED,yes,Merged from V513 at load; see V513 trace
+hm31_10,31,31,1,PLC-01536,V513_EXTRA_INTERNAL_MASTERY_BANK,hm31_10,hm31_10,MCQ_mastery,yes,yes,no,no,yes,no,no,no,V513_EXTRA_INTERNAL_MASTERY_BANK (merged into V57 at load),yes,VERIFIED,yes,Merged from V513 at load; see V513 trace
+hm32_1,32,32,1,PLC-01537,V513_EXTRA_INTERNAL_MASTERY_BANK,hm32_1,hm32_1,MCQ_mastery,yes,yes,no,no,yes,no,no,no,V513_EXTRA_INTERNAL_MASTERY_BANK (merged into V57 at load),yes,VERIFIED,yes,Merged from V513 at load; see V513 trace
+hm32_2,32,32,1,PLC-01538,V513_EXTRA_INTERNAL_MASTERY_BANK,hm32_2,hm32_2,MCQ_mastery,yes,yes,no,no,yes,no,no,no,V513_EXTRA_INTERNAL_MASTERY_BANK (merged into V57 at load),yes,VERIFIED,yes,Merged from V513 at load; see V513 trace
+hm32_3,32,32,1,PLC-01539,V513_EXTRA_INTERNAL_MASTERY_BANK,hm32_3,hm32_3,MCQ_mastery,yes,yes,no,no,yes,no,no,no,V513_EXTRA_INTERNAL_MASTERY_BANK (merged into V57 at load),yes,VERIFIED,yes,Merged from V513 at load; see V513 trace
+hm32_4,32,32,1,PLC-01540,V513_EXTRA_INTERNAL_MASTERY_BANK,hm32_4,hm32_4,MCQ_mastery,yes,yes,no,no,yes,no,no,no,V513_EXTRA_INTERNAL_MASTERY_BANK (merged into V57 at load),yes,VERIFIED,yes,Merged from V513 at load; see V513 trace
+hm32_5,32,32,1,PLC-01541,V513_EXTRA_INTERNAL_MASTERY_BANK,hm32_5,hm32_5,MCQ_mastery,yes,yes,no,no,yes,no,no,no,V513_EXTRA_INTERNAL_MASTERY_BANK (merged into V57 at load),yes,VERIFIED,yes,Merged from V513 at load; see V513 trace
+hm32_6,32,32,1,PLC-01542,V513_EXTRA_INTERNAL_MASTERY_BANK,hm32_6,hm32_6,MCQ_mastery,yes,yes,no,no,yes,no,no,no,V513_EXTRA_INTERNAL_MASTERY_BANK (merged into V57 at load),yes,VERIFIED,yes,Merged from V513 at load; see V513 trace
+hm32_7,32,32,1,PLC-01543,V513_EXTRA_INTERNAL_MASTERY_BANK,hm32_7,hm32_7,MCQ_mastery,yes,yes,no,no,yes,no,no,no,V513_EXTRA_INTERNAL_MASTERY_BANK (merged into V57 at load),yes,VERIFIED,yes,Merged from V513 at load; see V513 trace
+hm32_8,32,32,1,PLC-01544,V513_EXTRA_INTERNAL_MASTERY_BANK,hm32_8,hm32_8,MCQ_mastery,yes,yes,no,no,yes,no,no,no,V513_EXTRA_INTERNAL_MASTERY_BANK (merged into V57 at load),yes,VERIFIED,yes,Merged from V513 at load; see V513 trace
+hm32_9,32,32,1,PLC-01545,V513_EXTRA_INTERNAL_MASTERY_BANK,hm32_9,hm32_9,MCQ_mastery,yes,yes,no,no,yes,no,no,no,V513_EXTRA_INTERNAL_MASTERY_BANK (merged into V57 at load),yes,VERIFIED,yes,Merged from V513 at load; see V513 trace
+hm32_10,32,32,1,PLC-01546,V513_EXTRA_INTERNAL_MASTERY_BANK,hm32_10,hm32_10,MCQ_mastery,yes,yes,no,no,yes,no,no,no,V513_EXTRA_INTERNAL_MASTERY_BANK (merged into V57 at load),yes,VERIFIED,yes,Merged from V513 at load; see V513 trace
+hm33_1,33,33,1,PLC-01547,V57_INTERNAL_MASTERY_BANK,hm33_1,hm33_1,MCQ_mastery,yes,yes,no,no,yes,no,no,no,,yes,VERIFIED,yes,
+hm33_2,33,33,1,PLC-01548,V57_INTERNAL_MASTERY_BANK,hm33_2,hm33_2,MCQ_mastery,yes,yes,no,no,yes,no,no,no,,yes,VERIFIED,yes,
+hm33_3,33,33,1,PLC-01549,V57_INTERNAL_MASTERY_BANK,hm33_3,hm33_3,MCQ_mastery,yes,yes,no,no,yes,no,no,no,,yes,VERIFIED,yes,
+hm33_4,33,33,1,PLC-01550,V57_INTERNAL_MASTERY_BANK,hm33_4,hm33_4,MCQ_mastery,yes,yes,no,no,yes,no,no,no,,yes,VERIFIED,yes,
+hm33_5,33,33,1,PLC-01551,V57_INTERNAL_MASTERY_BANK,hm33_5,hm33_5,MCQ_mastery,yes,yes,no,no,yes,no,no,no,,yes,VERIFIED,yes,
+hm33_6,33,33,1,PLC-01552,V57_INTERNAL_MASTERY_BANK,hm33_6,hm33_6,MCQ_mastery,yes,yes,no,no,yes,no,no,no,,yes,VERIFIED,yes,
+hm33_7,33,33,1,PLC-01553,V57_INTERNAL_MASTERY_BANK,hm33_7,hm33_7,MCQ_mastery,yes,yes,no,no,yes,no,no,no,,yes,VERIFIED,yes,
+hm33_8,33,33,1,PLC-01554,V57_INTERNAL_MASTERY_BANK,hm33_8,hm33_8,MCQ_mastery,yes,yes,no,no,yes,no,no,no,,yes,VERIFIED,yes,
+hm33_9,33,33,1,PLC-01555,V57_INTERNAL_MASTERY_BANK,hm33_9,hm33_9,MCQ_mastery,yes,yes,no,no,yes,no,no,no,,yes,VERIFIED,yes,
+hm33_10,33,33,1,PLC-01556,V57_INTERNAL_MASTERY_BANK,hm33_10,hm33_10,MCQ_mastery,yes,yes,no,no,yes,no,no,no,,yes,VERIFIED,yes,
 ts5_1,5,5,1,PLC-01557,V57_TRANSFER_SUPPLEMENT,ts5_1,ts5_1,MCQ_blueprint_transfer,yes,NO - EXCLUDED (sourceConflict flag; evidence-safety gate),no,no,no,yes,no,no,,yes,SOURCE SUPPORT INSUFFICIENT,yes,"Audited during Pre-Batch-C blocker closeout pass. Newly discovered this pass (global inventory census) PRE-BATCH-C SAFETY GATE: excluded from all Apply/Challenge/Retention/Mastery-fallback evidence paths via sourceConflict flag + v57CuratedHighTrust gate. Preserved unedited for provenance. Side effect: Ch.5 Apply/Challenge Test source-case supply now 9 (below 5+5 floor) - tracked as a Ch.5 content-authoring gap, see ledger note."
 ts12_1,12,12,1,PLC-01558,V57_TRANSFER_SUPPLEMENT,ts12_1,ts12_1,MCQ_blueprint_transfer,yes,yes,no,no,no,yes,no,no,,yes,VERIFIED,yes,Audited during Pre-Batch-C blocker closeout pass. Newly discovered this pass (global inventory census)
 ts12_2,12,12,1,PLC-01559,V57_TRANSFER_SUPPLEMENT,ts12_2,ts12_2,MCQ_blueprint_transfer,yes,yes,no,no,no,yes,no,no,,yes,VERIFIED,yes,Audited during Pre-Batch-C blocker closeout pass. Newly discovered this pass (global inventory census)
@@ -1565,10 +1565,10 @@ ts25_1,25,25,1,PLC-01570,V57_TRANSFER_SUPPLEMENT,ts25_1,ts25_1,MCQ_blueprint_tra
 ts25_2,25,25,1,PLC-01571,V57_TRANSFER_SUPPLEMENT,ts25_2,ts25_2,MCQ_blueprint_transfer,yes,yes,no,no,no,yes,no,no,,yes,VERIFIED,yes,Newly discovered this pass (global inventory census)
 ts25_3,25,25,1,PLC-01572,V57_TRANSFER_SUPPLEMENT,ts25_3,ts25_3,MCQ_blueprint_transfer,yes,yes,no,no,no,yes,no,no,,yes,VERIFIED,yes,Newly discovered this pass (global inventory census)
 ts28_1,28,28,1,PLC-01573,V57_TRANSFER_SUPPLEMENT,ts28_1,ts28_1,MCQ_blueprint_transfer,yes,yes,no,no,no,yes,no,no,,yes,VERIFIED,yes,Newly discovered this pass (global inventory census)
-ts32_1,32,32,1,PLC-01574,V57_TRANSFER_SUPPLEMENT,ts32_1,ts32_1,MCQ_blueprint_transfer,yes,yes,no,no,no,yes,no,no,,yes,UNAUDITED,no,Newly discovered this pass (global inventory census)
-ts32_2,32,32,1,PLC-01575,V57_TRANSFER_SUPPLEMENT,ts32_2,ts32_2,MCQ_blueprint_transfer,yes,yes,no,no,no,yes,no,no,,yes,UNAUDITED,no,Newly discovered this pass (global inventory census)
-ts32_3,32,32,1,PLC-01576,V57_TRANSFER_SUPPLEMENT,ts32_3,ts32_3,MCQ_blueprint_transfer,yes,yes,no,no,no,yes,no,no,,yes,UNAUDITED,no,Newly discovered this pass (global inventory census)
-ts33_1,33,33,1,PLC-01577,V57_TRANSFER_SUPPLEMENT,ts33_1,ts33_1,MCQ_blueprint_transfer,yes,yes,no,no,no,yes,no,no,,yes,UNAUDITED,no,Newly discovered this pass (global inventory census)
+ts32_1,32,32,1,PLC-01574,V57_TRANSFER_SUPPLEMENT,ts32_1,ts32_1,MCQ_blueprint_transfer,yes,yes,no,no,no,yes,no,no,,yes,VERIFIED,yes,Newly discovered this pass (global inventory census)
+ts32_2,32,32,1,PLC-01575,V57_TRANSFER_SUPPLEMENT,ts32_2,ts32_2,MCQ_blueprint_transfer,yes,yes,no,no,no,yes,no,no,,yes,VERIFIED,yes,Newly discovered this pass (global inventory census)
+ts32_3,32,32,1,PLC-01576,V57_TRANSFER_SUPPLEMENT,ts32_3,ts32_3,MCQ_blueprint_transfer,yes,yes,no,no,no,yes,no,no,,yes,VERIFIED,yes,Newly discovered this pass (global inventory census)
+ts33_1,33,33,1,PLC-01577,V57_TRANSFER_SUPPLEMENT,ts33_1,ts33_1,MCQ_blueprint_transfer,yes,yes,no,no,no,yes,no,no,,yes,VERIFIED,yes,Newly discovered this pass (global inventory census)
 cx3_1,3,3,1,PLC-01578,V520_CHALLENGE_EXTRAS,cx3_1,cx3_1,MCQ_challenge_extra,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,Audited during Pre-Batch-C blocker closeout pass. Newly discovered this pass (global inventory census)
 cx14_1,14,14,1,PLC-01579,V520_CHALLENGE_EXTRAS,cx14_1,cx14_1,MCQ_challenge_extra,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,Newly discovered this pass (global inventory census)
 cx14_2,14,14,1,PLC-01580,V520_CHALLENGE_EXTRAS,cx14_2,cx14_2,MCQ_challenge_extra,yes,NO - EXCLUDED (sourceConflict flag; filtered from Challenge pool),no,no,no,no,no,no,,yes,SECONDARY-COURSE-SUPPORTED / HIGHER-PRIORITY SOURCE SUPPORT INSUFFICIENT (validated-evidence status: EXCLUDED),yes,"Newly discovered this pass (global inventory census) Batch C: same unsupported CPI x SPI composite EAC formula as 14-10; excluded from evidence. Part-0 status refinement: secondary-course-supported, higher-priority-source-insufficient (not technically incorrect); evidence exclusion unchanged."
@@ -1581,18 +1581,18 @@ cx28_2,28,28,1,PLC-01586,V520_CHALLENGE_EXTRAS,cx28_2,cx28_2,MCQ_challenge_extra
 cx28_3,28,28,1,PLC-01587,V520_CHALLENGE_EXTRAS,cx28_3,cx28_3,MCQ_challenge_extra,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,Newly discovered this pass (global inventory census)
 cx28_4,28,28,1,PLC-01588,V520_CHALLENGE_EXTRAS,cx28_4,cx28_4,MCQ_challenge_extra,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,Newly discovered this pass (global inventory census)
 cx28_5,28,28,1,PLC-01589,V520_CHALLENGE_EXTRAS,cx28_5,cx28_5,MCQ_challenge_extra,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,Newly discovered this pass (global inventory census)
-cx31_1,31,31,1,PLC-01590,V520_CHALLENGE_EXTRAS,cx31_1,cx31_1,MCQ_challenge_extra,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,Newly discovered this pass (global inventory census)
-cx31_2,31,31,1,PLC-01591,V520_CHALLENGE_EXTRAS,cx31_2,cx31_2,MCQ_challenge_extra,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,Newly discovered this pass (global inventory census)
-cx31_3,31,31,1,PLC-01592,V520_CHALLENGE_EXTRAS,cx31_3,cx31_3,MCQ_challenge_extra,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,Newly discovered this pass (global inventory census)
-cx31_4,31,31,1,PLC-01593,V520_CHALLENGE_EXTRAS,cx31_4,cx31_4,MCQ_challenge_extra,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,Newly discovered this pass (global inventory census)
-cx33_9,33,33,1,PLC-01594,V520_CHALLENGE_EXTRAS,cx33_9,cx33_9,MCQ_challenge_extra,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,Newly discovered this pass (global inventory census)
-cx33_10,33,33,1,PLC-01595,V520_CHALLENGE_EXTRAS,cx33_10,cx33_10,MCQ_challenge_extra,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,Newly discovered this pass (global inventory census)
-cx33_11,33,33,1,PLC-01596,V520_CHALLENGE_EXTRAS,cx33_11,cx33_11,MCQ_challenge_extra,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,Newly discovered this pass (global inventory census)
-cx34_1,34,34,1,PLC-01597,V520_CHALLENGE_EXTRAS,cx34_1,cx34_1,MCQ_challenge_extra,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,Newly discovered this pass (global inventory census)
-cx34_2,34,34,1,PLC-01598,V520_CHALLENGE_EXTRAS,cx34_2,cx34_2,MCQ_challenge_extra,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,Newly discovered this pass (global inventory census)
-cx34_3,34,34,1,PLC-01599,V520_CHALLENGE_EXTRAS,cx34_3,cx34_3,MCQ_challenge_extra,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,Newly discovered this pass (global inventory census)
-cx34_4,34,34,1,PLC-01600,V520_CHALLENGE_EXTRAS,cx34_4,cx34_4,MCQ_challenge_extra,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,Newly discovered this pass (global inventory census)
-cx34_5,34,34,1,PLC-01601,V520_CHALLENGE_EXTRAS,cx34_5,cx34_5,MCQ_challenge_extra,yes,yes,no,no,no,no,no,no,,yes,UNAUDITED,no,Newly discovered this pass (global inventory census)
+cx31_1,31,31,1,PLC-01590,V520_CHALLENGE_EXTRAS,cx31_1,cx31_1,MCQ_challenge_extra,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,Newly discovered this pass (global inventory census)
+cx31_2,31,31,1,PLC-01591,V520_CHALLENGE_EXTRAS,cx31_2,cx31_2,MCQ_challenge_extra,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,Newly discovered this pass (global inventory census)
+cx31_3,31,31,1,PLC-01592,V520_CHALLENGE_EXTRAS,cx31_3,cx31_3,MCQ_challenge_extra,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,Newly discovered this pass (global inventory census)
+cx31_4,31,31,1,PLC-01593,V520_CHALLENGE_EXTRAS,cx31_4,cx31_4,MCQ_challenge_extra,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,Newly discovered this pass (global inventory census)
+cx33_9,33,33,1,PLC-01594,V520_CHALLENGE_EXTRAS,cx33_9,cx33_9,MCQ_challenge_extra,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,Newly discovered this pass (global inventory census)
+cx33_10,33,33,1,PLC-01595,V520_CHALLENGE_EXTRAS,cx33_10,cx33_10,MCQ_challenge_extra,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,Newly discovered this pass (global inventory census)
+cx33_11,33,33,1,PLC-01596,V520_CHALLENGE_EXTRAS,cx33_11,cx33_11,MCQ_challenge_extra,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,Newly discovered this pass (global inventory census)
+cx34_1,34,34,1,PLC-01597,V520_CHALLENGE_EXTRAS,cx34_1,cx34_1,MCQ_challenge_extra,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,Newly discovered this pass (global inventory census)
+cx34_2,34,34,1,PLC-01598,V520_CHALLENGE_EXTRAS,cx34_2,cx34_2,MCQ_challenge_extra,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,Newly discovered this pass (global inventory census)
+cx34_3,34,34,1,PLC-01599,V520_CHALLENGE_EXTRAS,cx34_3,cx34_3,MCQ_challenge_extra,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,Newly discovered this pass (global inventory census)
+cx34_4,34,34,1,PLC-01600,V520_CHALLENGE_EXTRAS,cx34_4,cx34_4,MCQ_challenge_extra,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,Newly discovered this pass (global inventory census)
+cx34_5,34,34,1,PLC-01601,V520_CHALLENGE_EXTRAS,cx34_5,cx34_5,MCQ_challenge_extra,yes,yes,no,no,no,no,no,no,,yes,VERIFIED,yes,Newly discovered this pass (global inventory census)
 memo-01,general,general,1,PLC-01602,MEMO_PROMPTS,memo-01,memo-01,memo_manual_response,yes,yes(manual-graded),no,no,no,no,no,no,,contested-lower-priority,"PENDING - MEMO PEDAGOGICAL / HANDBOOK QA (not a technical source audit; procedural/synthesis prompt, outside the 1,601 source-audit-required denominator)",no,"Non-MCQ manual-response item; not chapter-specific; no page-citation claim to verify Tagged this pass for a future MEMO PEDAGOGICAL / HANDBOOK QA review track (distinct from MCQ source auditing). Remains in the 1,606 canonical inventory; excluded from the 1,601 source-audit-required count."
 memo-02,general,general,1,PLC-01603,MEMO_PROMPTS,memo-02,memo-02,memo_manual_response,yes,yes(manual-graded),no,no,no,no,no,no,,contested-lower-priority,"PENDING - MEMO PEDAGOGICAL / HANDBOOK QA (not a technical source audit; procedural/synthesis prompt, outside the 1,601 source-audit-required denominator)",no,"Non-MCQ manual-response item; not chapter-specific; no page-citation claim to verify Tagged this pass for a future MEMO PEDAGOGICAL / HANDBOOK QA review track (distinct from MCQ source auditing). Remains in the 1,606 canonical inventory; excluded from the 1,601 source-audit-required count."
 memo-03,general,general,1,PLC-01604,MEMO_PROMPTS,memo-03,memo-03,memo_manual_response,yes,yes(manual-graded),no,no,no,no,no,no,,contested-lower-priority,"PENDING - MEMO PEDAGOGICAL / HANDBOOK QA (not a technical source audit; procedural/synthesis prompt, outside the 1,601 source-audit-required denominator)",no,"Non-MCQ manual-response item; not chapter-specific; no page-citation claim to verify Tagged this pass for a future MEMO PEDAGOGICAL / HANDBOOK QA review track (distinct from MCQ source auditing). Remains in the 1,606 canonical inventory; excluded from the 1,601 source-audit-required count."
