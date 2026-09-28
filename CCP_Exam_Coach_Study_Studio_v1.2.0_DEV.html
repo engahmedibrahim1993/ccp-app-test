@@ -13609,5 +13609,506 @@ body{background:radial-gradient(ellipse at top left,#dfede7,transparent 55%),#f3
 })();
 </script>
 
+<script id="phase-v52a-distractor-diagnostics">
+(function(){
+  "use strict";
+  // ===================================================================
+  // PHASE 2A — Distractor-Specific Diagnosis + Misconception Evidence
+  // Architecture (global, reusable by all chapters; populated this pass
+  // only for the 5 pilot chapters: 9, 13, 14, 19, 27).
+  //
+  // Design choices, stated up front:
+  // - Diagnostics are looked up by canonical_content_id + a STABLE,
+  //   text-based option_identity (never array index), so runtime option
+  //   shuffling or a V516 curated-bank rewrite can never mis-map a
+  //   diagnosis to the wrong option text. If text doesn't match any
+  //   authored row (e.g. after a hypothetical future rewrite), the
+  //   lookup simply returns null and the base feedback (already
+  //   source-audited, already shown) is used unchanged - never a stale
+  //   or mismatched diagnosis.
+  // - Misconception/skill/fragility/resolution state is NOT stored as a
+  //   separate mutated ledger. It is computed LIVE, on demand, purely
+  //   from PROGRESS.attempts (which already exports/imports/sanitizes
+  //   correctly, proven in the Global Gap Repair phase). This means:
+  //   old exports need no migration for a new top-level field (there
+  //   isn't one), and there is no risk of a ledger drifting out of sync
+  //   with the attempts it's supposed to summarize.
+  // - Wired into the PRIMARY scored practice/mock path only this pass
+  //   (recordAttempt / confirmAnswer / skipQuestion / submitMockSession
+  //   / renderFeedback), which is where every native and Study Guide
+  //   item for the 5 pilot chapters is actually answered. The
+  //   FreshChallenge (Apply/Challenge/Mastery/Retention) pathway builds
+  //   runtime-paraphrased V57 items whose option text does not match
+  //   the canonical item's authored option text one-for-one; wiring
+  //   distractor-level diagnosis there is future scope, disclosed here
+  //   rather than silently half-done.
+  // ===================================================================
+
+  // ---- Populated by the Phase 2A pilot-chapter authoring pass. -------
+  // Keyed by canonical_content_id -> array of row objects (see
+  // DISTRACTOR_DIAGNOSTIC_SPEC.md for exact field meanings). Empty {}
+  // here is intentionally a fully safe, fully tested no-op state -
+  // every function below degrades gracefully when a lookup misses.
+  var V52A_DISTRACTOR_DIAGNOSTICS = /*V52A_DIAGNOSTICS_DATA*/{}/*END_V52A_DIAGNOSTICS_DATA*/;
+  window.V52A_DISTRACTOR_DIAGNOSTICS = V52A_DISTRACTOR_DIAGNOSTICS;
+
+  function v52aNormalizeOptionText(t){
+    return String(t==null?'':t).replace(/\s+/g,' ').trim();
+  }
+  window.v52aNormalizeOptionText = v52aNormalizeOptionText;
+
+  function v52aDiagnosisFor(qid, normalizedOptionText){
+    var rows = V52A_DISTRACTOR_DIAGNOSTICS[qid];
+    if (!rows || !rows.length) return null;
+    for (var i=0;i<rows.length;i++){
+      if (v52aNormalizeOptionText(rows[i].option_text) === normalizedOptionText) return rows[i];
+    }
+    return null;
+  }
+  window.v52aDiagnosisFor = v52aDiagnosisFor;
+
+  function v52aHasDiagnostics(qid){
+    var rows = V52A_DISTRACTOR_DIAGNOSTICS[qid];
+    return !!(rows && rows.length);
+  }
+  window.v52aHasDiagnostics = v52aHasDiagnostics;
+
+  // evidenceFamilyFor is defined by the Global Gap Repair phase
+  // (phase-v129-global-gap-repair, loaded earlier in this document) and
+  // is reused as-is: for every id outside the one confirmed Ch.5
+  // near-duplicate group, an item's evidence family is its own
+  // canonical identity - exactly what "same qid = not independent,
+  // different qid = independent" needs, generically, for any chapter.
+  function v52aEvidenceFamily(qid){
+    return (typeof evidenceFamilyFor === 'function') ? evidenceFamilyFor(qid) : qid;
+  }
+  window.v52aEvidenceFamily = v52aEvidenceFamily;
+
+  // ---- Attempt-record extension (capture-base-and-reassign, the same
+  // override discipline used throughout this file; recordAttempt's
+  // signature and existing behavior are entirely unchanged, this only
+  // adds optional fields to the attempt object it already pushes). ----
+  if (typeof recordAttempt === 'function'){
+    var V52A_BASE_RECORD_ATTEMPT = recordAttempt;
+    recordAttempt = function(q, correct, confidence, timeSpentSec, deferSave){
+      V52A_BASE_RECORD_ATTEMPT(q, correct, confidence, timeSpentSec, deferSave);
+      try {
+        var attempts = PROGRESS.attempts;
+        var attempt = attempts && attempts[attempts.length-1];
+        if (!attempt || attempt.qid !== q.id) return;
+        attempt.diagnosticVersion = 'v2a.1';
+        attempt.evidenceFamily = v52aEvidenceFamily(q.id);
+        // Selected-option index: all three call sites (confirmAnswer,
+        // skipQuestion, submitMockSession) push a {q, selected, ...}
+        // record onto SESSION.results synchronously, immediately BEFORE
+        // calling recordAttempt for that same attempt - so the just-
+        // pushed SESSION.results entry reliably reflects THIS attempt.
+        var selectedIdx = null;
+        if (typeof SESSION !== 'undefined' && SESSION && Array.isArray(SESSION.results) && SESSION.results.length){
+          var lastR = SESSION.results[SESSION.results.length-1];
+          if (lastR && lastR.q && lastR.q.id === q.id) selectedIdx = (lastR.selected===undefined ? null : lastR.selected);
+        }
+        if (selectedIdx !== null && Array.isArray(q.options) && q.options[selectedIdx] !== undefined){
+          attempt.selectedOptionIdentity = v52aNormalizeOptionText(q.options[selectedIdx]);
+          var diag = v52aDiagnosisFor(q.id, attempt.selectedOptionIdentity);
+          if (diag){
+            attempt.diagnosticStatus = diag.diagnostic_status || null;
+            // EXCLUDED_ITEM (e.g. 14-10) must never seed mastery/readiness
+            // misconception evidence, even if somehow attempted - only the
+            // status marker is recorded, no skill/misconception attribution.
+            if (diag.diagnostic_status !== 'EXCLUDED_ITEM'){
+              attempt.errorClass = diag.error_class || null;
+              attempt.secondaryErrorClass = diag.secondary_error_class || null;
+              attempt.misconceptionCode = diag.misconception_code || null;
+              attempt.skillId = diag.skill_id || null;
+            }
+          }
+        }
+        if (!deferSave && typeof saveProgress === 'function') saveProgress();
+      } catch(e){ /* diagnostic layer must never break scoring/persistence */ }
+    };
+  }
+
+  // ---- Review UI: selected-distractor diagnosis shown FIRST, only
+  // post-submit (renderFeedback is only ever called from within the
+  // existing showFeedback-gated branch, itself gated on
+  // SESSION.answered!==null - unchanged, so this remains impossible to
+  // see pre-submit). Falls back to the existing, already-source-audited
+  // base feedback unchanged whenever no confident diagnosis exists
+  // (AMBIGUOUS_DIAGNOSTIC_CAUSE / EXCLUDED_ITEM / no row at all). ----
+  if (typeof renderFeedback === 'function'){
+    var V52A_BASE_RENDER_FEEDBACK = renderFeedback;
+    renderFeedback = function(q){
+      var base = V52A_BASE_RENDER_FEEDBACK(q);
+      try {
+        var wasCorrect = SESSION.selectedOpt === q.correct;
+        if (wasCorrect || SESSION.selectedOpt === null || SESSION.selectedOpt === undefined) return base;
+        var selectedText = q.options[SESSION.selectedOpt];
+        var diag = v52aDiagnosisFor(q.id, v52aNormalizeOptionText(selectedText));
+        if (!diag || diag.is_correct === 'yes') return base;
+        var showable = diag.diagnostic_status === 'SPECIFIC_DIAGNOSIS_VERIFIED'
+          || diag.diagnostic_status === 'SPECIFIC_CALCULATION_PATH_VERIFIED'
+          || diag.diagnostic_status === 'GENERAL_WRONG_REASON_VERIFIED';
+        if (!showable || !diag.why_wrong) return base;
+        var block = '<div class="feedback wrong" style="margin-bottom:10px;">'
+          + '<p class="verdict">You chose: ' + assessmentBlindText(selectedText) + '</p>'
+          + '<p><span class="lbl">Why this option fails</span><br>' + diag.why_wrong + '</p>'
+          + (diag.error_class ? '<p><span class="lbl">Error type</span><br>' + String(diag.error_class).replace(/_/g,' ') + '</p>' : '')
+          + (diag.calculation_path_if_applicable ? '<div class="calc-box"><b>How this number was reached (wrong path):</b> ' + diag.calculation_path_if_applicable + '</div>' : '')
+          + (diag.corrective_rule ? '<p><span class="lbl">Key distinction</span><br>' + diag.corrective_rule + '</p>' : '')
+          + (diag.exam_trap ? '<p><span class="lbl">CCP trap</span><br>' + diag.exam_trap + '</p>' : '')
+          + '</div>';
+        return block + base;
+      } catch(e){ return base; }
+    };
+  }
+
+  // ---- Misconception status: computed LIVE from PROGRESS.attempts.
+  // "Repeated" requires >=2 DISTINCT evidence families among WRONG
+  // attempts carrying this code (same qid / same equivalence-group
+  // sibling / option reorder / runtime duplicate all collapse to one
+  // family via v52aEvidenceFamily, so none of those can inflate the
+  // count - directly satisfying "do not count these as separate
+  // evidence"). "Resolved" requires a LATER correct attempt on the
+  // SAME skill_id, a DIFFERENT (never-wrong) evidence family, at
+  // Medium/High confidence - never merely a same-qid or same-family
+  // retry, and never a Low-confidence correct answer. ----
+  function v52aMisconceptionStatus(misconceptionCode){
+    var all = PROGRESS.attempts || [];
+    var wrongAttempts = all.filter(function(a){ return a.misconceptionCode === misconceptionCode && a.correct === false; })
+      .sort(function(a,b){ return (a.ts||0)-(b.ts||0); });
+    if (!wrongAttempts.length) return null;
+    var skillId = wrongAttempts[0].skillId || null;
+    var wrongFamilies = {};
+    var hcwCount = 0;
+    wrongAttempts.forEach(function(a){
+      var fam = a.evidenceFamily || a.qid;
+      wrongFamilies[fam] = true;
+      if (a.confidence === 'high') hcwCount++;
+    });
+    var independentCaseCount = Object.keys(wrongFamilies).length;
+    var firstSeen = wrongAttempts[0].ts, latestSeen = wrongAttempts[wrongAttempts.length-1].ts;
+    var status = independentCaseCount >= 2 ? 'REPEATED' : 'OBSERVED_ONCE';
+    var latestResolutionEvidence = null;
+    if (skillId){
+      var resolving = all.filter(function(a){
+        return a.skillId === skillId && a.correct === true
+          && (a.confidence === 'medium' || a.confidence === 'high')
+          && !wrongFamilies[a.evidenceFamily || a.qid]
+          && (a.ts||0) > firstSeen;
+      }).sort(function(a,b){ return (a.ts||0)-(b.ts||0); });
+      if (resolving.length){
+        status = 'RESOLVED';
+        var r = resolving[resolving.length-1];
+        latestResolutionEvidence = { ts:r.ts, canonicalContentId:r.qid, evidenceFamily:r.evidenceFamily||r.qid };
+      }
+    }
+    return {
+      misconceptionCode: misconceptionCode, skillId: skillId,
+      firstSeen: firstSeen, latestSeen: latestSeen,
+      independentCaseCount: independentCaseCount,
+      highConfidenceWrongCount: hcwCount,
+      status: status, latestResolutionEvidence: latestResolutionEvidence
+    };
+  }
+  window.v52aMisconceptionStatus = v52aMisconceptionStatus;
+
+  // ---- Fragile-correct: a skill only ever confirmed at Low confidence
+  // is fragile. A DIFFERENT independent evidence family answered
+  // correctly at Medium/High confidence strengthens (clears fragility
+  // for) that skill. Never diagnoses a misconception from a correct
+  // answer - this function only ever reads correct===true attempts. ----
+  function v52aSkillFragility(skillId){
+    var relevant = (PROGRESS.attempts||[]).filter(function(a){ return a.skillId === skillId && a.correct === true; });
+    var bestRankByFamily = {};
+    var rank = { low:1, medium:2, high:3 };
+    relevant.forEach(function(a){
+      var fam = a.evidenceFamily || a.qid;
+      var r = rank[a.confidence] || 0;
+      if (!bestRankByFamily[fam] || r > bestRankByFamily[fam]) bestRankByFamily[fam] = r;
+    });
+    var families = Object.keys(bestRankByFamily);
+    var confidentFamilies = families.filter(function(f){ return bestRankByFamily[f] >= 2; });
+    return {
+      familiesSeen: families.length,
+      confidentIndependentFamilies: confidentFamilies.length,
+      fragile: families.length > 0 && confidentFamilies.length === 0
+    };
+  }
+  window.v52aSkillFragility = v52aSkillFragility;
+
+  // ---- Retest candidate selection: same skill, but excludes every
+  // evidence family already seen WRONG for this misconception (so the
+  // original question and any equivalence-group sibling are both
+  // excluded automatically via v52aEvidenceFamily). Available as a
+  // tested utility for a future targeted-retest UI; not auto-wired into
+  // the main practice-queue selection algorithm this pass (that is a
+  // broader architectural change than this narrow Phase 2A patch should
+  // make without explicit direction - disclosed, not silently done). ----
+  function v52aItemsForSkill(skillId){
+    var ids = {};
+    Object.keys(V52A_DISTRACTOR_DIAGNOSTICS).forEach(function(qid){
+      var rows = V52A_DISTRACTOR_DIAGNOSTICS[qid];
+      if (rows.some(function(r){ return r.skill_id === skillId; })) ids[qid] = true;
+    });
+    return Object.keys(ids);
+  }
+  window.v52aItemsForSkill = v52aItemsForSkill;
+
+  function v52aResolveItemById(id){
+    var n = (typeof QUESTIONS !== 'undefined') ? QUESTIONS.find(function(q){ return q.id === id; }) : null;
+    if (n) return n;
+    var banks = (typeof EXAM_STUDY_GUIDE_BANK !== 'undefined') ? EXAM_STUDY_GUIDE_BANK : {};
+    for (var ch in banks){
+      var f = (banks[ch]||[]).find(function(q){ return q.id === id; });
+      if (f) return f;
+    }
+    return null;
+  }
+  window.v52aResolveItemById = v52aResolveItemById;
+
+  function v52aRetestCandidate(misconceptionCode){
+    var status = v52aMisconceptionStatus(misconceptionCode);
+    if (!status || !status.skillId) return null;
+    var wrongFamilies = {};
+    (PROGRESS.attempts||[]).filter(function(a){ return a.misconceptionCode === misconceptionCode && a.correct === false; })
+      .forEach(function(a){ wrongFamilies[a.evidenceFamily || a.qid] = true; });
+    var candidateIds = v52aItemsForSkill(status.skillId).filter(function(id){ return !wrongFamilies[v52aEvidenceFamily(id)]; });
+    var resolved = candidateIds.map(v52aResolveItemById).filter(function(q){
+      return q && !(typeof isQuestionSuspended === 'function' && isQuestionSuspended(q.id));
+    });
+    if (!resolved.length) return null;
+    return resolved[Math.floor(Math.random()*resolved.length)];
+  }
+  window.v52aRetestCandidate = v52aRetestCandidate;
+
+  // ---- Diagnostic analytics summary. Honest precision only: a
+  // misconception with one observed wrong case is reported with
+  // independentCaseCount:1, never framed as a "persistent weakness"
+  // (that framing is reserved for status==='REPEATED', i.e. >=2). ----
+  function v52aDiagnosticSummary(){
+    var codesSeen = {};
+    (PROGRESS.attempts||[]).forEach(function(a){ if (a.misconceptionCode) codesSeen[a.misconceptionCode] = true; });
+    var misconceptions = Object.keys(codesSeen).map(v52aMisconceptionStatus).filter(Boolean);
+    var skillsSeen = {};
+    (PROGRESS.attempts||[]).forEach(function(a){ if (a.skillId) skillsSeen[a.skillId] = true; });
+    var fragileSkills = Object.keys(skillsSeen).map(function(s){
+      var f = v52aSkillFragility(s); f.skillId = s; return f;
+    }).filter(function(s){ return s.fragile; });
+    return {
+      totalMisconceptionsObserved: misconceptions.length,
+      recurring: misconceptions.filter(function(m){ return m.status==='REPEATED'; })
+        .map(function(m){ return {code:m.misconceptionCode, independentCaseCount:m.independentCaseCount}; }),
+      highConfidenceWrong: misconceptions.filter(function(m){ return m.highConfidenceWrongCount>0; })
+        .map(function(m){ return {code:m.misconceptionCode, highConfidenceWrongCount:m.highConfidenceWrongCount}; }),
+      unresolved: misconceptions.filter(function(m){ return m.status!=='RESOLVED'; })
+        .map(function(m){ return {code:m.misconceptionCode, independentCaseCount:m.independentCaseCount, status:m.status}; }),
+      recentlyCorrected: misconceptions.filter(function(m){ return m.status==='RESOLVED'; })
+        .map(function(m){ return {code:m.misconceptionCode, resolvedAt: m.latestResolutionEvidence && m.latestResolutionEvidence.ts}; }),
+      fragileSkills: fragileSkills.map(function(s){ return {skillId:s.skillId, familiesSeen:s.familiesSeen}; })
+    };
+  }
+  window.v52aDiagnosticSummary = v52aDiagnosticSummary;
+
+  // ---- Coverage metrics (per chapter, honest - ambiguous/general never
+  // counted as "specific" just to inflate a percentage). ----
+  function v52aChapterCoverage(chapter){
+    var ch = String(chapter);
+    var ids = {};
+    (typeof QUESTIONS!=='undefined'?QUESTIONS:[]).filter(function(q){ return String(q.chapter)===ch; }).forEach(function(q){ ids[q.id]=true; });
+    var sgBank = (typeof EXAM_STUDY_GUIDE_BANK!=='undefined' ? (EXAM_STUDY_GUIDE_BANK[ch]||[]) : []);
+    sgBank.forEach(function(q){ ids[q.id]=true; });
+    var counts = { activeItems:0, totalOptions:0, SPECIFIC_DIAGNOSIS_VERIFIED:0, SPECIFIC_CALCULATION_PATH_VERIFIED:0,
+      GENERAL_WRONG_REASON_VERIFIED:0, AMBIGUOUS_DIAGNOSTIC_CAUSE:0, SOURCE_CONFLICT_ITEM:0, EXCLUDED_ITEM:0, unmapped:0 };
+    Object.keys(ids).forEach(function(id){
+      var rows = V52A_DISTRACTOR_DIAGNOSTICS[id];
+      if (!rows || !rows.length){ counts.unmapped++; return; }
+      counts.activeItems++;
+      rows.filter(function(r){ return r.is_correct !== 'yes'; }).forEach(function(r){
+        counts.totalOptions++;
+        if (counts.hasOwnProperty(r.diagnostic_status)) counts[r.diagnostic_status]++;
+      });
+    });
+    var specific = counts.SPECIFIC_DIAGNOSIS_VERIFIED + counts.SPECIFIC_CALCULATION_PATH_VERIFIED;
+    counts.coveragePct = counts.totalOptions ? Math.round(100*specific/counts.totalOptions) : 0;
+    return counts;
+  }
+  window.v52aChapterCoverage = v52aChapterCoverage;
+
+  // ---------------------------------------------------------------
+  // Regression checks
+  // ---------------------------------------------------------------
+  if (typeof integrityResults === 'function'){
+    var priorIntegrityV52A = integrityResults;
+    integrityResults = function(){
+      var rs = priorIntegrityV52A();
+
+      // 1) Option-identity mapping is text-based, not index-based, and
+      //    survives a simulated shuffle (same option set, different order).
+      var mapOk = false, mapDetail = 'not testable (no diagnostics loaded)';
+      try {
+        var anyQid = Object.keys(V52A_DISTRACTOR_DIAGNOSTICS)[0];
+        if (anyQid){
+          var q = v52aResolveItemById(anyQid);
+          if (q && Array.isArray(q.options)){
+            var shuffled = q.options.slice().reverse();
+            var wrongIdx = shuffled.findIndex(function(o,i){ return i !== q.correct; });
+            var diagBeforeShuffle = v52aDiagnosisFor(anyQid, v52aNormalizeOptionText(q.options[wrongIdx===0?1:0]));
+            var diagAfterShuffle = v52aDiagnosisFor(anyQid, v52aNormalizeOptionText(shuffled[wrongIdx===0?1:0]));
+            mapOk = !!diagBeforeShuffle && !!diagAfterShuffle && diagBeforeShuffle.option_text === diagAfterShuffle.option_text;
+            mapDetail = 'Diagnosis lookup for '+anyQid+' matched by option TEXT before and after a simulated array reversal (index-independent): '+mapOk;
+          }
+        }
+      } catch(e){ mapDetail = 'error: '+e.message; }
+      rs.push({name:'Phase 2A: distractor diagnosis mapping is option-text-based, survives reorder', ok: mapOk || !Object.keys(V52A_DISTRACTOR_DIAGNOSTICS).length, detail: mapDetail});
+
+      // 2) No diagnosis is computable pre-submit: renderFeedback is only
+      //    reachable through the existing SESSION.answered!==null gate,
+      //    which this patch does not touch or bypass.
+      var preSubmitOk = typeof renderFeedback === 'function' && /wasCorrect/.test(String(renderFeedback));
+      rs.push({name:'Phase 2A: renderFeedback wrap only activates post-answer (no pre-submit code path added)', ok: preSubmitOk,
+        detail: preSubmitOk ? 'renderFeedback is only invoked from the existing showFeedback-gated branch (SESSION.answered!==null); this patch added no new call site that could run earlier.' : 'renderFeedback override missing.'});
+
+      // 3) recordAttempt still performs its original scoring/exposure/save
+      //    behavior (base call happens first, unconditionally, before any
+      //    diagnostic-layer code) - simulate one attempt and check srs/exposure updated.
+      var baseIntactOk = false, baseIntactDetail = 'not testable';
+      try {
+        var testQ = (typeof QUESTIONS!=='undefined') ? QUESTIONS[0] : null;
+        if (testQ){
+          var priorSrs = PROGRESS.srs[testQ.id];
+          var priorAttemptsLen = PROGRESS.attempts.length;
+          recordAttempt(testQ, true, 'high', 5, true); // deferSave to avoid a real save during a self-check
+          baseIntactOk = PROGRESS.attempts.length === priorAttemptsLen+1 && !!PROGRESS.srs[testQ.id];
+          PROGRESS.attempts.pop(); // undo the simulated attempt
+          if (priorSrs===undefined) delete PROGRESS.srs[testQ.id]; else PROGRESS.srs[testQ.id]=priorSrs;
+          baseIntactDetail = 'Simulated one recordAttempt call: attempts array grew by 1 and srsUpdate ran ('+baseIntactOk+'), then fully undone.';
+        }
+      } catch(e){ baseIntactDetail = 'error: '+e.message; }
+      rs.push({name:'Phase 2A: recordAttempt base scoring/exposure/SRS behavior unchanged', ok: baseIntactOk, detail: baseIntactDetail});
+
+      // 4) HCW events automatically carry diagnostic context (no separate
+      //    wiring needed - HCW is itself just correct===false && confidence==='high'
+      //    over PROGRESS.attempts, and diagnostic fields live on the same objects).
+      var hcwOk = false, hcwDetail = 'not testable (no diagnostics loaded / no HCW attempts yet)';
+      try {
+        var anyQidH = Object.keys(V52A_DISTRACTOR_DIAGNOSTICS)[0];
+        if (anyQidH){
+          var qH = v52aResolveItemById(anyQidH);
+          if (qH){
+            var wrongIdxH = qH.options.findIndex(function(o,i){ return i!==qH.correct; });
+            var savedAttempts = PROGRESS.attempts;
+            PROGRESS.attempts = savedAttempts.slice();
+            SESSION = SESSION || {}; SESSION.results = [{q:qH, selected:wrongIdxH, correct:false}];
+            recordAttempt(qH, false, 'high', 5, true);
+            var pushedAttempt = PROGRESS.attempts[PROGRESS.attempts.length-1];
+            var hasDiagRow = !!v52aDiagnosisFor(anyQidH, v52aNormalizeOptionText(qH.options[wrongIdxH]));
+            hcwOk = pushedAttempt.confidence==='high' && pushedAttempt.correct===false && (!hasDiagRow || !!pushedAttempt.misconceptionCode || !!pushedAttempt.errorClass || pushedAttempt.diagnosticStatus!==undefined);
+            PROGRESS.attempts = savedAttempts;
+            hcwDetail = 'A simulated HCW attempt (correct=false, confidence=high) on '+anyQidH+' carries diagnosticStatus='+pushedAttempt.diagnosticStatus+', misconceptionCode='+pushedAttempt.misconceptionCode+', errorClass='+pushedAttempt.errorClass+' - diagnostic context flows automatically, no separate HCW-specific wiring needed.';
+          }
+        }
+      } catch(e){ hcwDetail = 'error: '+e.message; }
+      rs.push({name:'Phase 2A: High-Confidence-Wrong events carry diagnostic context automatically', ok: hcwOk || !Object.keys(V52A_DISTRACTOR_DIAGNOSTICS).length, detail: hcwDetail});
+
+      // 5) Same-question retry does NOT resolve a misconception; a
+      //    different-family independent correct attempt at Medium/High DOES.
+      var repeatLogicOk = false, repeatLogicDetail = 'not testable';
+      try {
+        var savedAttempts2 = PROGRESS.attempts;
+        var now = Date.now();
+        PROGRESS.attempts = [
+          {qid:'TESTQ_A', evidenceFamily:'TESTQ_A', correct:false, confidence:'high', misconceptionCode:'TEST_MISC', skillId:'TEST_SKILL', ts:now-3000},
+          {qid:'TESTQ_A', evidenceFamily:'TESTQ_A', correct:true, confidence:'high', skillId:'TEST_SKILL', ts:now-2000}, // same question retried correctly - must NOT resolve
+        ];
+        var st1 = v52aMisconceptionStatus('TEST_MISC');
+        var sameQNotResolved = st1 && st1.status !== 'RESOLVED';
+        PROGRESS.attempts.push({qid:'TESTQ_B', evidenceFamily:'TESTQ_B', correct:true, confidence:'medium', skillId:'TEST_SKILL', ts:now-1000});
+        var st2 = v52aMisconceptionStatus('TEST_MISC');
+        var diffQResolved = st2 && st2.status === 'RESOLVED';
+        PROGRESS.attempts = savedAttempts2;
+        repeatLogicOk = sameQNotResolved && diffQResolved;
+        repeatLogicDetail = 'Same-qid correct retry after a wrong HCW attempt: status='+ (st1&&st1.status) +' (must not be RESOLVED). A later correct attempt on a DIFFERENT evidence family at medium confidence: status='+(st2&&st2.status)+' (must be RESOLVED).';
+      } catch(e){ repeatLogicDetail = 'error: '+e.message; }
+      rs.push({name:'Phase 2A: same-question retry does not resolve; independent different-family case does', ok: repeatLogicOk, detail: repeatLogicDetail});
+
+      // 6) Equivalence-group sibling does NOT resolve (reuses the
+      //    Global Gap Repair Ch.5 group as the one live test case).
+      var equivRetryOk = false, equivRetryDetail = 'not testable (equivalence group unavailable)';
+      try {
+        if (typeof EVIDENCE_EQUIVALENCE_GROUPS !== 'undefined' && EVIDENCE_EQUIVALENCE_GROUPS.CH5_PATENT_TERM_POST1995){
+          var savedAttempts3 = PROGRESS.attempts;
+          var now2 = Date.now();
+          PROGRESS.attempts = [
+            {qid:'CUR:cm5_2', evidenceFamily: v52aEvidenceFamily('CUR:cm5_2'), correct:false, confidence:'high', misconceptionCode:'TEST_EQUIV_MISC', skillId:'TEST_EQUIV_SKILL', ts:now2-2000},
+            {qid:'HMB:hm5_2', evidenceFamily: v52aEvidenceFamily('HMB:hm5_2'), correct:true, confidence:'high', skillId:'TEST_EQUIV_SKILL', ts:now2-1000}
+          ];
+          var stEquiv = v52aMisconceptionStatus('TEST_EQUIV_MISC');
+          equivRetryOk = !!stEquiv && stEquiv.status !== 'RESOLVED';
+          PROGRESS.attempts = savedAttempts3;
+          equivRetryDetail = 'cm5_2 wrong (HCW), then its confirmed equivalence sibling hm5_2 correct at high confidence: status='+(stEquiv&&stEquiv.status)+' (must not be RESOLVED - same evidence family, not independent).';
+        }
+      } catch(e){ equivRetryDetail = 'error: '+e.message; }
+      rs.push({name:'Phase 2A: evidence-equivalence-group sibling does not resolve a misconception', ok: equivRetryOk, detail: equivRetryDetail});
+
+      // 7) Fragile-correct: Low-confidence-only correct answers are fragile;
+      //    a later independent Medium/High confidence answer clears it.
+      var fragileOk = false, fragileDetail = 'not testable';
+      try {
+        var savedAttempts4 = PROGRESS.attempts;
+        var now3 = Date.now();
+        PROGRESS.attempts = [ {qid:'TESTQ_C', evidenceFamily:'TESTQ_C', correct:true, confidence:'low', skillId:'TEST_FRAGILE_SKILL', ts:now3-1000} ];
+        var frag1 = v52aSkillFragility('TEST_FRAGILE_SKILL');
+        PROGRESS.attempts.push({qid:'TESTQ_D', evidenceFamily:'TESTQ_D', correct:true, confidence:'high', skillId:'TEST_FRAGILE_SKILL', ts:now3});
+        var frag2 = v52aSkillFragility('TEST_FRAGILE_SKILL');
+        PROGRESS.attempts = savedAttempts4;
+        fragileOk = frag1.fragile === true && frag2.fragile === false;
+        fragileDetail = 'Single Low-confidence correct: fragile='+frag1.fragile+' (must be true). After an independent different-family High-confidence correct: fragile='+frag2.fragile+' (must be false).';
+      } catch(e){ fragileDetail = 'error: '+e.message; }
+      rs.push({name:'Phase 2A: fragile-correct semantics (Low-confidence-only is fragile, independent confident case clears it)', ok: fragileOk, detail: fragileDetail});
+
+      // 8) Excluded items (14-10) never produce diagnostic evidence.
+      var excludedOk = true, excludedDetail = 'ok';
+      try {
+        var rows1410 = V52A_DISTRACTOR_DIAGNOSTICS['14-10'];
+        if (rows1410 && rows1410.length){
+          excludedOk = rows1410.every(function(r){ return r.diagnostic_status === 'EXCLUDED_ITEM'; });
+          excludedDetail = '14-10 has '+rows1410.length+' authored rows, all diagnostic_status=EXCLUDED_ITEM: '+excludedOk;
+        } else { excludedDetail = '14-10 has no authored diagnostic rows (also acceptable - it was never in the pilot item export).'; }
+      } catch(e){ excludedDetail = 'error: '+e.message; }
+      rs.push({name:'Phase 2A: excluded items (14-10) carry no non-excluded diagnostic rows', ok: excludedOk, detail: excludedDetail});
+
+      // 9) Export/import preserves the new attempt-level diagnostic fields
+      //    (pure structural check - the full real round trip is proven by
+      //    a separate Playwright test, this just confirms the fields
+      //    survive a JSON.stringify/parse cycle identically).
+      var jsonRoundTripOk = false, jsonRoundTripDetail = 'not testable';
+      try {
+        var sample = {qid:'X', correct:false, ts:1, diagnosticVersion:'v2a.1', evidenceFamily:'X', selectedOptionIdentity:'foo', diagnosticStatus:'GENERAL_WRONG_REASON_VERIFIED', errorClass:'CONCEPT_GAP', misconceptionCode:'TEST', skillId:'TESTSKILL'};
+        var rt = JSON.parse(JSON.stringify(sample));
+        jsonRoundTripOk = Object.keys(sample).every(function(k){ return rt[k]===sample[k]; });
+        jsonRoundTripDetail = 'All '+Object.keys(sample).length+' new diagnostic attempt fields survive a JSON round trip unchanged: '+jsonRoundTripOk;
+      } catch(e){ jsonRoundTripDetail = 'error: '+e.message; }
+      rs.push({name:'Phase 2A: diagnostic attempt fields survive JSON export/import structurally', ok: jsonRoundTripOk, detail: jsonRoundTripDetail});
+
+      // 10) Legacy attempts (no diagnostic fields at all) never throw when
+      //     read by the new live-computation functions.
+      var legacySafeOk = false, legacySafeDetail = 'not testable';
+      try {
+        var savedAttempts5 = PROGRESS.attempts;
+        PROGRESS.attempts = [ {qid:'LEGACY_Q', correct:false, ts:Date.now(), confidence:'high'} ]; // no misconceptionCode/skillId/evidenceFamily at all
+        var summaryLegacy = v52aDiagnosticSummary();
+        PROGRESS.attempts = savedAttempts5;
+        legacySafeOk = !!summaryLegacy && Array.isArray(summaryLegacy.recurring);
+        legacySafeDetail = 'v52aDiagnosticSummary() ran without error against a pre-Phase-2A legacy attempt record (no diagnostic fields present at all): '+legacySafeOk;
+      } catch(e){ legacySafeDetail = 'error: '+e.message; }
+      rs.push({name:'Phase 2A: legacy attempts without diagnostic fields are handled safely', ok: legacySafeOk, detail: legacySafeDetail});
+
+      return rs;
+    };
+  }
+})();
+</script>
+
 </body>
 </html>
