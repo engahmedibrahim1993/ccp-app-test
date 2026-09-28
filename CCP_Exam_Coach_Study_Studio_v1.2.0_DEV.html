@@ -11841,7 +11841,7 @@ runRecommendedStep = function(){
       const quotaOk=Object.keys(EXPECTED_QUOTAS).every(k=>quotaObj[k]===EXPECTED_QUOTAS[k])&&Object.values(quotaObj).reduce((a,b)=>a+b,0)===119;
       rs.push({name:'Current blueprint domain allocation',ok:quotaOk,detail:'119Q allocation verified: D1 43, D2 28, D3 13, D4 20, D5 6, D6 9.'});
       rs.push({name:'Blueprint task coverage',ok:tasks.length===76&&uncovered.length===0,detail:`${tasks.length-uncovered.length}/${tasks.length} current blueprint tasks have at least one dedicated direct/reserve application item; uncovered: ${uncovered.map(x=>x.code).join(', ')||'none'}.`});
-      const native=(QUESTIONS||[]).filter(q=>!q.v522TaskReserve&&!q.v524DirectTask); rs.push({name:'Static assessment inventory',ok:Array.isArray(QUESTIONS)&&QUESTIONS.length===830&&native.length===702&&r.length===89&&d.length===39,detail:`${native.length} native + ${r.length} task-reserve + ${d.length} direct-task = ${QUESTIONS.length} installed static assessment items.`});
+      const native=(QUESTIONS||[]).filter(q=>!q.v522TaskReserve&&!q.v524DirectTask); rs.push({name:'Static assessment inventory',ok:Array.isArray(QUESTIONS)&&QUESTIONS.length===831&&native.length===703&&r.length===89&&d.length===39,detail:`${native.length} native + ${r.length} task-reserve + ${d.length} direct-task = ${QUESTIONS.length} installed static assessment items. (703/831 reflects the +1 v1.2.9 Global Gap Repair addition, 1-17R1 - see V529_REPLACEMENT_1_17.)`});
       return rs;
     };
   }
@@ -11885,7 +11885,7 @@ runRecommendedStep = function(){
       const native=(QUESTIONS||[]).filter(q=>!q.v522TaskReserve&&!q.v524DirectTask); const calcs=native.filter(q=>q.type==='calculation');
       const structureOk=calcs.every(q=>Array.isArray(q.options)&&q.options.length===4&&new Set(q.options.map(x=>String(x).trim().toLowerCase())).size===4&&Number.isInteger(q.correct)&&q.correct>=0&&q.correct<4&&String(q.formula||'').trim().length>0);
       const patched=CALC_REPAIR_IDS.filter(id=>{const q=QUESTIONS.find(x=>String(x.id)===id);return q&&String(q.calcSteps||'').trim()&&String(q.formula||'').trim();});
-      rs.push({name:'Native calculation structure',ok:calcs.length===276&&structureOk,detail:`${calcs.length} calculation items checked: four unique options, valid single key, and non-empty formula metadata.`});
+      rs.push({name:'Native calculation structure',ok:calcs.length===277&&structureOk,detail:`${calcs.length} calculation items checked: four unique options, valid single key, and non-empty formula metadata. (277 reflects the +1 v1.2.9 Global Gap Repair addition, 1-17R1.)`});
       rs.push({name:'High-risk arithmetic regressions',ok:patched.length===CALC_REPAIR_IDS.length&&arithmeticRegression(),detail:`${patched.length}/${CALC_REPAIR_IDS.length} repaired calculation items pass independent arithmetic regression checks.`});
       return rs;
     };
@@ -12399,7 +12399,7 @@ runRecommendedStep = function(){
   // ---- Manifest: every known learner-facing content bank and its count
   //      at the time of this census (2026, Batch-B-QA-correction pass). ----
   const CENSUS_MANIFEST = Object.freeze({
-    QUESTIONS: 830,                         // native + built BP522/BP524 runtime copies
+    QUESTIONS: 831,                         // native + built BP522/BP524 runtime copies (+1 v1.2.9 Global Gap Repair: 1-17R1)
     EXAM_STUDY_GUIDE_BANK: 414,
     V56_CURATED_BANK: 112,
     V57_INTERNAL_MASTERY_BANK: 200,         // includes the 50 V513-merged items (Ch.2/23/28/31/32)
@@ -12876,6 +12876,253 @@ runRecommendedStep = function(){
       const ok = !!q && q.source === NEW_SOURCE_20_11 && q.explain === NEW_EXPLAIN_20_11 && q.correct === 3 && Array.isArray(q.options) && q.options.length === 4;
       rs.push({name:'Batch E Part 0: 20-11 Maslow citation/explanation corrected (7-level source, answer unchanged)', ok,
         detail: ok ? '20-11 now cites S&K6 Ch.20 p.277 and discloses the source\'s 7-level hierarchy; correct-answer index (3) and all four option strings are unchanged.' : 'FIX NOT LIVE - see BATCHE_PART0_2011_FIX for expected values.'});
+      return rs;
+    };
+  }
+})();
+</script>
+
+<script id="phase-v129-global-gap-repair">
+/* =========================================================
+   v1.2.9 GLOBAL GAP REPAIR / EVIDENCE QUALITY REPAIR
+   Per explicit instruction, following Phase-1 freeze cleanup:
+     Part 2 - 1-17 quarantined-and-replaced (new sourced content unit)
+     Part 3 - Chapter 5 disjoint Apply+Challenge capacity repair
+     Part 8 - canonical evidence-status resolver
+   No native QUESTIONS/EXAM_STUDY_GUIDE_BANK/V56_CURATED_BANK literal
+   text is edited in place; all changes are guarded runtime overlays
+   or additive QUESTIONS.push() entries, per the established mechanism
+   (same pattern as V522/V524 task-reserve/direct-task items).
+   ========================================================= */
+(function(){
+
+  // ---------------------------------------------------------------
+  // PART 2: 1-17 replacement. Historical 1-17 stays quarantined via
+  // BATCHA_QA_QUARANTINE (untouched, preserved for provenance). A new
+  // canonical unit (1-17R1) is added, sourced only from indirect-cost
+  // elements S&K6 Ch.1 (p.11) and AACE RP 10S-90 explicitly name as
+  // indirect costs (overhead/general-administrative, taxes, utilities,
+  // legal services) - NOT profit or contingency, which RP 10S-90 and
+  // S&K6 Ch.1/Ch.2 define as amounts distinct from indirect cost.
+  // ---------------------------------------------------------------
+  const V529_REPLACEMENT_1_17 = {
+    id:'1-17R1', chapter:'1', chapterName:'Cost Elements', topic:'Indirect Cost Elements',
+    domain:'Domain 1: Managing Project Costs', type:'calculation', difficulty:'Easy',
+    q:"A project's indirect cost elements are: overhead $20,000, taxes $6,000, utilities $3,000, and legal services $4,000. What is the total indirect cost?",
+    options:["$33,000","$29,000","$27,000","$36,000"],
+    correct:0,
+    explain:"Formula: Total Indirect Cost = Overhead + Taxes + Utilities + Legal Services. Calculation: $20,000+$6,000+$3,000+$4,000 = $33,000. S&K6 Ch.1 (p.11) names general administrative/overhead activities and expenses for utilities, taxes, and legal services as indirect-cost examples (allocated across more than one final cost objective, unlike a direct cost); AACE RP 10S-90's own INDIRECT COSTS definition likewise lists taxes among its construction indirect-cost examples (field administration, capital tools, contractor's fees, insurance, taxes, etc.).",
+    whyWrong:"Each distractor omits one of the four source-supported indirect-cost elements, or substitutes a transcription-slip value for one element - verify every term against the formula and the source's own list before summing.",
+    formula:"Total Indirect Cost = Overhead + Taxes + Utilities + Legal Services",
+    calcSteps:"$20,000+$6,000+$3,000+$4,000 = $33,000",
+    source:"S&K6 Ch.1, p.11 (Indirect Costs) and Table 1.2 (Overhead); AACE RP 10S-90, INDIRECT COSTS",
+    imported:false,
+    replacesId:'1-17',
+    replacementReason:"1-17 (retired, quarantined) summed profit and contingency into 'total indirect cost'; RP 10S-90 and S&K6 Ch.1/Ch.2 define profit and contingency as amounts distinct from indirect cost, not indirect-cost components. This replacement uses only source-named indirect-cost elements (overhead, taxes, utilities, legal services)."
+  };
+  if (Array.isArray(QUESTIONS) && !QUESTIONS.some(q=>q.id==='1-17R1')){
+    QUESTIONS.push(V529_REPLACEMENT_1_17);
+  }
+  window.V529_REPLACEMENT_1_17 = V529_REPLACEMENT_1_17;
+
+  // ---------------------------------------------------------------
+  // PART 3: Chapter 5 disjoint Apply+Challenge capacity repair.
+  // Root-cause finding (not assumed): cm5_2 (patent-term item, already
+  // source-backed - S&K6 Ch.5 p.[Patents and Trade Secrets]: "for
+  // patents starting June 8, 1995, a patent's duration is now 20 years
+  // from the date of patent filing... Patents filed prior to June 8,
+  // 1995... 17 years") was SILENTLY excluded from every Apply/Challenge
+  // candidate pool by the v57BaseItemQa source-cue gate, because its
+  // .context field contained the phrase "used in the chapter" (matches
+  // HUMAN_QA_SOURCE_RE's \bthe chapter\b term - the same gate that
+  // correctly strips citation leakage elsewhere). This is a wording
+  // defect in an ALREADY-VERIFIED, ALREADY-SOURCED item, not a content
+  // gap - restoring it needs a minimal wording fix, not a new item.
+  // Live-tested: this brings Ch.5's distinct Apply/Challenge source-case
+  // supply from 9 back to 10, satisfying the 5+5 disjoint floor without
+  // restoring ts5_1 (which stays excluded - SOURCE SUPPORT INSUFFICIENT).
+  // ---------------------------------------------------------------
+  const OLD_CM5_2_CONTEXT = "A US company files a utility patent application for a new industrial device under the post-1995 patent-term rules used in the chapter.";
+  const NEW_CM5_2_CONTEXT = "A US company files a utility patent application for a new industrial device, filed after June 8, 1995.";
+  const cm5_2 = (V56_CURATED_BANK['5']||[]).find(x=>x.id==='cm5_2');
+  window.V529_CH5_CAPACITY_REPAIR = {
+    id:'cm5_2', oldContext: OLD_CM5_2_CONTEXT, newContext: NEW_CM5_2_CONTEXT,
+    reason:"Removed the 'used in the chapter' source-cue phrase (HUMAN_QA_SOURCE_RE trigger) from cm5_2's context, unblocking it from v57CuratedHighTrust so it becomes a 10th distinct Ch.5 Apply/Challenge source case. Question, options, correct answer, and explanation are unchanged.",
+    askUnchanged:true, optionsUnchanged:true, correctUnchanged:true
+  };
+  if (cm5_2 && cm5_2.context === OLD_CM5_2_CONTEXT){
+    cm5_2.context = NEW_CM5_2_CONTEXT;
+  }
+
+  // ---------------------------------------------------------------
+  // PART 8: Canonical evidence-status resolver.
+  // Static metadata (reason/mechanism/repairState/replacementId) is
+  // hand-verified per item; live eligibility fields are computed from
+  // actual runtime state so the resolver cannot silently drift from
+  // enforcement behavior. Existing gates (isQuestionSuspended,
+  // sourceConflict, SYSTEM_QUARANTINE_IDS, BATCHA_QA_QUARANTINE,
+  // BATCHC_QA_QUARANTINE, SOURCE_AUTHORITY_QUARANTINE, V57_SOURCE_
+  // UNSUPPORTED_IDS) are left fully in place; this resolver reads them,
+  // it does not replace them.
+  // ---------------------------------------------------------------
+  const CANONICAL_REPAIR_REGISTRY = Object.freeze({
+    '1-17': {reason:'TECHNICAL DEFECT', mechanism:'BATCHA_QA_QUARANTINE -> isQuestionSuspended (blocks all scored/mastery/cold pools)', repairState:'OPEN_CONTENT_REPAIR', replacementId:'1-17R1'},
+    '6-19': {reason:'OUTSIDE SUPPORTED SOURCE SCOPE', mechanism:'SYSTEM_QUARANTINE_IDS + SUPPLEMENTAL_TRAINING_ONLY -> isQuestionSuspended', repairState:'ACTIVE_EXCLUDED_NO_REPAIR_REQUIRED', replacementId:null},
+    '6-20': {reason:'OUTSIDE SUPPORTED SOURCE SCOPE', mechanism:'SYSTEM_QUARANTINE_IDS + SUPPLEMENTAL_TRAINING_ONLY -> isQuestionSuspended', repairState:'ACTIVE_EXCLUDED_NO_REPAIR_REQUIRED', replacementId:null},
+    '6-21': {reason:'OUTSIDE SUPPORTED SOURCE SCOPE', mechanism:'SYSTEM_QUARANTINE_IDS + SUPPLEMENTAL_TRAINING_ONLY -> isQuestionSuspended', repairState:'ACTIVE_EXCLUDED_NO_REPAIR_REQUIRED', replacementId:null},
+    '6-22': {reason:'OUTSIDE SUPPORTED SOURCE SCOPE', mechanism:'SYSTEM_QUARANTINE_IDS + SUPPLEMENTAL_TRAINING_ONLY -> isQuestionSuspended', repairState:'ACTIVE_EXCLUDED_NO_REPAIR_REQUIRED', replacementId:null},
+    '6-23': {reason:'OUTSIDE SUPPORTED SOURCE SCOPE', mechanism:'SYSTEM_QUARANTINE_IDS + SUPPLEMENTAL_TRAINING_ONLY -> isQuestionSuspended', repairState:'ACTIVE_EXCLUDED_NO_REPAIR_REQUIRED', replacementId:null},
+    '6-24': {reason:'OUTSIDE SUPPORTED SOURCE SCOPE', mechanism:'SYSTEM_QUARANTINE_IDS + SUPPLEMENTAL_TRAINING_ONLY -> isQuestionSuspended', repairState:'ACTIVE_EXCLUDED_NO_REPAIR_REQUIRED', replacementId:null},
+    'sg6_4': {reason:'SOURCE CONFLICT (suspected official Study Guide erratum vs S&K6 Ch.6 hierarchy)', mechanism:'EXAM_STUDY_GUIDE_BANK sourceConflict flag -> excluded from Official Study Guide auto-grade', repairState:'ACTIVE_EXCLUDED_NO_REPAIR_REQUIRED', replacementId:null},
+    'appa_2e': {reason:'SOURCE SUPPORT INSUFFICIENT', mechanism:'EXAM_STUDY_GUIDE_BANK sourceConflict flag -> excluded from Official Study Guide auto-grade', repairState:'ACTIVE_EXCLUDED_NO_REPAIR_REQUIRED', replacementId:null},
+    'ts5_1': {reason:'SOURCE SUPPORT INSUFFICIENT', mechanism:'V57_TRANSFER_SUPPLEMENT sourceConflict flag -> excluded from v57CuratedHighTrust gate', repairState:'ACTIVE_EXCLUDED_NO_REPAIR_REQUIRED (Ch.5 capacity restored separately via cm5_2 wording fix, not by restoring ts5_1)', replacementId:null},
+    '14-10': {reason:'SECONDARY-COURSE-SUPPORTED / HIGHER-PRIORITY SOURCE SUPPORT INSUFFICIENT', mechanism:'BATCHC_QA_QUARANTINE -> isQuestionSuspended', repairState:'ACTIVE_EXCLUDED_NO_REPAIR_REQUIRED', replacementId:null},
+    'cx14_2': {reason:'SECONDARY-COURSE-SUPPORTED / HIGHER-PRIORITY SOURCE SUPPORT INSUFFICIENT', mechanism:'V57_SOURCE_UNSUPPORTED_IDS sourceConflict flag -> filtered from Challenge candidate pool', repairState:'ACTIVE_EXCLUDED_NO_REPAIR_REQUIRED', replacementId:null},
+    '29-26': {reason:'OUTSIDE SUPPORTED SOURCE SCOPE (general probability addition rule)', mechanism:'SYSTEM_QUARANTINE_IDS + SOURCE_AUTHORITY_QUARANTINE -> isQuestionSuspended', repairState:'ACTIVE_EXCLUDED_NO_REPAIR_REQUIRED', replacementId:null},
+    '29-27': {reason:'OUTSIDE SUPPORTED SOURCE SCOPE (general probability multiplication rule)', mechanism:'SYSTEM_QUARANTINE_IDS + SOURCE_AUTHORITY_QUARANTINE -> isQuestionSuspended', repairState:'ACTIVE_EXCLUDED_NO_REPAIR_REQUIRED', replacementId:null},
+    '29-28': {reason:'OUTSIDE SUPPORTED SOURCE SCOPE (conditional probability formula)', mechanism:'SYSTEM_QUARANTINE_IDS + SOURCE_AUTHORITY_QUARANTINE -> isQuestionSuspended', repairState:'ACTIVE_EXCLUDED_NO_REPAIR_REQUIRED', replacementId:null}
+  });
+  window.CANONICAL_REPAIR_REGISTRY = CANONICAL_REPAIR_REGISTRY;
+
+  function v529FindBankItem(id){
+    const banks = [window.EXAM_STUDY_GUIDE_BANK, window.V56_CURATED_BANK, window.V57_INTERNAL_MASTERY_BANK, window.V57_TRANSFER_SUPPLEMENT, window.V520_CHALLENGE_EXTRAS].filter(Boolean);
+    for (const bank of banks){
+      for (const arr of Object.values(bank)){
+        const hit = (arr||[]).find(x=>x && x.id===id);
+        if (hit) return hit;
+      }
+    }
+    return null;
+  }
+
+  window.getCanonicalEvidenceStatus = function(canonicalId){
+    const id = String(canonicalId);
+    const reg = CANONICAL_REPAIR_REGISTRY[id] || null;
+    const nativeItem = Array.isArray(QUESTIONS) ? QUESTIONS.find(x=>String(x.id)===id) : null;
+    const bankItem = nativeItem ? null : v529FindBankItem(id);
+    const suspended = nativeItem && typeof isQuestionSuspended==='function' ? isQuestionSuspended(id) : null;
+    const sourceConflict = bankItem ? !!bankItem.sourceConflict : null;
+
+    if (!reg && !nativeItem && !bankItem){
+      return {canonicalId:id, known:false, reason:'not in registry or any bank', mechanism:null, repairState:null,
+        learnerVisible:null, scoringEligible:null, masteryEligible:null, readinessEligible:null, coldEligible:null, replacementId:null};
+    }
+
+    // Known-excluded population (the 15 units + any future additions): uniformly excluded
+    // from mastery/readiness/cold contribution. learnerVisible stays true (preserved for
+    // provenance, per established discipline); scoringEligible follows the actual live gate.
+    const isKnownExcluded = !!reg;
+    let scoringEligible;
+    if (nativeItem) scoringEligible = !suspended;
+    else if (bankItem) scoringEligible = !sourceConflict;
+    else scoringEligible = null;
+
+    const coldEligible = !!nativeItem && !suspended; // cold pools only ever draw from QUESTIONS/native
+    const masteryEligible = isKnownExcluded ? false : (scoringEligible===true);
+    const readinessEligible = isKnownExcluded ? false : (scoringEligible===true);
+
+    return {
+      canonicalId: id,
+      known: true,
+      technicalStatus: reg ? reg.reason : null,
+      reason: reg ? reg.reason : null,
+      mechanism: reg ? reg.mechanism : null,
+      repairState: reg ? reg.repairState : null,
+      replacementId: reg ? reg.replacementId : null,
+      learnerVisible: true,
+      scoringEligible,
+      masteryEligible,
+      readinessEligible,
+      coldEligible
+    };
+  };
+
+  // ---------------------------------------------------------------
+  // Parity/integrity tests: prove the resolver agrees with actual
+  // runtime behavior for every one of the 15 known-excluded units,
+  // plus the new 1-17 -> 1-17R1 replacement link and the Ch.5 repair.
+  // ---------------------------------------------------------------
+  if (typeof integrityResults === 'function'){
+    const priorIntegrityGapRepair = integrityResults;
+    integrityResults = function(){
+      const rs = priorIntegrityGapRepair();
+
+      const allIds = Object.keys(CANONICAL_REPAIR_REGISTRY);
+      const parityFailures = [];
+      allIds.forEach(id=>{
+        const status = getCanonicalEvidenceStatus(id);
+        if (!status.known){ parityFailures.push(id+': not known to resolver'); return; }
+        if (status.masteryEligible !== false || status.readinessEligible !== false){
+          parityFailures.push(id+': resolver reports mastery/readiness eligible for a known-excluded unit');
+        }
+        if (id==='1-17'){
+          if (status.scoringEligible !== false) parityFailures.push('1-17: resolver reports scoringEligible=true but is quarantined');
+          if (status.replacementId !== '1-17R1') parityFailures.push('1-17: replacementId not wired to 1-17R1');
+        } else if (['6-19','6-20','6-21','6-22','6-23','6-24','14-10','29-26','29-27','29-28'].includes(id)){
+          if (status.scoringEligible !== false) parityFailures.push(id+': resolver reports scoringEligible=true but isQuestionSuspended is expected true');
+        } else if (['sg6_4','appa_2e','ts5_1','cx14_2'].includes(id)){
+          if (status.scoringEligible !== false) parityFailures.push(id+': resolver reports scoringEligible=true but sourceConflict is expected true');
+        }
+      });
+      rs.push({name:'Canonical evidence-status resolver parity (15 known-excluded units)', ok: parityFailures.length===0,
+        detail: parityFailures.length===0 ? `getCanonicalEvidenceStatus() agrees with live isQuestionSuspended/sourceConflict state for all ${allIds.length} known-excluded canonical units; none report mastery/readiness eligibility.` : `Mismatches: ${parityFailures.join(' | ')}`});
+
+      // 1-17 replacement reachability/scoring
+      const r117 = QUESTIONS.find(q=>q.id==='1-17R1');
+      const r117Ok = !!r117 && r117.correct===0 && Array.isArray(r117.options) && r117.options.length===4
+        && (typeof isQuestionSuspended!=='function' || !isQuestionSuspended('1-17R1'))
+        && r117.options[0]==='$33,000';
+      rs.push({name:'1-17R1 (source-backed replacement) reachable and scoring-eligible', ok:r117Ok,
+        detail: r117Ok ? '1-17R1 is present in QUESTIONS, not suspended, and its correct option ($33,000 = overhead+taxes+utilities+legal services) is independently re-verifiable.' : 'FIX NOT LIVE - see V529_REPLACEMENT_1_17.'});
+
+      // Historical 1-17 non-leakage: still quarantined, unedited, linked to replacement
+      const orig117 = QUESTIONS.find(q=>q.id==='1-17');
+      const orig117Ok = !!orig117 && typeof isQuestionSuspended==='function' && isQuestionSuspended('1-17')
+        && orig117.correct===0 && orig117.options[0]==='$73,000';
+      rs.push({name:'Historical 1-17 preserved, quarantined, non-leaking', ok:orig117Ok,
+        detail: orig117Ok ? '1-17 is unedited (original $73,000-keyed text intact for provenance) and remains excluded from all scored/mastery/cold pools via BATCHA_QA_QUARANTINE.' : 'historical 1-17 state unexpected.'});
+
+      // Ch.5 disjoint 5+5 capacity restored
+      let ch5Ok = false, ch5Detail = 'v510PairPlan not callable';
+      try {
+        if (typeof v510PairPlan === 'function'){
+          const plan = v510PairPlan('5');
+          ch5Ok = !!(plan && plan.ok && plan.applyCount>=5 && plan.challengeCount>=5);
+          ch5Detail = `v510PairPlan('5') => ok=${plan&&plan.ok}, applyCount=${plan&&plan.applyCount}, challengeCount=${plan&&plan.challengeCount}, total distinct=${plan&&plan.total}.`;
+        }
+      } catch(e){ ch5Detail = 'error: '+e.message; }
+      rs.push({name:'Chapter 5 disjoint Apply+Challenge capacity restored (5+5)', ok:ch5Ok, detail:ch5Detail});
+
+      const cm52Live = (V56_CURATED_BANK['5']||[]).find(x=>x.id==='cm5_2');
+      const cm52TrustOk = !!(cm52Live && typeof v57CuratedHighTrust==='function' && v57CuratedHighTrust(cm52Live)===true && cm52Live.context===NEW_CM5_2_CONTEXT);
+      rs.push({name:'cm5_2 wording fix live (source-cue removed, passes QA gate)', ok:cm52TrustOk,
+        detail: cm52TrustOk ? 'cm5_2 context no longer contains a source-cue phrase, passes v57CuratedHighTrust, and its ask/options/correct/explanation are unchanged.' : 'FIX NOT LIVE - see V529_CH5_CAPACITY_REPAIR.'});
+
+      // ---- Part 9: tracked new-content delta vs. the frozen v1.1.2 baseline ----
+      // FINAL_RELEASE_MANIFEST is a genuine historical record and is intentionally
+      // left unedited. This phase adds exactly 1 new QUESTIONS-bank canonical unit
+      // (1-17R1); patch the frozen-baseline row so it reports the tracked,
+      // documented delta explicitly rather than a raw unexplained failure -
+      // mirrors the v519PatchCh5KnownException pattern used earlier in this file.
+      const V529_NEW_CONTENT_SINCE_V112 = Object.freeze({QUESTIONS:1});
+      window.V529_NEW_CONTENT_SINCE_V112 = V529_NEW_CONTENT_SINCE_V112;
+      {
+        const row = rs.find(r=>r.name==='Inherited v1.1.2 FINAL baseline manifest');
+        if (row && !row.ok){
+          const m = window.FINAL_RELEASE_MANIFEST;
+          const staticCount = (QUESTIONS||[]).length;
+          const nativeCount = (QUESTIONS||[]).filter(q=>!q.v522TaskReserve&&!q.v524DirectTask).length;
+          const sgCount = Object.values(EXAM_STUDY_GUIDE_BANK||{}).reduce((n,a)=>n+a.length,0);
+          const expectedDelta = V529_NEW_CONTENT_SINCE_V112.QUESTIONS;
+          const otherFieldsOk = sgCount===m.officialStudyGuidePlacements && (V521_BLUEPRINT_TASKS||[]).length===m.blueprintTasks && (window.SYSTEM_QUARANTINE_IDS||[]).length===m.systemQuarantinedItems;
+          const deltaAccountedOk = staticCount===(m.staticAssessmentInventory+expectedDelta) && nativeCount===(m.nativeQuestions+expectedDelta);
+          if (otherFieldsOk && deltaAccountedOk){
+            row.ok = true;
+            row.detail = `Diverges from the frozen v1.1.2 baseline by exactly the tracked, audited v1.2.9 Global Gap Repair addition (+${expectedDelta} QUESTIONS-bank unit: 1-17R1). All other baseline fields (Study Guide ${sgCount}, blueprint tasks ${(V521_BLUEPRINT_TASKS||[]).length}, system quarantine ${(window.SYSTEM_QUARANTINE_IDS||[]).length}) still match v1.1.2 exactly. ${row.detail}`;
+          }
+        }
+      }
+
       return rs;
     };
   }
