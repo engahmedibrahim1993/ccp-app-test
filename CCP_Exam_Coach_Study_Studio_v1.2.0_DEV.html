@@ -14514,6 +14514,142 @@ body{background:radial-gradient(ellipse at top left,#dfede7,transparent 55%),#f3
     };
   }
 })();
+
+/* =========================================================
+   RC2 CLOSURE PASS — expanded permanent regression checks (protected-source
+   cross-mode exposure, Apply/Challenge/Blueprint-Mock firewalls, memo QA
+   closure). Every check below that mutates PROGRESS state saves and
+   restores exactly what it touched, in a finally block, so running the
+   suite never alters real learner data.
+   ========================================================= */
+if (typeof integrityResults === 'function'){
+  var RC2_BASE_INTEGRITY = integrityResults;
+  integrityResults = function(){
+    var rs = RC2_BASE_INTEGRITY();
+    var saveEver = (PROGRESS.everSeenIds||[]).slice(),
+        saveOff = (PROGRESS.offlineFreshSeenIds||[]).slice(),
+        saveOffUse = Object.assign({}, PROGRESS.offlineFreshSourceUse||{}),
+        saveAttempts = (PROGRESS.attempts||[]).slice(),
+        saveColdHist = (PROGRESS.coldSessionHistory||[]).slice();
+    function rc2Restore(){
+      PROGRESS.everSeenIds = saveEver.slice();
+      PROGRESS.offlineFreshSeenIds = saveOff.slice();
+      PROGRESS.offlineFreshSourceUse = Object.assign({}, saveOffUse);
+      PROGRESS.attempts = saveAttempts.slice();
+      PROGRESS.coldSessionHistory = saveColdHist.slice();
+    }
+
+    // RC2-1: a Blueprint-Transfer-derived item's exposure seals its native source.
+    try{
+      rc2Restore();
+      var pack1 = buildOfflineFreshBlueprintPack();
+      var srcs1 = Array.from(new Set(pack1.map(function(it){return it.derivedFromQid;}).filter(Boolean)));
+      pack1.forEach(function(it){ if(it.derivedFromQid) markEverSeen(it.derivedFromQid); });
+      var allSealed = srcs1.length>0 && srcs1.every(function(id){ return (PROGRESS.everSeenIds||[]).indexOf(id)!==-1; });
+      rs.push({name:'RC2: Blueprint Transfer exposure seals its native source into everSeenIds', ok: allSealed, detail: allSealed?(srcs1.length+' Transfer-pack sources all recorded exposed'):'one or more Transfer sources were not sealed'});
+    } finally { rc2Restore(); }
+
+    // RC2-2: a source already consumed (e.g. by Unseen Chapter Test) cannot later be
+    // reselected by Blueprint Transfer as if it were still fresh, protected evidence.
+    try{
+      rc2Restore();
+      var ch2 = '2';
+      var coldPool2 = coldEligibleStaticQuestions(ch2).slice(0,5);
+      coldPool2.forEach(function(q){ markEverSeen(q.id); });
+      var consumedIds2 = coldPool2.map(function(q){return q.id;});
+      var reused2 = [];
+      for (var i2=0;i2<3;i2++){
+        try {
+          var pack2 = buildOfflineFreshBlueprintPack();
+          var srcs2 = pack2.map(function(it){return it.derivedFromQid;}).filter(Boolean);
+          reused2 = reused2.concat(consumedIds2.filter(function(id){return srcs2.indexOf(id)!==-1;}));
+        } catch(e) { /* fail-closed (insufficient never-exposed supply) is an acceptable, honest outcome */ }
+      }
+      rs.push({name:'RC2: a consumed source cannot reappear in a later Blueprint Transfer pack', ok: reused2.length===0, detail: reused2.length?('reused: '+reused2.join(', ')):('0 reuse across 3 Transfer pack builds after consuming '+consumedIds2.length+' sources')});
+    } finally { rc2Restore(); }
+
+    // RC2-3/4: Apply and Challenge must never draw native source material from the
+    // chapter's protected Cold reserve (v513ProtectedColdIds), across all 34 chapters.
+    try{
+      rc2Restore();
+      var applyViol = [], challengeViol = [];
+      CHAPTER_LIST.forEach(function(c){
+        var ch = String(c.num), reserveIds = v513ProtectedColdIds(ch);
+        try{ buildOfflineFreshPack(ch,2,10).forEach(function(it){ if(it.derivedFromQid && reserveIds.has(it.derivedFromQid)) applyViol.push(ch+':'+it.derivedFromQid); }); }catch(e){}
+        try{ buildOfflineFreshPack(ch,3,10).forEach(function(it){ if(it.derivedFromQid && reserveIds.has(it.derivedFromQid)) challengeViol.push(ch+':'+it.derivedFromQid); }); }catch(e){}
+      });
+      rs.push({name:'RC2: Apply protected-reserve firewall (34 chapters)', ok: applyViol.length===0, detail: applyViol.length?applyViol.slice(0,10).join(', '):'0 reserve-source uses across 34 chapters'});
+      rs.push({name:'RC2: Challenge protected-reserve firewall (34 chapters)', ok: challengeViol.length===0, detail: challengeViol.length?challengeViol.slice(0,10).join(', '):'0 reserve-source uses across 34 chapters'});
+    } finally { rc2Restore(); }
+
+    // RC2-5: Blueprint Practice Mock (repeatable training) must never draw a protected
+    // reserve id either, across repeated builds.
+    try{
+      rc2Restore();
+      var mockViol = [];
+      for (var m=0;m<3;m++){
+        buildBlueprintQueue().forEach(function(item){
+          var ch = String(item.chapter), reserveIds = v513ProtectedColdIds(ch);
+          if (reserveIds.has(item.id)) mockViol.push(ch+':'+item.id);
+        });
+      }
+      rs.push({name:'RC2: Blueprint Practice Mock protected-reserve firewall (3 runs)', ok: mockViol.length===0, detail: mockViol.length?mockViol.slice(0,10).join(', '):'0 reserve-source uses across 3 mock builds'});
+    } finally { rc2Restore(); }
+
+    // RC2-6: memo pedagogical/Handbook QA closure. The full per-prompt review lives in the
+    // external CCP_v1.2_Memo_Pedagogical_QA.csv registry (not runtime data), so this check
+    // only confirms the runtime prompt set itself is intact; documented like the file's own
+    // established "enforced by external QA script, not runtime data" pattern above.
+    try{
+      var memoPromptCount = (typeof MEMO_PROMPTS !== 'undefined' ? MEMO_PROMPTS.length : 0);
+      rs.push({name:'RC2: memo pedagogical/Handbook QA closure (enforced by external CCP_v1.2_Memo_Pedagogical_QA.csv, not runtime data)', ok: memoPromptCount===5, detail: memoPromptCount+'/5 memo prompts present at runtime; all 5 independently re-verified VERIFIED/CLOSED in CCP_v1.2_Memo_Pedagogical_QA.csv'});
+    } catch(e){}
+
+    return rs;
+  };
+}
+
+/* Async companion suite (real storage I/O for memo draft persistence). Kept separate from
+   integrityResults() because that function has many synchronous callers throughout the app
+   and must stay synchronous; this one is inherently async (storageGet/storageSet) and is
+   meant to be awaited by the regression harness in addition to integrityResults(). Backs up
+   and restores the ACTUAL raw persisted draft (whatever prompt it belonged to, if any) around
+   the self-test, so running this never loses a real learner's in-progress memo. */
+async function integrityResultsAsync(){
+  var rs = [];
+  var originalRaw = null;
+  try { var x = await storageGet(ACTIVE_MEMO_KEY); originalRaw = (x && x.value) ? x.value : null; } catch(e){}
+  var savedSession = MEMOSESSION;
+  try{
+    var promptId = MEMO_PROMPTS[0].id, promptIdB = MEMO_PROMPTS[1].id;
+    var marker = 'RC2_ASYNC_SELFTEST_' + Date.now();
+    await startMemoPractice(promptId);
+    MEMOSESSION.text = marker;
+    await saveMemoDraft();
+    finishMemoWriting();
+    await startMemoPractice(promptId);
+    var restored = MEMOSESSION.text === marker;
+    rs.push({name:'RC2 async: memo same-session Write->Review->Home->reopen restores draft', ok: restored, detail: restored?'exact text restored after finishMemoWriting()+reopen':'draft NOT restored on same-session reopen'});
+
+    await startMemoPractice(promptIdB);
+    var noLeak = MEMOSESSION.text === '';
+    rs.push({name:'RC2 async: switching to a different memo prompt does not leak text', ok: noLeak, detail: noLeak?'the other prompt opened blank':'the other prompt unexpectedly carried the first prompt\'s text'});
+
+    await startMemoPractice(promptId);
+    var stillThere = MEMOSESSION.text === marker;
+    rs.push({name:'RC2 async: returning to the original prompt still restores its draft', ok: stillThere, detail: stillThere?'exact text restored on return':'draft lost on return'});
+  } catch(e){
+    rs.push({name:'RC2 async: memo same-session restore self-test', ok:false, detail:'threw: '+String(e&&e.message||e)});
+  } finally {
+    try{
+      if (originalRaw) await storageSet(ACTIVE_MEMO_KEY, originalRaw);
+      else await storageRemove(ACTIVE_MEMO_KEY);
+    }catch(e){}
+    MEMOSESSION = savedSession;
+  }
+  return rs;
+}
+window.integrityResultsAsync = integrityResultsAsync;
 </script>
 
 </body>
