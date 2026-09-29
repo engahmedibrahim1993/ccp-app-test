@@ -7985,7 +7985,13 @@ var V56_baseChapterMasteryStatus=chapterMasteryStatus;
 chapterMasteryStatus=function(ch){
   const base=V56_baseChapterMasteryStatus(ch),g=chapterTrainingGate(ch),sgg=officialStudyGuideGate(ch);
   if(!sgg.pass&&(g.pass||base.key!=='developing'||g.unique>0)){
-    return {key:'developing',label:g.pass?'Practice Almost Complete':'Learning',detail:g.pass?'Complete and pass the Official Questions set before Apply/Mastery progress counts as complete.':base.detail};
+    // Bugfix: this wrapper can fire when the underlying base status is already
+    // advanced (e.g. "due"/"retained"), whose base.detail describes THAT state
+    // (a retention action, etc.) -- reusing it verbatim under the "Learning"/
+    // "Practice Almost Complete" label here produced a mismatched card (label
+    // said early-stage, detail described a later-stage action). Always describe
+    // the actual blocking gate instead of borrowing base.detail.
+    return {key:'developing',label:g.pass?'Practice Almost Complete':'Learning',detail:g.pass?'Complete and pass the Official Questions set before Apply/Mastery progress counts as complete.':'Continue Chapter Practice across every topic and pass the Official Questions set before Apply/Mastery/Retention progress counts as complete.'};
   }
   return base;
 };
@@ -11425,7 +11431,14 @@ var MRE_baseAdaptiveScore = adaptiveScore;
 adaptiveScore = function(q){
   let score = MRE_baseAdaptiveScore(q);
   const sid = mreSkillId(q.chapter, q.topic);
-  if(mreUnresolvedMisconceptions().some(u=>u.skillId===sid)) score += 12;
+  // Bugfix: mreUnresolvedMisconceptions() itself requires a correct answer on a
+  // DIFFERENT qid to clear the flag (see its own comment above), so boosting the
+  // exact qid that produced the misconception here stacks this +12 on top of the
+  // base score's own "recently wrong"/"high confidence" boosts for that same item,
+  // regularly outranking an untried alternate question testing the same skill --
+  // steering the adaptive/retest queue toward the one question that provably
+  // cannot resolve the misconception. Only boost a genuinely different question.
+  if(mreUnresolvedMisconceptions().some(u=>u.skillId===sid && u.qid!==q.id)) score += 12;
   const rep = mreRepeatedErrorSkills(2).find(r=>r.skillId===sid);
   if(rep) score += 8 + Math.min(4, rep.count);
   if(mreFragileSkills().some(f=>f.skillId===sid)) score += 3;
