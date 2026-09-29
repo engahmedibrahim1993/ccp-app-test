@@ -1266,6 +1266,7 @@ var MODES = [
   {key:"finalweek", label:"Final Week Mode", num:"10", desc:"High-yield triage: errors, hard Qs, calc, weak domains."},
   {key:"mission", label:"Today's Mission", num:"11", desc:"Auto-built daily queue from due SRS, weak points, retention, calculations and hard scenarios."},
   {key:"coldChapter", label:"Cold Chapter Certification", num:"12", desc:"One-use closed-book test using only static questions not exposed by Study Lab and never previously seen in this app."},
+  {key:"interleaved", label:"Interleaved Mixed Practice", num:"13", desc:"Cross-chapter, priority-weighted practice (weak/HCW/retention-due first) with the chapter hidden until you answer, so the topic can't be guessed from a label."},
 ];
 
 const BLUEPRINT_DOMAINS = [
@@ -1422,6 +1423,9 @@ function buildQueue(){
   if(CONFIG.mode === "finalweek"){
     pool = buildFinalWeekPool();
   }
+  if(CONFIG.mode === "interleaved"){
+    pool = buildInterleavedPool();
+  }
   if(CONFIG.difficulty !== "all"){ pool = pool.filter(q=>q.difficulty===CONFIG.difficulty); }
   if(CONFIG.qtype !== "all"){ pool = pool.filter(q=>q.type===CONFIG.qtype); }
   // Learner-suspended question issues are excluded from every scored static practice session.
@@ -1442,6 +1446,8 @@ function buildQueue(){
     selected = shuffle(pool); // return the full wrong-answer set, unfiltered by exposure
   } else if(CONFIG.mode === "adaptive" || CONFIG.mode === "finalweek"){
     selected = shuffle(pool).slice(0, Math.min(CONFIG.numQuestions, pool.length));
+  } else if(CONFIG.mode === "interleaved"){
+    selected = selectInterleavedDiverse(pool, Math.min(CONFIG.numQuestions, pool.length));
   } else {
     selected = selectByExposure(pool, Math.min(CONFIG.numQuestions, pool.length));
   }
@@ -1493,6 +1499,56 @@ function buildAdaptivePool(){
     : Math.max(40, CONFIG.numQuestions*4);
   const top = scored.slice(0, sliceSize).map(x=>x.q);
   return top;
+}
+/* =========================================================
+   INTERLEAVED MIXED PRACTICE (RC1 final-completion pass)
+   Genuine cross-chapter interleaving: reuses adaptiveScore() so priority
+   (HCW, fragile, repeated-wrong, retention-due, weak-topic) is identical
+   to Adaptive Practice, but adds an explicit anti-domination selection
+   step so a single chapter cannot fill most of the session — the whole
+   point of interleaving is that the learner cannot infer the method from
+   which chapter a run of questions belongs to. The per-question chapter
+   label is hidden in renderQuiz() (CONFIG.mode==="interleaved") until the
+   question is answered, then revealed in renderFeedback() ("may be shown"
+   after submission/review, per spec). No new content is generated here —
+   only existing, already-diagnosed questions are mixed and re-labeled.
+   ========================================================= */
+function buildInterleavedPool(){
+  const scored = QUESTIONS.filter(q=>!isQuestionSuspended(q.id) && staticQuestionIsQualityApproved(q)).map(q=>({q, s:adaptiveScore(q) + Math.random()*0.5}));
+  scored.sort((a,b)=>b.s-a.s);
+  return scored.map(x=>x.q);
+}
+function selectInterleavedDiverse(pool, n){
+  if(n<=0 || !pool.length) return [];
+  const byChapter = {};
+  pool.forEach(q=>{ const c=String(q.chapter); (byChapter[c]=byChapter[c]||[]).push(q); });
+  const chapters = Object.keys(byChapter);
+  // Cap any one chapter's share of the session; with few distinct chapters available
+  // (e.g. a thin bank slice) the cap widens so the session can still reach n.
+  const perChapterCap = Math.max(1, Math.ceil(n / Math.max(3, Math.min(chapters.length,6))));
+  const result = []; const usedByChapter = {};
+  let round = 0, guard = 0;
+  while(result.length<n && guard<n*20){
+    guard++;
+    let addedThisRound=false;
+    for(const c of chapters){
+      if(result.length>=n) break;
+      const bucket=byChapter[c];
+      usedByChapter[c]=usedByChapter[c]||0;
+      if(usedByChapter[c]>=perChapterCap) continue;
+      if(round>=bucket.length) continue;
+      result.push(bucket[round]); usedByChapter[c]++; addedThisRound=true;
+    }
+    round++;
+    if(!addedThisRound) break; // every chapter either exhausted or at cap
+  }
+  // Backfill without the cap if the diversity constraint left the session short
+  // (only happens when the eligible pool itself is too small to reach n any other way).
+  if(result.length<n){
+    const chosenIds=new Set(result.map(q=>q.id));
+    for(const q of pool){ if(result.length>=n) break; if(!chosenIds.has(q.id)){ result.push(q); chosenIds.add(q.id); } }
+  }
+  return shuffle(result);
 }
 function buildFinalWeekPool(){
   const priority = new Set([
@@ -1758,6 +1814,7 @@ function renderPracticeCenter(){
         <button class="btn secondary" onclick="homeAction('timedcalc')">Timed Calculation Set</button>
         <button class="btn secondary" onclick="homeAction('methoddrill')">Method Selection</button>
         <button class="btn secondary" onclick="homeAction('random')">Random Practice (mix chapters)</button>
+        <button class="btn secondary" onclick="homeAction('interleaved')">Interleaved Mixed Practice (unsignposted)</button>
         <button class="btn secondary" onclick="homeAction('generatedpractice')">Generated Practice</button>
         <button class="btn secondary" onclick="homeAction('freshchallengecenter')">Fresh Challenge (manual)</button>
       </div>
@@ -1973,7 +2030,7 @@ function renderFreshChallengeCenter(){
     </div>`;
 }
 function homeAction(key){
-  const startsSession=["chapter","random","weak","calc","concept","adaptive","timed","blueprint","wrong","finalweek","fullsim","methoddrill","timedcalc","mission","coldchapter"];
+  const startsSession=["chapter","random","weak","calc","concept","adaptive","interleaved","timed","blueprint","wrong","finalweek","fullsim","methoddrill","timedcalc","mission","coldchapter"];
   if((PENDING_ACTIVE_SESSION||PENDING_ACTIVE_FULLSIM) && startsSession.includes(key)){
     alert("You already have a paused exam/session. Resume it or discard it from the banner first so its rollback data is not overwritten.");
     return;
@@ -2061,6 +2118,11 @@ function selectMode(key){
     return;
   }
   if(key==="adaptive"){
+    CONFIG = { mode:key, chapter:"all", numQuestions:15, difficulty:"all", qtype:"all", timed:false, immediateFeedback:true, confidenceEnabled:true };
+    startSession();
+    return;
+  }
+  if(key==="interleaved"){
     CONFIG = { mode:key, chapter:"all", numQuestions:15, difficulty:"all", qtype:"all", timed:false, immediateFeedback:true, confidenceEnabled:true };
     startSession();
     return;
@@ -2772,7 +2834,7 @@ function renderQuiz(){
 
     <div class="qmeta">
       <span>Question <b>${SESSION.idx+1}</b> / ${SESSION.queue.length}</span>
-      <span>${chapterOnlyLabel(q)}</span>
+      <span>${(CONFIG.mode==="interleaved" && !showFeedback) ? "Mixed Practice — source hidden until answered" : chapterOnlyLabel(q)}</span>
       ${(!isMockStyle&&isStudyLabExposed(q.id))?`<span class="pacing-chip" title="This exact assessment stem is exposed by the paired Study Lab generated chapters; training use only.">Study Lab-exposed · training only</span>`:""}
       ${SESSION.evidenceClass==="cold"?`<span class="pacing-chip">Cold evidence</span>`:""}
       ${!isMockStyle && deferredCount()>0 ? `<span class="pacing-chip">Deferred: ${deferredCount()}</span>` : ""}
@@ -2832,6 +2894,13 @@ function toggleFlag(){
 function toggleBookmarkCurrent(){ toggleBookmark(SESSION.queue[SESSION.idx].id); }
 
 function renderFeedback(q){
+  // NOTE: this base definition is intentionally overridden later in the file
+  // (renderFeedback is reassigned as a full replacement at two later points,
+  // then wrapped once more) -- the live post-answer feedback always includes
+  // a .tagrow with the chapter/topic, which already satisfies Interleaved
+  // Mixed Practice's "chapter revealed only after answering" requirement
+  // without any mode-specific code here; see the later renderFeedback
+  // definitions for the actual live implementation.
   const wasCorrect = SESSION.selectedOpt === q.correct;
   return `<div class="feedback ${wasCorrect?'':'wrong'}">
     <p class="verdict">${wasCorrect ? "Correct" : "Incorrect"}</p>
@@ -3166,6 +3235,39 @@ function recordSessionHistory(){
   });
   if(PROGRESS.sessionHistory.length>100) PROGRESS.sessionHistory=PROGRESS.sessionHistory.slice(-100);
 }
+/* =========================================================
+   TIMING ANALYTICS — stall/outlier detection (RC1 final-completion pass)
+   Additive only: never changes scoring, mastery, or readiness. Flags a
+   question as a "stall" only when its time is both far above the
+   session's own median (>=3x) AND above an absolute floor (45s), so a
+   single 30s question in an otherwise-fast 5-question drill is not
+   flagged as a stall pattern. Requires at least 5 timed results before
+   flagging anything at all, per the instruction not to over-interpret
+   tiny samples. Shared by practice-session summaries, timed/Blueprint
+   mock history, and Full Simulation history.
+   ========================================================= */
+function sessionTimingAnalysis(results){
+  const times=(results||[]).map(r=>Number(r&&r.timeSpentSec)||0).filter(t=>t>0);
+  const n=times.length;
+  const avg=n?Math.round(times.reduce((a,b)=>a+b,0)/n):0;
+  if(n<5) return {n, median:avg, avg, stallThresholdSec:0, stallCount:0, stallQids:[], insufficientSample:true};
+  const sorted=times.slice().sort((a,b)=>a-b);
+  const median=sorted[Math.floor(n/2)];
+  const STALL_ABS_FLOOR_SEC=45, STALL_RATIO=3;
+  const stallThreshold=Math.max(STALL_ABS_FLOOR_SEC, median*STALL_RATIO);
+  const stalls=(results||[]).filter(r=>r && Number(r.timeSpentSec)>=stallThreshold);
+  return {
+    n, median, avg, stallThresholdSec:Math.round(stallThreshold),
+    stallCount: stalls.length,
+    stallQids: stalls.map(r=>r.q?r.q.id:(r.qid||null)).filter(Boolean),
+    insufficientSample:false,
+  };
+}
+function timingAnalyticsNoteHtml(timing){
+  if(!timing || timing.insufficientSample) return "";
+  if(!timing.stallCount) return `<p class="sub">Time management: median ${timing.median}s/question, no stalled questions detected (≥${timing.stallThresholdSec}s would flag).</p>`;
+  return `<p class="sub" style="color:var(--amber);">Time management: ${timing.stallCount} question${timing.stallCount===1?'':'s'} took ≥${timing.stallThresholdSec}s (median was ${timing.median}s) — a possible pacing stall, not a scoring penalty.</p>`;
+}
 function finishSession(){
   clearInterval(TIMER_INTERVAL);
   if(isMockSession() && !SESSION.mockSubmitted){ submitMockSession(true); return; }
@@ -3186,10 +3288,12 @@ function finishSession(){
     const topicList=Object.entries(byTopic).map(([name,t])=>({name,...t,pct:t.correct/t.total,misses:[...Array(t.total-t.correct)]}));
     const weakestSnapshot=topicList.map(t=>({...t,score:priorityScore(t)})).sort((a,b)=>b.score-a.score).slice(0,10);
     const totalQTime=SESSION.results.reduce((sum,r)=>sum+(Number(r.timeSpentSec)||0),0);
+    const timing=sessionTimingAnalysis(SESSION.results);
     PROGRESS.mockHistory.push({ts:Date.now(),mode:CONFIG.mode,sessionTag:SESSION.sessionTag||null,mockTag:SESSION.mockTag||null,score:correct,total:SESSION.results.length,
       domainScores:byDomain,chapterScores:byChapter,topicScores:byTopic,typeScores:byType,difficultyScores:byDifficulty,confidenceScores:confBuckets,
       highConfidenceMissCount:confBuckets.wrongHigh,fragileKnowledgeCount:confBuckets.correctLow,
       totalQuestionTimeSec:Math.round(totalQTime),avgQuestionTimeSec:SESSION.results.length?Math.round(totalQTime/SESSION.results.length):0,
+      medianQuestionTimeSec:timing.median,stallCount:timing.stallCount,stallQids:timing.stallQids,
       weakestTopicsSnapshot:weakestSnapshot.map(t=>({name:t.name,chapter:t.chapter,topic:t.topic,type:t.type,correct:t.correct,total:t.total,pct:t.pct,hcMisses:t.hcMisses}))});
   }
   if(CONFIG.mode==="coldChapter"){
@@ -3233,6 +3337,7 @@ function renderSummary(){
         <div class="statbox"><div class="n">${SESSION.startTs ? Math.round((Date.now()-SESSION.startTs)/60000) : 0}m</div><div class="l">Time spent</div></div>
       </div>
       ${CONFIG.mode==='blueprint' ? `<p class="sub" style="margin-top:10px;">This training mock score has been added to mock history and factored into your Training Readiness Index. It is not cold/unseen evidence and is not an official AACE score.</p>` : ""}
+      ${timingAnalyticsNoteHtml(sessionTimingAnalysis(results))}
       <div class="btnrow">
         <button class="btn" onclick="practiceAgain()">Practice again</button>
         ${canResetCurrentSession() ? `<button class="btn secondary" onclick="resetCurrentSession()">Restart &amp; discard this attempt</button>` : ""}
@@ -6052,14 +6157,15 @@ function finishFullSimulation(autoSubmit){
   if(FULLSIM.phase==="mcq"||!FULLSIM.mcqResults||FULLSIM.mcqResults.length!==FULLSIM.mcqQueue.length)finalizeFullSimMcqResults();
   const correct=FULLSIM.mcqResults.filter(r=>r.correct).length,byDomain={};FULLSIM.mcqResults.forEach(r=>{byDomain[r.q.domain]=byDomain[r.q.domain]||{correct:0,total:0};byDomain[r.q.domain].total++;if(r.correct)byDomain[r.q.domain].correct++;});
   const totalQTime=FULLSIM.mcqResults.reduce((sum,r)=>sum+(Number(r.timeSpentSec)||0),0);
-  const simRecord={ts:Date.now(),mcqScore:correct,mcqTotal:FULLSIM.mcqResults.length,mcqDomainScores:byDomain,mcqUnanswered:FULLSIM.mcqResults.filter(r=>r.skipped).length,totalQuestionTimeSec:Math.round(totalQTime),avgQuestionTimeSec:FULLSIM.mcqResults.length?Math.round(totalQTime/FULLSIM.mcqResults.length):0,mcqQids:FULLSIM.mcqQueue.map(q=>q.id),memoPromptId:FULLSIM.memoPrompt.id,memoPromptTitle:FULLSIM.memoPrompt.title,memoText:FULLSIM.memoText,memoWordCount:memoWordCount(FULLSIM.memoText),memoSubmitted:memoWordCount(FULLSIM.memoText)>0,autoSubmitted:!!autoSubmit};
+  const fsTiming=sessionTimingAnalysis(FULLSIM.mcqResults);
+  const simRecord={ts:Date.now(),mcqScore:correct,mcqTotal:FULLSIM.mcqResults.length,mcqDomainScores:byDomain,mcqUnanswered:FULLSIM.mcqResults.filter(r=>r.skipped).length,totalQuestionTimeSec:Math.round(totalQTime),avgQuestionTimeSec:FULLSIM.mcqResults.length?Math.round(totalQTime/FULLSIM.mcqResults.length):0,medianQuestionTimeSec:fsTiming.median,stallCount:fsTiming.stallCount,stallQids:fsTiming.stallQids,mcqQids:FULLSIM.mcqQueue.map(q=>q.id),memoPromptId:FULLSIM.memoPrompt.id,memoPromptTitle:FULLSIM.memoPrompt.title,memoText:FULLSIM.memoText,memoWordCount:memoWordCount(FULLSIM.memoText),memoSubmitted:memoWordCount(FULLSIM.memoText)>0,autoSubmitted:!!autoSubmit};
   PROGRESS.fullSimHistory.push(simRecord);saveProgress();clearActiveFullSimulation();VIEW="fullSimResult";render();
 }
 function renderFullSimResult(){
   const simIdx=PROGRESS.fullSimHistory.length-1,sim=PROGRESS.fullSimHistory[simIdx];
   if(!sim){VIEW="home";render();return;}
   const pct=sim.mcqTotal?Math.round(sim.mcqScore/sim.mcqTotal*100):0,alreadyLinked=PROGRESS.simMemoLinks[simIdx]!==undefined;
-  app.innerHTML=`${header("Full CCP Simulation — Results",true)}<div class="card"><h2>MCQ Result</h2><div class="statgrid"><div class="statbox"><div class="n">${sim.mcqScore}/${sim.mcqTotal}</div><div class="l">Score</div></div><div class="statbox"><div class="n">${pct}%</div><div class="l">Accuracy</div></div><div class="statbox"><div class="n">${sim.avgQuestionTimeSec||0}s</div><div class="l">Avg / question</div></div><div class="statbox"><div class="n">${sim.mcqUnanswered||0}</div><div class="l">Unanswered</div></div></div></div><div class="card"><h2>Memo Status</h2><p class="sub">${sim.memoSubmitted?`Submitted (${sim.memoWordCount} words) — "${sim.memoPromptTitle}"`:"Not submitted"}</p><p class="sub" style="color:var(--amber);">Memo scoring requires human/instructor review — this app does not fabricate an official AACE writing score.</p>${sim.memoSubmitted?`<div class="btnrow">${alreadyLinked?`<button class="btn secondary" disabled>Already added to Memo Review</button>`:`<button class="btn secondary" onclick="addSimMemoToReview(${simIdx})">Add Simulation Memo to Review</button>`}</div>`:""}</div>${officialScoringModelCardHtml()}<div class="card"><h2>Study Interpretation</h2><p class="sub">This Full CCP Simulation combines the MCQ Blueprint Mock with an original memo prompt under the current AACE 5-hour maximum. AACE states onscreen formula sheet(s) are available; this training build does not reproduce the exact official sheet content. The MCQ and pacing figures are study diagnostics; there is <b>no official combined pass/fail result</b> generated by this app.</p>${fullSimCloseoutHtml(sim)}<div class="btnrow"><button class="btn secondary" onclick="goWeaknessReport()">Full Weakness Report</button><button class="btn secondary" onclick="goHome()">Return Home</button></div></div>`;
+  app.innerHTML=`${header("Full CCP Simulation — Results",true)}<div class="card"><h2>MCQ Result</h2><div class="statgrid"><div class="statbox"><div class="n">${sim.mcqScore}/${sim.mcqTotal}</div><div class="l">Score</div></div><div class="statbox"><div class="n">${pct}%</div><div class="l">Accuracy</div></div><div class="statbox"><div class="n">${sim.avgQuestionTimeSec||0}s</div><div class="l">Avg / question</div></div><div class="statbox"><div class="n">${sim.mcqUnanswered||0}</div><div class="l">Unanswered</div></div></div>${sim.stallCount?`<p class="sub" style="color:var(--amber);">Time management: ${sim.stallCount} question${sim.stallCount===1?'':'s'} took ≥3x the session's median time (median ${sim.medianQuestionTimeSec||0}s) — a possible pacing stall, not a scoring penalty.</p>`:(sim.medianQuestionTimeSec?`<p class="sub">Time management: median ${sim.medianQuestionTimeSec}s/question, no stalled questions detected.</p>`:'')}</div><div class="card"><h2>Memo Status</h2><p class="sub">${sim.memoSubmitted?`Submitted (${sim.memoWordCount} words) — "${sim.memoPromptTitle}"`:"Not submitted"}</p><p class="sub" style="color:var(--amber);">Memo scoring requires human/instructor review — this app does not fabricate an official AACE writing score.</p>${sim.memoSubmitted?`<div class="btnrow">${alreadyLinked?`<button class="btn secondary" disabled>Already added to Memo Review</button>`:`<button class="btn secondary" onclick="addSimMemoToReview(${simIdx})">Add Simulation Memo to Review</button>`}</div>`:""}</div>${officialScoringModelCardHtml()}<div class="card"><h2>Study Interpretation</h2><p class="sub">This Full CCP Simulation combines the MCQ Blueprint Mock with an original memo prompt under the current AACE 5-hour maximum. AACE states onscreen formula sheet(s) are available; this training build does not reproduce the exact official sheet content. The MCQ and pacing figures are study diagnostics; there is <b>no official combined pass/fail result</b> generated by this app.</p>${fullSimCloseoutHtml(sim)}<div class="btnrow"><button class="btn secondary" onclick="goWeaknessReport()">Full Weakness Report</button><button class="btn secondary" onclick="goHome()">Return Home</button></div></div>`;
 }
 
 /* =========================================================
