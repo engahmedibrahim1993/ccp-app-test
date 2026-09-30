@@ -7023,8 +7023,16 @@ function renderMockReview(){
 /* =========================================================
    EXPORT / IMPORT
    ========================================================= */
-function exportProgress(){
-  const blob = new Blob([JSON.stringify(PROGRESS, null, 1)], {type:"application/json"});
+async function exportProgress(){
+  // RC2 closure fix: the memo draft (ACTIVE_MEMO_KEY) lives in its own storage slot, entirely
+  // separate from PROGRESS -- a plain JSON.stringify(PROGRESS) backup silently dropped any
+  // in-progress memo draft on restore (e.g. after clearing storage or moving devices). Fold the
+  // raw draft string into the exported payload as a sibling field so a learner's unfinished memo
+  // survives a real export/import round-trip too, without changing PROGRESS's own shape.
+  let memoDraftRaw = null;
+  try{ const x = await storageGet(ACTIVE_MEMO_KEY); memoDraftRaw = (x && x.value) ? x.value : null; }catch(e){}
+  const payload = Object.assign({}, PROGRESS, { _memoDraftBackup: memoDraftRaw });
+  const blob = new Blob([JSON.stringify(payload, null, 1)], {type:"application/json"});
   const url = URL.createObjectURL(blob);
   const a = document.createElement("a");
   a.href = url; a.download = "ccp-quiz-progress-export.json";
@@ -7041,9 +7049,16 @@ function importProgress(file){
         alert("This file doesn't look like a valid CCP Study Quiz progress export.");
         return;
       }
+      // Restore the sibling memo-draft backup (if this export included one) into its own
+      // storage slot BEFORE merging `data` into PROGRESS, so the field never leaks onto the
+      // PROGRESS object itself. Older export files without this field simply have none --
+      // leave whatever draft is currently saved untouched rather than wiping it.
+      const memoDraftBackup = data._memoDraftBackup;
+      delete data._memoDraftBackup;
       PROGRESS = Object.assign(defaultProgress(), data);
       sanitizeProgressShape(PROGRESS);
       rebuildEverSeenIds();
+      if(memoDraftBackup){ try{ await storageSet(ACTIVE_MEMO_KEY, memoDraftBackup); }catch(e){} }
       const saved = await saveProgress();
       if(saved){
         alert("Progress imported successfully.");
