@@ -13380,7 +13380,11 @@ runRecommendedStep = function(){
     CH2_ROI_GAIN_COST_RATIO: Object.freeze(['NAT:2-14', 'NAT:2-15']),
     // D-classified (representation duplicate, not merely a same-template near-duplicate) --
     // see CCP_v1.2_Evidence_Equivalence.csv's REPRESENTATION_DUPLICATE_FLAGGED note.
-    CH29_EXPECTED_VALUE_BID_REJECT_REPR_DUP: Object.freeze(['NAT:29-16', 'NAT:29-29'])
+    CH29_EXPECTED_VALUE_BID_REJECT_REPR_DUP: Object.freeze(['NAT:29-16', 'NAT:29-29']),
+    // RC3 closure: the last of the 5 near-duplicate NEEDS_REVIEW cases. 31-18/32-18 share the
+    // identical numbers and scenario; 32-18's correct percentage is read directly off 31-18's
+    // own correct-option text with no further calculation. See CCP_v1.2_Evidence_Equivalence.csv.
+    CH31_CH32_SENSITIVITY_PCT_IMPACT_REPR_DUP: Object.freeze(['NAT:31-18', 'NAT:32-18'])
   });
   window.EVIDENCE_EQUIVALENCE_GROUPS = EVIDENCE_EQUIVALENCE_GROUPS;
 
