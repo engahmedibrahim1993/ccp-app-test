@@ -36,6 +36,21 @@ mini-audits were run during implementation, per the mission's own instruction).
 
 ## B. Source Hierarchy (§1)
 
+> **[SUPERSEDED — RC3 closure pass]** The hierarchy statement below is incorrect and must not be
+> relied upon: it places S&K6 above the Candidate Handbook/Blueprint, which reverses authority
+> for exam-scope, structure, and format matters. The corrected controlling hierarchy, per the
+> RC3 closure mission, is: (1) current CCP Candidate Handbook / Exam Blueprint (exam scope,
+> tasks, structure, weighting, memo/exam rules) > (2) AACE RP 10S-90 (definitions, terminology)
+> > (3) Skills & Knowledge 6th Edition (primary *technical* source — still authoritative for
+> technical-content accuracy, just not for exam-scope/format matters) > (4) Total Cost Management
+> Framework (lifecycle/process integration) > (5) CCP Certification Study Guide, 2nd Edition >
+> (6) CCP Preparation Course (secondary teaching aid only). A live-code audit performed during
+> the RC3 pass confirmed no source-conflict-resolution logic in the app actually depends on the
+> incorrect ordering stated below — every quarantine/conflict decision in DEV.html (e.g.
+> `BATCHC_QA_QUARANTINE`, `PHASE2A_SOURCE_CONFLICT_QUARANTINE`) resolves technical-content
+> disputes among S&K6/RP 10S-90/TCM/Study Guide, which remains correct; only this document's
+> prose statement was wrong. Original text preserved below, unedited, for audit provenance.
+
 Unchanged from RC1: S&K6 (primary technical text) > AACE Recommended Practices > AACE Candidate
 Handbook / current Memo Writing Guidance (Rev. 10/27/2025) > this app's own internal training
 policy. Every memo-QA and technical claim in this pass was checked against this hierarchy, and
@@ -159,7 +174,7 @@ copied from any prior approximate figure):
 | CHAPTER_POPULATION_SUM | **1,608** |
 | PLACEMENT_ROWS | **1,608** |
 | TECHNICAL_SOURCE_AUDIT_REQUIRED | **1,596** |
-| RUNTIME_QUESTIONS_COUNT (native `QUESTIONS.length`) | **702** |
+| RUNTIME_QUESTIONS_COUNT (native `QUESTIONS.length`) | **702** [SUPERSEDED — RC3 closure pass: this row conflated the static native-literal count with the actual runtime-installed count. 702 is the ORIGINAL_NATIVE_QUESTIONS_LITERAL (the hardcoded source array) only. The live runtime `QUESTIONS.length` is 831, confirmed both by direct measurement and by the app's own embedded `CENSUS_MANIFEST` self-check: ORIGINAL_NATIVE_QUESTIONS_LITERAL=702, ADDITIVE_GLOBAL_REPAIR_ITEMS=1 (1-17R1), INSTALLED_NATIVE_BASE=703, V522_TASK_RESERVE_ITEMS=89, V524_DIRECT_TASK_ITEMS=39, RUNTIME_INSTALLED_STATIC_QUESTIONS=703+89+39=831. See `FINAL_RC3_TARGETED_CLOSURE_REPORT.md` section K for the full reconciliation.] |
 | MEMO_GENERAL_UNITS | **5** |
 | ACTIVE_EVIDENCE_ELIGIBLE | **1,582** |
 | EXCLUDED_CANONICAL_UNITS (= TOTAL_NON_EVIDENCE_ELIGIBLE_CANONICAL) | **14** |

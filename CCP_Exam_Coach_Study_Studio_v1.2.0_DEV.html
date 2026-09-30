@@ -9693,7 +9693,7 @@ integrityResults=function(){
      }
    }catch(e){malformed.push(`${ch}:PACK`);}}
  }finally{PROGRESS.v57PackHistory=oldHist;}
- r.push({name:'v5.16 native source-blind stem audit',ok:nativeLeak.length===0,detail:nativeLeak.length?nativeLeak.slice(0,12).join(', '):'0 source/chapter-reference cues in all 702 native question stems'});
+ r.push({name:'v5.16 native source-blind stem audit',ok:nativeLeak.length===0,detail:nativeLeak.length?nativeLeak.slice(0,12).join(', '):`0 source/chapter-reference cues in all ${QUESTIONS.length} installed static question stems`});
  r.push({name:'v5.16 generated grammar/source audit',ok:malformed.length===0&&leaks.length===0,detail:(malformed.length||leaks.length)?`malformed ${malformed.slice(0,8).join(', ')} · leak ${leaks.slice(0,8).join(', ')}`:'0 malformed/source-leaking stems across 34 sequential stage packs'});
  r.push({name:'v5.16 correct-option length-tell audit',ok:lengthCue.length===0,detail:lengthCue.length?lengthCue.slice(0,12).join(', '):'0 extreme correct-option length tells in generated sequential stage packs'});
  return r;
