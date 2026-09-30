@@ -294,7 +294,8 @@ textarea.notebox:focus,select:focus{outline:1px solid var(--brass);}
 
 </head>
 <body>
-<div id="app"></div>
+<div id="app"><div id="ccp-boot-shell" style="max-width:480px;margin:18vh auto;padding:32px 28px;text-align:center;font-family:var(--serif,'Segoe UI',Arial,sans-serif);color:var(--steel,#3D5A73);"><div style="width:34px;height:34px;margin:0 auto 18px;border:3px solid var(--line,#D7DCDD);border-top-color:var(--navy,#0E2438);border-radius:50%;animation:ccpBootSpin 0.9s linear infinite;"></div><p style="font-size:15px;margin:0;">Loading your Study Studio…</p></div></div>
+<style>@keyframes ccpBootSpin{to{transform:rotate(360deg)}}</style>
 
 <script>
 /* v5.4.4 SELF-CONTAINED MASTERY
@@ -8457,6 +8458,44 @@ nativeQuestionIsVetted=function(q){
   const ok=!!V58_ORIG_NATIVE_VET(q);V58_NATIVE_VET_CACHE.set(q.id,ok);return ok;
 };
 
+/* assessmentBlindText is a pure scrub of its input string with no other dependency, so the
+   same raw string always produces the same scrubbed output for the life of this build. It
+   runs several times per question (stem + every option) from many call sites, including
+   once per question on every full-bank quality/reserve pass, so it dominates first-render
+   cost when those passes run across hundreds of questions. Memoize it by its exact input
+   string. This is content-keyed, not id-keyed: a changed raw string simply misses the cache
+   and is (re)computed fresh, so no separate invalidation step is ever needed. */
+var V58_ORIG_BLIND_TEXT=assessmentBlindText;
+var V58_BLIND_TEXT_CACHE=new Map();
+assessmentBlindText=function(raw){
+  const key=raw==null?'':String(raw);
+  if(V58_BLIND_TEXT_CACHE.has(key))return V58_BLIND_TEXT_CACHE.get(key);
+  const out=V58_ORIG_BLIND_TEXT(raw);
+  V58_BLIND_TEXT_CACHE.set(key,out);
+  return out;
+};
+
+/* RC3 permanent regression guard for the startup double-render/legacy-Home-flash
+   defect: count every time render() actually paints Home during THIS page's boot
+   phase, so integrityResults() can assert it happened exactly once. This wraps
+   render() (declared once, decorated only once, at line ~8159, never re-declared
+   again) rather than renderHome() (redecorated ~14 times): a later top-level
+   `function renderHome(){}` declaration uses CreateGlobalFunctionBinding, which
+   silently overwrites any accessor/wrapper installed on that name, so renderHome
+   cannot be reliably instrumented this way -- render() has no such declaration
+   after this point and is safe to wrap. Counting stops once ccpBoot() marks
+   V58_BOOT_COMPLETE=true (right after its own single render() call), so later,
+   legitimate Home revisits during normal use are never mistaken for a startup
+   regression. */
+var V58_BOOT_HOME_RENDER_COUNT=0;
+var V58_BOOT_COMPLETE=false;
+var V58_ORIG_RENDER_FOR_BOOT_COUNT=render;
+render=function(){
+  const r=V58_ORIG_RENDER_FOR_BOOT_COUNT();
+  if(!V58_BOOT_COMPLETE && VIEW==='home') V58_BOOT_HOME_RENDER_COUNT++;
+  return r;
+};
+
 function v58IssueMap(){
   if(V58_CACHE.issueRev===V58_REV&&V58_CACHE.issueMap)return V58_CACHE.issueMap;
   const m=new Map();(PROGRESS.questionIssues||[]).forEach(x=>{if(x&&!x.resolved&&x.qid)m.set(x.qid,x);});
@@ -11418,9 +11457,31 @@ document.addEventListener("visibilitychange",function(){
     else if(FULLSIM.phase==="mcq"&&FULLSIM.questionEnterTs===null){ beginFullSimQuestionTime(); }
   }
 });
-(async function init(){
+// RC3 closure fix: this used to be an auto-invoking `(async function init(){...})()`
+// IIFE, running immediately at this point in document parsing. Because it awaits
+// loadProgress() (async), and the HTML parser keeps executing every later <script>
+// tag SYNCHRONOUSLY while that promise is pending, one of two races could occur
+// depending on exactly when loadProgress() resolved relative to the remaining
+// script tags: most often, the microtask that resumes this function (setting
+// VIEW="home" and calling render() for the FIRST time) ran and completed before
+// the parser reached the late "studio-enhancement" script further down the body --
+// so that first render() call used the base, not-yet-wrapped renderHome(), painting
+// the legacy/unstyled Home. studio-enhancement then wraps renderHome() and, finding
+// VIEW already "home", immediately re-renders on top of it -- a real, visible
+// double-render (legacy Home flash, then the final Study Studio Home). Converting
+// this into a plain named function and calling it explicitly only once, at the very
+// end of the document (after every other script -- including studio-enhancement --
+// has finished registering its renderHome wrapper), guarantees renderHome is
+// already the FINAL, fully-decorated version the one and only time render() is
+// ever called during boot. See the ccpBoot() call at the end of the file.
+async function ccpBoot(){
+  const mark=(typeof performance!=='undefined'&&performance.mark)?(n)=>performance.mark(n):()=>{};
+  const measure=(typeof performance!=='undefined'&&performance.measure)?(n,a,b)=>{try{performance.measure(n,a,b);}catch(e){}}:()=>{};
+  mark('ccpBoot:start');
   buildIndexes();
+  mark('ccpBoot:buildIndexesDone'); measure('ccpBoot:buildIndexes','ccpBoot:start','ccpBoot:buildIndexesDone');
   await loadProgress();
+  mark('ccpBoot:loadProgressDone'); measure('ccpBoot:loadProgress','ccpBoot:buildIndexesDone','ccpBoot:loadProgressDone');
   PROGRESS.sessionHistory=Array.isArray(PROGRESS.sessionHistory)?PROGRESS.sessionHistory:[];
   PROGRESS.externalEvidence=Array.isArray(PROGRESS.externalEvidence)?PROGRESS.externalEvidence:[];
   PROGRESS.questionIssues=Array.isArray(PROGRESS.questionIssues)?PROGRESS.questionIssues:[];
@@ -11428,13 +11489,21 @@ document.addEventListener("visibilitychange",function(){
   PROGRESS.relearnTopics=Array.isArray(PROGRESS.relearnTopics)?PROGRESS.relearnTopics:[];
   PROGRESS.frictionLog=Array.isArray(PROGRESS.frictionLog)?PROGRESS.frictionLog:[];
   PROGRESS.timedCalcHistory=Array.isArray(PROGRESS.timedCalcHistory)?PROGRESS.timedCalcHistory:[];
+  mark('ccpBoot:schemaNormalizeDone'); measure('ccpBoot:schemaNormalize','ccpBoot:loadProgressDone','ccpBoot:schemaNormalizeDone');
   PENDING_ACTIVE_SESSION=await loadActiveSession();
+  mark('ccpBoot:activeSessionDone'); measure('ccpBoot:activeSessionRestore','ccpBoot:schemaNormalizeDone','ccpBoot:activeSessionDone');
   PENDING_ACTIVE_FULLSIM=await loadActiveFullSimulation();
+  mark('ccpBoot:fullSimDone'); measure('ccpBoot:fullSimRestore','ccpBoot:activeSessionDone','ccpBoot:fullSimDone');
   PENDING_MEMO_DRAFT=await loadMemoDraft();
+  mark('ccpBoot:memoDraftDone'); measure('ccpBoot:memoDraftRestore','ccpBoot:fullSimDone','ccpBoot:memoDraftDone');
   VIEW = "home";
   NAV_STACK=[]; LAST_RENDERED_VIEW=null; NAV_BACK_IN_PROGRESS=false;
   render();
-})();
+  if(typeof V58_BOOT_COMPLETE!=='undefined') V58_BOOT_COMPLETE=true;
+  mark('ccpBoot:homeRenderDone');
+  measure('ccpBoot:homeRender','ccpBoot:memoDraftDone','ccpBoot:homeRenderDone');
+  measure('ccpBoot:total','ccpBoot:start','ccpBoot:homeRenderDone');
+}
 
 /* =========================================================
    CONTROLLED MASTERY + ADAPTIVE RETESTING + RETENTION ENGINE (MRE)
@@ -13930,7 +13999,11 @@ body{background:radial-gradient(ellipse at top left,#dfede7,transparent 55%),#f3
  document.addEventListener('keydown',e=>{if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='k'){e.preventDefault();if(dialog.open)dialog.close();else open();}});
  for(const pair of [['studio-focus','studio-focus'],['studio-size','studio-large']]){const b=document.getElementById(pair[0]);try{if(localStorage.getItem(pair[0])==='true')document.body.classList.add(pair[1]);}catch(e){}b.setAttribute('aria-pressed',String(document.body.classList.contains(pair[1])));b.onclick=()=>{const on=document.body.classList.toggle(pair[1]);b.setAttribute('aria-pressed',String(on));try{localStorage.setItem(pair[0],String(on));}catch(e){}};}
  const prior=renderHome;renderHome=function(){prior();const stats=document.createElement('section');stats.className='studio-overview';stats.setAttribute('aria-label','Study inventory');const chapters=new Set(QUESTIONS.map(q=>String(q.chapter))).size;const sessions=Array.isArray(PROGRESS.sessionHistory)?PROGRESS.sessionHistory.length:0;stats.innerHTML='<div class="studio-stat"><strong>'+chapters+'</strong><span>Chapters in inventory</span></div><div class="studio-stat"><strong>'+sessions+'</strong><span>Recorded sessions</span></div><div class="studio-stat"><strong>01</strong><span>Next recommended action</span></div>';const card=app.querySelector('.recommend-card');if(card)card.before(stats);const paths=document.createElement('section');paths.className='studio-paths';for(const item of [['Practice','practiceCenter','Build your understanding'],['Review','reviewCenter','Return to weak areas'],['Exam','examCenter','Put your knowledge to work'],['Study plan','studyPlan','Organize your next steps']]){const b=document.createElement('button');b.textContent=item[0]+' →';const s=document.createElement('small');s.textContent=item[2];b.appendChild(s);b.onclick=()=>{VIEW=item[1];render();};paths.appendChild(b);}if(card)card.after(paths);const note=document.createElement('p');note.className='studio-note';note.textContent='Study Studio · v1.2.0 DEV (development build, not the production release). Inventory counts are not a readiness score. To move existing progress, use Export / Import in More Tools.';app.appendChild(note);};
- if(VIEW==='home')render();
+ // RC3 closure fix: this used to force a second render() here when VIEW was
+ // already "home" (a real double-render this pass eliminated -- see ccpBoot() at
+ // the end of the file). VIEW is always still "loading" at this point now, since
+ // boot is deferred until after every script (including this one) has registered
+ // its wrapper, so this line is no longer needed and has been removed.
 })();
 </script>
 
@@ -14715,6 +14788,19 @@ if (typeof integrityResults === 'function'){
       rs.push({name:'RC2: memo pedagogical/Handbook QA closure (enforced by external CCP_v1.2_Memo_Pedagogical_QA.csv, not runtime data)', ok: memoPromptCount===5, detail: memoPromptCount+'/5 memo prompts present at runtime; all 5 independently re-verified VERIFIED/CLOSED in CCP_v1.2_Memo_Pedagogical_QA.csv'});
     } catch(e){}
 
+    // RC3: startup double-render/legacy-Home-flash regression guard. Passes trivially
+    // if this runs before ccpBoot() has finished (count not yet meaningful); once boot
+    // has completed, Home must have been painted during boot exactly once -- see the
+    // V58_BOOT_HOME_RENDER_COUNT wrapper around render() above ccpBoot()'s definition.
+    try{
+      var bootCount = (typeof V58_BOOT_HOME_RENDER_COUNT !== 'undefined') ? V58_BOOT_HOME_RENDER_COUNT : null;
+      var bootDone = (typeof V58_BOOT_COMPLETE !== 'undefined') ? V58_BOOT_COMPLETE : false;
+      var bootRenderOk = !bootDone || bootCount === 1;
+      rs.push({name:'RC3: Home renders exactly once during boot (no legacy-UI flash)', ok: bootRenderOk, detail: bootDone ? ('boot complete; Home rendered '+bootCount+'x during boot') : 'boot not yet complete at check time (not yet meaningful)'});
+    } catch(e){
+      rs.push({name:'RC3: Home renders exactly once during boot (no legacy-UI flash)', ok:false, detail:'threw: '+String(e&&e.message||e)});
+    }
+
     return rs;
   };
 }
@@ -14760,6 +14846,43 @@ async function integrityResultsAsync(){
   return rs;
 }
 window.integrityResultsAsync = integrityResultsAsync;
+
+/* =========================================================
+   RC3 SINGLE AUTHORITATIVE BOOT SEQUENCE
+   This is the ONLY place ccpBoot() is called, and it is the last thing this
+   document's scripts do -- every other script (every V5xx decorator layer,
+   the studio-enhancement wrapper, the memo/async integrity additions, etc.)
+   has already finished registering its wrapper around render()/renderHome()
+   by the time this line runs, so the one render() call inside ccpBoot() is
+   guaranteed to use the final, fully-decorated UI. This closes the RC2
+   startup defect (a legacy/base Home briefly flashing before the final
+   Study Studio Home replaced it) at its root cause, rather than papering
+   over the symptom with a delay or a visibility hack.
+
+   Startup-failure handling (mission requirement): if ccpBoot() itself
+   throws -- e.g. a storage read fails -- do not leave a blank page, do not
+   fall back to any legacy/unstyled view, and do not silently reset or
+   delete the learner's saved progress. Show a small, final-style error
+   card with the real exception logged to the console and a Retry button
+   (a full reload, the safest recovery since the failure may have occurred
+   before any in-memory state was safely established).
+   ========================================================= */
+ccpBoot().catch(function(err){
+  console.error('CCP Study Studio failed to start:', err);
+  var shell = document.getElementById('ccp-boot-shell');
+  var target = shell || document.getElementById('app');
+  if(target){
+    var host = shell ? shell.parentNode : target;
+    host.innerHTML = '<div style="max-width:480px;margin:18vh auto;padding:32px 28px;text-align:center;font-family:var(--serif,\'Segoe UI\',Arial,sans-serif);">'
+      + '<div style="font-size:32px;margin-bottom:10px;">⚠</div>'
+      + '<h2 style="color:var(--navy,#0E2438);margin:0 0 10px;font-size:20px;">Study Studio could not start</h2>'
+      + '<p style="color:var(--steel,#3D5A73);font-size:14px;line-height:1.6;margin:0 0 20px;">Something went wrong while loading your saved progress. Your data has not been changed or deleted. Reloading usually fixes this; if it keeps happening, use Export/Import from a working session to move your progress.</p>'
+      + '<button id="ccp-boot-retry" style="min-height:44px;padding:0 24px;border-radius:10px;border:1px solid var(--navy,#0E2438);background:var(--navy,#0E2438);color:#fff;font:inherit;font-size:14px;cursor:pointer;">Retry</button>'
+      + '</div>';
+    var retryBtn = document.getElementById('ccp-boot-retry');
+    if(retryBtn) retryBtn.onclick = function(){ window.location.reload(); };
+  }
+});
 </script>
 
 </body>
