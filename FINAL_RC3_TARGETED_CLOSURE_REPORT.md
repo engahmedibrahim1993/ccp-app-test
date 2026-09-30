@@ -107,24 +107,39 @@ for a reserve (100%, no exceptions).
 ## C. Fix 2 — Five Near-Duplicate NEEDS_REVIEW Adjudications
 
 All 5 rows previously marked `NEEDS_REVIEW` in `CCP_v1.2_Global_Near_Duplicate_Audit.csv` were
-adjudicated by direct content comparison against the five-source hierarchy. 4 were classified
-**B** (related-but-independent, no action — different governing concept/context, correctly
-scored as separate evidence) and closed. 1 was classified **D** (genuine representation-level
-duplicate requiring an evidence-equivalence group) and actioned:
+adjudicated by direct content comparison against the project's six-level source hierarchy (see
+Section F). 4 were classified **B** (related-but-independent, no action — different governing
+concept/reasoning path, correctly scored as separate evidence) and closed. 1 was classified
+**D** (genuine representation-level duplicate requiring an evidence-equivalence group) and
+actioned. The full audit trail for all five pairs, pulled directly from the repository CSV
+(commit `394c2ae`), is:
 
-| Pair | Classification | Action |
-|---|---|---|
-| (4 pairs, various chapters) | B — CLOSED | No runtime change; documented as independent evidence in the audit CSV |
-| CH31-18 / CH32-18 | D — ACTIONED | New evidence-equivalence group `CH31_CH32_SENSITIVITY_PCT_IMPACT_REPR_DUP` added |
+| # | Item A | Item B | Chapter(s) | Similarity concern | Classification | Reason | Evidence-independence consequence | Equivalence-family ID | Runtime-registry action? | Final review status |
+|---|---|---|---|---|---|---|---|---|---|---|
+| 1 | 7-20 | 10-28 | 7 / 10 | Identical Sum-of-Years-Digits formula/process, different chapters | **B** RELATED_BUT_INDEPENDENT | Different year computed (2 vs 3), different numbers; 7-20 requires a salvage subtraction step 10-28 does not have — solving one does not give the other's answer | Kept as independent evidence; no change to HCW/mastery credit logic | — (none) | NO | CLOSED |
+| 2 | 7-19 | 10-27 | 7 / 10 | Identical Double-Declining-Balance formula/process, different chapters | **B** RELATED_BUT_INDEPENDENT | 7-19 explicitly exercises the salvage-floor constraint (book value must not fall below salvage); 10-27 (zero salvage) never encounters that constraint and asks a different year — separable sub-skills | Kept as independent evidence; no change to HCW/mastery credit logic | — (none) | NO | CLOSED |
+| 3 | 7-5 | 10-26 | 7 / 10 | Identical Straight-Line depreciation formula family, different chapters | **B** RELATED_BUT_INDEPENDENT | 7-5 requires the general form with a nonzero-salvage subtraction; 10-26 is the zero-salvage special case — different numbers, magnitude, and chapter context (asset costing vs. process/manufacturing capital investment) | Kept as independent evidence; no change to HCW/mastery credit logic | — (none) | NO | CLOSED |
+| 4 | 31-19 | 32-19 | 31 / 32 | Same P50/P90 contingency-gap concept, high option-set similarity (os=0.88) | **B** RELATED_BUT_INDEPENDENT | 31-19 is a direct two-value (P50/P90) subtraction; 32-19 adds a third value (P10) as a distractor and requires correctly selecting the P50-to-P90 pair — a materially different cognitive task (pair selection vs. direct subtraction) | Kept as independent evidence; no change to HCW/mastery credit logic | — (none) | NO | CLOSED |
+| 5 | 31-18 | 32-18 | 31 / 32 | Identical underlying scenario and numbers (1,000 units, $1/unit labor+material, labor +50%) | **D** REPRESENTATION_DUPLICATE | 31-18's own correct option states "$2,500, a 25% increase" verbatim; 32-18 asks only for that same percentage, answerable directly off 31-18's correct-option text with zero additional reasoning — same computed evidence, two response formats | **Non-independent**: a correct answer on one no longer counts as separate mastery evidence from the other; HCW/repeated-misconception logic treats them as the same family | `CH31_CH32_SENSITIVITY_PCT_IMPACT_REPR_DUP` | **YES** — added | ACTIONED |
 
-**Evidence-equivalence registry sync.** `CCP_v1.2_Evidence_Equivalence.csv` (durable audit
-artifact) and the runtime `EVIDENCE_EQUIVALENCE_GROUPS` object (embedded JS mirror) were both
-updated with the new group (2 rows: `NAT:31-18`, `NAT:32-18`). A dedicated Playwright test
-(`test_new_equiv_group.js`) confirmed `evidenceFamilyFor()` correctly resolves both source keys
-to the same family, and that HCW/repeated-misconception independence logic (`mreUnresolvedMisconceptions`,
-`mreRepeatedErrorSkills`) correctly treats them as non-independent evidence.
+**Formerly NEEDS_REVIEW: 5. Remaining NEEDS_REVIEW: 0** (verified directly against the current
+`CCP_v1.2_Global_Near_Duplicate_Audit.csv`: 141 rows CLOSED, 15 rows ACTION_NEEDED — a pre-existing,
+unrelated backlog category never in NEEDS_REVIEW status and outside this mission's scope — 2 rows
+ACTIONED (the D-pair's two item-rows), 0 rows NEEDS_REVIEW).
 
-`CCP_v1.2_Global_Near_Duplicate_Audit.csv` now has **0 rows** with `review_status = NEEDS_REVIEW`.
+**Evidence-equivalence registry sync — independently re-verified.** `CCP_v1.2_Evidence_Equivalence.csv`
+(durable audit artifact, rows 33–34) and the runtime `EVIDENCE_EQUIVALENCE_GROUPS` object (embedded
+JS mirror, 16 groups total) both carry the new group. Live re-verification against the actual RC3.html
+artifact (not assumed from memory) confirms:
+
+- `evidenceFamilyFor('NAT:31-18')` === `evidenceFamilyFor('NAT:32-18')` === `'CH31_CH32_SENSITIVITY_PCT_IMPACT_REPR_DUP'`
+- `evidenceFamilyFor('NAT:31-19')` (an unrelated sibling pair, itself classified B above) resolves to a
+  different value, confirming the group is correctly scoped to only the intended D-pair
+- `EVIDENCE_EQUIVALENCE_GROUPS['CH31_CH32_SENSITIVITY_PCT_IMPACT_REPR_DUP']` contains exactly
+  `['NAT:31-18', 'NAT:32-18']`, no more and no fewer
+
+No discrepancy was found between the RC3 artifact and the repository CSV/runtime data — this section
+is a documentation-completeness correction only, not a data or code fix.
 
 ---
 
@@ -187,13 +202,27 @@ value in the cell for provenance.
 
 ## F. Fix 5 — Source Hierarchy Documentation
 
-The correct hierarchy is: **Candidate Handbook/Blueprint > AACE RP 10S-90 > S&K6 > TCM Framework
-> Study Guide > Prep Course.** `FINAL_RC2_CLOSURE_AUDIT_REPORT.md`'s Section B had stated an
-incorrect order. A live grep-based audit of every conflict-resolution code path in DEV.html
-confirmed **zero** live logic depends on the specific stated order (source precedence is applied
-per-item at authoring time via manual citation, not algorithmically at runtime) — so per the
-mission's explicit branch ("if only documentation is wrong, fix documentation only"), only the
-report was corrected, via the same supersede-annotation pattern as Fix 4, with no code change.
+The controlling project source hierarchy has **six levels**, in descending order of authority:
+
+| Level | Source | Role |
+|---|---|---|
+| 1 | Current CCP Candidate Handbook / Exam Blueprint | Scope, tasks, exam structure, weighting, memo/exam rules |
+| 2 | AACE RP 10S-90 | Definitions, terminology |
+| 3 | Skills & Knowledge, 6th Edition (S&K6) | Primary technical source |
+| 4 | Total Cost Management Framework | Lifecycle/process integration |
+| 5 | CCP Certification Study Guide, 2nd Edition | Secondary reference |
+| 6 | CCP Preparation Course | Secondary teaching aid only |
+
+i.e. **Candidate Handbook/Blueprint > AACE RP 10S-90 > S&K6 > TCM Framework > Study Guide >
+Prep Course.** `FINAL_RC2_CLOSURE_AUDIT_REPORT.md`'s Section B had stated an incorrect order,
+and this report's own Section C originally (before this documentation-correction pass; see
+Section O) mistakenly referred to it as a "five-source hierarchy" — both are terminology errors,
+not a change to the hierarchy itself, which has always had six levels. A live grep-based audit of
+every conflict-resolution code path in DEV.html/RC3.html confirmed **zero** live logic depends on
+the specific stated order (source precedence is applied per-item at authoring time via manual
+citation, not algorithmically at runtime) — so per the mission's explicit branch ("if only
+documentation is wrong, fix documentation only"), only documentation was corrected, via the same
+supersede-annotation pattern as Fix 4, with no code change.
 
 ---
 
@@ -349,11 +378,16 @@ verified independently against DEV.html and against the final RC3.html — ident
 
 ## I. Native Integrity
 
-`QUESTIONS` literal SHA-256 (the entire native question-bank array literal, exact source text):
-`5add92029ed451510a13f078c380f751d545c36b5a67ceeb5872c88ef2288ead` — identical before Checkpoint 1,
-after every one of the four checkpoints, and between the final DEV.html and RC3.html. Confirmed
-by `git diff` on every commit that no line inside the `QUESTIONS` literal's source range was ever
-touched, in addition to the hash match.
+Native `QUESTIONS` literal SHA-256 (the exact source text of the array literal itself, from its
+opening `[` to its matching `]`, precise bracket-matched extraction — not the surrounding
+`var QUESTIONS = ` declaration or trailing semicolon):
+`bf8682521168a7c95f625a2a25701cc07cf65ce1e48a0d10773427304a69106c` — confirmed identical across
+RC1.html, RC2.html, DEV.html, and RC3.html. `JSON.parse` of the extracted literal confirms exactly
+**702** items, matching `ORIGINAL_NATIVE_QUESTIONS_LITERAL_COUNT` throughout this pass. See
+Section O for the documentation-correction history of this value.
+
+`git diff` on every RC3 commit confirms no line inside the `QUESTIONS` literal's source range was
+ever touched, in addition to the hash match.
 
 ---
 
@@ -416,7 +450,12 @@ to this session).
 | `CCP_Exam_Coach_Study_Studio_v1.2.0_RC3.html` | `804e9fbab84129d3550a7d0382c4d9cb927cf69e00965d79a46416adb1b8b39e` |
 | `CCP_Exam_Coach_Study_Studio_v1.2.0_RC2.html` (unchanged) | `72f4026698aded4e19d9ae0baf59620b9a334ee89ce4353cf55fd34c1f83a429` |
 | `CCP_Exam_Coach_Study_Studio_v1.2.0_RC1.html` (unchanged) | `3d00706c54983ac39ab897d98a85771fc6f5ad5bf85c1c37901b7d5960dd6e3a` |
-| Native `QUESTIONS` literal (DEV and RC3, identical) | `5add92029ed451510a13f078c380f751d545c36b5a67ceeb5872c88ef2288ead` |
+| Native `QUESTIONS` literal, 702 items, exact `[...]` array text (RC1, RC2, DEV, RC3 — all identical) | `bf8682521168a7c95f625a2a25701cc07cf65ce1e48a0d10773427304a69106c` |
+
+`ORIGINAL_NATIVE_QUESTIONS_LITERAL_COUNT = 702`, `ADDITIVE_GLOBAL_REPAIR_ITEMS = 1`,
+`INSTALLED_NATIVE_BASE = 703`, `V522_TASK_RESERVE_ITEMS = 89`, `V524_DIRECT_TASK_ITEMS = 39`,
+`RUNTIME_INSTALLED_STATIC_QUESTIONS = 831` (702 + 1 + 89 + 39 = 831, verified both by static
+extraction and live in the browser — see Section O).
 
 ---
 
@@ -458,3 +497,82 @@ item came back green on the first run — no second audit round was needed:
 26. Git/artifact state (4 checkpoints pushed, RC1/RC2 untouched, hashes recorded) — **PASS**
 
 **Verdict: GREEN. RC3 created.**
+
+---
+
+## O. Documentation Correction / Final Independent Verification
+
+A subsequent documentation-only review (no application code, question content, runtime
+registries, or evidence-equivalence data touched) found that this report, as originally written,
+mischaracterized one value and under-documented one audit trail. Both are corrected here
+transparently rather than silently rewritten.
+
+**1. The native `QUESTIONS` literal SHA-256 was previously reported incorrectly.**
+
+This report originally stated the native literal's SHA-256 as
+`5add92029ed451510a13f078c380f751d545c36b5a67ceeb5872c88ef2288ead`. That value was wrong. It was
+produced by an ad hoc verification regex, `/var QUESTIONS\s*=\s*\[[\s\S]*?\n\];/`, run against the
+DEV/RC3 source during the RC3 engineering pass. Because the true `QUESTIONS` array's closing `]`
+in the actual source is immediately followed by `;` with **no newline in between** (`...}];\n\n//
+Can...`), that regex's requirement of a literal `\n];` sequence did not match at the array's true
+end — it kept scanning non-greedily until the *next* occurrence of `\n];` in the file, 1,973 bytes
+later, which turns out to be the closing bracket of the unrelated `CHAPTER_LIST` array (the file's
+34 chapter number/name entries). The reported hash therefore covered "`QUESTIONS`'s true content
+plus roughly two kilobytes of unrelated trailing source, arbitrarily terminated by an unconnected
+array's closing bracket" — a meaningless boundary, not a real extraction of anything. This has now
+been independently re-derived and confirmed by two separate, convergent methods:
+
+- **Static, precise bracket-matched extraction.** A depth-counting parser (string-literal aware,
+  so bracket characters inside quoted strings are correctly ignored) was used to find the exact
+  matching `]` for `QUESTIONS`'s opening `[`. The resulting `[...]` substring — array content
+  only, no `var QUESTIONS = ` prefix, no trailing `;` — parses cleanly via `JSON.parse` into
+  exactly **702** items, and hashes to
+  `bf8682521168a7c95f625a2a25701cc07cf65ce1e48a0d10773427304a69106c`. This was run independently
+  against `CCP_Exam_Coach_Study_Studio_v1.2.0_RC3.html`, `_DEV.html`, `_RC2.html`, and `_RC1.html`
+  — **all four produce the identical hash and identical 702-item count.**
+- **Live runtime verification.** Loaded in a real browser, RC3.html's live `QUESTIONS.length` is
+  831. Filtering the live array by the markers each additive mechanism sets on its own items
+  (`v522TaskReserve`, `v524DirectTask`, `replacesId==='1-17'`) finds exactly 89 + 39 + 1 = 129
+  additively-pushed items, leaving `831 − 129 = 702` — matching the static extraction exactly. The
+  quarantined original `1-17` item is confirmed still present in the live array (it was never
+  deleted, only excluded from active serving elsewhere), consistent with the 702-count being
+  unchanged.
+
+So: `5add920...` does not correspond to the native literal, the 703 installed native base, the 831
+runtime-installed inventory, or any other meaningful artifact — it was a pure regex-boundary bug,
+now identified and explained rather than left unexplained. **`bf8682521168a7c95f625a2a25701cc07cf65ce1e48a0d10773427304a69106c`
+is the correct native `QUESTIONS` literal SHA-256**, confirmed independently and consistently
+across RC1, RC2, DEV, and RC3. Sections I and M above have been corrected to this value; the
+runtime-count model is unchanged from Section E (702 native + 1 additive repair = 703 installed
+native base; + 89 V522 + 39 V524 = 831 runtime-installed static questions).
+
+**2. RC3 application file itself was not changed by this correction.** Only the two `.md` report
+files were edited. `CCP_Exam_Coach_Study_Studio_v1.2.0_RC3.html`'s own SHA-256 was recomputed
+before and after this documentation pass and is unchanged:
+`804e9fbab84129d3550a7d0382c4d9cb927cf69e00965d79a46416adb1b8b39e`.
+
+**3. All five formerly-`NEEDS_REVIEW` near-duplicate pairs are now individually listed** (Section
+C above), pulled directly from the repository's `CCP_v1.2_Global_Near_Duplicate_Audit.csv` and
+commit `394c2ae`, not summarized. The single D-classified pair's evidence-equivalence group,
+`CH31_CH32_SENSITIVITY_PCT_IMPACT_REPR_DUP`, was independently re-verified live against RC3.html
+(not assumed from a prior report): `evidenceFamilyFor('NAT:31-18') === evidenceFamilyFor('NAT:32-18')`,
+both differ from the unrelated sibling `NAT:31-19`, and the group's membership is exactly
+`['NAT:31-18', 'NAT:32-18']` — no more, no fewer. No discrepancy was found between the RC3
+artifact and the repository CSV/runtime data; this was a documentation-completeness gap only.
+
+**4. The source hierarchy is now explicitly described as six levels** (Section F above), correcting
+this report's own earlier "five-source hierarchy" wording. The hierarchy's actual order —
+Candidate Handbook/Blueprint > AACE RP 10S-90 > S&K6 > TCM Framework > Study Guide > Prep Course —
+is unchanged; only the prior report's miscount of its levels is corrected.
+
+**5. Historical reports were not rewritten.** `FINAL_RC2_CLOSURE_AUDIT_REPORT.md` remains exactly
+as it was left in the RC2/RC3-checkpoint-3 pass (annotated with `[SUPERSEDED — RC3 closure pass]`
+blockquotes where corrected, original values preserved in place for provenance). This
+documentation-correction pass added no new annotations to that historical file; it corrected only
+this report (`FINAL_RC3_TARGETED_CLOSURE_REPORT.md`) and reviewed `FINAL_RC3_RELEASE_READINESS_REPORT.md`
+for consistency (no incorrect hash, no "five-source" wording, and no incomplete near-duplicate
+summary were present there, so no edit was required beyond this confirmation).
+
+No application code, question content, runtime registry, or evidence-equivalence data was found
+to be in error — this was a documentation-only defect, and it has been corrected transparently,
+not hidden.

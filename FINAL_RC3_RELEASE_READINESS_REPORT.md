@@ -1,7 +1,10 @@
 # CCP Exam Coach Study Studio v1.2.0 RC3 — Release Readiness Report
 
-Full technical detail: `FINAL_RC3_TARGETED_CLOSURE_REPORT.md`. This report is the concise
-go/no-go summary.
+Full technical detail: `FINAL_RC3_TARGETED_CLOSURE_REPORT.md`, including Section O
+(Documentation Correction / Final Independent Verification) for a subsequent documentation-only
+correction pass that fixed a mismeasured native-literal SHA and completed the near-duplicate
+audit trail. The application itself was not changed by that pass — see Section O for details.
+This report is the concise go/no-go summary.
 
 ## Integrity Categories
 
