@@ -11422,7 +11422,14 @@ function mreUnresolvedMisconceptions(){
     for(let i=list.length-1;i>=0;i--){
       const a=list[i];
       if(!a.correct && a.confidence==='high'){
-        const freshFix = list.slice(i+1).some(b=>b.correct && b.qid!==a.qid && (b.confidence==='medium'||b.confidence==='high'));
+        // RC2 closure fix: "a different question" must mean a different EVIDENCE FAMILY, not
+        // merely a different runtime qid -- the global near-duplicate audit found several
+        // native-question pairs that are the same underlying scenario/template with only the
+        // numbers changed (e.g. 11-11/11-21), now registered in EVIDENCE_EQUIVALENCE_GROUPS.
+        // Without this, answering a near-duplicate sibling correctly would have incorrectly
+        // counted as independent resolution of a high-confidence misconception.
+        const aFam = (typeof evidenceFamilyFor==='function') ? evidenceFamilyFor('NAT:'+a.qid) : a.qid;
+        const freshFix = list.slice(i+1).some(b=>b.correct && (typeof evidenceFamilyFor==='function' ? evidenceFamilyFor('NAT:'+b.qid)!==aFam : b.qid!==a.qid) && (b.confidence==='medium'||b.confidence==='high'));
         if(!freshFix){
           out.push({
             skillId:sid, chapter:a.chapter, chapterName:a.chapterName, topic:a.topic, qid:a.qid, ts:a.ts,
@@ -11474,7 +11481,10 @@ function mreRepeatedErrorSkills(minDistinctWrong){
   const map = mreSkillAttemptMap(), out=[];
   Object.keys(map).forEach(sid=>{
     const list=map[sid];
-    const wrongQids = new Set(list.filter(a=>!a.correct).map(a=>a.qid));
+    // RC2 closure fix: count distinct EVIDENCE FAMILIES, not distinct raw qids -- two wrong
+    // attempts on a declared near-duplicate pair (EVIDENCE_EQUIVALENCE_GROUPS) are the same
+    // underlying case repeated, not two independently-failed different cases.
+    const wrongQids = new Set(list.filter(a=>!a.correct).map(a=>(typeof evidenceFamilyFor==='function') ? evidenceFamilyFor('NAT:'+a.qid) : a.qid));
     if(wrongQids.size>=minDistinctWrong) out.push({skillId:sid, chapter:list[0].chapter, chapterName:list[0].chapterName, topic:list[0].topic, count:wrongQids.size});
   });
   return out.sort((a,b)=>b.count-a.count);
@@ -13274,7 +13284,29 @@ runRecommendedStep = function(){
   //     silently allowed - see the regression check below.
   // ---------------------------------------------------------------
   const EVIDENCE_EQUIVALENCE_GROUPS = Object.freeze({
-    CH5_PATENT_TERM_POST1995: Object.freeze(['CUR:cm5_2', 'HMB:hm5_2'])
+    CH5_PATENT_TERM_POST1995: Object.freeze(['CUR:cm5_2', 'HMB:hm5_2']),
+    // RC2 closure pass: groups confirmed by the global near-duplicate audit
+    // (2026-09-29) across the full active evidence-eligible native QUESTIONS
+    // pool -- see CCP_v1.2_Global_Near_Duplicate_Audit.csv and
+    // CCP_v1.2_Evidence_Equivalence.csv for the full similarity basis and
+    // adjudication notes for each group. All keys here use the 'NAT:' prefix
+    // (plain native QUESTIONS items, not curated/mastery-bank derived).
+    CH11_GROSSUP_PRETAX_PROFIT: Object.freeze(['NAT:11-11', 'NAT:11-21']),
+    CH10_ROYALTY_EXPENSE_PCT_SALES: Object.freeze(['NAT:10-12', 'NAT:10-24']),
+    CH27_EFFECTIVE_RATE_PERIODIC: Object.freeze(['NAT:27-2', 'NAT:27-16', 'NAT:27-17']),
+    CH6_MIN_DESIRED_SELLING_PRICE: Object.freeze(['NAT:6-12', 'NAT:6-18']),
+    CH7_INTEREST_RATE_ADDITIVE: Object.freeze(['NAT:7-17', 'NAT:7-21']),
+    CH30_MONTECARLO_EV_TWO_OUTCOME: Object.freeze(['NAT:30-2', 'NAT:30-11']),
+    CH28_PROFITABILITY_INDEX: Object.freeze(['NAT:28-3', 'NAT:28-20']),
+    CH28_ROCE_COMPARISON: Object.freeze(['NAT:28-4', 'NAT:28-18']),
+    CH23_BONDING_CAPACITY_REMAINING: Object.freeze(['NAT:23-18', 'NAT:26-8']),
+    CH11_SHUTDOWN_POINT_NO_ADMIN: Object.freeze(['NAT:11-7', 'NAT:11-22']),
+    CH11_COST_POINT_WITH_ADMIN: Object.freeze(['NAT:11-8', 'NAT:11-23']),
+    CH23_LUMPSUM_HIGHEST_CONTRACTOR_RISK: Object.freeze(['NAT:23-1', 'NAT:23-10']),
+    CH2_ROI_GAIN_COST_RATIO: Object.freeze(['NAT:2-14', 'NAT:2-15']),
+    // D-classified (representation duplicate, not merely a same-template near-duplicate) --
+    // see CCP_v1.2_Evidence_Equivalence.csv's REPRESENTATION_DUPLICATE_FLAGGED note.
+    CH29_EXPECTED_VALUE_BID_REJECT_REPR_DUP: Object.freeze(['NAT:29-16', 'NAT:29-29'])
   });
   window.EVIDENCE_EQUIVALENCE_GROUPS = EVIDENCE_EQUIVALENCE_GROUPS;
 
