@@ -9035,52 +9035,53 @@ var V513_EXTRA_INTERNAL_MASTERY_BANK = {
 
 /* Stable Cold reserve. The reserve is selected from the chapter's quality-approved,
    Study-Lab-unexposed static items in a deterministic order. Ordinary Chapter Practice
-   will not consume these reserved stems. */
-// RC2 closure fix: a fixed top-8 reserve slice could, in a handful of chapters, happen to
-// remove enough of that chapter's small "challenge"-eligible pool (after ALL of the file's
-// later quality/QA/method-cue/demand-score decorator layers on v510CandidateItems, not just
-// the coarse v57NativeHighTrust predicate -- a native item can pass that predicate and still
-// be rejected by a later layer) that Apply/Challenge (v510PairPlan) could no longer find 5
-// distinct cases per stage, even though the chapter's total quality-approved count looked
-// comfortable -- once v57TransferSources correctly began excluding the reserve from Apply/
-// Challenge/Retention source material (the cross-mode leak this pass fixes). Rather than
-// re-implement every one of those layers here (and risk drifting out of sync with them),
-// this probes the REAL, fully-decorated v510PairPlan for each candidate reserve size via a
-// temporary override that v513ProtectedColdIds consults instead of recursing back into this
-// function -- giving an exact answer instead of an approximation.
-var V513_RESERVE_OVERRIDE=null;
+   will not consume these reserved stems.
+   RC3 closure fix: RC2's version of this function shrank the reserve from 8 down to as
+   low as 1 in six chapters (1,3,15,19,20,32) to avoid starving Apply/Challenge capacity --
+   an architectural policy change, not just a leak fix. The intended policy is a FIXED 8-item
+   reserve for every qualifying chapter. Each of those six chapters' real capacity shortfall
+   has instead been closed by adding the minimum number of genuinely independent,
+   source-supported supplemental Challenge-only items (V520_CHALLENGE_EXTRAS cx1_1, cx3_2,
+   cx15_1, cx19_1/cx19_2, cx20_2/cx20_3, cx32_1/cx32_2 -- 9 items total, verified live against
+   the real v510PairPlan + Challenge cognitive-demand floor before being added), so the
+   reserve itself never has to shrink. This function is now a plain, fast, fixed-size slice
+   with no capacity probing in the hot path (see v513ReserveCapacityAudit() below for the
+   authoring-time/regression-time capacity check, which does not run during normal startup
+   or Home rendering). */
 function v513BaseColdReserve(ch){
   ch=String(ch);
   const base=QUESTIONS.filter(q=>String(q.chapter)===ch&&staticQuestionIsQualityApproved(q)&&!isStudyLabExposed(q.id))
     .slice().sort((a,b)=>deterministicHash(a.id+'|V513COLD')-deterministicHash(b.id+'|V513COLD'));
   if(base.length<8)return [];
-  // Shrink from a full 8-item reserve only as far as necessary (never below what the training
-  // pipeline needs) rather than always taking the full 8 regardless of chapter capacity.
-  for(let n=8;n>=1;n--){
-    const candidate=base.slice(0,n);
-    const prevOverride=V513_RESERVE_OVERRIDE;
-    V513_RESERVE_OVERRIDE={ch,ids:new Set(candidate.map(q=>q.id))};
-    let ok=false;
-    try{
-      ok=v510PairPlan(ch,new Set()).ok;
-      // Also honor the v5.20 Challenge cognitive-demand floor (>=5 candidates scoring >=3),
-      // a stricter quality gate than plain distinctness -- probed the same way, against the
-      // same candidate reserve size, so a chapter never gets a reserve that quietly breaks it.
-      if(ok&&typeof v520ChallengeDemandScore==='function'){
-        const strong=v510CandidateItems(ch,'challenge').filter(x=>v520ChallengeDemandScore(x)>=3);
-        if(strong.length<5)ok=false;
-      }
-    }
-    finally{ V513_RESERVE_OVERRIDE=prevOverride; }
-    if(ok)return candidate;
-  }
-  return [];
+  return base.slice(0,8);
 }
 function v513ProtectedColdIds(ch){
-  if(V513_RESERVE_OVERRIDE&&V513_RESERVE_OVERRIDE.ch===String(ch))return V513_RESERVE_OVERRIDE.ids;
   return new Set(v513BaseColdReserve(ch).map(q=>q.id));
 }
 function v513SafeTrainingBank(ch){const r=v513ProtectedColdIds(ch);return QUESTIONS.filter(q=>String(q.chapter)===String(ch)&&staticQuestionIsQualityApproved(q)&&!r.has(q.id));}
+/* Authoring-time/regression-time capacity check ONLY -- never called during normal startup,
+   Home rendering, or any learner-facing path. Confirms that the fixed-8 reserve for every
+   qualifying chapter still leaves Apply/Challenge able to find >=5 distinct cases per stage
+   and the Challenge cognitive-demand floor (>=5 candidates scoring >=3) intact. No override/
+   probing is needed here: v513BaseColdReserve already always returns the full 8-item slice
+   for a qualifying chapter (no shrinking), so this simply verifies that real, live reserve
+   directly via the fully-decorated v510PairPlan/demand-score pipeline. */
+function v513ReserveCapacityAudit(){
+  const results=[];
+  for(const c of CHAPTER_LIST){
+    const ch=String(c.num);
+    const reserve=v513BaseColdReserve(ch);
+    if(reserve.length<8){results.push({chapter:ch,qualifies:false,reserveSize:reserve.length,pairPlanOk:null,challengeFloorMet:null});continue;}
+    const pairPlanOk=v510PairPlan(ch,new Set()).ok;
+    let challengeFloorMet=false;
+    if(typeof v520ChallengeDemandScore==='function'){
+      const strong=v510CandidateItems(ch,'challenge').filter(x=>v520ChallengeDemandScore(x)>=3);
+      challengeFloorMet=strong.length>=5;
+    }
+    results.push({chapter:ch,qualifies:true,reserveSize:8,pairPlanOk,challengeFloorMet});
+  }
+  return results;
+}
 
 /* RC1 centralized fix: the reserve above was previously excluded only inside the
    selectByExposure() override below, whose guard only fired for CONFIG.mode==='chapter'.
@@ -9167,12 +9168,25 @@ try{v58ClearDerived();}catch(e){}
    - Challenge-only source keys are not available to Apply, preserving stage independence.
    ========================================================= */
 var V520_CHALLENGE_EXTRAS={
+  "1":[{
+    id:"cx1_1",topic:"Direct vs Indirect Cost Classification",
+    context:"A cost estimator is compiling a project cost breakdown. A field supervisor's wages are charged entirely to the project's labor account for the weeks worked on site, while a corporately-funded safety training program covering all company projects is charged to this project through an allocated percentage of direct labor hours.",
+    ask:"Which classification correctly treats the supervisor's wages and the safety training charge?",
+    options:["Supervisor's wages as a direct cost; safety training as an indirect (overhead) cost allocated across projects","Both are direct costs, since both are charged to the project's accounts","Supervisor's wages as an indirect cost, since supervision benefits the whole company","Both are indirect costs, since both use a cost-charging method"],
+    correct:0,explanation:"A cost traceable to a single cost objective (the supervisor working this project) is direct. A cost shared across multiple cost objectives and assigned by an allocation basis (labor-hour percentage) is indirect/overhead, even though it still ends up on this project's ledger."
+  }],
   "3":[{
     id:"cx3_1",topic:"Inventory Decision Integration",
     context:"A fabrication shop uses 24,000 identical fasteners per year. Each purchase order costs $150 to process and annual carrying cost is $6 per fastener. Average usage is 80 fasteners per working day, replenishment lead time is 5 working days, and management requires 150 fasteners of safety stock.",
     ask:"Which pair best supports both the economic order decision and the timing of the next order?",
     options:["EOQ ≈ 1,095 units; reorder at 550 units","EOQ ≈ 600 units; reorder at 400 units","EOQ ≈ 1,095 units; reorder at 400 units","EOQ ≈ 2,190 units; reorder at 550 units"],
     correct:0,explanation:"EOQ = sqrt(2DP/S) = sqrt(2×24,000×150/6) ≈ 1,095 units. Reorder point = lead-time usage + safety stock = 5×80 + 150 = 550 units."
+  },{
+    id:"cx3_2",topic:"Safety Stock and Lead-Time Variability",
+    context:"A warehouse manager notices that lead time for a critical imported valve has become highly variable from shipment to shipment, while lead time for a common domestic fastener stays nearly constant. Order quantities for both items were originally set with an identical reorder-point calculation that did not account for lead-time variability.",
+    ask:"Which change best addresses the risk this variability creates?",
+    options:["Increase safety stock for the imported valve to buffer the variability, leaving the fastener's safety stock largely unchanged","Increase safety stock equally for both items, since reorder-point methods require uniform buffers","Remove safety stock for the imported valve, since imported items ship on a fixed schedule","Reduce the order quantity for the fastener to compensate for the valve's variability"],
+    correct:0,explanation:"Safety stock should scale with the variability of demand and lead time for the specific item, not be applied uniformly. The stable domestic fastener needs little buffer; the highly variable imported valve needs more."
   }],
   "14":[{
     id:"cx14_1",topic:"EAC Assumption Selection",
@@ -9187,12 +9201,44 @@ var V520_CHALLENGE_EXTRAS={
     options:["EAC ≈ $14.38 million","EAC = $12.50 million","EAC = $11.00 million","EAC = $10.00 million"],
     correct:0,explanation:"CPI=4/5=0.80 and SPI=4/5=0.80. When both efficiencies are expected to affect the remainder, EAC = AC + (BAC−EV)/(CPI×SPI) = 5 + 6/0.64 = $14.375 million ≈ $14.38 million."
   }],
+  "15":[{
+    id:"cx15_1",topic:"Combined Schedule and Cost Index Interpretation",
+    context:"A project's reporting at a given date shows $127,500 of work actually completed, compared with $150,000 of work that had been scheduled to be finished by that date, and $115,909 actually spent to complete the work done so far. The project sponsor asks for a plain-language read on schedule and cost health before committing to next quarter's cash flow plan.",
+    ask:"Which interpretation of these figures is most defensible?",
+    options:["The project is behind schedule but spending efficiently for the work actually performed","The project is ahead of schedule and spending efficiently","The project is behind schedule and overspending for the work performed","The two indices cannot be interpreted together without a third index"],
+    correct:0,explanation:"SPI<1.0 indicates the project is behind schedule (earned value trails planned value). CPI>1.0 indicates cost efficiency (earned value exceeds actual cost). The two indices measure independent dimensions and can be read together directly."
+  }],
+  "19":[{
+    id:"cx19_1",topic:"Labor Efficiency Variance Isolation",
+    context:"A control account shows actual labor hours of 1,200 at an actual rate of $42 per hour, while the budget called for 1,000 hours at $40 per hour for the work actually completed.",
+    ask:"What does the labor efficiency variance show, separated from any rate effect?",
+    options:["Crews used 200 more hours than budgeted for the completed work, an unfavorable efficiency variance","Crews were paid $2 more per hour than budgeted, an unfavorable rate variance","Total labor cost was exactly on budget once hours and rate are combined","The variance cannot be separated into efficiency and rate components"],
+    correct:0,explanation:"Labor efficiency variance isolates the hours dimension (actual hours vs. budgeted hours for the work performed), independent of the rate variance (actual rate vs. budgeted rate). Here, 200 excess hours is the efficiency effect."
+  },{
+    id:"cx19_2",topic:"Labor-Specific EAC Assumption Selection",
+    context:"A control account's labor cost overrun this period was traced entirely to a temporary crew-size increase needed to recover a weather delay. The crew has since returned to planned staffing, and the remaining labor scope is expected to proceed at the original budgeted productivity rate.",
+    ask:"Which forecasting assumption for the remaining labor cost is most defensible?",
+    options:["Treat the overrun as non-recurring and forecast remaining labor cost at the original budgeted rate","Assume the current unfavorable labor cost performance index will continue for all remaining labor","Assume both labor cost and schedule inefficiency will continue equally for all remaining labor","Disregard the overrun and forecast remaining labor cost as if no labor work has occurred yet"],
+    correct:0,explanation:"Because the cause of the overrun (temporary crew increase) has been resolved and will not recur, the defensible forecast treats the variance as non-recurring: EAC-style forecast = actual cost to date + remaining budgeted work at the original rate, rather than projecting the poor performance forward."
+  }],
   "20":[{
     id:"cx20_1",topic:"Motivation and Leadership Integration",
     context:"A project team complained about poor office conditions and pay inequity. Management corrected both, so complaints declined, but initiative and ownership did not improve. The manager now wants people to take greater responsibility for work they understand well.",
     ask:"Which response best addresses the remaining leadership problem?",
     options:["Add achievement, recognition, and responsibility while managing capable staff with a Theory Y orientation","Increase pay again because hygiene factors are the main driver of lasting motivation","Tighten supervision and assume employees avoid responsibility, consistent with Theory X","Remove individual responsibility so motivation depends only on group rules"],
     correct:0,explanation:"Herzberg distinguishes hygiene factors, which prevent dissatisfaction, from motivators such as achievement, recognition, and responsibility. A Theory Y orientation is consistent with capable people exercising self-direction and accepting responsibility."
+  },{
+    id:"cx20_2",topic:"Conflict Resolution Style Selection",
+    context:"Two discipline leads disagree over which design change to implement before a hard permit deadline. Both positions have technical merit, the deadline cannot move, and a wrong choice would require significant rework either way.",
+    ask:"Which conflict-resolution approach best fits this situation?",
+    options:["Compromise quickly on a workable middle option, since time pressure outweighs finding the ideal solution","Avoid the conflict and let each lead proceed with their own design independently","Accommodate whichever lead has more seniority rather than weighing the technical merits","Force a decision using positional authority without discussing either lead's technical concerns"],
+    correct:0,explanation:"When time pressure is severe and both positions have comparable merit, a quick compromise that produces a workable outcome is preferable to prolonged analysis, unilateral avoidance, or a decision that ignores the technical substance of the disagreement."
+  },{
+    id:"cx20_3",topic:"Situational Leadership and Delegation Readiness",
+    context:"A newly-formed cost engineering team includes one experienced analyst who has performed a specific forecasting task for years, and two junior analysts who have never produced that forecast independently. The manager must assign the next forecast with confidence in the result.",
+    ask:"Which delegation approach best matches situational leadership principles?",
+    options:["Delegate the forecast fully to the experienced analyst while coaching the junior analysts on related tasks","Assign the forecast equally to all three analysts without weighing their prior experience, to build team cohesion","Assign the forecast to a junior analyst without support, since stretch assignments typically build confidence quickly","Perform the forecast personally, since delegation is inappropriate on a newly-formed team"],
+    correct:0,explanation:"Situational leadership matches the delegation approach to each person's readiness: a high-readiness performer can be given full autonomy on a task they have mastered, while lower-readiness team members are better served by closer coaching on tasks that build toward that readiness."
   }],
   "28":[{
     id:"cx28_1",topic:"Capital Rationing Decision",
@@ -9207,6 +9253,19 @@ var V520_CHALLENGE_EXTRAS={
     ask:"What expected monetary exposure remains with the project after the transfer, assuming the transfer fully removes the second threat from the project's retained cost exposure?",
     options:["$0.50 million","$0.90 million","$1.00 million","$3.00 million"],
     correct:0,explanation:"Before treatment the two EMVs are $0.50M and $0.40M. If the second threat is fully transferred and the first remains, retained expected exposure is 0.25×$2.0M = $0.50M."
+  }],
+  "32":[{
+    id:"cx32_1",topic:"Risk Response Strategy Selection",
+    context:"A project team identifies a risk that a key subcontractor could become insolvent mid-project. The team cannot avoid using this subcontractor's specialized service, but a performance bond is commercially available at a reasonable premium that would cover replacement costs if the subcontractor fails.",
+    ask:"Which risk response strategy does purchasing the bond represent?",
+    options:["Risk transfer, because the financial consequence shifts to a third party","Risk avoidance, because the bond removes the possibility of insolvency","Risk mitigation, because the bond reduces the probability that the subcontractor becomes insolvent","Risk acceptance, because the project still depends on the same subcontractor"],
+    correct:0,explanation:"A performance bond does not change the probability of the subcontractor's insolvency or remove the underlying exposure; it shifts the financial consequence to a third party (the surety). That is the defining feature of risk transfer, distinct from avoidance or mitigation, which act on probability or exposure directly."
+  },{
+    id:"cx32_2",topic:"Risk Register Update Discipline",
+    context:"Midway through construction, three previously identified moderate risks have passed their exposure window without occurring, while one new risk, a regulatory change, has just been identified with potentially significant cost impact.",
+    ask:"What is the most defensible next step for the project's risk management process?",
+    options:["Retire the three expired risks from active tracking and fully assess the new regulatory risk","Leave all four risks in the register unchanged until the next scheduled quarterly review","Remove the new regulatory risk from tracking, since it was not part of the original risk register","Increase contingency for the three expired risks alone, since they were the most thoroughly analyzed"],
+    correct:0,explanation:"Risk management is an ongoing process: risks whose exposure window has passed without occurring should be retired from active tracking, and newly identified risks should receive qualitative and quantitative assessment as soon as they are identified, not deferred to the next scheduled review."
   }],
   "34":[{
     id:"cx34_1",topic:"SI Conversion and Significant Digits",
@@ -12617,7 +12676,7 @@ runRecommendedStep = function(){
     V56_CURATED_BANK: 113,                  // +1 v1.2.9 Global Gap Repair: cm5_9 (Prototypes, distinct Ch.5 case)
     V57_INTERNAL_MASTERY_BANK: 200,         // includes the 50 V513-merged items (Ch.2/23/28/31/32)
     V57_TRANSFER_SUPPLEMENT: 21,            // discovered this pass
-    V520_CHALLENGE_EXTRAS: 24,              // discovered this pass
+    V520_CHALLENGE_EXTRAS: 33,              // +9 RC3 fixed-8 Cold reserve capacity repair (cx1_1, cx3_2, cx15_1, cx19_1, cx19_2, cx20_2, cx20_3, cx32_1, cx32_2)
     V522_TASK_RESERVE_ITEMS: 89,            // spec-level; each builds 1 QUESTIONS object (BP522-*)
     V524_DIRECT_TASK_ITEMS: 39,             // spec-level; each builds 1 QUESTIONS object (BP524-*)
     MEMO_PROMPTS: 5                         // non-MCQ, not chapter-specific
